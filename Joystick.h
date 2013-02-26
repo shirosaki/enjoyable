@@ -9,26 +9,17 @@
 #import <Cocoa/Cocoa.h>
 @class JSAction;
 
-@interface Joystick : NSObject {
-	int vendorId;
-	int productId;
-	int index;
-	NSString* productName;
-	IOHIDDeviceRef device;
-	NSMutableArray* children;
-	NSString* name;
-}
+@interface Joystick : NSObject
 
-@property(readwrite) int vendorId;
-@property(readwrite) int productId;
-@property(readwrite) int index;
-@property(readwrite, copy) NSString* productName;
-@property(readwrite) IOHIDDeviceRef device;
-@property(readonly) NSArray* children;
-@property(readonly) NSString* name;
+@property (assign) int vendorId;
+@property (assign) int productId;
+@property (assign) int index;
+@property (copy) NSString *productName;
+@property (assign) IOHIDDeviceRef device;
+@property (readonly) NSArray *children;
+@property (readonly) NSString *name;
 
 -(void) populateActions;
--(void) invalidate;
 -(id) handlerForEvent: (IOHIDValueRef) value;
 -(id)initWithDevice: (IOHIDDeviceRef) newDevice;
 -(JSAction*) actionForEvent: (IOHIDValueRef) value;

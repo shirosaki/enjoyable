@@ -5,36 +5,26 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
-@implementation Joystick
+@implementation Joystick {
+	NSMutableArray *children;
+}
 
+@synthesize	vendorId, productId, productName, index, device, children;
 
-@synthesize	vendorId, productId, productName, name, index, device, children;
-
--(id)initWithDevice: (IOHIDDeviceRef) newDevice {
-	if(self=[super init]) {
-		children = [[NSMutableArray alloc]init];
+- (id)initWithDevice: (IOHIDDeviceRef) newDevice {
+	if ((self = [super init])) {
+		children = [[NSMutableArray alloc] init];
 		
-		device = newDevice;
-		productName = (__bridge NSString*)IOHIDDeviceGetProperty( device, CFSTR(kIOHIDProductKey) );
-		vendorId = [(__bridge NSNumber*)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
-		productId = [(__bridge NSNumber*)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
-		
-		name = productName;
+		self.device = newDevice;
+		self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+		self.vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
+		self.productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
 	}
 	return self;
 }
 
--(void) setIndex: (int) newIndex {
-	index = newIndex;
-	name = [[NSString alloc] initWithFormat: @"%@ #%d", productName, (index+1)];
-}
--(int) index {
-	return index;
-}
-
--(void) invalidate {
-	IOHIDDeviceClose(device, kIOHIDOptionsTypeNone);
-	NSLog(@"Removed a device: %@", [self name]);
+- (NSString *)name {
+	return [[NSString alloc] initWithFormat: @"%@ #%d", productName, index + 1];
 }
 
 -(id) base {

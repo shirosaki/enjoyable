@@ -43,15 +43,7 @@ static NSMutableDictionary* create_criterion( UInt32 inUsagePage, UInt32 inUsage
 	[outlineView expandItem: handler];
 }
 
-BOOL objInArray(NSMutableArray *array, id object) {
-    for (id o in array) {
-        if (o == object)
-            return true;
-    }
-    return false;
-}
-
-void timer_callback(CFRunLoopTimerRef timer, void *ctx) {
+static void timer_callback(CFRunLoopTimerRef timer, void *ctx) {
     JoystickController *jc = (__bridge JoystickController *)ctx;
     jc->mouseLoc = [NSEvent mouseLocation];
     for (Target *target in [jc runningTargets]) {
@@ -59,13 +51,12 @@ void timer_callback(CFRunLoopTimerRef timer, void *ctx) {
     }
 }
 
-void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDValueRef value) {
-	JoystickController* self = (__bridge JoystickController*)inContext;
-	IOHIDDeviceRef device = IOHIDQueueGetDevice((IOHIDQueueRef) inSender);
+static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
+	JoystickController *controller = (__bridge JoystickController *)ctx;
+	IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
 	
-	Joystick* js = [self findJoystickByRef: device];
+	Joystick *js = [controller findJoystickByRef:device];
 	if([(ApplicationController *)[[NSApplication sharedApplication] delegate] active]) {
-		// for reals
 		JSAction* mainAction = [js actionForEvent: value];
 		if(!mainAction)
 			return;
@@ -75,17 +66,17 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
 		if(!subactions)
 			subactions = @[mainAction];
 		for(id subaction in subactions) {
-			Target* target = [[self->configsController currentConfig] getTargetForAction:subaction];
+			Target* target = [[controller->configsController currentConfig] getTargetForAction:subaction];
 			if(!target)
 				continue;
 			/* target application? doesn't seem to be any need since we are only active when it's in front */
 			/* might be required for some strange actions */
             if ([target running] != [subaction active]) {
                 if ([subaction active]) {
-                    [target trigger: self];
+                    [target trigger: controller];
                 }
                 else {
-                    [target untrigger: self];
+                    [target untrigger: controller];
                 }
                 [target setRunning: [subaction active]];
             }
@@ -96,8 +87,8 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
             
                 // Add to list of running targets
                 if ([target isContinuous] && [target running]) {
-                    if (!objInArray([self runningTargets], target)) {
-                        [[self runningTargets] addObject: target];
+                    if (![controller.runningTargets containsObject:target]) {
+                        [[controller runningTargets] addObject: target];
                     }
                 }
             }
@@ -108,13 +99,13 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
 		if(!handler)
 			return;
 	
-		[self expandRecursive: handler];
-		self->programmaticallySelecting = YES;
-		[self->outlineView selectRowIndexes: [NSIndexSet indexSetWithIndex: [self->outlineView rowForItem: handler]] byExtendingSelection: NO];
+		[controller expandRecursive: handler];
+		controller->programmaticallySelecting = YES;
+		[controller->outlineView selectRowIndexes: [NSIndexSet indexSetWithIndex: [controller->outlineView rowForItem: handler]] byExtendingSelection: NO];
 	}
 }
 
-int findAvailableIndex(id list, Joystick* js) {
+static int findAvailableIndex(id list, Joystick* js) {
 	BOOL available;
 	Joystick* js2;
 	for(int index=0;;index++) {
@@ -131,46 +122,39 @@ int findAvailableIndex(id list, Joystick* js) {
 	}
 }
 
-void add_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDeviceRef device) {
-	JoystickController* self = (__bridge JoystickController*)inContext;
-	
-	IOHIDDeviceOpen(device, kIOHIDOptionsTypeNone);
-	IOHIDDeviceRegisterInputValueCallback(device, input_callback, (void*) CFBridgingRetain(self));
-	
-	Joystick *js = [[Joystick alloc] initWithDevice: device];
-	[js setIndex: findAvailableIndex([self joysticks], js)];
-	
+static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
+	JoystickController *controller = (__bridge JoystickController *)ctx;
+    IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)controller);
+	Joystick *js = [[Joystick alloc] initWithDevice:device];
+    js.index = findAvailableIndex(controller.joysticks, js);
 	[js populateActions];
-
-	[[self joysticks] addObject: js];
-	[self->outlineView reloadData];
+	[[controller joysticks] addObject:js];
+	[controller->outlineView reloadData];
 }
 	
--(Joystick*) findJoystickByRef: (IOHIDDeviceRef) device {
+- (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device {
     for (Joystick *js in joysticks)
         if (js.device == device)
             return js;
 	return nil;
 }	
 
-void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDeviceRef device) {
-	JoystickController* self = CFBridgingRelease(inContext);
-	
-	Joystick* match = [self findJoystickByRef: device];
-	if(!match)
-		return;
-				
-	[[self joysticks] removeObject: match];
-
-	[match invalidate];
-	[self->outlineView reloadData];
+static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
+	JoystickController *controller = (__bridge JoystickController *)ctx;
+	Joystick *match = [controller findJoystickByRef:device];
+    IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
+	if (match) {
+        [controller.joysticks removeObject:match];
+        [controller->outlineView reloadData];
+    }
 }
 
--(void) setup {
+- (void)setup {
     hidManager = IOHIDManagerCreate( kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-	NSArray *criteria = @[create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_Joystick),
-		 create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_GamePad),
-         create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_MultiAxisController)];
+	NSArray *criteria = @[
+        create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_Joystick),
+        create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_GamePad),
+        create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_MultiAxisController)];
 	
 	IOHIDManagerSetDeviceMatchingMultiple(hidManager, (CFArrayRef)CFBridgingRetain(criteria));
     
@@ -178,13 +162,9 @@ void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDe
 	IOReturn tIOReturn = IOHIDManagerOpen( hidManager, kIOHIDOptionsTypeNone );
 	(void)tIOReturn;
 	
-	IOHIDManagerRegisterDeviceMatchingCallback( hidManager, add_callback, (__bridge void*)self );
-	IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void*) self);
-//	IOHIDManagerRegisterInputValueCallback(hidManager, input_callback, (void*)self);
-// register individually so we can find the device more easily
-    
-    
-	
+	IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self );
+	IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
+
     // Setup timer for continuous targets
     CFRunLoopTimerContext ctx = {
         0, (__bridge void*)self, NULL, NULL, NULL
