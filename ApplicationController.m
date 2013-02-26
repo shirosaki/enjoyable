@@ -4,31 +4,44 @@
 //
 //  Created by Sam McCall on 4/05/09.
 //
-#include <Carbon/Carbon.h>
 
-@implementation ApplicationController
+@implementation ApplicationController {
+    BOOL active;
+}
 
 @synthesize jsController, targetController, configsController;
 
-static BOOL active;
+- (void)didSwitchApplication:(NSNotification *)notification {
+    NSRunningApplication *currentApp = notification.userInfo[NSWorkspaceApplicationKey];
+	ProcessSerialNumber psn;
+    OSStatus err;
+    if ((err = GetProcessForPID(currentApp.processIdentifier, &psn)) == noErr) {
+        [self->configsController applicationSwitchedTo:currentApp.localizedName withPsn:psn];
+    } else {
+        NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
+        NSLog(@"Error getting PSN for %@: %@", currentApp.localizedName, error);
+    }
+}
 
-pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void* userData);
-
--(void) applicationDidFinishLaunching: (NSNotification*) notification {
+-(void) applicationDidFinishLaunching:(NSNotification*) notification {
 	[jsController setup];
 	[drawer open];
-	[targetController setEnabled: false];
-	[self setActive: NO];
+	[targetController setEnabled: NO];
+    self.active = NO;
 	[configsController load];
-	EventTypeSpec et;
-	et.eventClass = kEventClassApplication;
-	et.eventKind = kEventAppFrontSwitched;
-	EventHandlerUPP handler = NewEventHandlerUPP(appSwitch);
-	InstallApplicationEventHandler(handler, 1, &et, (void *)CFBridgingRetain(self), NULL);
+    [[[NSWorkspace sharedWorkspace] notificationCenter]
+     addObserver:self
+     selector:@selector(didSwitchApplication:)
+     name:NSWorkspaceDidActivateApplicationNotification
+     object:nil];
 }
 
 -(void) applicationWillTerminate: (NSNotification *)aNotification {
 	[configsController save];
+    [[[NSWorkspace sharedWorkspace] notificationCenter]
+     removeObserver:self
+     name:NSWorkspaceDidActivateApplicationNotification
+     object:nil];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
@@ -38,29 +51,20 @@ pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void
 	return YES;
 }
 
-pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void* userData) {
-	ApplicationController* self = (__bridge ApplicationController*)userData;
-	NSDictionary* currentApp = [[NSWorkspace sharedWorkspace] activeApplication];
-	ProcessSerialNumber psn;
-	psn.lowLongOfPSN = [currentApp[@"NSApplicationProcessSerialNumberLow"] longValue];
-	psn.highLongOfPSN = [currentApp[@"NSApplicationProcessSerialNumberHigh"] longValue];
-	[self->configsController applicationSwitchedTo: currentApp[@"NSApplicationName"] withPsn: psn];
-	return noErr;
+- (BOOL)active {
+    return active;
 }
 
--(BOOL) active {
-	return active;
-}
-
--(void) setActive: (BOOL) newActive {
-	[activeButton setLabel: (newActive ? @"Stop" : @"Start")];
-	[activeButton setImage: [NSImage imageNamed: (newActive ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate" )]];
-	[activeMenuItem setState: (newActive ? 1 : 0)];
+- (void)setActive:(BOOL)newActive {
+	[activeButton setLabel:newActive ? @"Stop" : @"Start"];
+    NSImage *buttonImage = [NSImage imageNamed:newActive ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate"];
+	[activeButton setImage:buttonImage];
+	[activeMenuItem setState:newActive];
 	active = newActive;
 }
 
--(IBAction) toggleActivity: (id)sender {
-	[self setActive: ![self active]];
+- (IBAction)toggleActivity:(id)sender {
+    self.active = !self.active;
 }
 
 -(void) configsChanged {
@@ -76,7 +80,7 @@ pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void
 	Config* current = [configsController currentConfig];
 	NSArray* configs = [configsController configs];
 	for(int i=0; i<[configs count]; i++)
-		[[dockMenuBase itemAtIndex: (2+i)] setState: ((configs[i] == current) ? YES : NO)];
+		[[dockMenuBase itemAtIndex: (2+i)] setState: (configs[i] == current)];
 }
 
 -(void) chooseConfig: (id) sender {
