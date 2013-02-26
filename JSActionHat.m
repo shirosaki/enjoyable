@@ -32,7 +32,6 @@ NO,  NO,  YES, NO , // W
 					  [[SubAction alloc] initWithIndex: 1 name: @"Down" base: self],
 					  [[SubAction alloc] initWithIndex: 2 name: @"Left" base: self],
 					  [[SubAction alloc] initWithIndex: 3 name: @"Right" base: self]];
-		[subActions retain];
 		name = @"Hat switch";
 	}
 	return self;

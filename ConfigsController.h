@@ -27,8 +27,8 @@
 -(NSDictionary*) dumpAll;
 -(void) loadAllFrom: (NSDictionary*) dict;
 
-@property(readonly) Config* currentConfig;
-@property(readonly) Config* currentNeutralConfig;
+@property(strong, readonly) Config* currentConfig;
+@property(strong, readonly) Config* currentNeutralConfig;
 @property(readonly) NSArray* configs;
 @property(readonly) ProcessSerialNumber* targetApplication;
 -(void) save;

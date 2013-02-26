@@ -12,7 +12,6 @@
 	subActions = @[[[SubAction alloc] initWithIndex: 0 name: @"Low" base: self],
 		[[SubAction alloc] initWithIndex: 1 name: @"High" base: self],
         [[SubAction alloc] initWithIndex: 2 name: @"Analog" base: self]];
-		[subActions retain];
 	index = newIndex;
 	name = [[NSString alloc] initWithFormat: @"Axis %d", (index+1)];
    }

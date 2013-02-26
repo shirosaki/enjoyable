@@ -24,7 +24,7 @@ pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void
 	et.eventClass = kEventClassApplication;
 	et.eventKind = kEventAppFrontSwitched;
 	EventHandlerUPP handler = NewEventHandlerUPP(appSwitch);
-	InstallApplicationEventHandler(handler, 1, &et, self, NULL);
+	InstallApplicationEventHandler(handler, 1, &et, (void *)CFBridgingRetain(self), NULL);
 }
 
 -(void) applicationWillTerminate: (NSNotification *)aNotification {
@@ -39,7 +39,7 @@ pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void
 }
 
 pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void* userData) {
-	ApplicationController* self = (ApplicationController*)userData;
+	ApplicationController* self = (__bridge ApplicationController*)userData;
 	NSDictionary* currentApp = [[NSWorkspace sharedWorkspace] activeApplication];
 	ProcessSerialNumber psn;
 	psn.lowLongOfPSN = [currentApp[@"NSApplicationProcessSerialNumberLow"] longValue];

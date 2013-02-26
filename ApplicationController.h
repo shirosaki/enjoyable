@@ -24,9 +24,9 @@
 }
 
 @property(readwrite) BOOL active;
-@property(readonly) JoystickController * jsController;
-@property(readonly) TargetController * targetController;
-@property(readonly) ConfigsController * configsController;
+@property(strong, readonly) JoystickController * jsController;
+@property(strong, readonly) TargetController * targetController;
+@property(strong, readonly) ConfigsController * configsController;
 -(IBAction) toggleActivity: (id)sender;
 -(void) configsChanged;
 -(void) configChanged;

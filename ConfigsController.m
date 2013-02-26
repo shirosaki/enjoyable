@@ -139,7 +139,7 @@
 		[ary addObject: cfgInfo];
 	}
 	envelope[@"configurationList"] = ary;
-	envelope[@"selectedIndex"] = [NSNumber numberWithInt: [configs indexOfObject: [self currentNeutralConfig] ] ];
+	envelope[@"selectedIndex"] = @([configs indexOfObject: [self currentNeutralConfig] ]);
 	return envelope;
 }
 -(void) loadAllFrom: (NSDictionary*) envelope{

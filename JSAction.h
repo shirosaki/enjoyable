@@ -12,17 +12,17 @@
 @interface JSAction : NSObject {
 	int usage, index;
 	void* cookie;
-	NSArray* subActions;
+	NSArray *subActions;
 	id base;
-	NSString* name;
+	NSString *name;
 }
 
 @property(readwrite) int usage;
 @property(readwrite) void* cookie;
 @property(readonly) int index;
-@property(readonly) NSArray* subActions;
-@property(readwrite, retain) id base;
-@property(readonly) NSString* name;
+@property(copy) NSArray* subActions;
+@property(readwrite, strong) id base;
+@property(copy) NSString* name;
 @property(readonly) BOOL active;
 
 -(void) notifyEvent: (IOHIDValueRef) value;

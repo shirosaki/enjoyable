@@ -31,7 +31,7 @@
 -(void) setup;
 -(Joystick*) findJoystickByRef: (IOHIDDeviceRef) device;
 
-@property(readonly) id selectedAction;
+@property(strong, readonly) id selectedAction;
 @property(readonly) NSMutableArray *joysticks;
 @property(readonly) NSMutableArray *runningTargets;
 @property(readwrite) BOOL frontWindowOnly;

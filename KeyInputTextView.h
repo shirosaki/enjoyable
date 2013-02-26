@@ -20,7 +20,7 @@
 
 @property(readonly) BOOL hasKey;
 @property(readwrite) int vk;
-@property(readonly) NSString* descr;
+@property(copy) NSString* descr;
 @property(readwrite) BOOL enabled;
 
 -(void) clear;

@@ -14,7 +14,7 @@
 	Config *config;
 }
 
-@property(readwrite, retain) Config* config;
+@property(readwrite, strong) Config* config;
 +(TargetConfig*) unstringifyImpl: (NSArray*) comps withConfigList: (NSArray*) configs;
 
 @end

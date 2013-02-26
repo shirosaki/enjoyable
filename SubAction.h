@@ -18,7 +18,7 @@
 
 -(id) initWithIndex:(int)newIndex name: (NSString*)newName  base: (JSAction*)newBase;
 
-@property(readwrite, assign) JSAction* base;
+@property(readwrite, strong) JSAction* base;
 @property(readwrite, copy) NSString* name;
 @property(readwrite) int index;
 @property(readwrite) BOOL active;

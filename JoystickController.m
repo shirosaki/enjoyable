@@ -21,20 +21,19 @@
 	return self;
 }
 
--(void) finalize {
+-(void) dealloc {
 	for(int i=0; i<[joysticks count]; i++) {
 		[joysticks[i] invalidate];
 	}
 	IOHIDManagerClose(hidManager, kIOHIDOptionsTypeNone);
 	CFRelease(hidManager);
-	[super finalize];
 }
 
 static NSMutableDictionary* create_criterion( UInt32 inUsagePage, UInt32 inUsage )
 {
 	NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-	dict[(NSString*)CFSTR(kIOHIDDeviceUsagePageKey)] = [NSNumber numberWithInt: inUsagePage];
-	dict[(NSString*)CFSTR(kIOHIDDeviceUsageKey)] = [NSNumber numberWithInt: inUsage];
+	dict[(NSString*)CFSTR(kIOHIDDeviceUsagePageKey)] = @(inUsagePage);
+	dict[(NSString*)CFSTR(kIOHIDDeviceUsageKey)] = @(inUsage);
 	return dict;
 } 
 
@@ -53,7 +52,7 @@ BOOL objInArray(NSMutableArray *array, id object) {
 }
 
 void timer_callback(CFRunLoopTimerRef timer, void *ctx) {
-    JoystickController *jc = (JoystickController *)ctx;
+    JoystickController *jc = (__bridge JoystickController *)ctx;
     jc->mouseLoc = [NSEvent mouseLocation];
     for (Target *target in [jc runningTargets]) {
         [target update: jc];
@@ -61,7 +60,7 @@ void timer_callback(CFRunLoopTimerRef timer, void *ctx) {
 }
 
 void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDValueRef value) {
-	JoystickController* self = (JoystickController*)inContext;
+	JoystickController* self = (__bridge JoystickController*)inContext;
 	IOHIDDeviceRef device = IOHIDQueueGetDevice((IOHIDQueueRef) inSender);
 	
 	Joystick* js = [self findJoystickByRef: device];
@@ -133,10 +132,10 @@ int findAvailableIndex(id list, Joystick* js) {
 }
 
 void add_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDeviceRef device) {
-	JoystickController* self = (JoystickController*)inContext;
+	JoystickController* self = (__bridge JoystickController*)inContext;
 	
 	IOHIDDeviceOpen(device, kIOHIDOptionsTypeNone);
-	IOHIDDeviceRegisterInputValueCallback(device, input_callback, (void*) self);
+	IOHIDDeviceRegisterInputValueCallback(device, input_callback, (void*) CFBridgingRetain(self));
 	
 	Joystick *js = [[Joystick alloc] initWithDevice: device];
 	[js setIndex: findAvailableIndex([self joysticks], js)];
@@ -155,7 +154,7 @@ void add_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDevic
 }	
 
 void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDeviceRef device) {
-	JoystickController* self = (JoystickController*)inContext;
+	JoystickController* self = CFBridgingRelease(inContext);
 	
 	Joystick* match = [self findJoystickByRef: device];
 	if(!match)
@@ -173,14 +172,14 @@ void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDe
 		 create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_GamePad),
          create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_MultiAxisController)];
 	
-	IOHIDManagerSetDeviceMatchingMultiple(hidManager, (CFArrayRef)criteria);
+	IOHIDManagerSetDeviceMatchingMultiple(hidManager, (CFArrayRef)CFBridgingRetain(criteria));
     
 	IOHIDManagerScheduleWithRunLoop( hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode );
 	IOReturn tIOReturn = IOHIDManagerOpen( hidManager, kIOHIDOptionsTypeNone );
 	(void)tIOReturn;
 	
-	IOHIDManagerRegisterDeviceMatchingCallback( hidManager, add_callback, (void*)self );
-	IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (void*) self);
+	IOHIDManagerRegisterDeviceMatchingCallback( hidManager, add_callback, (__bridge void*)self );
+	IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void*) self);
 //	IOHIDManagerRegisterInputValueCallback(hidManager, input_callback, (void*)self);
 // register individually so we can find the device more easily
     
@@ -188,7 +187,7 @@ void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDe
 	
     // Setup timer for continuous targets
     CFRunLoopTimerContext ctx = {
-        0, (void*)self, NULL, NULL, NULL
+        0, (__bridge void*)self, NULL, NULL, NULL
     };
     CFRunLoopTimerRef timer = CFRunLoopTimerCreate(kCFAllocatorDefault,
                                                    CFAbsoluteTimeGetCurrent(), 1.0/80.0,

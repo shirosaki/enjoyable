@@ -15,9 +15,9 @@
 		children = [[NSMutableArray alloc]init];
 		
 		device = newDevice;
-		productName = (NSString*)IOHIDDeviceGetProperty( device, CFSTR(kIOHIDProductKey) );
-		vendorId = [(NSNumber*)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
-		productId = [(NSNumber*)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
+		productName = (__bridge NSString*)IOHIDDeviceGetProperty( device, CFSTR(kIOHIDProductKey) );
+		vendorId = [(__bridge NSNumber*)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
+		productId = [(__bridge NSNumber*)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
 		
 		name = productName;
 	}
@@ -42,13 +42,13 @@
 }
 
 -(void) populateActions {
-	NSArray* elements = (NSArray*)IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
+	NSArray* elements = (NSArray*)CFBridgingRelease(IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone));
 	
 	int buttons = 0;
 	int axes = 0;
 	
 	for(int i=0; i<[elements count]; i++) {
-		IOHIDElementRef element = (IOHIDElementRef)elements[i];
+		IOHIDElementRef element = (__bridge IOHIDElementRef)elements[i];
 		int type = IOHIDElementGetType(element);
 		int usage = IOHIDElementGetUsage(element);
 		int usagePage = IOHIDElementGetUsagePage(element);
@@ -70,7 +70,7 @@
 		}
 		
 		if((max - min == 1) || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
-			action = [[JSActionButton alloc] initWithIndex: buttons++ andName: (NSString *)elName];
+			action = [[JSActionButton alloc] initWithIndex: buttons++ andName: (__bridge NSString *)elName];
 			[(JSActionButton*)action setMax: max];
 		} else if(usage == 0x39)
 			action = [[JSActionHat alloc] init];
