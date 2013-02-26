@@ -9,12 +9,9 @@
 
 - (id) initWithIndex: (int)newIndex {
 	if(self = [super init]) {
-	subActions = [NSArray arrayWithObjects:
-		[[SubAction alloc] initWithIndex: 0 name: @"Low" base: self],
+	subActions = @[[[SubAction alloc] initWithIndex: 0 name: @"Low" base: self],
 		[[SubAction alloc] initWithIndex: 1 name: @"High" base: self],
-        [[SubAction alloc] initWithIndex: 2 name: @"Analog" base: self],
-		nil
-	];
+        [[SubAction alloc] initWithIndex: 2 name: @"Analog" base: self]];
 		[subActions retain];
 	index = newIndex;
 	name = [[NSString alloc] initWithFormat: @"Axis %d", (index+1)];
@@ -23,8 +20,8 @@
 }
 
 -(id) findSubActionForValue: (IOHIDValueRef) value {
-    if ([[subActions objectAtIndex: 2] active]) {
-        return [subActions objectAtIndex: 2]; // TODO?
+    if ([subActions[2] active]) {
+        return subActions[2]; // TODO?
     }
     
     //Target* target = [[base->configsController currentConfig] getTargetForAction: [subActions objectAtIndex: 0]];
@@ -33,21 +30,21 @@
     double parsed = [self getRealValue: raw];
 	
 	if(parsed < -0.3) // fixed?!
-		return [subActions objectAtIndex: 0];
+		return subActions[0];
 	else if(parsed > 0.3)
-		return [subActions objectAtIndex: 1];
+		return subActions[1];
 	return NULL;
 }
 
 -(void) notifyEvent: (IOHIDValueRef) value {
     // Analog action is always active
-    [[subActions objectAtIndex: 2] setActive: true];
+    [subActions[2] setActive: true];
     
 	int raw = IOHIDValueGetIntegerValue(value);
     double parsed = [self getRealValue: raw];
 	
-	[[subActions objectAtIndex: 0] setActive: (parsed < -0.3)];
-	[[subActions objectAtIndex: 1] setActive: (parsed > 0.3)];
+	[subActions[0] setActive: (parsed < -0.3)];
+	[subActions[1] setActive: (parsed > 0.3)];
 }
 
 -(double) getRealValue: (int)value {

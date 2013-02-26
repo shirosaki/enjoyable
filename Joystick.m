@@ -48,7 +48,7 @@
 	int axes = 0;
 	
 	for(int i=0; i<[elements count]; i++) {
-		IOHIDElementRef element = (IOHIDElementRef)[elements objectAtIndex: i];
+		IOHIDElementRef element = (IOHIDElementRef)elements[i];
 		int type = IOHIDElementGetType(element);
 		int usage = IOHIDElementGetUsage(element);
 		int usagePage = IOHIDElementGetUsagePage(element);
@@ -96,8 +96,8 @@
 
 - (JSAction*) findActionByCookie: (void*) cookie {
 	for(int i=0; i<[children count]; i++)
-		if([[children objectAtIndex:i]cookie] == cookie)
-			return (JSAction*)[children objectAtIndex:i];
+		if([children[i]cookie] == cookie)
+			return (JSAction*)children[i];
 	return NULL;
 }
 

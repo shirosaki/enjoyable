@@ -19,7 +19,7 @@
 +(TargetMouseBtn*) unstringifyImpl: (NSArray*) comps {
 	NSParameterAssert([comps count] == 2);
 	TargetMouseBtn* target = [[TargetMouseBtn alloc] init];
-	[target setWhich: [[comps objectAtIndex:1] integerValue]];
+	[target setWhich: [comps[1] integerValue]];
 	return target;
 }
 

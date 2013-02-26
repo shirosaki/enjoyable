@@ -18,11 +18,11 @@
 
 +(TargetConfig*) unstringifyImpl: (NSArray*) comps withConfigList: (NSArray*) configs {
 	NSParameterAssert([comps count] == 2);
-	NSString* name = [comps objectAtIndex: 1];
+	NSString* name = comps[1];
 	TargetConfig* target = [[TargetConfig alloc] init];
 	for(int i=0; i<[configs count]; i++)
-		if([[[configs objectAtIndex:i] name] isEqualToString:name]) {
-			[target setConfig: [configs objectAtIndex:i]];
+		if([[configs[i] name] isEqualToString:name]) {
+			[target setConfig: configs[i]];
 			return target;
 		}
 	NSLog(@"Warning: couldn't find matching config to restore from: %@",name);

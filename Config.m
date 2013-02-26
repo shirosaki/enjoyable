@@ -20,7 +20,7 @@
 	[entries setValue:target forKey: [jsa stringify]];
 }
 -(Target*) getTargetForAction: (id) jsa {
-	return [entries objectForKey: [jsa stringify]];
+	return entries[[jsa stringify]];
 }
 
 @end

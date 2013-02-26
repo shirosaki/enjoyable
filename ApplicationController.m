@@ -42,9 +42,9 @@ pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void
 	ApplicationController* self = (ApplicationController*)userData;
 	NSDictionary* currentApp = [[NSWorkspace sharedWorkspace] activeApplication];
 	ProcessSerialNumber psn;
-	psn.lowLongOfPSN = [[currentApp objectForKey:@"NSApplicationProcessSerialNumberLow"] longValue];
-	psn.highLongOfPSN = [[currentApp objectForKey:@"NSApplicationProcessSerialNumberHigh"] longValue];
-	[self->configsController applicationSwitchedTo: [currentApp objectForKey:@"NSApplicationName"] withPsn: psn];
+	psn.lowLongOfPSN = [currentApp[@"NSApplicationProcessSerialNumberLow"] longValue];
+	psn.highLongOfPSN = [currentApp[@"NSApplicationProcessSerialNumberHigh"] longValue];
+	[self->configsController applicationSwitchedTo: currentApp[@"NSApplicationName"] withPsn: psn];
 	return noErr;
 }
 
@@ -76,10 +76,10 @@ pascal OSStatus appSwitch(EventHandlerCallRef handlerChain, EventRef event, void
 	Config* current = [configsController currentConfig];
 	NSArray* configs = [configsController configs];
 	for(int i=0; i<[configs count]; i++)
-		[[dockMenuBase itemAtIndex: (2+i)] setState: (([configs objectAtIndex:i] == current) ? YES : NO)];
+		[[dockMenuBase itemAtIndex: (2+i)] setState: ((configs[i] == current) ? YES : NO)];
 }
 
 -(void) chooseConfig: (id) sender {
-	[configsController activateConfig: [[configsController configs] objectAtIndex: ([dockMenuBase indexOfItem: sender]-2)] forApplication: NULL];
+	[configsController activateConfig: [configsController configs][([dockMenuBase indexOfItem: sender]-2)] forApplication: NULL];
 }
 @end

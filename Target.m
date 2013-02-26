@@ -10,7 +10,7 @@
 +(Target*) unstringify: (NSString*) str withConfigList: (NSArray*) configs {
 	NSArray* components = [str componentsSeparatedByString:@"~"];
 	NSParameterAssert([components count]);
-	NSString* typeTag = [components objectAtIndex:0];
+	NSString* typeTag = components[0];
 	if([typeTag isEqualToString:@"key"])
 		return [TargetKeyboard unstringifyImpl:components];
 	if([typeTag isEqualToString:@"cfg"])

@@ -23,7 +23,7 @@
 
 -(void) finalize {
 	for(int i=0; i<[joysticks count]; i++) {
-		[[joysticks objectAtIndex:i] invalidate];
+		[joysticks[i] invalidate];
 	}
 	IOHIDManagerClose(hidManager, kIOHIDOptionsTypeNone);
 	CFRelease(hidManager);
@@ -33,8 +33,8 @@
 static NSMutableDictionary* create_criterion( UInt32 inUsagePage, UInt32 inUsage )
 {
 	NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-	[dict setObject: [NSNumber numberWithInt: inUsagePage] forKey: (NSString*)CFSTR(kIOHIDDeviceUsagePageKey)];
-	[dict setObject: [NSNumber numberWithInt: inUsage] forKey: (NSString*)CFSTR(kIOHIDDeviceUsageKey)];
+	dict[(NSString*)CFSTR(kIOHIDDeviceUsagePageKey)] = [NSNumber numberWithInt: inUsagePage];
+	dict[(NSString*)CFSTR(kIOHIDDeviceUsageKey)] = [NSNumber numberWithInt: inUsage];
 	return dict;
 } 
 
@@ -74,7 +74,7 @@ void input_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDVal
 		[mainAction notifyEvent: value];
 		NSArray* subactions = [mainAction subActions];
 		if(!subactions)
-			subactions = [NSArray arrayWithObject:mainAction];
+			subactions = @[mainAction];
 		for(id subaction in subactions) {
 			Target* target = [[self->configsController currentConfig] getTargetForAction:subaction];
 			if(!target)
@@ -121,7 +121,7 @@ int findAvailableIndex(id list, Joystick* js) {
 	for(int index=0;;index++) {
 		available = YES;
 		for(int i=0; i<[list count]; i++) {
-			js2 = [list objectAtIndex: i];
+			js2 = list[i];
 			if([js2 vendorId] == [js vendorId] && [js2 productId] == [js productId] && [js index] == index) {
 				available = NO;
 				break;
@@ -169,12 +169,9 @@ void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDe
 
 -(void) setup {
     hidManager = IOHIDManagerCreate( kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-	NSArray *criteria = [NSArray arrayWithObjects: 
-		 create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_Joystick),
+	NSArray *criteria = @[create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_Joystick),
 		 create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_GamePad),
-         create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_MultiAxisController),
-         //create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard),
-	nil];
+         create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_MultiAxisController)];
 	
 	IOHIDManagerSetDeviceMatchingMultiple(hidManager, (CFArrayRef)criteria);
     
@@ -234,13 +231,13 @@ void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDe
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item {
 	if(item == nil) 
-		return [joysticks objectAtIndex: index];
+		return joysticks[index];
 
 	if([item isKindOfClass: [Joystick class]])
-		return [[item children] objectAtIndex: index];
+		return [item children][index];
 	
 	if([item isKindOfClass: [JSAction class]]) 
-		return [[item subActions] objectAtIndex:index];
+		return [item subActions][index];
 
 	return NULL;
 }

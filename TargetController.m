@@ -47,7 +47,7 @@
 		case 2:
 		{
 			TargetConfig* c = [[TargetConfig alloc] init];
-			[c setConfig: [[configsController configs] objectAtIndex: [configPopup indexOfSelectedItem]]];
+			[c setConfig: [configsController configs][[configPopup indexOfSelectedItem]]];
 			return c;
 		}
         case 3: {
@@ -185,7 +185,7 @@
 	NSArray* configs = [configsController configs];
 	[configPopup removeAllItems];
 	for(int i=0; i<[configs count]; i++) {
-		[configPopup addItemWithTitle: [[configs objectAtIndex:i]name]];
+		[configPopup addItemWithTitle: [configs[i]name]];
 	}
 	if(preserve)
 		[configPopup selectItemAtIndex:initialIndex];

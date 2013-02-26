@@ -16,8 +16,8 @@
 +(TargetKeyboard*) unstringifyImpl: (NSArray*) comps {
 	NSParameterAssert([comps count] == 3);
 	TargetKeyboard* target = [[TargetKeyboard alloc] init];
-	[target setVk: [[comps objectAtIndex:1] integerValue]];
-	[target setDescr: [comps objectAtIndex:2]];
+	[target setVk: [comps[1] integerValue]];
+	[target setDescr: comps[2]];
 	return target;
 }
 

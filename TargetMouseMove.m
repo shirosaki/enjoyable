@@ -23,7 +23,7 @@
 +(TargetMouseMove*) unstringifyImpl: (NSArray*) comps {
 	NSParameterAssert([comps count] == 2);
 	TargetMouseMove* target = [[TargetMouseMove alloc] init];
-	[target setDir: [[comps objectAtIndex:1] integerValue]];
+	[target setDir: [comps[1] integerValue]];
 	return target;
 }
 

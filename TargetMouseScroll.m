@@ -19,7 +19,7 @@
 +(TargetMouseScroll*) unstringifyImpl: (NSArray*) comps {
 	NSParameterAssert([comps count] == 2);
 	TargetMouseScroll* target = [[TargetMouseScroll alloc] init];
-	[target setHowMuch: [[comps objectAtIndex:1] integerValue]];
+	[target setHowMuch: [comps[1] integerValue]];
 	return target;
 }
 

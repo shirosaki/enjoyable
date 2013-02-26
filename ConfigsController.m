@@ -60,16 +60,16 @@
 -(IBAction) removePressed: (id)sender {
 	// save changes first
 	[tableView reloadData];
-	Config* current_config = [configs objectAtIndex: [tableView selectedRow]];
+	Config* current_config = configs[[tableView selectedRow]];
 	if([current_config protect])
 		return;
 	[configs removeObjectAtIndex: [tableView selectedRow]];
 	
 	// remove all "switch to configuration" actions
 	for(int i=0; i<[configs count]; i++) {
-		NSMutableDictionary* entries = [(Config*)[configs objectAtIndex:i] entries];
+		NSMutableDictionary* entries = [(Config*)configs[i] entries];
 		for(id key in entries) {
-			Target* target = (Target*) [entries objectForKey: key];
+			Target* target = (Target*) entries[key];
 			if([target isKindOfClass: [TargetConfig class]] && [(TargetConfig*)target config] == current_config)
 				[entries removeObjectForKey: key];
 		}
@@ -81,19 +81,19 @@
 
 -(void)tableViewSelectionDidChange:(NSNotification*) notify {
     if (tableView.selectedRow < configs.count)
-        [self activateConfig: (Config*)[configs objectAtIndex:[tableView selectedRow]] forApplication: NULL];
+        [self activateConfig: (Config*)configs[[tableView selectedRow]] forApplication: NULL];
 }
 	
 -(id) tableView: (NSTableView*)view objectValueForTableColumn: (NSTableColumn*) column row: (int) index {
     NSParameterAssert(index >= 0 && index < [configs count]);
-	return [[configs objectAtIndex: index] name];
+	return [configs[index] name];
 }
 
 -(void) tableView: (NSTableView*) view setObjectValue:obj forTableColumn:(NSTableColumn*) col row: (int)index {
     NSParameterAssert(index >= 0 && index < [configs count]);
 	/* ugly hack so stringification doesn't fail */
 	NSString* newName = [(NSString*)obj stringByReplacingOccurrencesOfString: @"~" withString: @""];
-	[(Config*)[configs objectAtIndex: index] setName: newName];
+	[(Config*)configs[index] setName: newName];
 	[targetController refreshConfigsPreservingSelection:YES];
 	[tableView reloadData];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
@@ -104,7 +104,7 @@
 }
 
 -(BOOL)tableView: (NSTableView*)view shouldEditTableColumn: (NSTableColumn*) column row: (int) index {
-	return ![[configs objectAtIndex: index] protect];
+	return ![configs[index] protect];
 }	
 
 -(Config*) currentConfig {
@@ -130,37 +130,35 @@
 	NSMutableArray* ary = [[NSMutableArray alloc] init];
 	for(Config* config in configs) {
 		NSMutableDictionary* cfgInfo = [[NSMutableDictionary alloc] init];
-		[cfgInfo setObject:[config name] forKey:@"name"];
+		cfgInfo[@"name"] = [config name];
 		NSMutableDictionary* cfgEntries = [[NSMutableDictionary alloc] init];
 		for(id key in [config entries]) {
-			[cfgEntries setObject:[[[config entries]objectForKey:key]stringify] forKey: key];
+			cfgEntries[key] = [[config entries][key]stringify];
 		}
-		[cfgInfo setObject: cfgEntries forKey: @"entries"];
+		cfgInfo[@"entries"] = cfgEntries;
 		[ary addObject: cfgInfo];
 	}
-	[envelope setObject: ary forKey: @"configurationList"];
-	[envelope setObject: [NSNumber numberWithInt: [configs indexOfObject: [self currentNeutralConfig] ] ] forKey: @"selectedIndex"];
+	envelope[@"configurationList"] = ary;
+	envelope[@"selectedIndex"] = [NSNumber numberWithInt: [configs indexOfObject: [self currentNeutralConfig] ] ];
 	return envelope;
 }
 -(void) loadAllFrom: (NSDictionary*) envelope{
 	if(envelope == NULL)
 		return;
-	NSArray* ary = [envelope objectForKey: @"configurationList"];
+	NSArray* ary = envelope[@"configurationList"];
 	
 	NSMutableArray* newConfigs = [[NSMutableArray alloc] init];
 	// have to do two passes in case config1 refers to config2 via a TargetConfig
 	for(int i=0; i<[ary count]; i++) {
 		Config* cfg = [[Config alloc] init];
-		[cfg setName: [[ary objectAtIndex:i] objectForKey:@"name"]];		
+		[cfg setName: ary[i][@"name"]];		
 		[newConfigs addObject: cfg];
 	}
-	[[configs objectAtIndex:0] setProtect: YES];
+	[configs[0] setProtect: YES];
 	for(int i=0; i<[ary count]; i++) {
-		NSDictionary* dict = [[ary objectAtIndex:i] objectForKey:@"entries"];
+		NSDictionary* dict = ary[i][@"entries"];
 		for(id key in dict) {
-			[[[newConfigs objectAtIndex:i] entries]
-			 setObject: [Target unstringify: [dict objectForKey: key] withConfigList: newConfigs]
-			 forKey: key];
+			[newConfigs[i] entries][key] = [Target unstringify: dict[key] withConfigList: newConfigs];
 		}
 	}
 	
@@ -169,14 +167,14 @@
 	currentConfig = NULL;
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	
-	int index = [[envelope objectForKey: @"selectedIndex"] intValue];
+	int index = [envelope[@"selectedIndex"] intValue];
     if (index < configs.count)
-        [self activateConfig: [configs objectAtIndex:index] forApplication: NULL];
+        [self activateConfig: configs[index] forApplication: NULL];
 }
 
 -(void) applicationSwitchedTo: (NSString*) name withPsn: (ProcessSerialNumber) psn {
 	for(int i=0; i<[configs count]; i++) {
-		Config* cfg = [configs objectAtIndex:i];
+		Config* cfg = configs[i];
 		if([[cfg name] isEqualToString: name]) {
 			[self activateConfig: cfg forApplication: &psn];
 			return;
