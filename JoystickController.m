@@ -148,10 +148,10 @@ void add_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDevic
 }
 	
 -(Joystick*) findJoystickByRef: (IOHIDDeviceRef) device {
-	for(int i=0; i<[joysticks count]; i++)
-		if([[joysticks objectAtIndex:i] device] == device)
-			return [joysticks objectAtIndex:i];
-	return NULL;
+    for (Joystick *js in joysticks)
+        if (js.device == device)
+            return js;
+	return nil;
 }	
 
 void remove_callback(void* inContext, IOReturn inResult, void* inSender, IOHIDDeviceRef device) {
