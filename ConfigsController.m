@@ -23,10 +23,6 @@
 -(void) restoreNeutralConfig {
 	if(!neutralConfig)
 		return;
-	if([configs indexOfObject:neutralConfig] < 0) {// deleted, keep what we have
-		neutralConfig = NULL;
-		return;
-	}
 	[self activateConfig: neutralConfig forApplication: NULL];
 }
 
@@ -84,7 +80,8 @@
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification*) notify {
-	[self activateConfig: (Config*)[configs objectAtIndex:[tableView selectedRow]] forApplication: NULL];
+    if (tableView.selectedRow < configs.count)
+        [self activateConfig: (Config*)[configs objectAtIndex:[tableView selectedRow]] forApplication: NULL];
 }
 	
 -(id) tableView: (NSTableView*)view objectValueForTableColumn: (NSTableColumn*) column row: (int) index {
@@ -161,7 +158,7 @@
 	for(int i=0; i<[ary count]; i++) {
 		NSDictionary* dict = [[ary objectAtIndex:i] objectForKey:@"entries"];
 		for(id key in dict) {
-			[[[newConfigs objectAtIndex:i] entries] 
+			[[[newConfigs objectAtIndex:i] entries]
 			 setObject: [Target unstringify: [dict objectForKey: key] withConfigList: newConfigs]
 			 forKey: key];
 		}
@@ -173,7 +170,8 @@
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	
 	int index = [[envelope objectForKey: @"selectedIndex"] intValue];
-	[self activateConfig: [configs objectAtIndex:index] forApplication: NULL];
+    if (index < configs.count)
+        [self activateConfig: [configs objectAtIndex:index] forApplication: NULL];
 }
 
 -(void) applicationSwitchedTo: (NSString*) name withPsn: (ProcessSerialNumber) psn {
