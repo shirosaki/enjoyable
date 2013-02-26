@@ -5,102 +5,100 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
-@implementation Joystick {
-	NSMutableArray *children;
+static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
+    CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
+    NSMutableArray *children = [NSMutableArray arrayWithCapacity:CFArrayGetCount(elements)];
+    
+    int buttons = 0;
+    int axes = 0;
+    
+    for (int i = 0; i < CFArrayGetCount(elements); i++) {
+        IOHIDElementRef element = (IOHIDElementRef)CFArrayGetValueAtIndex(elements, i);
+        int type = IOHIDElementGetType(element);
+        int usage = IOHIDElementGetUsage(element);
+        int usagePage = IOHIDElementGetUsagePage(element);
+        int max = IOHIDElementGetPhysicalMax(element);
+        int min = IOHIDElementGetPhysicalMin(element);
+        CFStringRef elName = IOHIDElementGetName(element);
+        
+        JSAction *action = NULL;
+        
+        if(!(type == kIOHIDElementTypeInput_Misc
+             || type == kIOHIDElementTypeInput_Axis
+             || type == kIOHIDElementTypeInput_Button))
+            continue;
+        
+        if (max - min == 1 || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
+            action = [[JSActionButton alloc] initWithIndex:buttons++ andName:(__bridge NSString *)elName];
+            [(JSActionButton*)action setMax:max];
+        } else if (usage == kHIDUsage_GD_Hatswitch) {
+            action = [[JSActionHat alloc] init];
+        } else {
+            if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
+                action = [[JSActionAnalog alloc] initWithIndex: axes++];
+                [(JSActionAnalog*)action setOffset:(double)-1.0];
+                [(JSActionAnalog*)action setScale:(double)2.0/(max - min)];
+            } else
+                continue;
+        }
+        
+        [action setBase:base];
+        [action setUsage:usage];
+        [action setCookie:IOHIDElementGetCookie(element)];
+        [children addObject:action];
+    }
+    return children;
 }
 
-@synthesize	vendorId, productId, productName, index, device, children;
+@implementation Joystick
 
-- (id)initWithDevice: (IOHIDDeviceRef) newDevice {
-	if ((self = [super init])) {
-		children = [[NSMutableArray alloc] init];
-		
-		self.device = newDevice;
-		self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-		self.vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
-		self.productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey)) intValue];
-	}
-	return self;
+@synthesize vendorId;
+@synthesize productId;
+@synthesize productName;
+@synthesize index;
+@synthesize device;
+@synthesize children;
+
+- (id)initWithDevice:(IOHIDDeviceRef)dev {
+    if ((self = [super init])) {
+        self.device = dev;
+        self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
+        self.vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
+        self.productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
+        self.children = ActionsForElement(dev, self);
+    }
+    return self;
 }
 
 - (NSString *)name {
-	return [[NSString alloc] initWithFormat: @"%@ #%d", productName, index + 1];
+    return [NSString stringWithFormat:@"%@ #%d", productName, index + 1];
 }
 
--(id) base {
-	return NULL;
+- (id)base {
+    // FIXME(jfw): This is a hack because actions get joysticks as their base.
+    return nil;
 }
 
--(void) populateActions {
-	NSArray* elements = (NSArray*)CFBridgingRelease(IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone));
-	
-	int buttons = 0;
-	int axes = 0;
-	
-	for(int i=0; i<[elements count]; i++) {
-		IOHIDElementRef element = (__bridge IOHIDElementRef)elements[i];
-		int type = IOHIDElementGetType(element);
-		int usage = IOHIDElementGetUsage(element);
-		int usagePage = IOHIDElementGetUsagePage(element);
-		int max = IOHIDElementGetPhysicalMax(element);
-		int min = IOHIDElementGetPhysicalMin(element);
-        CFStringRef elName = IOHIDElementGetName(element);
-		
-//		if(usagePage != 1 || usagePage == 9) {
-//			NSLog(@"Skipping usage page %x usage %x", usagePage, usage);
-//			continue;
-//		}
-		
-		JSAction* action = NULL;
-		
-		if(!(type == kIOHIDElementTypeInput_Misc || type == kIOHIDElementTypeInput_Axis ||
-			 type == kIOHIDElementTypeInput_Button)) {
-
-			continue;
-		}
-		
-		if((max - min == 1) || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
-			action = [[JSActionButton alloc] initWithIndex: buttons++ andName: (__bridge NSString *)elName];
-			[(JSActionButton*)action setMax: max];
-		} else if(usage == 0x39)
-			action = [[JSActionHat alloc] init];
-		else {
-			if(usage >= 0x30 && usage < 0x36) {
-				action = [[JSActionAnalog alloc] initWithIndex: axes++];
-				[(JSActionAnalog*)action setOffset: (double)-1.0];
-				[(JSActionAnalog*)action setScale: (double)2.0/(max - min)];
-			} else 
-				continue;
-		}
-
-		[action setBase: self];
-		[action setUsage: usage];
-		[action setCookie: IOHIDElementGetCookie(element)];
-		[children addObject:action];
-	}
+- (NSString *)stringify {
+    return [[NSString alloc] initWithFormat: @"%d~%d~%d", vendorId, productId, index];
 }
 
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"%d~%d~%d", vendorId, productId, index];
+- (JSAction *)findActionByCookie:(void *)cookie {
+    for (JSAction *child in children)
+        if (child.cookie == cookie)
+            return child;
+    return nil;
 }
 
-- (JSAction*) findActionByCookie: (void*) cookie {
-	for(int i=0; i<[children count]; i++)
-		if([children[i]cookie] == cookie)
-			return (JSAction*)children[i];
-	return NULL;
+- (id)handlerForEvent:(IOHIDValueRef) value {
+    JSAction *mainAction = [self actionForEvent:value];
+    return [mainAction findSubActionForValue:value];
 }
 
--(id) handlerForEvent: (IOHIDValueRef) value {
-	JSAction* mainAction = [self actionForEvent: value];
-	if(!mainAction)
-		return NULL;
-	return [mainAction findSubActionForValue: value];
-}
--(JSAction*) actionForEvent: (IOHIDValueRef) value {
-	IOHIDElementRef elt = IOHIDValueGetElement(value);
-	void* cookie = IOHIDElementGetCookie(elt);
-	return [self findActionByCookie: cookie];
+- (JSAction *)actionForEvent:(IOHIDValueRef)value {
+    IOHIDElementRef elt = IOHIDValueGetElement(value);
+    void *cookie = IOHIDElementGetCookie(elt);
+    return [self findActionByCookie:cookie];
 }
 
 @end

@@ -127,7 +127,6 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
     IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)controller);
 	Joystick *js = [[Joystick alloc] initWithDevice:device];
     js.index = findAvailableIndex(controller.joysticks, js);
-	[js populateActions];
 	[[controller joysticks] addObject:js];
 	[controller->outlineView reloadData];
 }
