@@ -48,7 +48,7 @@
 	currentConfig = config;
 	[removeButton setEnabled: ![config protect]];
 	[targetController load];
-	[[[NSApplication sharedApplication] delegate] configChanged];
+	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
 	[tableView selectRow: [configs indexOfObject: config] byExtendingSelection: NO];
 }
 
@@ -56,7 +56,7 @@
 	Config* newConfig = [[Config alloc] init];
 	[newConfig setName: @"untitled"];
 	[configs addObject: newConfig];
-	[[[NSApplication sharedApplication] delegate] configsChanged];
+	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	[tableView reloadData];
 	[tableView selectRow: ([configs count]-1) byExtendingSelection: NO];
 	[tableView editColumn: 0 row:([configs count]-1) withEvent:nil select:YES];
@@ -78,7 +78,7 @@
 				[entries removeObjectForKey: key];
 		}
 	}
-	[[[NSApplication sharedApplication] delegate] configsChanged];
+	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	
 	[tableView reloadData];
 }
@@ -99,7 +99,7 @@
 	[(Config*)[configs objectAtIndex: index] setName: newName];
 	[targetController refreshConfigsPreservingSelection:YES];
 	[tableView reloadData];
-	[[[NSApplication sharedApplication] delegate] configsChanged];
+	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 }
 
 -(int)numberOfRowsInTableView: (NSTableView*)table {
@@ -170,7 +170,7 @@
 	configs = newConfigs;
 	[tableView reloadData];
 	currentConfig = NULL;
-	[[[NSApplication sharedApplication] delegate] configsChanged];
+	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	
 	int index = [[envelope objectForKey: @"selectedIndex"] intValue];
 	[self activateConfig: [configs objectAtIndex:index] forApplication: NULL];

@@ -30,7 +30,7 @@
 }
 
 -(void) trigger {
-	[[[[NSApplication sharedApplication] delegate] configsController] activateConfig:config forApplication: NULL];
+	[[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsController] activateConfig:config forApplication: NULL];
 }
 
 @end
