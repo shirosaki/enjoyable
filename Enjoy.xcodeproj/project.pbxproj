@@ -26,7 +26,6 @@
 		D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */; };
 		D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE30FAFD7B000928B3A /* TargetController.m */; };
 		D5617FE70FAFDB5800928B3A /* KeyInputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE60FAFDB5800928B3A /* KeyInputTextView.m */; };
-		D561800A0FAFE8E400928B3A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D56180090FAFE8E400928B3A /* Carbon.framework */; };
 		D594BE860FAE6219007A85F2 /* Joystick.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BE850FAE6219007A85F2 /* Joystick.m */; };
 		D594BE8A0FAE64AD007A85F2 /* JSAction.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BE890FAE64AD007A85F2 /* JSAction.m */; };
 		D594BEF90FAE6FF2007A85F2 /* JoystickController.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BEF80FAE6FF2007A85F2 /* JoystickController.m */; };
@@ -98,7 +97,6 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */,
-				D561800A0FAFE8E400928B3A /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
