@@ -45,7 +45,7 @@
 	[removeButton setEnabled: ![config protect]];
 	[targetController load];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
-	[tableView selectRow: [configs indexOfObject: config] byExtendingSelection: NO];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[configs indexOfObject:config]] byExtendingSelection:NO];
 }
 
 -(IBAction) addPressed: (id)sender {
@@ -54,7 +54,7 @@
 	[configs addObject: newConfig];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	[tableView reloadData];
-	[tableView selectRow: ([configs count]-1) byExtendingSelection: NO];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:configs.count - 1] byExtendingSelection:NO];
 	[tableView editColumn: 0 row:([configs count]-1) withEvent:nil select:YES];
 }
 -(IBAction) removePressed: (id)sender {
