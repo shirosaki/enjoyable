@@ -6,20 +6,18 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+
 @class Target;
+@class JSAction;
 
-@interface Config : NSObject {
-	NSString *name;
-	BOOL protect;
-	NSMutableDictionary *entries;
-}
+@interface Config : NSObject
 
-@property(readwrite) BOOL protect;
-@property(readwrite, copy) NSString* name;
-@property(readonly) NSMutableDictionary* entries;
+@property (assign) BOOL protect;
+@property (copy) NSString *name;
+@property (readonly) NSMutableDictionary *entries;
 
--(void) setTarget:(Target*)target forAction:(id)jsa;
--(Target*) getTargetForAction: (id) jsa;
+- (void)setTarget:(Target *)target forAction:(JSAction *)jsa;
+- (Target *)getTargetForAction:(JSAction *)sa;
 
 @end

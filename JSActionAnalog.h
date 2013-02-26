@@ -7,16 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class JSAction;
 
-@interface JSActionAnalog : JSAction {
-	double offset, scale;
-}
+#import "JSAction.h"
 
-@property(readwrite) double offset;
-@property(readwrite) double scale;
+@interface JSActionAnalog : JSAction
 
-- (id) initWithIndex: (int)newIndex;
--(double) getRealValue: (int) value;
+@property (assign) float offset;
+@property (assign) float scale;
+
+- (id)initWithIndex:(int)newIndex offset:(float)offset scale:(float)scale;
+- (float)getRealValue:(int)value;
 
 @end

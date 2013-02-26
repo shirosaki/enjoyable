@@ -5,21 +5,27 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
-@implementation SubAction
+// TODO(jfw): This class is useless and can just be replaced w/ JSAction probably.
 
-@synthesize base, name, index, active;
+#import "SubAction.h"
 
--(id) initWithIndex:(int)newIndex name: (NSString*)newName base: (JSAction*)newBase {
-	if(self = [super init]) {
-		[self setName: newName];
-		[self setBase: newBase];
-		[self setIndex: newIndex];
+@implementation SubAction {
+	BOOL active;
+}
+
+@synthesize active;
+
+- (id)initWithIndex:(int)newIndex name:(NSString *)newName base:(JSAction *)newBase {
+	if ((self = [super init])) {
+        self.name = newName;
+        self.base = newBase;
+        self.index = newIndex;
 	}
 	return self;
 }
 
 -(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"%@~%d", [base stringify], index];
+	return [[NSString alloc] initWithFormat: @"%@~%d", [base stringify], self.index];
 }
 
 @end

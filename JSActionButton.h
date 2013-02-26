@@ -7,14 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class JSAction;
 
-@interface JSActionButton : JSAction {
-	int max;
-	BOOL active;
-}
+#import "JSAction.h"
 
--(id)initWithIndex: (int)newIndex andName: (NSString*)newName;
-@property(readwrite) int max;
+@interface JSActionButton : JSAction
+
+- (id)initWithName:(NSString *)name idx:(int)idx max:(int)max;
+
+@property (assign) int max;
 
 @end

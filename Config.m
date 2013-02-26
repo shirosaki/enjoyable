@@ -5,22 +5,25 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
-@implementation Config
+#import "Config.h"
 
--(id) init {
-	if(self=[super init]) {
-		entries = [[NSMutableDictionary alloc] init];
-	}
-	return self;
-}
+@implementation Config
 
 @synthesize protect, name, entries;
 
--(void) setTarget:(Target*)target forAction:(id)jsa {
-	[entries setValue:target forKey: [jsa stringify]];
+- (id)init {
+    if ((self = [super init])) {
+        entries = [[NSMutableDictionary alloc] init];
+    }
+    return self;
 }
--(Target*) getTargetForAction: (id) jsa {
-	return entries[[jsa stringify]];
+
+- (void)setTarget:(Target *)target forAction:(JSAction *)jsa {
+    entries[[jsa stringify]] = target;
+}
+
+- (Target *)getTargetForAction:(JSAction *)jsa {
+    return entries[[jsa stringify]];
 }
 
 @end

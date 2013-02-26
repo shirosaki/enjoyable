@@ -6,28 +6,23 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <IOKit/hid/IOHIDLib.h>
+#import <Foundation/Foundation.h>
+#import <IOKit/hid/IOHIDBase.h>
 
 @interface JSAction : NSObject {
-	int usage, index;
-	void* cookie;
-	NSArray *subActions;
 	id base;
 	NSString *name;
 }
 
-@property(readwrite) int usage;
-@property(readwrite) void* cookie;
-@property(readonly) int index;
-@property(copy) NSArray* subActions;
-@property(readwrite, strong) id base;
-@property(copy) NSString* name;
-@property(readonly) BOOL active;
+@property (assign) void* cookie;
+@property (assign) int index;
+@property (copy) NSArray *subActions;
+@property (strong) id base;
+@property (copy) NSString *name;
+@property (readonly) BOOL active;
 
--(void) notifyEvent: (IOHIDValueRef) value;
--(NSString*) stringify;
--(NSArray*) subActions;
--(id) findSubActionForValue: (IOHIDValueRef) value;
+- (void)notifyEvent:(IOHIDValueRef)value;
+- (NSString *)stringify;
+- (id)findSubActionForValue:(IOHIDValueRef)value;
 
 @end

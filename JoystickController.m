@@ -5,7 +5,7 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "CoreFoundation/CoreFoundation.h"
+#import "JoystickController.h"
 
 @implementation JoystickController
 
@@ -174,15 +174,12 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopDefaultMode);
 }
 
--(id) determineSelectedAction {
-	id item = [outlineView itemAtRow: [outlineView selectedRow]];
-	if(!item)
-		return NULL;
-	if([item isKindOfClass: [JSAction class]] && [item subActions] != NULL)
-		return NULL;
-	if([item isKindOfClass: [Joystick class]])
-		return NULL;
-	return item;
+- (JSAction *)selectedAction {
+    id item = [outlineView itemAtRow:outlineView.selectedRow];
+	if ([item isKindOfClass: [JSAction class]] && ![item subActions])
+		return item;
+    else
+        return nil;
 }
 
 /* outline view */
@@ -227,9 +224,8 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 
 - (void)outlineViewSelectionDidChange: (NSNotification*) notification {
 	[targetController reset];
-	selectedAction = [self determineSelectedAction];
 	[targetController load];
-	if(programmaticallySelecting)
+	if (programmaticallySelecting)
 		[targetController focusKey];
 	programmaticallySelecting = NO;
 }

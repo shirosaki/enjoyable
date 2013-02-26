@@ -5,53 +5,49 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
+// TODO: Dead zone should be configurable per-device.
+#define DEAD_ZONE 0.3
+
+#import "JSActionAnalog.h"
+
 @implementation JSActionAnalog
 
-- (id) initWithIndex: (int)newIndex {
-	if(self = [super init]) {
-	subActions = @[[[SubAction alloc] initWithIndex: 0 name: @"Low" base: self],
-		[[SubAction alloc] initWithIndex: 1 name: @"High" base: self],
-        [[SubAction alloc] initWithIndex: 2 name: @"Analog" base: self]];
-	index = newIndex;
-	name = [[NSString alloc] initWithFormat: @"Axis %d", (index+1)];
-   }
-	return self;
-}
-
--(id) findSubActionForValue: (IOHIDValueRef) value {
-    if ([subActions[2] active]) {
-        return subActions[2]; // TODO?
-    }
-    
-    //Target* target = [[base->configsController currentConfig] getTargetForAction: [subActions objectAtIndex: 0]];
-    
-	int raw = IOHIDValueGetIntegerValue(value);
-    double parsed = [self getRealValue: raw];
-	
-	if(parsed < -0.3) // fixed?!
-		return subActions[0];
-	else if(parsed > 0.3)
-		return subActions[1];
-	return NULL;
-}
-
--(void) notifyEvent: (IOHIDValueRef) value {
-    // Analog action is always active
-    [subActions[2] setActive: true];
-    
-	int raw = IOHIDValueGetIntegerValue(value);
-    double parsed = [self getRealValue: raw];
-	
-	[subActions[0] setActive: (parsed < -0.3)];
-	[subActions[1] setActive: (parsed > 0.3)];
-}
-
--(double) getRealValue: (int)value {
-	double parsed = offset + scale * value;
-    return parsed;
-}
-
 @synthesize offset, scale;
+
+- (id)initWithIndex:(int)newIndex offset:(float)offset_ scale:(float)scale_ {
+    if ((self = [super init])) {
+        self.subActions = @[[[SubAction alloc] initWithIndex:0 name:@"Low" base:self],
+                            [[SubAction alloc] initWithIndex:1 name:@"High" base:self]];
+        self.index = newIndex;
+        self.offset = offset_;
+        self.scale = scale_;
+        self.name = [[NSString alloc] initWithFormat: @"Axis %d", self.index + 1];
+    }
+    return self;
+}
+
+- (id)findSubActionForValue:(IOHIDValueRef)value {
+    int raw = IOHIDValueGetIntegerValue(value);
+    float parsed = [self getRealValue:raw];
+    
+    if (parsed < -DEAD_ZONE)
+        return self.subActions[0];
+    else if (parsed > DEAD_ZONE)
+        return self.subActions[1];
+    else
+        return nil;
+}
+
+- (void)notifyEvent:(IOHIDValueRef)value {
+    int raw = IOHIDValueGetIntegerValue(value);
+    float parsed = [self getRealValue:raw];
+    [self.subActions[0] setActive:parsed < -DEAD_ZONE];
+    [self.subActions[1] setActive:parsed > DEAD_ZONE];
+}
+
+- (float)getRealValue:(int)value {
+    return offset + scale * value;
+}
 
 
 @end

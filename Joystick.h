@@ -6,7 +6,8 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import <IOKit/hid/IOHIDBase.h>
 
 @class JSAction;
 

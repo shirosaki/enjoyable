@@ -8,9 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <IOKit/hid/IOHIDLib.h>
-@class Joystick;
-@class ConfigsController;
 
+@class Joystick;
+@class JSAction;
+@class ConfigsController;
 @class TargetController;
 
 @interface JoystickController : NSObject {
@@ -31,9 +32,9 @@
 -(void) setup;
 -(Joystick*) findJoystickByRef: (IOHIDDeviceRef) device;
 
-@property(strong, readonly) id selectedAction;
-@property(readonly) NSMutableArray *joysticks;
-@property(readonly) NSMutableArray *runningTargets;
-@property(readwrite) BOOL frontWindowOnly;
+@property (readonly) JSAction *selectedAction;
+@property (readonly) NSMutableArray *joysticks;
+@property (readonly) NSMutableArray *runningTargets;
+@property (readwrite) BOOL frontWindowOnly;
 
 @end

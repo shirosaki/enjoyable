@@ -7,20 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class JSAction;
 
-@interface SubAction : NSObject {
-	JSAction *base;
-	NSString *name;
-	int index;
-	BOOL active;
-}
+#import "JSAction.h"
 
--(id) initWithIndex:(int)newIndex name: (NSString*)newName  base: (JSAction*)newBase;
+@interface SubAction : JSAction
 
-@property(readwrite, strong) JSAction* base;
-@property(readwrite, copy) NSString* name;
-@property(readwrite) int index;
-@property(readwrite) BOOL active;
+- (id)initWithIndex:(int)newIndex name:(NSString *)newName  base:(JSAction *)newBase;
+
+@property (assign) BOOL active;
 
 @end

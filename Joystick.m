@@ -5,6 +5,8 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
+#import "Joystick.h"
+
 static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
     NSMutableArray *children = [NSMutableArray arrayWithCapacity:CFArrayGetCount(elements)];
@@ -21,30 +23,31 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
         int min = IOHIDElementGetPhysicalMin(element);
         CFStringRef elName = IOHIDElementGetName(element);
         
-        JSAction *action = NULL;
+        JSAction *action = nil;
         
-        if(!(type == kIOHIDElementTypeInput_Misc
-             || type == kIOHIDElementTypeInput_Axis
-             || type == kIOHIDElementTypeInput_Button))
-            continue;
+        if (!(type == kIOHIDElementTypeInput_Misc
+              || type == kIOHIDElementTypeInput_Axis
+              || type == kIOHIDElementTypeInput_Button))
+             continue;
         
         if (max - min == 1 || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
-            action = [[JSActionButton alloc] initWithIndex:buttons++ andName:(__bridge NSString *)elName];
-            [(JSActionButton*)action setMax:max];
+            action = [[JSActionButton alloc] initWithName:(__bridge NSString *)elName
+                                                      idx:buttons++
+                                                      max:max];
         } else if (usage == kHIDUsage_GD_Hatswitch) {
             action = [[JSActionHat alloc] init];
+        } else if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
+            // TODO(jfw): Scaling equation doesn't seem right if min != 0.
+            action = [[JSActionAnalog alloc] initWithIndex:axes++
+                                                    offset:-1.f
+                                                     scale:2.f / (max - min)];
         } else {
-            if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
-                action = [[JSActionAnalog alloc] initWithIndex: axes++];
-                [(JSActionAnalog*)action setOffset:(double)-1.0];
-                [(JSActionAnalog*)action setScale:(double)2.0/(max - min)];
-            } else
-                continue;
+            continue;
         }
         
-        [action setBase:base];
-        [action setUsage:usage];
-        [action setCookie:IOHIDElementGetCookie(element)];
+        // TODO(jfw): Should be moved into better constructors.
+        action.base = base;
+        action.cookie = IOHIDElementGetCookie(element);
         [children addObject:action];
     }
     return children;

@@ -5,27 +5,31 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
-@implementation JSActionButton
-
-@synthesize max, active;
-
--(id)initWithIndex: (int)newIndex andName: (NSString *)newName {
-	if(self= [ super init]) {
-		subActions = NULL;
-		index = newIndex;
-		name = [[NSString alloc] initWithFormat: @"Button %d %@", (index+1), newName];
-	}
-	return self;
+@implementation JSActionButton {
+    BOOL active;
 }
 
--(id) findSubActionForValue: (IOHIDValueRef) val {
-	if(IOHIDValueGetIntegerValue(val) == max)
-		return self;
-	return NULL;
+@synthesize max;
+@synthesize active;
+
+- (id)initWithName:(NSString *)name_ idx:(int)idx max:(int)max_ {
+    if ((self = [super init])) {
+        self.index = idx;
+        self.max = max_;
+        if (name_.length)
+            self.name = [NSString stringWithFormat:@"Button %d - %@", self.index + 1, name_];
+        else
+            self.name = [NSString stringWithFormat:@"Button %d", self.index + 1];
+    }
+    return self;
 }
 
--(void) notifyEvent: (IOHIDValueRef) value {
-	active = IOHIDValueGetIntegerValue(value) == max;
+- (id)findSubActionForValue:(IOHIDValueRef)val {
+    return (IOHIDValueGetIntegerValue(val) == max) ? self : nil;
+}
+
+- (void)notifyEvent:(IOHIDValueRef)value {
+    active = IOHIDValueGetIntegerValue(value) == max;
 }
 
 @end

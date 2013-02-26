@@ -7,10 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class JSAction;
 
-@interface JSActionHat : JSAction {
-	
-}
+#import "JSAction.h"
+
+@interface JSActionHat : JSAction
 
 @end
