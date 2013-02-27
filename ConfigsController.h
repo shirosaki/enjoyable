@@ -17,7 +17,6 @@
 	IBOutlet TargetController* targetController;
 	Config* currentConfig;
 	Config* neutralConfig; /* last config to be manually selected */
-	ProcessSerialNumber attachedApplication;
 }
 
 -(IBAction) addPressed: (id)sender;
@@ -30,7 +29,7 @@
 @property(strong, readonly) Config* currentConfig;
 @property(strong, readonly) Config* currentNeutralConfig;
 @property(readonly) NSArray* configs;
-@property(readonly) ProcessSerialNumber* targetApplication;
+
 -(void) save;
 -(void) load;
 

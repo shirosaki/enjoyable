@@ -26,6 +26,9 @@
 	[self activateConfig: neutralConfig forApplication: NULL];
 }
 
+// TODO: Not an appropriate way to track 'neutral configs', it should just
+// always be the first config and be unremovable.
+
 -(void) activateConfig: (Config*)config forApplication: (ProcessSerialNumber*) psn {
 	if(currentConfig == config)
 		return;
@@ -33,7 +36,6 @@
 	if(psn) {
 		if(!neutralConfig)
 			neutralConfig = currentConfig;
-		attachedApplication = *psn;
 	} else {
 		neutralConfig = NULL;
 	}
@@ -181,12 +183,6 @@
 		}
 	}
 	[self restoreNeutralConfig];
-}
-
--(ProcessSerialNumber*) targetApplication {
-	if(neutralConfig)
-		return &attachedApplication;
-	return NULL;
 }
 
 @end

@@ -7,28 +7,26 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 @class JoystickController;
 @class TargetController;
 @class ConfigsController;
 
 @interface ApplicationController : NSObject {
-	IBOutlet JoystickController *jsController;
-	IBOutlet TargetController *targetController;
-	IBOutlet ConfigsController *configsController;
-	
-	IBOutlet NSDrawer *drawer;
-	IBOutlet NSWindow *mainWindow;
-	IBOutlet NSToolbarItem* activeButton;
-	IBOutlet NSMenuItem* activeMenuItem;
-	IBOutlet NSMenu* dockMenuBase;
+    IBOutlet NSDrawer *drawer;
+    IBOutlet NSWindow *mainWindow;
+    IBOutlet NSToolbarItem *activeButton;
+    IBOutlet NSMenuItem *activeMenuItem;
+    IBOutlet NSMenu *dockMenuBase;
 }
 
-@property(readwrite) BOOL active;
-@property(strong, readonly) JoystickController * jsController;
-@property(strong, readonly) TargetController * targetController;
-@property(strong, readonly) ConfigsController * configsController;
--(IBAction) toggleActivity: (id)sender;
--(void) configsChanged;
--(void) configChanged;
+@property (strong) IBOutlet JoystickController *jsController;
+@property (strong) IBOutlet TargetController *targetController;
+@property (strong) IBOutlet ConfigsController *configsController;
+@property (assign) BOOL active;
+
+- (IBAction)toggleActivity:(id)sender;
+- (void)configsChanged;
+- (void)configChanged;
 
 @end
