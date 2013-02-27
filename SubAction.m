@@ -9,11 +9,7 @@
 
 #import "SubAction.h"
 
-@implementation SubAction {
-	BOOL active;
-}
-
-@synthesize active;
+@implementation SubAction
 
 - (id)initWithIndex:(int)newIndex name:(NSString *)newName base:(JSAction *)newBase {
 	if ((self = [super init])) {

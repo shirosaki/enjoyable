@@ -20,7 +20,11 @@
 	return target;
 }
 
--(void) trigger: (JoystickController *)jc {
+- (void)trigger {
+    // FIXME: It's hacky to get at the controller this way, but it's
+    // also hacky to pass it. Shouldn't need to do either.
+    ApplicationController *ac = [NSApplication sharedApplication].delegate;
+    JoystickController *jc = ac.jsController;
     [jc setFrontWindowOnly: ![jc frontWindowOnly]];
     printf("Front window only: %d\n", [jc frontWindowOnly]);
 }

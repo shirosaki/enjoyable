@@ -16,6 +16,5 @@
 @property (assign) float scale;
 
 - (id)initWithIndex:(int)newIndex offset:(float)offset scale:(float)scale;
-- (float)getRealValue:(int)value;
 
 @end

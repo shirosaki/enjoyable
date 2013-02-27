@@ -59,33 +59,17 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
     Joystick *js = [controller findJoystickByRef:device];
     if (((ApplicationController *)[NSApplication sharedApplication].delegate).active) {
         JSAction *mainAction = [js actionForEvent:value];
-        if (!mainAction)
-            return;
-        
         [mainAction notifyEvent:value];
         NSArray *children = mainAction.children ? mainAction.children : @[mainAction];
         for (JSAction *subaction in children) {
-            Target *target = [[controller->configsController currentConfig] getTargetForAction:subaction];
-            if (!target)
-                continue;
-            // TODO: Can we just trigger based on setRunning:?
-            if (target.running != subaction.active) {
-                if (subaction.active)
-                    [target trigger:controller];
-                else
-                    [target untrigger:controller];
-                target.running = subaction.active;
-            }
-            
-            // FIXME: Hack, should just expose analog info properly in continuous target.
-            if ([mainAction isKindOfClass:[JSActionAnalog class]]) {
-                double realValue = [(JSActionAnalog *)mainAction getRealValue:IOHIDValueGetIntegerValue(value)];
-                [target setInputValue:realValue];
-                if (target.isContinuous && target.running)
-                    [controller addRunningTarget:target];
-            }
+            Target *target = [controller.currentConfig getTargetForAction:subaction];
+            target.magnitude = mainAction.magnitude;
+            target.running = subaction.active;
+            if (target.running && target.isContinuous)
+                [controller addRunningTarget:target];
         }
-    } else if ([NSApplication sharedApplication].isActive && [NSApplication sharedApplication].mainWindow.isVisible) {
+    } else if ([NSApplication sharedApplication].isActive
+               && [NSApplication sharedApplication].mainWindow.isVisible) {
         // joysticks not active, use it to select stuff
         JSAction *handler = [js handlerForEvent:value];
         if (!handler)
@@ -168,6 +152,10 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     
     IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self);
     IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
+}
+
+- (Config *)currentConfig {
+    return configsController.currentConfig;
 }
 
 - (JSAction *)selectedAction {

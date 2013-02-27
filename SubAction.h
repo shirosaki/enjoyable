@@ -14,6 +14,4 @@
 
 - (id)initWithIndex:(int)newIndex name:(NSString *)newName  base:(JSAction *)newBase;
 
-@property (assign) BOOL active;
-
 @end

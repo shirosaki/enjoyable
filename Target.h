@@ -8,19 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface Target : NSObject {
-	BOOL running;
-    BOOL isContinuous;
-    double inputValue;
-}
+@interface Target : NSObject
 
-@property(readwrite) BOOL running;
-@property(readonly) BOOL isContinuous;
-@property(readwrite) double inputValue;
--(void) trigger: (JoystickController *)jc;
--(void) untrigger: (JoystickController *)jc;
+@property (assign) float magnitude;
+@property (assign) BOOL running;
+@property (readonly) BOOL isContinuous;
+
+- (void)trigger;
+- (void)untrigger;
 - (BOOL)update:(JoystickController *)jc;
--(NSString*) stringify;
-+(Target*) unstringify: (NSString*) str withConfigList: (NSArray*) configs;
+- (NSString*) stringify;
++ (Target *)unstringify:(NSString*)str withConfigList:(NSArray*)configs;
 
 @end

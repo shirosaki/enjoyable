@@ -5,16 +5,21 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
-@implementation Target
+@implementation Target {
+    BOOL running;
+}
 
+@synthesize magnitude;
+
+// TODO: Should just be NSCoding? Or like a dictionary?
 +(Target*) unstringify: (NSString*) str withConfigList: (NSArray*) configs {
-	NSArray* components = [str componentsSeparatedByString:@"~"];
-	NSParameterAssert([components count]);
-	NSString* typeTag = components[0];
-	if([typeTag isEqualToString:@"key"])
-		return [TargetKeyboard unstringifyImpl:components];
-	if([typeTag isEqualToString:@"cfg"])
-		return [TargetConfig unstringifyImpl:components withConfigList:configs];
+    NSArray* components = [str componentsSeparatedByString:@"~"];
+    NSParameterAssert([components count]);
+    NSString* typeTag = components[0];
+    if([typeTag isEqualToString:@"key"])
+        return [TargetKeyboard unstringifyImpl:components];
+    if([typeTag isEqualToString:@"cfg"])
+        return [TargetConfig unstringifyImpl:components withConfigList:configs];
     if([typeTag isEqualToString:@"mmove"])
         return [TargetMouseMove unstringifyImpl:components];
     if([typeTag isEqualToString:@"mbtn"])
@@ -23,32 +28,43 @@
         return [TargetMouseScroll unstringifyImpl:components];
     if([typeTag isEqualToString:@"mtoggle"])
         return [TargetToggleMouseScope unstringifyImpl:components];
-		
-	NSParameterAssert(NO);
-	return NULL;
+    
+    NSParameterAssert(NO);
+    return NULL;
 }
 
--(NSString*) stringify {
-	[self doesNotRecognizeSelector:_cmd];
-	return NULL;
+- (NSString *)stringify {
+    [self doesNotRecognizeSelector:_cmd];
+    return NULL;
 }
 
--(void) trigger: (JoystickController *)jc {
-	[self doesNotRecognizeSelector:_cmd];
+- (void)trigger {
 }
 
--(void) untrigger: (JoystickController *)jc {
-	// no-op by default
+- (void)untrigger {
 }
 
 - (BOOL)update:(JoystickController *)jc {
     return NO;
 }
 
--(BOOL) isContinuous {
-    return false;
+- (BOOL)isContinuous {
+    return NO;
 }
 
-@synthesize inputValue, running;
+- (BOOL)running {
+    return running;
+}
+
+- (void)setRunning:(BOOL)newRunning {
+    if (running != newRunning) {
+        running = newRunning;
+        if (running)
+            [self trigger];
+        else
+            [self untrigger];
+    }
+}
+
 
 @end

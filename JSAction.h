@@ -19,7 +19,8 @@
 @property (copy) NSArray *children;
 @property (strong) id base;
 @property (copy) NSString *name;
-@property (readonly) BOOL active;
+@property (assign) BOOL active;
+@property (readonly) float magnitude;
 
 - (void)notifyEvent:(IOHIDValueRef)value;
 - (NSString *)stringify;

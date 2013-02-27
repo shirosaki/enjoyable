@@ -23,7 +23,7 @@
 	return target;
 }
 
--(void) trigger: (JoystickController *)jc {
+-(void) trigger {
     CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
                                                       kCGScrollEventUnitLine,
                                                       1,

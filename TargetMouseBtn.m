@@ -23,7 +23,7 @@
 	return target;
 }
 
--(void) trigger: (JoystickController *)jc {
+-(void) trigger {
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     NSPoint mouseLoc = [NSEvent mouseLocation];
@@ -36,7 +36,7 @@
     CFRelease(click);
 }
 
--(void) untrigger: (JoystickController *)jc {
+-(void) untrigger {
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     NSPoint mouseLoc = [NSEvent mouseLocation];

@@ -14,6 +14,7 @@
 @synthesize children;
 @synthesize base;
 @synthesize name;
+@synthesize active;
 
 - (id)findSubActionForValue:(IOHIDValueRef)value {
     return NULL;
@@ -27,9 +28,8 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
-- (BOOL)active {
-    [self doesNotRecognizeSelector:_cmd];
-    return NO;
+- (float)magnitude {
+    return 0.f;
 }
 
 @end

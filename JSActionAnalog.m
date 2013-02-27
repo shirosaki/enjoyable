@@ -10,7 +10,9 @@
 
 #import "JSActionAnalog.h"
 
-@implementation JSActionAnalog
+@implementation JSActionAnalog {
+    float magnitude;
+}
 
 @synthesize offset, scale;
 
@@ -28,11 +30,10 @@
 
 - (id)findSubActionForValue:(IOHIDValueRef)value {
     int raw = IOHIDValueGetIntegerValue(value);
-    float parsed = [self getRealValue:raw];
-    
-    if (parsed < -DEAD_ZONE)
+    float mag = offset + scale * raw;
+    if (mag < -DEAD_ZONE)
         return self.children[0];
-    else if (parsed > DEAD_ZONE)
+    else if (mag > DEAD_ZONE)
         return self.children[1];
     else
         return nil;
@@ -40,14 +41,13 @@
 
 - (void)notifyEvent:(IOHIDValueRef)value {
     int raw = IOHIDValueGetIntegerValue(value);
-    float parsed = [self getRealValue:raw];
-    [self.children[0] setActive:parsed < -DEAD_ZONE];
-    [self.children[1] setActive:parsed > DEAD_ZONE];
+    magnitude = offset + scale * raw;
+    [self.children[0] setActive:magnitude < -DEAD_ZONE];
+    [self.children[1] setActive:magnitude > DEAD_ZONE];
 }
 
-- (float)getRealValue:(int)value {
-    return offset + scale * value;
+- (float)magnitude {
+    return magnitude;
 }
-
 
 @end

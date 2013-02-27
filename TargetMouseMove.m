@@ -27,31 +27,23 @@
 	return target;
 }
 
--(void) trigger: (JoystickController *)jc {
-    return;
-}
-
--(void) untrigger: (JoystickController *)jc {
-    return;
-}
-
 - (BOOL)update:(JoystickController *)jc {
     //printf("Dir %d inputValue %f\n", [self dir], [self inputValue]);
-    if (fabs([self inputValue]) < 0.01)
+    if (fabs(self.magnitude) < 0.01)
         return NO; // dead zone
     
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     
     // TODO
-    double speed = 4.0;
+    float speed = 4.0;
     if ([jc frontWindowOnly])
         speed = 12.0;
-    double dx = 0.0, dy = 0.0;
+    float dx = 0.0, dy = 0.0;
     if ([self dir] == 0)
-        dx = [self inputValue] * speed;
+        dx = self.magnitude * speed;
     else
-        dy = [self inputValue] * speed;
+        dy = self.magnitude * speed;
     NSPoint mouseLoc = jc.mouseLoc;
     mouseLoc.x += dx;
     mouseLoc.y -= dy;
