@@ -1,5 +1,5 @@
 //
-//  KeyInputTextField.h
+//  KeyInputTextView.h
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
@@ -7,22 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class TargetController;
 
-@interface KeyInputTextView: NSTextView {
-	IBOutlet NSWindow* window;
-	IBOutlet TargetController* targetController;
-	BOOL hasKey;
-	int vk;
-	NSString* descr;
-	BOOL enabled;
+@interface KeyInputTextView : NSTextField {
+	IBOutlet NSWindow *window;
+	IBOutlet TargetController *targetController;
 }
 
-@property(readonly) BOOL hasKey;
-@property(readwrite) int vk;
-@property(copy) NSString* descr;
-@property(readwrite) BOOL enabled;
+@property (copy) NSString* descr;
+@property (assign) int vk;
+@property (readonly) BOOL hasKey;
+@property (assign) BOOL enabled;
 
--(void) clear;
+- (void)clear;
 
 @end

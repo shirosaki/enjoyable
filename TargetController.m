@@ -37,7 +37,7 @@
 		case 0: // none
 			return NULL;
 		case 1: // key
-			if([keyInput hasKey]) {
+			if(keyInput.hasKey) {
 				TargetKeyboard* k = [[TargetKeyboard alloc] init];
 				[k setVk: [keyInput vk]];
 				[k setDescr: [keyInput descr]];
