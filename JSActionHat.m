@@ -29,10 +29,10 @@ static BOOL active_fourway[20] = {
 
 - (id)init {
     if ((self = [super init])) {
-        self.children = @[[[SubAction alloc] initWithIndex: 0 name: @"Up" base: self],
-                            [[SubAction alloc] initWithIndex: 1 name: @"Down" base: self],
-                            [[SubAction alloc] initWithIndex: 2 name: @"Left" base: self],
-                            [[SubAction alloc] initWithIndex: 3 name: @"Right" base: self]];
+        self.children = @[[[JSAction alloc] initWithName:@"Up" base: self],
+                          [[JSAction alloc] initWithName:@"Down" base: self],
+                          [[JSAction alloc] initWithName:@"Left" base: self],
+                          [[JSAction alloc] initWithName:@"Right" base: self]];
         // TODO(jfw): Should have an indexed name, like everything else.
         self.name = @"Hat switch";
     }

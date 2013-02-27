@@ -18,7 +18,6 @@
 #import "JSActionButton.h"
 #import "JSActionHat.h"
 #import "KeyInputTextView.h"
-#import "SubAction.h"
 #import "Target.h"
 #import "TargetConfig.h"
 #import "TargetController.h"

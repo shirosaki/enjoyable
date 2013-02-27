@@ -17,9 +17,9 @@
         self.index = idx;
         self.max = max_;
         if (name_.length)
-            self.name = [NSString stringWithFormat:@"Button %d - %@", self.index + 1, name_];
+            self.name = [NSString stringWithFormat:@"Button %d - %@", self.index, name_];
         else
-            self.name = [NSString stringWithFormat:@"Button %d", self.index + 1];
+            self.name = [NSString stringWithFormat:@"Button %d", self.index];
     }
     return self;
 }

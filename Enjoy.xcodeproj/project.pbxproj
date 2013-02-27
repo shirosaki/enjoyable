@@ -21,7 +21,6 @@
 		D5617D1A0FAF568100928B3A /* JSActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D190FAF568100928B3A /* JSActionButton.m */; };
 		D5617D260FAF579300928B3A /* JSActionHat.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D250FAF579300928B3A /* JSActionHat.m */; };
 		D5617D2B0FAF579A00928B3A /* JSActionAnalog.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D2A0FAF579A00928B3A /* JSActionAnalog.m */; };
-		D5617DF20FAF636C00928B3A /* SubAction.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617DF10FAF636C00928B3A /* SubAction.m */; };
 		D5617FD60FAFD06000928B3A /* Target.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD50FAFD06000928B3A /* Target.m */; };
 		D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */; };
 		D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE30FAFD7B000928B3A /* TargetController.m */; };
@@ -66,8 +65,6 @@
 		D5617D250FAF579300928B3A /* JSActionHat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSActionHat.m; sourceTree = "<group>"; };
 		D5617D290FAF579A00928B3A /* JSActionAnalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSActionAnalog.h; sourceTree = "<group>"; };
 		D5617D2A0FAF579A00928B3A /* JSActionAnalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSActionAnalog.m; sourceTree = "<group>"; };
-		D5617DF00FAF636C00928B3A /* SubAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubAction.h; sourceTree = "<group>"; };
-		D5617DF10FAF636C00928B3A /* SubAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubAction.m; sourceTree = "<group>"; };
 		D5617FD40FAFD06000928B3A /* Target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Target.h; sourceTree = "<group>"; };
 		D5617FD50FAFD06000928B3A /* Target.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Target.m; sourceTree = "<group>"; };
 		D5617FD70FAFD1E600928B3A /* TargetKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetKeyboard.h; sourceTree = "<group>"; };
@@ -124,8 +121,6 @@
 				D5617A350FAEB74000928B3A /* ConfigsController.m */,
 				D5617A370FAEBA1800928B3A /* Config.h */,
 				D5617A380FAEBA1800928B3A /* Config.m */,
-				D5617DF00FAF636C00928B3A /* SubAction.h */,
-				D5617DF10FAF636C00928B3A /* SubAction.m */,
 				D5F8096F0FB093400006A4DE /* TargetConfig.h */,
 				D5F809700FB093400006A4DE /* TargetConfig.m */,
 				D5617FD40FAFD06000928B3A /* Target.h */,
@@ -295,7 +290,6 @@
 				D5617D1A0FAF568100928B3A /* JSActionButton.m in Sources */,
 				D5617D260FAF579300928B3A /* JSActionHat.m in Sources */,
 				D5617D2B0FAF579A00928B3A /* JSActionAnalog.m in Sources */,
-				D5617DF20FAF636C00928B3A /* SubAction.m in Sources */,
 				D5617FD60FAFD06000928B3A /* Target.m in Sources */,
 				D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */,
 				D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */,

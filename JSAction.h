@@ -19,6 +19,8 @@
 @property (assign) BOOL active;
 @property (readonly) float magnitude;
 
+- (id)initWithName:(NSString *)newName base:(JSAction *)newBase;
+
 - (void)notifyEvent:(IOHIDValueRef)value;
 - (NSString *)stringify;
 - (id)findSubActionForValue:(IOHIDValueRef)value;

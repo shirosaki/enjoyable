@@ -18,12 +18,12 @@
 
 - (id)initWithIndex:(int)newIndex offset:(float)offset_ scale:(float)scale_ {
     if ((self = [super init])) {
-        self.children = @[[[SubAction alloc] initWithIndex:0 name:@"Low" base:self],
-                          [[SubAction alloc] initWithIndex:1 name:@"High" base:self]];
+        self.children = @[[[JSAction alloc] initWithName:@"Low" base:self],
+                          [[JSAction alloc] initWithName:@"High" base:self]];
         self.index = newIndex;
         self.offset = offset_;
         self.scale = scale_;
-        self.name = [[NSString alloc] initWithFormat: @"Axis %d", self.index + 1];
+        self.name = [[NSString alloc] initWithFormat: @"Axis %d", self.index];
     }
     return self;
 }

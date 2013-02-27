@@ -16,12 +16,23 @@
 @synthesize name;
 @synthesize active;
 
+- (id)initWithName:(NSString *)newName base:(JSAction *)newBase {
+    if ((self = [super init])) {
+        self.name = newName;
+        self.base = newBase;
+    }
+    return self;
+}
+
 - (id)findSubActionForValue:(IOHIDValueRef)value {
     return NULL;
 }
 
 - (NSString *)stringify {
-    return [NSString stringWithFormat: @"%@~%p", [base stringify], cookie];
+    if (cookie)
+        return [NSString stringWithFormat: @"%@~%p", [base stringify], cookie];
+    else
+        return [NSString stringWithFormat: @"%@~%@", [base stringify], name];
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {

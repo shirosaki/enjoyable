@@ -82,7 +82,7 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
 }
 
 static int findAvailableIndex(NSArray *list, Joystick *js) {
-    for (int index = 0; ; index++) {
+    for (int index = 1; ; index++) {
         BOOL available = YES;
         for (Joystick *used in list) {
             if ([used.productName isEqualToString:js.productName] && used.index == index) {

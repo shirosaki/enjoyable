@@ -32,13 +32,13 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
         
         if (max - min == 1 || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
             action = [[JSActionButton alloc] initWithName:(__bridge NSString *)elName
-                                                      idx:buttons++
+                                                      idx:++buttons
                                                       max:max];
         } else if (usage == kHIDUsage_GD_Hatswitch) {
             action = [[JSActionHat alloc] init];
         } else if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
             // TODO(jfw): Scaling equation doesn't seem right if min != 0.
-            action = [[JSActionAnalog alloc] initWithIndex:axes++
+            action = [[JSActionAnalog alloc] initWithIndex:++axes
                                                     offset:-1.f
                                                      scale:2.f / (max - min)];
         } else {
@@ -74,7 +74,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
 }
 
 - (NSString *)name {
-    return [NSString stringWithFormat:@"%@ #%d", productName, index + 1];
+    return [NSString stringWithFormat:@"%@ #%d", productName, index];
 }
 
 - (id)base {
