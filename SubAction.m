@@ -21,7 +21,7 @@
 }
 
 -(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"%@~%d", [base stringify], self.index];
+	return [[NSString alloc] initWithFormat: @"%@~%d", [self.base stringify], self.index];
 }
 
 @end

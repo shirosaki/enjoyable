@@ -9,15 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <IOKit/hid/IOHIDBase.h>
 
-@interface JSAction : NSObject {
-	id base;
-	NSString *name;
-}
+@interface JSAction : NSObject
 
-@property (assign) void* cookie;
+@property (assign) void *cookie;
 @property (assign) int index;
 @property (copy) NSArray *children;
-@property (strong) id base;
+@property (weak) id base;
 @property (copy) NSString *name;
 @property (assign) BOOL active;
 @property (readonly) float magnitude;
