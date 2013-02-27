@@ -29,7 +29,7 @@ static BOOL active_fourway[20] = {
 
 - (id)init {
     if ((self = [super init])) {
-        self.subActions = @[[[SubAction alloc] initWithIndex: 0 name: @"Up" base: self],
+        self.children = @[[[SubAction alloc] initWithIndex: 0 name: @"Up" base: self],
                             [[SubAction alloc] initWithIndex: 1 name: @"Down" base: self],
                             [[SubAction alloc] initWithIndex: 2 name: @"Left" base: self],
                             [[SubAction alloc] initWithIndex: 3 name: @"Right" base: self]];
@@ -44,34 +44,34 @@ static BOOL active_fourway[20] = {
     switch (IOHIDElementGetLogicalMax(IOHIDValueGetElement(value))) {
         case 7: // 8-way switch, 0-7.
             switch (parsed) {
-                case 0: return self.subActions[0];
-                case 4: return self.subActions[1];
-                case 6: return self.subActions[2];
-                case 2: return self.subActions[3];
+                case 0: return self.children[0];
+                case 4: return self.children[1];
+                case 6: return self.children[2];
+                case 2: return self.children[3];
                 default: return nil;
             }
         case 8: // 8-way switch, 1-8 (neutral 0).
             switch (parsed) {
-                case 1: return self.subActions[0];
-                case 5: return self.subActions[1];
-                case 7: return self.subActions[2];
-                case 3: return self.subActions[3];
+                case 1: return self.children[0];
+                case 5: return self.children[1];
+                case 7: return self.children[2];
+                case 3: return self.children[3];
                 default: return nil;
             }
         case 3: // 4-way switch, 0-3.
             switch (parsed) {
-                case 0: return self.subActions[0];
-                case 2: return self.subActions[1];
-                case 3: return self.subActions[2];
-                case 1: return self.subActions[3];
+                case 0: return self.children[0];
+                case 2: return self.children[1];
+                case 3: return self.children[2];
+                case 1: return self.children[3];
                 default: return nil;
             }
         case 4: // 4-way switch, 1-4 (neutral 0).
             switch (parsed) {
-                case 1: return self.subActions[0];
-                case 3: return self.subActions[1];
-                case 4: return self.subActions[2];
-                case 2: return self.subActions[3];
+                case 1: return self.children[0];
+                case 3: return self.children[1];
+                case 4: return self.children[2];
+                case 2: return self.children[3];
                 default: return nil;
             }
         default:
@@ -87,9 +87,9 @@ static BOOL active_fourway[20] = {
         parsed++;
         size++;
     }
-    BOOL *activeSubactions = (size == 8) ? active_eightway : active_fourway;
+    BOOL *activechildren = (size == 8) ? active_eightway : active_fourway;
     for (int i = 0; i < 4; i++)
-        [self.subActions[i] setActive:activeSubactions[parsed * 4 + i]];
+        [self.children[i] setActive:activechildren[parsed * 4 + i]];
 }
 
 @end

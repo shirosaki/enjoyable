@@ -16,8 +16,8 @@
 
 - (id)initWithIndex:(int)newIndex offset:(float)offset_ scale:(float)scale_ {
     if ((self = [super init])) {
-        self.subActions = @[[[SubAction alloc] initWithIndex:0 name:@"Low" base:self],
-                            [[SubAction alloc] initWithIndex:1 name:@"High" base:self]];
+        self.children = @[[[SubAction alloc] initWithIndex:0 name:@"Low" base:self],
+                          [[SubAction alloc] initWithIndex:1 name:@"High" base:self]];
         self.index = newIndex;
         self.offset = offset_;
         self.scale = scale_;
@@ -31,9 +31,9 @@
     float parsed = [self getRealValue:raw];
     
     if (parsed < -DEAD_ZONE)
-        return self.subActions[0];
+        return self.children[0];
     else if (parsed > DEAD_ZONE)
-        return self.subActions[1];
+        return self.children[1];
     else
         return nil;
 }
@@ -41,8 +41,8 @@
 - (void)notifyEvent:(IOHIDValueRef)value {
     int raw = IOHIDValueGetIntegerValue(value);
     float parsed = [self getRealValue:raw];
-    [self.subActions[0] setActive:parsed < -DEAD_ZONE];
-    [self.subActions[1] setActive:parsed > DEAD_ZONE];
+    [self.children[0] setActive:parsed < -DEAD_ZONE];
+    [self.children[1] setActive:parsed > DEAD_ZONE];
 }
 
 - (float)getRealValue:(int)value {

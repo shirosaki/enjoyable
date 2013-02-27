@@ -16,7 +16,7 @@
 
 @property (assign) void* cookie;
 @property (assign) int index;
-@property (copy) NSArray *subActions;
+@property (copy) NSArray *children;
 @property (strong) id base;
 @property (copy) NSString *name;
 @property (readonly) BOOL active;

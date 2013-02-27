@@ -11,7 +11,7 @@
 
 @synthesize cookie;
 @synthesize index;
-@synthesize subActions;
+@synthesize children;
 @synthesize base;
 @synthesize name;
 

@@ -62,10 +62,10 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
 			return;
 		
 		[mainAction notifyEvent: value];
-		NSArray* subactions = [mainAction subActions];
-		if(!subactions)
-			subactions = @[mainAction];
-		for(id subaction in subactions) {
+		NSArray* children = [mainAction children];
+		if(!children)
+			children = @[mainAction];
+		for(id subaction in children) {
 			Target* target = [[controller->configsController currentConfig] getTargetForAction:subaction];
 			if(!target)
 				continue;
@@ -176,46 +176,21 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 
 - (JSAction *)selectedAction {
     id item = [outlineView itemAtRow:outlineView.selectedRow];
-	if ([item isKindOfClass: [JSAction class]] && ![item subActions])
-		return item;
-    else
-        return nil;
+    return [item children] ? nil : item;
 }
 
-/* outline view */
-
 - (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
-	if(item == nil)
-		return [joysticks count];
-	if([item isKindOfClass: [Joystick class]])
-		return [[item children] count];
-	if([item isKindOfClass: [JSAction class]] && [item subActions] != NULL)
-		return [[item subActions] count];
-	return 0;
+    return item ? [[item children] count] : [joysticks count];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
-	if(item == nil)
-		return YES;
-	if([item isKindOfClass: [Joystick class]])
-		return YES;
-	if([item isKindOfClass: [JSAction class]]) 
-		return [item subActions]==NULL ? NO : YES;
-	return NO;
+    return item ? [[item children] count] > 0: YES;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item {
-	if(item == nil) 
-		return joysticks[index];
-
-	if([item isKindOfClass: [Joystick class]])
-		return [item children][index];
-	
-	if([item isKindOfClass: [JSAction class]]) 
-		return [item subActions][index];
-
-	return NULL;
+    return item ? [item children][index] : joysticks[index];
 }
+
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item  {
 	if(item == nil)
 		return @"root";
