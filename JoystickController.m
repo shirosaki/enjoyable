@@ -7,171 +7,167 @@
 
 #import "JoystickController.h"
 
-@implementation JoystickController
-
-@synthesize joysticks, runningTargets, selectedAction, frontWindowOnly;
-
--(id) init {
-	if(self=[super init]) {
-		joysticks = [[NSMutableArray alloc]init];
-        runningTargets = [[NSMutableArray alloc]init];
-		programmaticallySelecting = NO;
-        mouseLoc.x = mouseLoc.y = 0;
-	}
-	return self;
+@implementation JoystickController {
+    IOHIDManagerRef hidManager;
+    BOOL programmaticallySelecting;
+    NSTimer *continuousTimer;
 }
 
--(void) dealloc {
-	for(int i=0; i<[joysticks count]; i++) {
-		[joysticks[i] invalidate];
-	}
-	IOHIDManagerClose(hidManager, kIOHIDOptionsTypeNone);
-	CFRelease(hidManager);
+@synthesize joysticks;
+@synthesize runningTargets;
+@synthesize selectedAction;
+@synthesize frontWindowOnly;
+@synthesize mouseLoc;
+
+- (id)init {
+    if ((self = [super init])) {
+        joysticks = [[NSMutableArray alloc] initWithCapacity:16];
+        runningTargets = [[NSMutableArray alloc] initWithCapacity:32];
+    }
+    return self;
 }
 
-static NSMutableDictionary* create_criterion( UInt32 inUsagePage, UInt32 inUsage )
-{
-	NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-	dict[(NSString*)CFSTR(kIOHIDDeviceUsagePageKey)] = @(inUsagePage);
-	dict[(NSString*)CFSTR(kIOHIDDeviceUsageKey)] = @(inUsage);
-	return dict;
-} 
-
--(void) expandRecursive: (id) handler {
-	if([handler base])
-		[self expandRecursive: [handler base]];
-	[outlineView expandItem: handler];
+- (void)dealloc {
+    [continuousTimer invalidate];
+    IOHIDManagerClose(hidManager, kIOHIDOptionsTypeNone);
+    CFRelease(hidManager);
 }
 
-static void timer_callback(CFRunLoopTimerRef timer, void *ctx) {
-    JoystickController *jc = (__bridge JoystickController *)ctx;
-    jc->mouseLoc = [NSEvent mouseLocation];
-    for (Target *target in [jc runningTargets]) {
-        [target update: jc];
+- (void)expandRecursive:(id)handler {
+    if ([handler base])
+        [self expandRecursive:[handler base]];
+    [outlineView expandItem:handler];
+}
+
+- (void)addRunningTarget:(Target *)target {
+    if (![runningTargets containsObject:target])
+        [runningTargets addObject:target];
+    if (!continuousTimer) {
+        continuousTimer = [NSTimer scheduledTimerWithTimeInterval:1.f/60.f
+                                                           target:self
+                                                         selector:@selector(updateContinuousActions:)
+                                                         userInfo:nil
+                                                          repeats:YES];
+        NSLog(@"Scheduled continuous target timer.");
     }
 }
 
 static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
-	JoystickController *controller = (__bridge JoystickController *)ctx;
-	IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
-	
-	Joystick *js = [controller findJoystickByRef:device];
-	if([(ApplicationController *)[[NSApplication sharedApplication] delegate] active]) {
-		JSAction* mainAction = [js actionForEvent: value];
-		if(!mainAction)
-			return;
-		
-		[mainAction notifyEvent: value];
-		NSArray* children = [mainAction children];
-		if(!children)
-			children = @[mainAction];
-		for(id subaction in children) {
-			Target* target = [[controller->configsController currentConfig] getTargetForAction:subaction];
-			if(!target)
-				continue;
-			/* target application? doesn't seem to be any need since we are only active when it's in front */
-			/* might be required for some strange actions */
-            if ([target running] != [subaction active]) {
-                if ([subaction active]) {
-                    [target trigger: controller];
-                }
-                else {
-                    [target untrigger: controller];
-                }
-                [target setRunning: [subaction active]];
+    JoystickController *controller = (__bridge JoystickController *)ctx;
+    IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
+    
+    Joystick *js = [controller findJoystickByRef:device];
+    if (((ApplicationController *)[NSApplication sharedApplication].delegate).active) {
+        JSAction *mainAction = [js actionForEvent:value];
+        if (!mainAction)
+            return;
+        
+        [mainAction notifyEvent:value];
+        NSArray *children = mainAction.children ? mainAction.children : @[mainAction];
+        for (JSAction *subaction in children) {
+            Target *target = [[controller->configsController currentConfig] getTargetForAction:subaction];
+            if (!target)
+                continue;
+            // TODO: Can we just trigger based on setRunning:?
+            if (target.running != subaction.active) {
+                if (subaction.active)
+                    [target trigger:controller];
+                else
+                    [target untrigger:controller];
+                target.running = subaction.active;
             }
             
-            if ([mainAction isKindOfClass: [JSActionAnalog class]]) {
-                double realValue = [(JSActionAnalog*)mainAction getRealValue: IOHIDValueGetIntegerValue(value)];
-                [target setInputValue: realValue];
-            
-                // Add to list of running targets
-                if ([target isContinuous] && [target running]) {
-                    if (![controller.runningTargets containsObject:target]) {
-                        [[controller runningTargets] addObject: target];
-                    }
-                }
+            // FIXME: Hack, should just expose analog info properly in continuous target.
+            if ([mainAction isKindOfClass:[JSActionAnalog class]]) {
+                double realValue = [(JSActionAnalog *)mainAction getRealValue:IOHIDValueGetIntegerValue(value)];
+                [target setInputValue:realValue];
+                if (target.isContinuous && target.running)
+                    [controller addRunningTarget:target];
             }
-		}
-	} else if([[NSApplication sharedApplication] isActive] && [[[NSApplication sharedApplication]mainWindow]isVisible]) {
-		// joysticks not active, use it to select stuff
-		id handler = [js handlerForEvent: value];
-		if(!handler)
-			return;
-	
-		[controller expandRecursive: handler];
-		controller->programmaticallySelecting = YES;
-		[controller->outlineView selectRowIndexes: [NSIndexSet indexSetWithIndex: [controller->outlineView rowForItem: handler]] byExtendingSelection: NO];
-	}
+        }
+    } else if ([NSApplication sharedApplication].isActive && [NSApplication sharedApplication].mainWindow.isVisible) {
+        // joysticks not active, use it to select stuff
+        JSAction *handler = [js handlerForEvent:value];
+        if (!handler)
+            return;
+        
+        [controller expandRecursive:handler];
+        controller->programmaticallySelecting = YES;
+        [controller->outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[controller->outlineView rowForItem:handler]] byExtendingSelection: NO];
+    }
 }
 
-static int findAvailableIndex(id list, Joystick* js) {
-	BOOL available;
-	Joystick* js2;
-	for(int index=0;;index++) {
-		available = YES;
-		for(int i=0; i<[list count]; i++) {
-			js2 = list[i];
-			if([js2 vendorId] == [js vendorId] && [js2 productId] == [js productId] && [js index] == index) {
-				available = NO;
-				break;
-			}
-		}
-		if(available)
-			return index;
-	}
+static int findAvailableIndex(NSArray *list, Joystick *js) {
+    for (int index = 0; ; index++) {
+        BOOL available = YES;
+        for (Joystick *used in list) {
+            if ([used.productName isEqualToString:js.productName] && used.index == index) {
+                available = NO;
+                break;
+            }
+        }
+        if (available)
+            return index;
+    }
 }
 
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-	JoystickController *controller = (__bridge JoystickController *)ctx;
+    JoystickController *controller = (__bridge JoystickController *)ctx;
     IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)controller);
-	Joystick *js = [[Joystick alloc] initWithDevice:device];
+    Joystick *js = [[Joystick alloc] initWithDevice:device];
     js.index = findAvailableIndex(controller.joysticks, js);
-	[[controller joysticks] addObject:js];
-	[controller->outlineView reloadData];
+    [[controller joysticks] addObject:js];
+    [controller->outlineView reloadData];
 }
-	
+
 - (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device {
     for (Joystick *js in joysticks)
         if (js.device == device)
             return js;
-	return nil;
-}	
+    return nil;
+}
 
 static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-	JoystickController *controller = (__bridge JoystickController *)ctx;
-	Joystick *match = [controller findJoystickByRef:device];
+    JoystickController *controller = (__bridge JoystickController *)ctx;
+    Joystick *match = [controller findJoystickByRef:device];
     IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
-	if (match) {
+    if (match) {
         [controller.joysticks removeObject:match];
         [controller->outlineView reloadData];
     }
 }
 
-- (void)setup {
-    hidManager = IOHIDManagerCreate( kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-	NSArray *criteria = @[
-        create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_Joystick),
-        create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_GamePad),
-        create_criterion(kHIDPage_GenericDesktop, kHIDUsage_GD_MultiAxisController)];
-	
-	IOHIDManagerSetDeviceMatchingMultiple(hidManager, (CFArrayRef)CFBridgingRetain(criteria));
-    
-	IOHIDManagerScheduleWithRunLoop( hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode );
-	IOReturn tIOReturn = IOHIDManagerOpen( hidManager, kIOHIDOptionsTypeNone );
-	(void)tIOReturn;
-	
-	IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self );
-	IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
+- (void)updateContinuousActions:(NSTimer *)timer {
+    self.mouseLoc = [NSEvent mouseLocation];
+    for (Target *target in [self.runningTargets copy]) {
+        if (![target update:self])
+            [self.runningTargets removeObject:target];
+    }
+    if (!self.runningTargets.count) {
+        [continuousTimer invalidate];
+        continuousTimer = nil;
+        NSLog(@"Unscheduled continuous target timer.");
+    }
+}
 
-    // Setup timer for continuous targets
-    CFRunLoopTimerContext ctx = {
-        0, (__bridge void*)self, NULL, NULL, NULL
-    };
-    CFRunLoopTimerRef timer = CFRunLoopTimerCreate(kCFAllocatorDefault,
-                                                   CFAbsoluteTimeGetCurrent(), 1.0/80.0,
-                                                   0, 0, timer_callback, &ctx);
-    CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopDefaultMode);
+#define NSSTR(e) ((NSString *)CFSTR(e))
+
+- (void)setup {
+    hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
+    NSArray *criteria = @[ @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
+                              NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_Joystick) },
+                           @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
+                              NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_GamePad) },
+                           @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
+                              NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_MultiAxisController) }
+                           ];
+    IOHIDManagerSetDeviceMatchingMultiple(hidManager, (__bridge CFArrayRef)criteria);
+    
+    IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    IOHIDManagerOpen(hidManager, kIOHIDOptionsTypeNone); // FIXME: If an error happens, report it!
+    
+    IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self);
+    IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
 }
 
 - (JSAction *)selectedAction {
@@ -192,17 +188,17 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item  {
-	if(item == nil)
-		return @"root";
-	return [item name];
+    if(item == nil)
+        return @"root";
+    return [item name];
 }
 
 - (void)outlineViewSelectionDidChange: (NSNotification*) notification {
-	[targetController reset];
-	[targetController load];
-	if (programmaticallySelecting)
-		[targetController focusKey];
-	programmaticallySelecting = NO;
+    [targetController reset];
+    [targetController load];
+    if (programmaticallySelecting)
+        [targetController focusKey];
+    programmaticallySelecting = NO;
 }
-	
+
 @end

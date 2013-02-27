@@ -35,10 +35,10 @@
     return;
 }
 
--(void) update: (JoystickController *)jc {
+- (BOOL)update:(JoystickController *)jc {
     //printf("Dir %d inputValue %f\n", [self dir], [self inputValue]);
     if (fabs([self inputValue]) < 0.01)
-        return; // dead zone
+        return NO; // dead zone
     
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
@@ -52,12 +52,13 @@
         dx = [self inputValue] * speed;
     else
         dy = [self inputValue] * speed;
-    NSPoint *mouseLoc = &jc->mouseLoc;
-    mouseLoc->x += dx;
-    mouseLoc->y -= dy;
+    NSPoint mouseLoc = jc.mouseLoc;
+    mouseLoc.x += dx;
+    mouseLoc.y -= dy;
+    jc.mouseLoc = mouseLoc;
     
     CGEventRef move = CGEventCreateMouseEvent(NULL, kCGEventMouseMoved,
-                                              CGPointMake(mouseLoc->x, height - mouseLoc->y),
+                                              CGPointMake(mouseLoc.x, height - mouseLoc.y),
                                               0);
     CGEventSetType(move, kCGEventMouseMoved);
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaX, dx);
@@ -73,6 +74,7 @@
     }
     
     CFRelease(move);
+    return dx || dy;
 }
 
 @end

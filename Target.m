@@ -41,8 +41,8 @@
 	// no-op by default
 }
 
--(void) update: (JoystickController *) jc {
-    [self doesNotRecognizeSelector:_cmd];
+- (BOOL)update:(JoystickController *)jc {
+    return NO;
 }
 
 -(BOOL) isContinuous {

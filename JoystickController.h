@@ -15,26 +15,18 @@
 @class TargetController;
 
 @interface JoystickController : NSObject {
-	NSMutableArray *joysticks;
-    NSMutableArray *runningTargets;
-	IOHIDManagerRef hidManager;
-	IBOutlet NSOutlineView* outlineView;
-	IBOutlet TargetController* targetController;
-	IBOutlet ConfigsController* configsController;
-	id selectedAction;
-	BOOL programmaticallySelecting;
-    BOOL frontWindowOnly;
-    
-    @public
-    NSPoint mouseLoc;
+	IBOutlet NSOutlineView *outlineView;
+	IBOutlet TargetController *targetController;
+	IBOutlet ConfigsController *configsController;
 }
 
--(void) setup;
--(Joystick*) findJoystickByRef: (IOHIDDeviceRef) device;
+- (void)setup;
+- (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device;
 
 @property (readonly) JSAction *selectedAction;
 @property (readonly) NSMutableArray *joysticks;
 @property (readonly) NSMutableArray *runningTargets;
-@property (readwrite) BOOL frontWindowOnly;
+@property (assign) NSPoint mouseLoc;
+@property (assign) BOOL frontWindowOnly;
 
 @end

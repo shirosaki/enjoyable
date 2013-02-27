@@ -19,7 +19,7 @@
 @property(readwrite) double inputValue;
 -(void) trigger: (JoystickController *)jc;
 -(void) untrigger: (JoystickController *)jc;
--(void) update: (JoystickController *)jc;
+- (BOOL)update:(JoystickController *)jc;
 -(NSString*) stringify;
 +(Target*) unstringify: (NSString*) str withConfigList: (NSArray*) configs;
 
