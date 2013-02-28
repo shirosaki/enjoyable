@@ -7,14 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
+#import "Target.h"
+
 @class Config;
-@class Target;
 
-@interface TargetConfig : Target {
-	Config *config;
-}
+@interface TargetConfig : Target
 
-@property(readwrite, strong) Config* config;
-+(TargetConfig*) unstringifyImpl: (NSArray*) comps withConfigList: (NSArray*) configs;
+@property (weak) Config *config;
++ (TargetConfig *)unstringifyImpl:(NSArray *)comps withConfigList:(NSArray *)configs;
 
 @end

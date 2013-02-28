@@ -73,16 +73,6 @@
     if (toRemove == manualConfig)
         manualConfig = configs[0];
 	
-	// remove all "switch to configuration" actions
-    for (Config *config in configs) {
-		NSMutableDictionary *entries = config.entries;
-		for (id key in entries) {
-			Target *target = entries[key];
-			if ([target isKindOfClass:[TargetConfig class]]
-                && [(TargetConfig *)target config] == toRemove)
-				[entries removeObjectForKey: key];
-		}
-	}
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];	
 	[tableView reloadData];
 }

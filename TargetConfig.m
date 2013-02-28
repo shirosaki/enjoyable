@@ -7,30 +7,27 @@
 
 #import "TargetConfig.h"
 
-
 @implementation TargetConfig
 
-@synthesize config;
-
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"cfg~%@", [config name]];
+- (NSString *)stringify {
+    return [[NSString alloc] initWithFormat: @"cfg~%@", self.config.name];
 }
 
-+(TargetConfig*) unstringifyImpl: (NSArray*) comps withConfigList: (NSArray*) configs {
-	NSParameterAssert([comps count] == 2);
-	NSString* name = comps[1];
-	TargetConfig* target = [[TargetConfig alloc] init];
-	for(int i=0; i<[configs count]; i++)
-		if([[configs[i] name] isEqualToString:name]) {
-			[target setConfig: configs[i]];
-			return target;
-		}
-	NSLog(@"Warning: couldn't find matching config to restore from: %@",name);
-	return NULL;
++ (TargetConfig *)unstringifyImpl:(NSArray *)comps withConfigList:(NSArray *)configs {
+    NSString *name = comps[1];
+    TargetConfig *target = [[TargetConfig alloc] init];
+    for (Config *config in configs) {
+        if ([config.name isEqualToString:name]) {
+            target.config = config;
+            return target;
+        }
+    }
+    NSLog(@"Warning: couldn't find matching config to restore from: %@", name);
+    return nil;
 }
 
--(void) trigger {
-	[[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsController] activateConfig:config];
+- (void)trigger {
+    [[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsController] activateConfig:self.config];
 }
 
 @end
