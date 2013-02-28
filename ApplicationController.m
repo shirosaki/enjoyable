@@ -15,14 +15,7 @@
 
 - (void)didSwitchApplication:(NSNotification *)notification {
     NSRunningApplication *currentApp = notification.userInfo[NSWorkspaceApplicationKey];
-    ProcessSerialNumber psn;
-    OSStatus err;
-    if ((err = GetProcessForPID(currentApp.processIdentifier, &psn)) == noErr) {
-        [self.configsController applicationSwitchedTo:currentApp.localizedName withPsn:psn];
-    } else {
-        NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
-        NSLog(@"Error getting PSN for %@: %@", currentApp.localizedName, error);
-    }
+    [self.configsController activateConfigForProcess:currentApp.localizedName];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -94,6 +87,6 @@
 - (void)chooseConfig:(id)sender {
     int idx = [dockMenuBase indexOfItem:sender] - [self firstConfigMenuIndex];
     Config *chosen = self.configsController.configs[idx];
-    [configsController activateConfig:chosen forApplication:NULL];
+    [configsController activateConfig:chosen];
 }
 @end

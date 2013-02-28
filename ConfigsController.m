@@ -7,7 +7,7 @@
 
 @implementation ConfigsController {
     NSMutableArray *configs;
-	Config *neutralConfig;
+	Config *manualConfig;
 }
 
 @synthesize currentConfig;
@@ -16,36 +16,35 @@
 - (id)init {
 	if ((self = [super init])) {
 		configs = [[NSMutableArray alloc] init];
-		currentConfig = [[Config alloc] init];
-		[currentConfig setName: @"(default)"];
+        currentConfig = [[Config alloc] init];
+        currentConfig.name = @"(default)";
+        manualConfig = currentConfig;
 		[configs addObject:currentConfig];
 	}
 	return self;
 }
 
-// TODO: Neutral config stuff is a mess.
-
--(void) restoreNeutralConfig {
-	if(!neutralConfig)
-		return;
-	[self activateConfig: neutralConfig forApplication: NULL];
+- (Config *)objectForKeyedSubscript:(NSString *)name {
+    for (Config *config in configs)
+        if ([name isEqualToString:config.name])
+            return config;
+    return nil;
 }
 
--(void) activateConfig: (Config*)config forApplication: (ProcessSerialNumber*) psn {
-	if(currentConfig == config)
-		return;
+- (void)activateConfigForProcess:(NSString *)processName {
+    Config *oldConfig = manualConfig;
+    [self activateConfig:self[processName]];
+    manualConfig = oldConfig;
+}
 
-	if(psn) {
-		if(!neutralConfig)
-			neutralConfig = currentConfig;
-	} else {
-		neutralConfig = NULL;
-	}
-	
-	if(currentConfig != NULL) {
-		[targetController reset];
-	}
+- (void)activateConfig:(Config *)config {
+    if (!config)
+        config = manualConfig;
+	if (currentConfig == config)
+		return;
+    manualConfig = config;
 	currentConfig = config;
+    [targetController reset];
 	[removeButton setEnabled:configs[0] != config];
 	[targetController load];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
@@ -66,8 +65,13 @@
     if (tableView.selectedRow == 0)
         return;
 
-	Config *current_config = configs[tableView.selectedRow];
+	Config *toRemove = configs[tableView.selectedRow];
 	[configs removeObjectAtIndex:tableView.selectedRow];
+    
+    if (toRemove == currentConfig)
+        currentConfig = configs[0];
+    if (toRemove == manualConfig)
+        manualConfig = configs[0];
 	
 	// remove all "switch to configuration" actions
     for (Config *config in configs) {
@@ -75,7 +79,7 @@
 		for (id key in entries) {
 			Target *target = entries[key];
 			if ([target isKindOfClass:[TargetConfig class]]
-                && [(TargetConfig *)target config] == current_config)
+                && [(TargetConfig *)target config] == toRemove)
 				[entries removeObjectForKey: key];
 		}
 	}
@@ -85,7 +89,7 @@
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notify {
     if (tableView.selectedRow >= 0)
-        [self activateConfig:configs[tableView.selectedRow] forApplication: NULL];
+        [self activateConfig:configs[tableView.selectedRow]];
 }
 	
 - (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(int)index {
@@ -107,16 +111,6 @@
 
 - (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(int)index {
 	return index > 0;
-}	
-
-- (Config *)currentConfig {
-	return currentConfig;
-}
-
-- (Config *)currentNeutralConfig {
-	if (neutralConfig)
-		return neutralConfig;
-	return currentConfig;
 }
 
 -(void) save {
@@ -141,9 +135,9 @@
 		[ary addObject: cfgInfo];
 	}
 	envelope[@"configurationList"] = ary;
-	envelope[@"selectedIndex"] = @([configs indexOfObject: [self currentNeutralConfig] ]);
 	return envelope;
 }
+
 -(void) loadAllFrom: (NSDictionary*) envelope{
 	if(envelope == NULL)
 		return;
@@ -163,25 +157,13 @@
 		}
 	}
 	
-	configs = newConfigs;
-	[tableView reloadData];
-	currentConfig = NULL;
-	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
-	
-	int index = [envelope[@"selectedIndex"] intValue];
-    if (index < configs.count)
-        [self activateConfig: configs[index] forApplication: NULL];
-}
-
--(void) applicationSwitchedTo: (NSString*) name withPsn: (ProcessSerialNumber) psn {
-	for(int i=0; i<[configs count]; i++) {
-		Config* cfg = configs[i];
-		if([[cfg name] isEqualToString: name]) {
-			[self activateConfig: cfg forApplication: &psn];
-			return;
-		}
-	}
-	[self restoreNeutralConfig];
+    if (newConfigs.count) {
+        configs = newConfigs;
+        [tableView reloadData];
+        currentConfig = configs[0];
+        manualConfig = configs[0];
+        [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+    }
 }
 
 @end

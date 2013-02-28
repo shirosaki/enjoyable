@@ -19,18 +19,16 @@
 
 - (IBAction)addPressed:(id)sender;
 - (IBAction)removePressed:(id)sender;
-- (void)activateConfig:(Config *)config forApplication:(ProcessSerialNumber *)psn;
+- (void)activateConfig:(Config *)config;
+- (void)activateConfigForProcess:(NSString *)processName;
 
 - (NSDictionary *)dumpAll;
 - (void)loadAllFrom:(NSDictionary*) dict;
 
 @property (readonly) Config *currentConfig;
-@property (readonly) Config *currentNeutralConfig;
 @property (readonly) NSArray *configs;
 
 - (void)save;
 - (void)load;
-
-- (void)applicationSwitchedTo:(NSString *)name withPsn:(ProcessSerialNumber)psn;
 
 @end
