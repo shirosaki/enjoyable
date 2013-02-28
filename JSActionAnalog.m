@@ -10,26 +10,29 @@
 
 #import "JSActionAnalog.h"
 
-@implementation JSActionAnalog {
-    float magnitude;
+static float normalize(int p, int min, int max) {
+    return 2 * (p - min) / (float)(max - min) - 1;
 }
 
-@synthesize offset, scale;
+@implementation JSActionAnalog {
+    float magnitude;
+    int rawMin;
+    int rawMax;
+}
 
-- (id)initWithIndex:(int)newIndex offset:(float)offset_ scale:(float)scale_ {
+- (id)initWithIndex:(int)index rawMin:(int)rawMin_ rawMax:(int)rawMax_ {
     if ((self = [super init])) {
+        self.name = [[NSString alloc] initWithFormat: @"Axis %d", index];
         self.children = @[[[JSAction alloc] initWithName:@"Low" base:self],
                           [[JSAction alloc] initWithName:@"High" base:self]];
-        self.offset = offset_;
-        self.scale = scale_;
-        self.name = [[NSString alloc] initWithFormat: @"Axis %d", newIndex];
+        rawMax = rawMax_;
+        rawMin = rawMin_;
     }
     return self;
 }
 
 - (id)findSubActionForValue:(IOHIDValueRef)value {
-    int raw = IOHIDValueGetIntegerValue(value);
-    float mag = offset + scale * raw;
+    float mag = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
     if (mag < -DEAD_ZONE)
         return self.children[0];
     else if (mag > DEAD_ZONE)
@@ -39,8 +42,7 @@
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {
-    int raw = IOHIDValueGetIntegerValue(value);
-    magnitude = offset + scale * raw;
+    magnitude = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
     [self.children[0] setActive:magnitude < -DEAD_ZONE];
     [self.children[1] setActive:magnitude > DEAD_ZONE];
 }

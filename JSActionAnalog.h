@@ -12,9 +12,6 @@
 
 @interface JSActionAnalog : JSAction
 
-@property (assign) float offset;
-@property (assign) float scale;
-
-- (id)initWithIndex:(int)newIndex offset:(float)offset scale:(float)scale;
+- (id)initWithIndex:(int)index rawMin:(int)rawMin rawMax:(int)rawMax;
 
 @end

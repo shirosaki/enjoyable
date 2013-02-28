@@ -43,10 +43,9 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
         } else if (usage == kHIDUsage_GD_Hatswitch) {
             action = [[JSActionHat alloc] initWithIndex:++hats];
         } else if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
-            // TODO(jfw): Scaling equation doesn't seem right if min != 0.
             action = [[JSActionAnalog alloc] initWithIndex:++axes
-                                                    offset:-1.f
-                                                     scale:2.f / (max - min)];
+                                                    rawMin:min
+                                                    rawMax:max];
         } else {
             continue;
         }
