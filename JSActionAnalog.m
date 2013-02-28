@@ -5,7 +5,6 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
-// TODO: Dead zone should be configurable per-device.
 #define DEAD_ZONE 0.3
 
 #import "JSActionAnalog.h"
