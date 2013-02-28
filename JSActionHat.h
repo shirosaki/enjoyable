@@ -10,4 +10,6 @@
 
 @interface JSActionHat : JSAction
 
+- (id)initWithIndex:(int)index;
+
 @end

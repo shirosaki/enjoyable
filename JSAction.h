@@ -9,7 +9,6 @@
 @interface JSAction : NSObject
 
 @property (assign) void *cookie;
-@property (assign) int index;
 @property (copy) NSArray *children;
 @property (weak) id base;
 @property (copy) NSString *name;

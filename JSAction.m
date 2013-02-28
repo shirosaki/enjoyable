@@ -10,7 +10,6 @@
 @implementation JSAction
 
 @synthesize cookie;
-@synthesize index;
 @synthesize children;
 @synthesize base;
 @synthesize name;

@@ -29,14 +29,13 @@ static BOOL active_fourway[20] = {
 
 @implementation JSActionHat
 
-- (id)init {
+- (id)initWithIndex:(int)index {
     if ((self = [super init])) {
-        self.children = @[[[JSAction alloc] initWithName:@"Up" base: self],
-                          [[JSAction alloc] initWithName:@"Down" base: self],
-                          [[JSAction alloc] initWithName:@"Left" base: self],
-                          [[JSAction alloc] initWithName:@"Right" base: self]];
-        // TODO(jfw): Should have an indexed name, like everything else.
-        self.name = @"Hat switch";
+        self.children = @[[[JSAction alloc] initWithName:@"Up" base:self],
+                          [[JSAction alloc] initWithName:@"Down" base:self],
+                          [[JSAction alloc] initWithName:@"Left" base:self],
+                          [[JSAction alloc] initWithName:@"Right" base:self]];
+        self.name = [NSString stringWithFormat:@"Hat Switch %d", index];
     }
     return self;
 }

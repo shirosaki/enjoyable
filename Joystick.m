@@ -18,6 +18,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     
     int buttons = 0;
     int axes = 0;
+    int hats = 0;
     
     for (int i = 0; i < CFArrayGetCount(elements); i++) {
         IOHIDElementRef element = (IOHIDElementRef)CFArrayGetValueAtIndex(elements, i);
@@ -40,7 +41,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
                                                       idx:++buttons
                                                       max:max];
         } else if (usage == kHIDUsage_GD_Hatswitch) {
-            action = [[JSActionHat alloc] init];
+            action = [[JSActionHat alloc] initWithIndex:++hats];
         } else if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
             // TODO(jfw): Scaling equation doesn't seem right if min != 0.
             action = [[JSActionAnalog alloc] initWithIndex:++axes

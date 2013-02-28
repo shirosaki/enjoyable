@@ -16,12 +16,11 @@
 
 - (id)initWithName:(NSString *)name_ idx:(int)idx max:(int)max_ {
     if ((self = [super init])) {
-        self.index = idx;
         self.max = max_;
         if (name_.length)
-            self.name = [NSString stringWithFormat:@"Button %d - %@", self.index, name_];
+            self.name = [NSString stringWithFormat:@"Button %d - %@", idx, name_];
         else
-            self.name = [NSString stringWithFormat:@"Button %d", self.index];
+            self.name = [NSString stringWithFormat:@"Button %d", idx];
     }
     return self;
 }

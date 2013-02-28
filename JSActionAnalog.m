@@ -20,10 +20,9 @@
     if ((self = [super init])) {
         self.children = @[[[JSAction alloc] initWithName:@"Low" base:self],
                           [[JSAction alloc] initWithName:@"High" base:self]];
-        self.index = newIndex;
         self.offset = offset_;
         self.scale = scale_;
-        self.name = [[NSString alloc] initWithFormat: @"Axis %d", self.index];
+        self.name = [[NSString alloc] initWithFormat: @"Axis %d", newIndex];
     }
     return self;
 }
