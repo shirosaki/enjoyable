@@ -20,31 +20,34 @@
 
 @synthesize magnitude;
 
-// TODO: Should just be NSCoding? Or like a dictionary?
-+(Target*) unstringify: (NSString*) str withConfigList: (NSArray*) configs {
-    NSArray* components = [str componentsSeparatedByString:@"~"];
-    NSParameterAssert([components count]);
-    NSString* typeTag = components[0];
-    if([typeTag isEqualToString:@"key"])
-        return [TargetKeyboard unstringifyImpl:components];
-    if([typeTag isEqualToString:@"cfg"])
-        return [TargetConfig unstringifyImpl:components withConfigList:configs];
-    if([typeTag isEqualToString:@"mmove"])
-        return [TargetMouseMove unstringifyImpl:components];
-    if([typeTag isEqualToString:@"mbtn"])
-        return [TargetMouseBtn unstringifyImpl:components];
-    if([typeTag isEqualToString:@"mscroll"])
-        return [TargetMouseScroll unstringifyImpl:components];
-    if([typeTag isEqualToString:@"mtoggle"])
-        return [TargetToggleMouseScope unstringifyImpl:components];
-    
-    NSParameterAssert(NO);
-    return NULL;
++ (NSString *)serializationCode {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
-- (NSString *)stringify {
+- (NSDictionary *)serialize {
     [self doesNotRecognizeSelector:_cmd];
-    return NULL;
+    return nil;    
+}
+
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs {
+    // Don't crash loading old configs (but don't load them either).
+    if (![serialization isKindOfClass:[NSDictionary class]])
+        return nil;
+    NSString *type = serialization[@"type"];
+    for (Class cls in @[[TargetKeyboard class],
+                        [TargetConfig class],
+                        [TargetMouseMove class],
+                        [TargetMouseBtn class],
+                        [TargetMouseScroll class],
+                        [TargetToggleMouseScope class]
+         ]) {
+        if ([type isEqualToString:[cls serializationCode]])
+            return [cls targetDeserialize:serialization withConfigs:configs];
+    }
+    
+    return nil;
 }
 
 - (void)trigger {

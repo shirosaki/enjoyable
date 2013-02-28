@@ -17,7 +17,10 @@
 - (void)trigger;
 - (void)untrigger;
 - (BOOL)update:(JoystickController *)jc;
-- (NSString*) stringify;
-+ (Target *)unstringify:(NSString*)str withConfigList:(NSArray*)configs;
+
+- (NSDictionary *)serialize;
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs;
++ (NSString *)serializationCode;
 
 @end

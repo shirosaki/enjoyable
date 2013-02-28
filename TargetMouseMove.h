@@ -8,12 +8,8 @@
 
 #import "Target.h"
 
-@interface TargetMouseMove : Target {
-    int dir;
-}
+@interface TargetMouseMove : Target
 
-@property(readwrite) int dir;
-
-+(TargetMouseMove*) unstringifyImpl: (NSArray*) comps;
+@property (assign) int dir;
 
 @end

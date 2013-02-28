@@ -13,6 +13,5 @@
 @interface TargetConfig : Target
 
 @property (weak) Config *config;
-+ (TargetConfig *)unstringifyImpl:(NSArray *)comps withConfigList:(NSArray *)configs;
 
 @end

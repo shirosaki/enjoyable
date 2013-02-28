@@ -8,14 +8,9 @@
 
 #import "Target.h"
 
-@interface TargetKeyboard : Target {
-	CGKeyCode vk;
-	NSString* descr;
-}
+@interface TargetKeyboard : Target
 
-@property (readwrite) CGKeyCode vk;
-@property (readwrite, copy) NSString* descr;
-
-+(TargetKeyboard*) unstringifyImpl: (NSArray*) comps;
+@property (assign) CGKeyCode vk;
+@property (readonly) NSString* descr;
 
 @end

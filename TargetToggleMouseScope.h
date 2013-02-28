@@ -10,6 +10,4 @@
 
 @interface TargetToggleMouseScope : Target
 
-+(TargetToggleMouseScope*) unstringifyImpl: (NSArray*) comps;
-
 @end

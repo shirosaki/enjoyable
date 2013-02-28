@@ -13,12 +13,19 @@
 
 @implementation TargetConfig
 
-- (NSString *)stringify {
-    return [[NSString alloc] initWithFormat: @"cfg~%@", self.config.name];
++ (NSString *)serializationCode {
+    return @"cfg";
 }
 
-+ (TargetConfig *)unstringifyImpl:(NSArray *)comps withConfigList:(NSArray *)configs {
-    NSString *name = comps[1];
+- (NSDictionary *)serialize {
+    return self.config
+        ? @{ @"type": @"cfg", @"name": self.config.name }
+        : @{};
+}
+
++ (TargetConfig *)targetDeserialize:(NSDictionary *)serialization
+                        withConfigs:(NSArray *)configs {
+    NSString *name = serialization[@"name"];
     TargetConfig *target = [[TargetConfig alloc] init];
     for (Config *config in configs) {
         if ([config.name isEqualToString:name]) {
@@ -26,7 +33,6 @@
             return target;
         }
     }
-    NSLog(@"Warning: couldn't find matching config to restore from: %@", name);
     return nil;
 }
 

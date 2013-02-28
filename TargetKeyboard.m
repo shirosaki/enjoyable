@@ -7,19 +7,24 @@
 
 #import "TargetKeyboard.h"
 
+#import "KeyInputTextView.h"
+
 @implementation TargetKeyboard
 
-@synthesize vk, descr;
+@synthesize vk;
 
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"key~%d~%@", vk, descr];
++ (NSString *)serializationCode {
+    return @"key";
 }
 
-+(TargetKeyboard*) unstringifyImpl: (NSArray*) comps {
-	NSParameterAssert([comps count] == 3);
-	TargetKeyboard* target = [[TargetKeyboard alloc] init];
-	[target setVk: [comps[1] integerValue]];
-	[target setDescr: comps[2]];
+- (NSDictionary *)serialize {
+    return @{ @"type": @"key", @"key": @(self.vk) };
+}
+
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs {
+	TargetKeyboard *target = [[TargetKeyboard alloc] init];
+    target.vk = [serialization[@"key"] intValue];
 	return target;
 }
 
@@ -33,6 +38,10 @@
 	CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, vk, false);
 	CGEventPost(kCGHIDEventTap, keyUp);
 	CFRelease(keyUp);
+}
+
+- (NSString *)descr {
+    return [KeyInputTextView stringForKeyCode:self.vk];
 }
 
 @end

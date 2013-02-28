@@ -18,14 +18,18 @@
 
 @synthesize dir;
 
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"mmove~%d", dir];
++ (NSString *)serializationCode {
+    return @"mmove";
 }
 
-+(TargetMouseMove*) unstringifyImpl: (NSArray*) comps {
-	NSParameterAssert([comps count] == 2);
-	TargetMouseMove* target = [[TargetMouseMove alloc] init];
-	[target setDir: [comps[1] integerValue]];
+- (NSDictionary *)serialize {
+    return @{ @"type": @"mmove", @"dir": @(self.dir) };
+}
+
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs {
+	TargetMouseMove *target = [[TargetMouseMove alloc] init];
+    target.dir = [serialization[@"dir"] intValue];
 	return target;
 }
 

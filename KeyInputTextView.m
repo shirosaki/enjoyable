@@ -33,7 +33,7 @@
     return self.vk >= 0;
 }
 
-- (NSString *)stringForKeyCode:(int)keycode {
++ (NSString *)stringForKeyCode:(int)keycode {
     switch(keycode) {
         case   -1: return @"";
         case 0x7a: return @"F1";
@@ -176,7 +176,7 @@
 
 - (void)setVk:(int)key {
     vk = key;
-    descr = [self stringForKeyCode:key];
+    descr = [KeyInputTextView stringForKeyCode:key];
     [self setStringValue:descr];
     if (self.hasKey)
         [targetController keyChanged];

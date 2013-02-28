@@ -12,14 +12,18 @@
 
 @synthesize which;
 
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"mbtn~%u", which];
++ (NSString *)serializationCode {
+    return @"mbtn";
 }
 
-+(TargetMouseBtn*) unstringifyImpl: (NSArray*) comps {
-	NSParameterAssert([comps count] == 2);
-	TargetMouseBtn* target = [[TargetMouseBtn alloc] init];
-	[target setWhich: [comps[1] integerValue]];
+- (NSDictionary *)serialize {
+    return @{ @"type": @"mbtn", @"which": @(self.which) };
+}
+
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs {
+	TargetMouseBtn *target = [[TargetMouseBtn alloc] init];
+    target.which = [serialization[@"which"] intValue];
 	return target;
 }
 

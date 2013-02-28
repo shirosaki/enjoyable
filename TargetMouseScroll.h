@@ -8,12 +8,8 @@
 
 #import "Target.h"
 
-@interface TargetMouseScroll : Target {
-    int howMuch;
-}
+@interface TargetMouseScroll : Target
 
-@property(readwrite) int howMuch;
-
-+(TargetMouseScroll*) unstringifyImpl: (NSArray*) comps;
+@property (assign) int howMuch;
 
 @end

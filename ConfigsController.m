@@ -94,10 +94,8 @@
 	return [configs[index] name];
 }
 
-- (void)tableView:(NSTableView *)view setObjectValue:obj forTableColumn:(NSTableColumn *)col row:(int)index {
-	/* ugly hack so stringification doesn't fail */
-	NSString* newName = [(NSString*)obj stringByReplacingOccurrencesOfString: @"~" withString: @""];
-	[(Config *)configs[index] setName:newName];
+- (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(int)index {
+	[(Config *)configs[index] setName:obj];
 	[targetController refreshConfigsPreservingSelection:YES];
 	[tableView reloadData];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
@@ -127,7 +125,7 @@
 		cfgInfo[@"name"] = [config name];
 		NSMutableDictionary* cfgEntries = [[NSMutableDictionary alloc] init];
 		for(id key in [config entries]) {
-			cfgEntries[key] = [[config entries][key]stringify];
+			cfgEntries[key] = [[config entries][key] serialize];
 		}
 		cfgInfo[@"entries"] = cfgEntries;
 		[ary addObject: cfgInfo];
@@ -151,7 +149,7 @@
 	for(int i=0; i<[ary count]; i++) {
 		NSDictionary* dict = ary[i][@"entries"];
 		for(id key in dict) {
-			[newConfigs[i] entries][key] = [Target unstringify: dict[key] withConfigList: newConfigs];
+			[newConfigs[i] entries][key] = [Target targetDeserialize:dict[key] withConfigs:newConfigs];
 		}
 	}
 	

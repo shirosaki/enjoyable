@@ -13,16 +13,19 @@
 
 @implementation TargetToggleMouseScope
 
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"mtoggle"];
++ (NSString *)serializationCode {
+    return @"mtoggle";
 }
 
-+(TargetToggleMouseScope*) unstringifyImpl: (NSArray*) comps {
-	NSParameterAssert([comps count] == 1);
-	TargetToggleMouseScope* target = [[TargetToggleMouseScope alloc] init];
+- (NSDictionary *)serialize {
+    return @{ @"type": @"mtoggle" };
+}
+
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs {
+	TargetToggleMouseScope *target = [[TargetToggleMouseScope alloc] init];
 	return target;
 }
-
 - (void)trigger {
     // FIXME: It's hacky to get at the controller this way, but it's
     // also hacky to pass it. Shouldn't need to do either.

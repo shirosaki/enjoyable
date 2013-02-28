@@ -18,6 +18,8 @@
 @property (readonly) BOOL hasKey;
 @property (assign) BOOL enabled;
 
++ (NSString *)stringForKeyCode:(int)keycode;
+
 - (void)clear;
 
 @end

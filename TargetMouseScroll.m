@@ -12,22 +12,25 @@
 
 @synthesize howMuch;
 
--(NSString*) stringify {
-	return [[NSString alloc] initWithFormat: @"mscroll~%d", howMuch];
++ (NSString *)serializationCode {
+    return @"mscroll";
 }
 
-+(TargetMouseScroll*) unstringifyImpl: (NSArray*) comps {
-	NSParameterAssert([comps count] == 2);
-	TargetMouseScroll* target = [[TargetMouseScroll alloc] init];
-	[target setHowMuch: [comps[1] integerValue]];
+- (NSDictionary *)serialize {
+    return @{ @"type": @"mscroll", @"howMuch": @(self.howMuch) };
+}
+
++ (Target *)targetDeserialize:(NSDictionary *)serialization
+                  withConfigs:(NSArray *)configs {
+	TargetMouseScroll *target = [[TargetMouseScroll alloc] init];
+    target.howMuch = [serialization[@"howMuch"] intValue];
 	return target;
 }
-
 -(void) trigger {
     CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
                                                       kCGScrollEventUnitLine,
                                                       1,
-                                                      [self howMuch]);
+                                                      self.howMuch);
     CGEventPost(kCGHIDEventTap, scroll);
     CFRelease(scroll);
 }

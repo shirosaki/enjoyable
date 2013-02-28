@@ -8,12 +8,8 @@
 
 #import "Target.h"
 
-@interface TargetMouseBtn : Target {
-    CGMouseButton which;
-}
+@interface TargetMouseBtn : Target
 
-@property(readwrite) CGMouseButton which;
-
-+(TargetMouseBtn*) unstringifyImpl: (NSArray*) comps;
+@property (assign) CGMouseButton which;
 
 @end
