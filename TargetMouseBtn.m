@@ -10,20 +10,20 @@
 
 @implementation TargetMouseBtn
 
-@synthesize which;
+@synthesize button;
 
 + (NSString *)serializationCode {
     return @"mbtn";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mbtn", @"which": @(self.which) };
+    return @{ @"type": @"mbtn", @"button": @(self.button) };
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
                   withConfigs:(NSArray *)configs {
 	TargetMouseBtn *target = [[TargetMouseBtn alloc] init];
-    target.which = [serialization[@"which"] intValue];
+    target.button = [serialization[@"button"] intValue];
 	return target;
 }
 
@@ -31,11 +31,11 @@
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     NSPoint mouseLoc = [NSEvent mouseLocation];
-    CGEventType eventType = (which == kCGMouseButtonLeft) ? kCGEventLeftMouseDown : kCGEventRightMouseDown;
+    CGEventType eventType = (button == kCGMouseButtonLeft) ? kCGEventLeftMouseDown : kCGEventRightMouseDown;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
-                                               which);
+                                               button);
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
 }
@@ -44,11 +44,11 @@
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     NSPoint mouseLoc = [NSEvent mouseLocation];
-    CGEventType eventType = (which == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
+    CGEventType eventType = (button == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
-                                               which);
+                                               button);
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
 }

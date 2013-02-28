@@ -107,17 +107,17 @@
         }
         case 3: {
             TargetMouseMove *mm = [[TargetMouseMove alloc] init];
-            mm.dir = mouseDirSelect.selectedSegment;
+            mm.axis = mouseDirSelect.selectedSegment;
             return mm;
         }
         case 4: {
             TargetMouseBtn *mb = [[TargetMouseBtn alloc] init];
-            mb.which = mouseBtnSelect.selectedSegment == 0 ? kCGMouseButtonLeft : kCGMouseButtonRight;
+            mb.button = mouseBtnSelect.selectedSegment == 0 ? kCGMouseButtonLeft : kCGMouseButtonRight;
             return mb;
         }
         case 5: {
             TargetMouseScroll *ms = [[TargetMouseScroll alloc] init];
-            ms.howMuch = scrollDirSelect.selectedSegment ? 1 : -1;
+            ms.amount = scrollDirSelect.selectedSegment ? 1 : -1;
             return ms;
         }
         case 6: {
@@ -180,15 +180,15 @@
     }
     else if ([target isKindOfClass:[TargetMouseMove class]]) {
         [radioButtons setState:1 atRow:3 column:0];
-        [mouseDirSelect setSelectedSegment:[(TargetMouseMove *)target dir]];
+        [mouseDirSelect setSelectedSegment:[(TargetMouseMove *)target axis]];
     }
     else if ([target isKindOfClass:[TargetMouseBtn class]]) {
         [radioButtons setState:1 atRow:4 column:0];
-        mouseBtnSelect.selectedSegment = [(TargetMouseBtn *)target which] == kCGMouseButtonLeft ? 0 : 1;
+        mouseBtnSelect.selectedSegment = [(TargetMouseBtn *)target button] == kCGMouseButtonLeft ? 0 : 1;
     }
     else if ([target isKindOfClass:[TargetMouseScroll class]]) {
         [radioButtons setState:1 atRow:5 column:0];
-        scrollDirSelect.selectedSegment = [(TargetMouseScroll *)target howMuch] > 0;
+        scrollDirSelect.selectedSegment = [(TargetMouseScroll *)target amount] > 0;
     }
     else if ([target isKindOfClass:[TargetToggleMouseScope class]]) {
         [radioButtons setState:1 atRow:6 column:0];

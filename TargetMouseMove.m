@@ -18,20 +18,20 @@
     return YES;
 }
 
-@synthesize dir;
+@synthesize axis;
 
 + (NSString *)serializationCode {
     return @"mmove";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mmove", @"dir": @(self.dir) };
+    return @{ @"type": @"mmove", @"axis": @(self.axis) };
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
                   withConfigs:(NSArray *)configs {
 	TargetMouseMove *target = [[TargetMouseMove alloc] init];
-    target.dir = [serialization[@"dir"] intValue];
+    target.axis = [serialization[@"axis"] intValue];
 	return target;
 }
 
@@ -57,7 +57,7 @@
     if ([jc frontWindowOnly])
         speed = 12.f;
     float dx = 0.f, dy = 0.f;
-    if (self.dir == 0)
+    if (axis == 0)
         dx = self.magnitude * speed;
     else
         dy = self.magnitude * speed;

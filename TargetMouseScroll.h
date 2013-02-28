@@ -10,6 +10,6 @@
 
 @interface TargetMouseScroll : Target
 
-@property (assign) int howMuch;
+@property (assign) int amount;
 
 @end

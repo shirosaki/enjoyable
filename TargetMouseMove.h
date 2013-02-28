@@ -10,6 +10,6 @@
 
 @interface TargetMouseMove : Target
 
-@property (assign) int dir;
+@property (assign) int axis;
 
 @end

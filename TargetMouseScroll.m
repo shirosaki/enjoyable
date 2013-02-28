@@ -10,27 +10,27 @@
 
 @implementation TargetMouseScroll
 
-@synthesize howMuch;
+@synthesize amount;
 
 + (NSString *)serializationCode {
     return @"mscroll";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mscroll", @"howMuch": @(self.howMuch) };
+    return @{ @"type": @"mscroll", @"amount": @(self.amount) };
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
                   withConfigs:(NSArray *)configs {
 	TargetMouseScroll *target = [[TargetMouseScroll alloc] init];
-    target.howMuch = [serialization[@"howMuch"] intValue];
+    target.amount = [serialization[@"amount"] intValue];
 	return target;
 }
 -(void) trigger {
     CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
                                                       kCGScrollEventUnitLine,
                                                       1,
-                                                      self.howMuch);
+                                                      self.amount);
     CGEventPost(kCGHIDEventTap, scroll);
     CFRelease(scroll);
 }

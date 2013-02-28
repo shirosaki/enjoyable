@@ -10,6 +10,6 @@
 
 @interface TargetMouseBtn : Target
 
-@property (assign) CGMouseButton which;
+@property (assign) CGMouseButton button;
 
 @end
