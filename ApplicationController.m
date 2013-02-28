@@ -63,6 +63,7 @@
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     for (Config *config in self.configsController.configs)
         [dockMenuBase addItemWithTitle:config.name action:@selector(chooseConfig:) keyEquivalent:@""];
+    [_targetController refreshConfigs];
     [self configChanged];
 }
 

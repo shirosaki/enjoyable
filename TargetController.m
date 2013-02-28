@@ -22,62 +22,73 @@
 
 @implementation TargetController
 
-- (IBAction)radioChanged:(id)sender {
-    NSInteger row, col;
-    [radioButtons getRow:&row column:&col ofCell:sender];
-    [[NSApplication sharedApplication].mainWindow makeFirstResponder:sender];
+- (void)cleanUpInterface {
+    NSInteger row = radioButtons.selectedRow;
     
-    if (row != 1)
+    if (row != 1) {
         keyInput.vk = -1;
+        [keyInput resignIfFirstResponder];
+    }
     
-    if (row != 2)
+    if (row != 2) {
         [configPopup selectItemAtIndex:-1];
-    else if (!configPopup.selectedItem)
+        [configPopup resignIfFirstResponder];
+    } else if (!configPopup.selectedItem)
         [configPopup selectItemAtIndex:0];
     
-    if (row != 3)
+    if (row != 3) {
         mouseDirSelect.selectedSegment = -1;
-    else if (mouseDirSelect.selectedSegment == -1)
+        [mouseDirSelect resignIfFirstResponder];
+    } else if (mouseDirSelect.selectedSegment == -1)
         mouseDirSelect.selectedSegment = 0;
     
-    if (row != 4)
+    if (row != 4) {
         mouseBtnSelect.selectedSegment = -1;
-    else if (mouseBtnSelect.selectedSegment == -1)
+        [mouseBtnSelect resignIfFirstResponder];
+    } else if (mouseBtnSelect.selectedSegment == -1)
         mouseBtnSelect.selectedSegment = 0;
     
-    if (row != 5)
+    if (row != 5) {
         scrollDirSelect.selectedSegment = -1;
-    else if (scrollDirSelect.selectedSegment == -1)
-        scrollDirSelect.selectedSegment = 0;
-    
+        [scrollDirSelect resignIfFirstResponder];
+    } else if (scrollDirSelect.selectedSegment == -1)
+        scrollDirSelect.selectedSegment = 0;    
+}
+
+- (IBAction)radioChanged:(NSView *)sender {
+    [sender.window makeFirstResponder:sender];
+    if (radioButtons.selectedRow == 1)
+        [keyInput.window makeFirstResponder:keyInput];
     [self commit];
 }
 
 - (void)keyChanged {
-    [radioButtons setState:1 atRow:1 column:0];
+    [radioButtons selectCellAtRow:1 column:0];
+    [radioButtons.window makeFirstResponder:radioButtons];
     [self commit];
 }
 
 - (void)configChosen:(id)sender {
-    [radioButtons setState:1 atRow:2 column:0];
+    [radioButtons selectCellAtRow:2 column:0];
+    [configPopup.window makeFirstResponder:configPopup];
     [self commit];
 }
 
-- (void)mdirChanged:(id)sender {
-    [radioButtons setState:1 atRow:3 column:0];
-    [[NSApplication sharedApplication].mainWindow makeFirstResponder:sender];
+- (void)mdirChanged:(NSView *)sender {
+    [radioButtons selectCellAtRow:3 column:0];
+    [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
-- (void)mbtnChanged:(id)sender {
-    [radioButtons setState:1 atRow:4 column:0];
-    [[NSApplication sharedApplication].mainWindow makeFirstResponder:sender];
+- (void)mbtnChanged:(NSView *)sender {
+    [radioButtons selectCellAtRow:4 column:0];
+    [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
-- (void)sdirChanged:(id)sender {
-    [radioButtons setState:1 atRow:5 column:0];
-    [[NSApplication sharedApplication].mainWindow makeFirstResponder:sender];
+- (void)sdirChanged:(NSView *)sender {
+    [radioButtons selectCellAtRow:5 column:0];
+    [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
@@ -100,8 +111,6 @@
             break;
         case 2: {
             TargetConfig *c = [[TargetConfig alloc] init];
-            if (!configPopup.selectedItem)
-                [configPopup selectItemAtIndex:0];
             c.config = configsController.configs[configPopup.indexOfSelectedItem];
             return c;
         }
@@ -130,14 +139,9 @@
 }
 
 - (void)commit {
+    [self cleanUpInterface];
     configsController.currentConfig[joystickController.selectedAction] = [self makeTarget];
     [configsController save];
-}
-
-- (void)reset {
-    [keyInput clear];
-    [radioButtons setState:1 atRow:0 column:0];
-    [self refreshConfigsPreservingSelection:NO];
 }
 
 - (BOOL)enabled {
@@ -153,64 +157,65 @@
     [scrollDirSelect setEnabled:enabled];
 }
 
-- (void)load {
-    JSAction *act = joystickController.selectedAction;
-    if (!act) {
+- (void)loadTarget:(Target *)target forAction:(JSAction *)action {
+    if (!action) {
         self.enabled = NO;
         title.stringValue = @"";
-        return;
     } else {
         self.enabled = YES;
+        NSString *actFullName = action.name;
+        for (JSAction *cur = action.base; cur; cur = cur.base) {
+            actFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, actFullName];
+        }
+        title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, actFullName];
     }
-    
-    Target *target = [self currentTarget];
-    NSString *actFullName = act.name;
-    for (JSAction *cur = act.base; cur; cur = cur.base) {
-        actFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, actFullName];
-    }
-    title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, actFullName];
-    
+
     if ([target isKindOfClass:[TargetKeyboard class]]) {
-        [radioButtons setState:1 atRow:1 column:0];
+        [radioButtons selectCellAtRow:1 column:0];
         keyInput.vk = [(TargetKeyboard*)target vk];
     } else if ([target isKindOfClass:[TargetConfig class]]) {
-        [radioButtons setState:1 atRow:2 column:0];
+        [radioButtons selectCellAtRow:2 column:0];
         [configPopup selectItemAtIndex:[configsController.configs
                                         indexOfObject:[(TargetConfig *)target config]]];
     }
     else if ([target isKindOfClass:[TargetMouseMove class]]) {
-        [radioButtons setState:1 atRow:3 column:0];
+        [radioButtons selectCellAtRow:3 column:0];
         [mouseDirSelect setSelectedSegment:[(TargetMouseMove *)target axis]];
     }
     else if ([target isKindOfClass:[TargetMouseBtn class]]) {
-        [radioButtons setState:1 atRow:4 column:0];
+        [radioButtons selectCellAtRow:4 column:0];
         mouseBtnSelect.selectedSegment = [(TargetMouseBtn *)target button] == kCGMouseButtonLeft ? 0 : 1;
     }
     else if ([target isKindOfClass:[TargetMouseScroll class]]) {
-        [radioButtons setState:1 atRow:5 column:0];
+        [radioButtons selectCellAtRow:5 column:0];
         scrollDirSelect.selectedSegment = [(TargetMouseScroll *)target amount] > 0;
     }
     else if ([target isKindOfClass:[TargetToggleMouseScope class]]) {
-        [radioButtons setState:1 atRow:6 column:0];
+        [radioButtons selectCellAtRow:6 column:0];
     } else {
-        [radioButtons setState:1 atRow:0 column:0];
+        [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
     }
+    [self cleanUpInterface];
+}
+
+- (void)loadCurrent {
+    [self loadTarget:[self currentTarget] forAction:joystickController.selectedAction];
 }
 
 - (void)focusKey {
-    Target *currentTarget = [self currentTarget];
-    if (!currentTarget || [currentTarget isKindOfClass:[TargetKeyboard class]])
-        [[[NSApplication sharedApplication] mainWindow] makeFirstResponder:keyInput];
+    if (radioButtons.selectedRow <= 1)
+        [keyInput.window makeFirstResponder:keyInput];
     else
-        [keyInput resignFirstResponder];
+        [keyInput resignIfFirstResponder];
 }
 
-- (void)refreshConfigsPreservingSelection:(BOOL)preserve  {
-    int initialIndex = [configPopup indexOfSelectedItem];
+- (void)refreshConfigs {
+    // TODO: This doesn't work when removing configs.
+    int initialIndex = configPopup.indexOfSelectedItem;
     [configPopup removeAllItems];
     for (Config *config in configsController.configs)
         [configPopup addItemWithTitle:config.name];
-    [configPopup selectItemAtIndex:preserve ? initialIndex : -1];
+    [configPopup selectItemAtIndex:initialIndex];
 }
 
 @end

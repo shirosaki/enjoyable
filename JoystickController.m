@@ -127,7 +127,6 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     for (Target *target in [runningTargets copy]) {
         if (![target update:self]) {
             [runningTargets removeObject:target];
-            NSLog(@"Removing action, now running %lu.", runningTargets.count);
         }
     }
     if (!runningTargets.count) {
@@ -194,9 +193,8 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     return [item name];
 }
 
-- (void)outlineViewSelectionDidChange: (NSNotification*) notification {
-    [targetController reset];
-    [targetController load];
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification {
+    [targetController loadCurrent];
 }
 
 @end

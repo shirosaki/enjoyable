@@ -27,9 +27,8 @@
 @property (assign) BOOL enabled;
 
 - (void)keyChanged;
-- (void)load;
-- (void)reset;
-- (void)refreshConfigsPreservingSelection:(BOOL)preserve;
+- (void)loadCurrent;
+- (void)refreshConfigs;
 - (IBAction)configChosen:(id)sender;
 - (IBAction)radioChanged:(id)sender;
 - (IBAction)mdirChanged:(id)sender;

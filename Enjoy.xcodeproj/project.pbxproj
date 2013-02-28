@@ -32,6 +32,7 @@
 		D594BF830FAE9661007A85F2 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BF820FAE9661007A85F2 /* ApplicationController.m */; };
 		D5F809710FB093400006A4DE /* TargetConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F809700FB093400006A4DE /* TargetConfig.m */; };
 		D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D5617A080FAEAF8300928B3A /* icon.icns */; };
+		EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,8 @@
 		D594BF820FAE9661007A85F2 /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
 		D5F8096F0FB093400006A4DE /* TargetConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetConfig.h; sourceTree = "<group>"; };
 		D5F809700FB093400006A4DE /* TargetConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetConfig.m; sourceTree = "<group>"; };
+		EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+FirstResponder.h"; sourceTree = "<group>"; };
+		EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+FirstResponder.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 			children = (
 				32CA4F630368D1EE00C91783 /* Enjoy_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */,
+				EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 				8B7E476C15C314A200C588FA /* TargetMouseBtn.m in Sources */,
 				8BEFAD9C15C46BFF00823AEC /* TargetMouseScroll.m in Sources */,
 				8BEFADA015C476DC00823AEC /* TargetToggleMouseScope.m in Sources */,
+				EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

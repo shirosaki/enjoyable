@@ -48,9 +48,8 @@
         return;
     manualConfig = config;
     _currentConfig = config;
-    [targetController reset];
     [removeButton setEnabled:_configs[0] != config];
-    [targetController load];
+    [targetController loadCurrent];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_configs indexOfObject:config]] byExtendingSelection:NO];
 }
@@ -91,7 +90,6 @@
 
 - (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(int)index {
     [(Config *)_configs[index] setName:obj];
-    [targetController refreshConfigsPreservingSelection:YES];
     [tableView reloadData];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 }

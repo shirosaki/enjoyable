@@ -720,7 +720,7 @@
 											<int key="NSNumCols">1</int>
 											<array class="NSMutableArray" key="NSCells">
 												<object class="NSButtonCell" id="177186415">
-													<int key="NSCellFlags">-1543503872</int>
+													<int key="NSCellFlags">603979776</int>
 													<int key="NSCellFlags2">0</int>
 													<string key="NSContents">Do nothing</string>
 													<reference key="NSSupport" ref="45863614"/>
@@ -1012,7 +1012,7 @@ ZSwgSW5jLiwgMjAwOQA</bytes>
 											</array>
 											<string key="NSCellSize">{201, 32}</string>
 											<string key="NSIntercellSpacing">{4, 2}</string>
-											<int key="NSMatrixFlags">1151868928</int>
+											<int key="NSMatrixFlags">1353195520</int>
 											<string key="NSCellClass">NSActionCell</string>
 											<object class="NSButtonCell" key="NSProtoCell" id="632642090">
 												<int key="NSCellFlags">603979776</int>
@@ -1064,7 +1064,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
 											</object>
-											<reference key="NSSelectedCell" ref="177186415"/>
+											<int key="NSSelectedRow">-1</int>
+											<int key="NSSelectedCol">-1</int>
 											<object class="NSColor" key="NSBackgroundColor" id="473846075">
 												<int key="NSColorSpace">6</int>
 												<string key="NSCatalogName">System</string>

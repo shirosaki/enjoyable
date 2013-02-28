@@ -7,3 +7,5 @@
 #endif
 
 #import <IOKit/hid/IOHIDLib.h>
+
+#import "NSView+FirstResponder.h"

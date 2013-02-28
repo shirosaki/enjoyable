@@ -25,6 +25,8 @@
 
 - (void)clear {
     self.vk = -1;
+    [targetController keyChanged];
+    [self resignIfFirstResponder];
 }
 
 - (BOOL)hasKey {
@@ -168,15 +170,9 @@
     return [super resignFirstResponder];
 }
 
-- (void)setBackgroundColor:(NSColor *)color {
-    [super setBackgroundColor:color];
-}
-
 - (void)setVk:(int)key {
     vk = key;
     [self setStringValue:[KeyInputTextView stringForKeyCode:key]];
-    if (self.hasKey)
-        [targetController keyChanged];
 }
 
 - (int)vk {
@@ -186,20 +182,22 @@
 - (void)keyDown:(NSEvent *)evt {
     if (!evt.isARepeat) {
         self.vk = evt.keyCode;
-        [self.window makeFirstResponder:nil];
+        [targetController keyChanged];
+        [self resignIfFirstResponder];
     }
 }
 
 - (void)flagsChanged:(NSEvent *)evt {
     self.vk = evt.keyCode;
-    [[self window] makeFirstResponder:nil];
+    [targetController keyChanged];
+    [self resignIfFirstResponder];
 }
 
 - (void)setEnabled:(BOOL)newEnabled {
     enabled = newEnabled;
 
-    if (!enabled && window.firstResponder == self)
-        [window makeFirstResponder:nil];
+    if (!enabled)
+        [self resignIfFirstResponder];
 }
 
 - (BOOL)enabled {
