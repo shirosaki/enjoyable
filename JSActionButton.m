@@ -8,17 +8,14 @@
 #import "JSActionButton.h"
 
 @implementation JSActionButton {
-    BOOL active;
+    int _max;
 }
 
-@synthesize max;
-@synthesize active;
-
-- (id)initWithName:(NSString *)name_ idx:(int)idx max:(int)max_ {
+- (id)initWithName:(NSString *)name idx:(int)idx max:(int)max {
     if ((self = [super init])) {
-        self.max = max_;
-        if (name_.length)
-            self.name = [NSString stringWithFormat:@"Button %d - %@", idx, name_];
+        _max = max;
+        if (name.length)
+            self.name = [NSString stringWithFormat:@"Button %d - %@", idx, name];
         else
             self.name = [NSString stringWithFormat:@"Button %d", idx];
     }
@@ -26,11 +23,11 @@
 }
 
 - (id)findSubActionForValue:(IOHIDValueRef)val {
-    return (IOHIDValueGetIntegerValue(val) == max) ? self : nil;
+    return (IOHIDValueGetIntegerValue(val) == _max) ? self : nil;
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {
-    active = IOHIDValueGetIntegerValue(value) == max;
+    self.active = IOHIDValueGetIntegerValue(value) == _max;
 }
 
 @end

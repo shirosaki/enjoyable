@@ -11,6 +11,5 @@
 @interface TargetKeyboard : Target
 
 @property (assign) CGKeyCode vk;
-@property (readonly) NSString* descr;
 
 @end

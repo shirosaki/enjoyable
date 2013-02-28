@@ -18,8 +18,6 @@
     BOOL running;
 }
 
-@synthesize magnitude;
-
 + (NSString *)serializationCode {
     [self doesNotRecognizeSelector:_cmd];
     return nil;

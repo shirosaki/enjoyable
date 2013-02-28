@@ -10,14 +10,12 @@
 
 @implementation TargetMouseScroll
 
-@synthesize amount;
-
 + (NSString *)serializationCode {
     return @"mscroll";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mscroll", @"amount": @(self.amount) };
+    return @{ @"type": @"mscroll", @"amount": @(_amount) };
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
@@ -30,7 +28,7 @@
     CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
                                                       kCGScrollEventUnitLine,
                                                       1,
-                                                      self.amount);
+                                                      _amount);
     CGEventPost(kCGHIDEventTap, scroll);
     CFRelease(scroll);
 }

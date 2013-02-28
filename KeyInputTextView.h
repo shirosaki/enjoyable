@@ -13,7 +13,6 @@
 	IBOutlet TargetController *targetController;
 }
 
-@property (copy) NSString* descr;
 @property (assign) int vk;
 @property (readonly) BOOL hasKey;
 @property (assign) BOOL enabled;

@@ -18,8 +18,8 @@
 }
 
 - (NSDictionary *)serialize {
-    return self.config
-        ? @{ @"type": @"cfg", @"name": self.config.name }
+    return _config
+        ? @{ @"type": @"cfg", @"name": _config.name }
         : @{};
 }
 
@@ -37,7 +37,7 @@
 }
 
 - (void)trigger {
-    [[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsController] activateConfig:self.config];
+    [[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsController] activateConfig:_config];
 }
 
 @end

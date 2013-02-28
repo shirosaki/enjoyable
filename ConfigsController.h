@@ -10,21 +10,18 @@
 @class TargetController;
 
 @interface ConfigsController : NSObject {
-	IBOutlet NSButton *removeButton;
-	IBOutlet NSTableView *tableView;
-	IBOutlet TargetController *targetController;
+    IBOutlet NSButton *removeButton;
+    IBOutlet NSTableView *tableView;
+    IBOutlet TargetController *targetController;
 }
+
+@property (readonly) Config *currentConfig;
+@property (readonly) NSArray *configs;
 
 - (IBAction)addPressed:(id)sender;
 - (IBAction)removePressed:(id)sender;
 - (void)activateConfig:(Config *)config;
 - (void)activateConfigForProcess:(NSString *)processName;
-
-- (NSDictionary *)dumpAll;
-- (void)loadAllFrom:(NSDictionary*) dict;
-
-@property (readonly) Config *currentConfig;
-@property (readonly) NSArray *configs;
 
 - (void)save;
 - (void)load;

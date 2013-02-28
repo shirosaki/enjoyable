@@ -18,14 +18,12 @@
     return YES;
 }
 
-@synthesize axis;
-
 + (NSString *)serializationCode {
     return @"mmove";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mmove", @"axis": @(self.axis) };
+    return @{ @"type": @"mmove", @"axis": @(_axis) };
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
@@ -57,7 +55,7 @@
     if ([jc frontWindowOnly])
         speed = 12.f;
     float dx = 0.f, dy = 0.f;
-    if (axis == 0)
+    if (_axis == 0)
         dx = self.magnitude * speed;
     else
         dy = self.magnitude * speed;

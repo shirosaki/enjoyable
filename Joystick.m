@@ -60,28 +60,24 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     return children;
 }
 
-@implementation Joystick
-
-@synthesize vendorId;
-@synthesize productId;
-@synthesize productName;
-@synthesize index;
-@synthesize device;
-@synthesize children;
+@implementation Joystick {
+    int vendorId;
+    int productId;
+}
 
 - (id)initWithDevice:(IOHIDDeviceRef)dev {
     if ((self = [super init])) {
         self.device = dev;
         self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
-        self.vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
-        self.productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
+        vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
+        productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
         self.children = ActionsForElement(dev, self);
     }
     return self;
 }
 
 - (NSString *)name {
-    return [NSString stringWithFormat:@"%@ #%d", productName, index];
+    return [NSString stringWithFormat:@"%@ #%d", _productName, _index];
 }
 
 - (id)base {
@@ -89,11 +85,11 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
 }
 
 - (NSString *)uid {
-    return [NSString stringWithFormat: @"%d:%d:%d", vendorId, productId, index];
+    return [NSString stringWithFormat: @"%d:%d:%d", vendorId, productId, _index];
 }
 
 - (JSAction *)findActionByCookie:(void *)cookie {
-    for (JSAction *child in children)
+    for (JSAction *child in _children)
         if (child.cookie == cookie)
             return child;
     return nil;

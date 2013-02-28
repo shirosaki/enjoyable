@@ -14,25 +14,22 @@
 #import "TargetController.h"
 
 @implementation ConfigsController {
-    NSMutableArray *configs;
+    NSMutableArray *_configs;
     Config *manualConfig;
 }
 
-@synthesize currentConfig;
-@synthesize configs;
-
 - (id)init {
     if ((self = [super init])) {
-        configs = [[NSMutableArray alloc] init];
-        currentConfig = [[Config alloc] initWithName:@"(default)"];
-        manualConfig = currentConfig;
-        [configs addObject:currentConfig];
+        _configs = [[NSMutableArray alloc] init];
+        _currentConfig = [[Config alloc] initWithName:@"(default)"];
+        manualConfig = _currentConfig;
+        [_configs addObject:_currentConfig];
     }
     return self;
 }
 
 - (Config *)objectForKeyedSubscript:(NSString *)name {
-    for (Config *config in configs)
+    for (Config *config in _configs)
         if ([name isEqualToString:config.name])
             return config;
     return nil;
@@ -47,37 +44,37 @@
 - (void)activateConfig:(Config *)config {
     if (!config)
         config = manualConfig;
-    if (currentConfig == config)
+    if (_currentConfig == config)
         return;
     manualConfig = config;
-    currentConfig = config;
+    _currentConfig = config;
     [targetController reset];
-    [removeButton setEnabled:configs[0] != config];
+    [removeButton setEnabled:_configs[0] != config];
     [targetController load];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[configs indexOfObject:config]] byExtendingSelection:NO];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_configs indexOfObject:config]] byExtendingSelection:NO];
 }
 
 - (IBAction)addPressed:(id)sender {
     Config *newConfig = [[Config alloc] initWithName:@"Untitled"];
-    [configs addObject:newConfig];
+    [_configs addObject:newConfig];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
     [tableView reloadData];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:configs.count - 1] byExtendingSelection:NO];
-    [tableView editColumn:0 row:[configs count] - 1 withEvent:nil select:YES];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
+    [tableView editColumn:0 row:[_configs count] - 1 withEvent:nil select:YES];
 }
 
 - (IBAction)removePressed:(id)sender {
     if (tableView.selectedRow == 0)
         return;
     
-    Config *toRemove = configs[tableView.selectedRow];
-    [configs removeObjectAtIndex:tableView.selectedRow];
+    Config *toRemove = _configs[tableView.selectedRow];
+    [_configs removeObjectAtIndex:tableView.selectedRow];
     
-    if (toRemove == currentConfig)
-        currentConfig = configs[0];
+    if (toRemove == _currentConfig)
+        _currentConfig = _configs[0];
     if (toRemove == manualConfig)
-        manualConfig = configs[0];
+        manualConfig = _configs[0];
     
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
     [tableView reloadData];
@@ -85,22 +82,22 @@
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notify {
     if (tableView.selectedRow >= 0)
-        [self activateConfig:configs[tableView.selectedRow]];
+        [self activateConfig:_configs[tableView.selectedRow]];
 }
 
 - (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(int)index {
-    return [configs[index] name];
+    return [_configs[index] name];
 }
 
 - (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(int)index {
-    [(Config *)configs[index] setName:obj];
+    [(Config *)_configs[index] setName:obj];
     [targetController refreshConfigsPreservingSelection:YES];
     [tableView reloadData];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 }
 
 - (int)numberOfRowsInTableView:(NSTableView*)table {
-    return [configs count];
+    return [_configs count];
 }
 
 - (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(int)index {
@@ -117,8 +114,8 @@
 }
 
 - (NSDictionary *)dumpAll {
-    NSMutableArray *ary = [[NSMutableArray alloc] initWithCapacity:configs.count];
-    for (Config *config in configs) {
+    NSMutableArray *ary = [[NSMutableArray alloc] initWithCapacity:_configs.count];
+    for (Config *config in _configs) {
         NSMutableDictionary* cfgEntries = [[NSMutableDictionary alloc] initWithCapacity:config.entries.count];
         for (id key in config.entries)
             cfgEntries[key] = [config.entries[key] serialize];
@@ -126,7 +123,7 @@
                           @"entries": cfgEntries,
                         }];
     }
-    NSUInteger current = currentConfig ? [configs indexOfObject:currentConfig] : 0;
+    NSUInteger current = _currentConfig ? [_configs indexOfObject:_currentConfig] : 0;
     return @{ @"configurationList": ary,
               @"selectedConfiguration": @(current) };
 }
@@ -153,10 +150,10 @@
         int current = [envelope[@"selectedConfiguration"] unsignedIntValue];
         if (current >= newConfigs.count)
             current = 0;
-        configs = newConfigs;
+        _configs = newConfigs;
         [tableView reloadData];
         [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
-        [self activateConfig:configs[current]];
+        [self activateConfig:_configs[current]];
     }
 }
 

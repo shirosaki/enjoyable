@@ -10,8 +10,6 @@
 
 @interface Joystick : NSObject
 
-@property (assign) int vendorId;
-@property (assign) int productId;
 @property (assign) int index;
 @property (copy) NSString *productName;
 @property (assign) IOHIDDeviceRef device;

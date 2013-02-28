@@ -14,8 +14,6 @@
     BOOL enabled;
 }
 
-@synthesize descr;
-
 - (id)initWithFrame:(NSRect)frameRect {
     if ((self = [super initWithFrame:frameRect])) {
         self.alignment = NSCenterTextAlignment;
@@ -157,7 +155,7 @@
 }
 
 - (BOOL)acceptsFirstResponder {
-    return enabled;
+    return self.enabled;
 }
 
 - (BOOL)becomeFirstResponder {
@@ -176,8 +174,7 @@
 
 - (void)setVk:(int)key {
     vk = key;
-    descr = [KeyInputTextView stringForKeyCode:key];
-    [self setStringValue:descr];
+    [self setStringValue:[KeyInputTextView stringForKeyCode:key]];
     if (self.hasKey)
         [targetController keyChanged];
 }
@@ -189,7 +186,7 @@
 - (void)keyDown:(NSEvent *)evt {
     if (!evt.isARepeat) {
         self.vk = evt.keyCode;
-        [[self window] makeFirstResponder:nil];
+        [self.window makeFirstResponder:nil];
     }
 }
 

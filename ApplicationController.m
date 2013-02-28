@@ -16,10 +16,6 @@
     BOOL active;
 }
 
-@synthesize jsController;
-@synthesize targetController;
-@synthesize configsController;
-
 - (void)didSwitchApplication:(NSNotification *)notification {
     NSRunningApplication *currentApp = notification.userInfo[NSWorkspaceApplicationKey];
     [self.configsController activateConfigForProcess:currentApp.localizedName];
@@ -81,6 +77,6 @@
 - (void)chooseConfig:(id)sender {
     int idx = [dockMenuBase indexOfItem:sender] - [self firstConfigMenuIndex];
     Config *chosen = self.configsController.configs[idx];
-    [configsController activateConfig:chosen];
+    [_configsController activateConfig:chosen];
 }
 @end

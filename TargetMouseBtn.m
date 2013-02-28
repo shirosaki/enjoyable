@@ -10,14 +10,12 @@
 
 @implementation TargetMouseBtn
 
-@synthesize button;
-
 + (NSString *)serializationCode {
     return @"mbtn";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mbtn", @"button": @(self.button) };
+    return @{ @"type": @"mbtn", @"button": @(_button) };
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
@@ -31,11 +29,11 @@
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     NSPoint mouseLoc = [NSEvent mouseLocation];
-    CGEventType eventType = (button == kCGMouseButtonLeft) ? kCGEventLeftMouseDown : kCGEventRightMouseDown;
+    CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseDown : kCGEventRightMouseDown;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
-                                               button);
+                                               _button);
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
 }
@@ -44,11 +42,11 @@
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     NSPoint mouseLoc = [NSEvent mouseLocation];
-    CGEventType eventType = (button == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
+    CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
-                                               button);
+                                               _button);
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
 }

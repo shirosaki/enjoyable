@@ -20,15 +20,9 @@
     NSMutableArray *runningTargets;
 }
 
-@synthesize joysticks;
-@synthesize selectedAction;
-@synthesize frontWindowOnly;
-@synthesize mouseLoc;
-@synthesize sendingRealEvents;
-
 - (id)init {
     if ((self = [super init])) {
-        joysticks = [[NSMutableArray alloc] initWithCapacity:16];
+        _joysticks = [[NSMutableArray alloc] initWithCapacity:16];
         runningTargets = [[NSMutableArray alloc] initWithCapacity:32];
     }
     return self;
@@ -112,7 +106,7 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
 }
 
 - (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device {
-    for (Joystick *js in joysticks)
+    for (Joystick *js in _joysticks)
         if (js.device == device)
             return js;
     return nil;
@@ -183,7 +177,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 }
 
 - (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
-    return item ? [[item children] count] : [joysticks count];
+    return item ? [[item children] count] : _joysticks.count;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
@@ -191,7 +185,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item {
-    return item ? [item children][index] : joysticks[index];
+    return item ? [item children][index] : _joysticks[index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item  {

@@ -9,12 +9,6 @@
 
 @implementation JSAction
 
-@synthesize cookie;
-@synthesize children;
-@synthesize base;
-@synthesize name;
-@synthesize active;
-
 - (id)initWithName:(NSString *)newName base:(JSAction *)newBase {
     if ((self = [super init])) {
         self.name = newName;
@@ -28,7 +22,7 @@
 }
 
 - (NSString *)uid {
-    return [NSString stringWithFormat:@"%@~%@", [self.base uid], self.name];
+    return [NSString stringWithFormat:@"%@~%@", [_base uid], _name];
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {

@@ -12,6 +12,4 @@
 
 - (id)initWithName:(NSString *)name idx:(int)idx max:(int)max;
 
-@property (assign) int max;
-
 @end
