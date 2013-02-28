@@ -55,6 +55,8 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
         action.cookie = IOHIDElementGetCookie(element);
         [children addObject:action];
     }
+
+    CFRelease(elements);
     return children;
 }
 
