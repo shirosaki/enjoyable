@@ -189,7 +189,11 @@
 }
 
 -(void) focusKey {
-	[[[NSApplication sharedApplication] mainWindow] makeFirstResponder: keyInput];
+    Target *currentTarget = configsController.currentConfig[currentJsaction];
+    if (!currentTarget || [currentTarget isKindOfClass:[TargetKeyboard class]])
+        [[[NSApplication sharedApplication] mainWindow] makeFirstResponder: keyInput];
+    else
+        [keyInput resignFirstResponder];
 }
 
 -(void) refreshConfigsPreservingSelection: (BOOL) preserve  {

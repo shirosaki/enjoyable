@@ -17,7 +17,6 @@
 
 @implementation JoystickController {
     IOHIDManagerRef hidManager;
-    BOOL programmaticallySelecting;
     NSTimer *continuousTimer;
 }
 
@@ -84,8 +83,8 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
             return;
         
         [controller expandRecursive:handler];
-        controller->programmaticallySelecting = YES;
         [controller->outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[controller->outlineView rowForItem:handler]] byExtendingSelection: NO];
+        [controller->targetController focusKey];
     }
 }
 
@@ -192,9 +191,6 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 - (void)outlineViewSelectionDidChange: (NSNotification*) notification {
     [targetController reset];
     [targetController load];
-    if (programmaticallySelecting)
-        [targetController focusKey];
-    programmaticallySelecting = NO;
 }
 
 @end
