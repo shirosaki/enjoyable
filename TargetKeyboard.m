@@ -29,13 +29,13 @@
 }
 
 -(void) trigger {
-	CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, vk, true);
+	CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, vk, YES);
 	CGEventPost(kCGHIDEventTap, keyDown);
 	CFRelease(keyDown);
 }
 
 -(void) untrigger {
-	CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, vk, false);
+	CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, vk, NO);
 	CGEventPost(kCGHIDEventTap, keyUp);
 	CFRelease(keyUp);
 }

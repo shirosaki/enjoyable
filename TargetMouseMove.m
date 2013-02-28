@@ -15,7 +15,7 @@
 }
 
 -(BOOL) isContinuous {
-    return true;
+    return YES;
 }
 
 @synthesize dir;
