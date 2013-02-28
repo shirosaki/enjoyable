@@ -454,7 +454,7 @@
 															<string key="NSFrameSize">{200, 298}</string>
 															<reference key="NSSuperview" ref="698362889"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="1036252745"/>
+															<reference key="NSNextKeyView" ref="892486973"/>
 															<bool key="NSEnabled">YES</bool>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -586,7 +586,7 @@
 											<string key="NSFrameSize">{202, 300}</string>
 											<reference key="NSSuperview" ref="977242492"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="892486973"/>
+											<reference key="NSNextKeyView" ref="698362889"/>
 											<int key="NSsFlags">133650</int>
 											<reference key="NSVScroller" ref="1036252745"/>
 											<reference key="NSHScroller" ref="892486973"/>
@@ -650,7 +650,6 @@
 											<string key="NSFrame">{{227, 55}, {180, 24}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSSegmentedCell" key="NSCell" id="301345285">
@@ -716,7 +715,6 @@
 											<string key="NSFrame">{{20, 16}, {201, 236}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<int key="NSNumRows">7</int>
 											<int key="NSNumCols">1</int>
@@ -1392,10 +1390,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="NSClassName">TargetController</string>
 			</object>
 			<object class="NSButton" id="735675040">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<string key="NSFrameSize">{82, 32}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSButtonCell" key="NSCell" id="835359972">
@@ -1699,22 +1696,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">radioKey</string>
-						<reference key="source" ref="801536542"/>
-						<reference key="destination" ref="387494389"/>
-					</object>
-					<int key="connectionID">690</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">radioNoAction</string>
-						<reference key="source" ref="801536542"/>
-						<reference key="destination" ref="177186415"/>
-					</object>
-					<int key="connectionID">691</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">radioButtons</string>
 						<reference key="source" ref="801536542"/>
 						<reference key="destination" ref="120408205"/>
@@ -1760,14 +1741,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="194275224"/>
 					</object>
 					<int key="connectionID">714</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">radioConfig</string>
-						<reference key="source" ref="801536542"/>
-						<reference key="destination" ref="339215895"/>
-					</object>
-					<int key="connectionID">715</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2657,7 +2630,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">KeyInputTextView</string>
-					<string key="superclassName">NSTextView</string>
+					<string key="superclassName">NSTextField</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="targetController">TargetController</string>
 						<string key="window">NSWindow</string>
@@ -2717,9 +2690,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="mouseBtnSelect">NSSegmentedControl</string>
 						<string key="mouseDirSelect">NSSegmentedControl</string>
 						<string key="radioButtons">NSMatrix</string>
-						<string key="radioConfig">NSButtonCell</string>
-						<string key="radioKey">NSButtonCell</string>
-						<string key="radioNoAction">NSButtonCell</string>
 						<string key="scrollDirSelect">NSSegmentedControl</string>
 						<string key="title">NSTextField</string>
 					</dictionary>
@@ -2751,18 +2721,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="IBToOneOutletInfo" key="radioButtons">
 							<string key="name">radioButtons</string>
 							<string key="candidateClassName">NSMatrix</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="radioConfig">
-							<string key="name">radioConfig</string>
-							<string key="candidateClassName">NSButtonCell</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="radioKey">
-							<string key="name">radioKey</string>
-							<string key="candidateClassName">NSButtonCell</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="radioNoAction">
-							<string key="name">radioNoAction</string>
-							<string key="candidateClassName">NSButtonCell</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="scrollDirSelect">
 							<string key="name">scrollDirSelect</string>

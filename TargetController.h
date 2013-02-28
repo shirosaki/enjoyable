@@ -14,7 +14,6 @@
 
 @interface TargetController : NSObject {
 	IBOutlet KeyInputTextView* keyInput;
-	IBOutlet NSButtonCell *radioNoAction, *radioKey, *radioConfig;
 	IBOutlet NSMatrix* radioButtons;
     IBOutlet NSSegmentedControl* mouseDirSelect;
     IBOutlet NSSegmentedControl* mouseBtnSelect;
@@ -30,7 +29,6 @@
 -(void) load;
 -(void) commit;
 -(void) reset;
--(Target*) state;
 -(void) refreshConfigsPreservingSelection: (BOOL) preserve;
 -(IBAction)configChosen:(id)sender;
 -(IBAction)radioChanged:(id)sender;
@@ -39,6 +37,6 @@
 -(IBAction)sdirChanged:(id)sender;
 -(void) focusKey;
 
-@property(readwrite) BOOL enabled;
+@property (assign) BOOL enabled;
 
 @end
