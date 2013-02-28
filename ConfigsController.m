@@ -24,8 +24,7 @@
 - (id)init {
     if ((self = [super init])) {
         configs = [[NSMutableArray alloc] init];
-        currentConfig = [[Config alloc] init];
-        currentConfig.name = @"(default)";
+        currentConfig = [[Config alloc] initWithName:@"(default)"];
         manualConfig = currentConfig;
         [configs addObject:currentConfig];
     }
@@ -60,8 +59,7 @@
 }
 
 - (IBAction)addPressed:(id)sender {
-    Config *newConfig = [[Config alloc] init];
-    newConfig.name = @"untitled";
+    Config *newConfig = [[Config alloc] initWithName:@"Untitled"];
     [configs addObject:newConfig];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
     [tableView reloadData];
@@ -139,8 +137,7 @@
 
     // have to do two passes in case config1 refers to config2 via a TargetConfig
     for (NSDictionary *storedConfig in storedConfigs) {
-        Config *cfg = [[Config alloc] init];
-        cfg.name = storedConfig[@"name"];
+        Config *cfg = [[Config alloc] initWithName:storedConfig[@"name"]];
         [newConfigs addObject:cfg];
     }
 

@@ -9,30 +9,26 @@
 
 #import "JSAction.h"
 
-@implementation Config {
-    NSMutableDictionary *entries;
-}
+@implementation Config
 
-@synthesize name;
-@synthesize entries;
-
-- (id)init {
+- (id)initWithName:(NSString *)name {
     if ((self = [super init])) {
-        entries = [[NSMutableDictionary alloc] init];
+        self.name = name;
+        _entries = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
 - (Target *)objectForKeyedSubscript:(JSAction *)action {
-    return action ? entries[action.uid] : nil;
+    return action ? _entries[action.uid] : nil;
 }
 
 - (void)setObject:(Target *)target forKeyedSubscript:(JSAction *)action {
     if (action) {
         if (target)
-            entries[action.uid] = target;
+            _entries[action.uid] = target;
         else
-            [entries removeObjectForKey:action.uid];
+            [_entries removeObjectForKey:action.uid];
     }
 }
 
