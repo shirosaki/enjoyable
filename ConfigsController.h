@@ -7,32 +7,30 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 @class Config;
 @class TargetController;
 
 @interface ConfigsController : NSObject {
-	NSMutableArray* configs;
-	IBOutlet NSButton* removeButton;
-	IBOutlet NSTableView* tableView;
-	IBOutlet TargetController* targetController;
-	Config* currentConfig;
-	Config* neutralConfig; /* last config to be manually selected */
+	IBOutlet NSButton *removeButton;
+	IBOutlet NSTableView *tableView;
+	IBOutlet TargetController *targetController;
 }
 
--(IBAction) addPressed: (id)sender;
--(IBAction) removePressed: (id)sender;
--(void) activateConfig: (Config*)config forApplication: (ProcessSerialNumber*) psn;
+- (IBAction)addPressed:(id)sender;
+- (IBAction)removePressed:(id)sender;
+- (void)activateConfig:(Config *)config forApplication:(ProcessSerialNumber *)psn;
 
--(NSDictionary*) dumpAll;
--(void) loadAllFrom: (NSDictionary*) dict;
+- (NSDictionary *)dumpAll;
+- (void)loadAllFrom:(NSDictionary*) dict;
 
-@property(strong, readonly) Config* currentConfig;
-@property(strong, readonly) Config* currentNeutralConfig;
-@property(readonly) NSArray* configs;
+@property (readonly) Config *currentConfig;
+@property (readonly) Config *currentNeutralConfig;
+@property (readonly) NSArray *configs;
 
--(void) save;
--(void) load;
+- (void)save;
+- (void)load;
 
--(void) applicationSwitchedTo: (NSString*) name withPsn: (ProcessSerialNumber) psn;	
+- (void)applicationSwitchedTo:(NSString *)name withPsn:(ProcessSerialNumber)psn;
 
 @end

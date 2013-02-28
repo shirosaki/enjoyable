@@ -13,7 +13,6 @@
 
 @interface Config : NSObject
 
-@property (assign) BOOL protect;
 @property (copy) NSString *name;
 @property (readonly) NSMutableDictionary *entries;
 

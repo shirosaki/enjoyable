@@ -5,29 +5,31 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
-@implementation ConfigsController
+@implementation ConfigsController {
+    NSMutableArray *configs;
+	Config *neutralConfig;
+}
 
+@synthesize currentConfig;
 @synthesize configs;
 
--(id) init {
-	if(self = [super init]) {
+- (id)init {
+	if ((self = [super init])) {
 		configs = [[NSMutableArray alloc] init];
 		currentConfig = [[Config alloc] init];
 		[currentConfig setName: @"(default)"];
-		[currentConfig setProtect: YES];
-		[configs addObject: currentConfig];		
+		[configs addObject:currentConfig];
 	}
 	return self;
 }
+
+// TODO: Neutral config stuff is a mess.
 
 -(void) restoreNeutralConfig {
 	if(!neutralConfig)
 		return;
 	[self activateConfig: neutralConfig forApplication: NULL];
 }
-
-// TODO: Not an appropriate way to track 'neutral configs', it should just
-// always be the first config and be unremovable.
 
 -(void) activateConfig: (Config*)config forApplication: (ProcessSerialNumber*) psn {
 	if(currentConfig == config)
@@ -44,77 +46,75 @@
 		[targetController reset];
 	}
 	currentConfig = config;
-	[removeButton setEnabled: ![config protect]];
+	[removeButton setEnabled:configs[0] != config];
 	[targetController load];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[configs indexOfObject:config]] byExtendingSelection:NO];
 }
 
--(IBAction) addPressed: (id)sender {
-	Config* newConfig = [[Config alloc] init];
-	[newConfig setName: @"untitled"];
-	[configs addObject: newConfig];
+- (IBAction)addPressed:(id)sender {
+	Config *newConfig = [[Config alloc] init];
+    newConfig.name = @"untitled";
+	[configs addObject:newConfig];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 	[tableView reloadData];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:configs.count - 1] byExtendingSelection:NO];
-	[tableView editColumn: 0 row:([configs count]-1) withEvent:nil select:YES];
+	[tableView editColumn:0 row:[configs count] - 1 withEvent:nil select:YES];
 }
--(IBAction) removePressed: (id)sender {
-	// save changes first
-	[tableView reloadData];
-	Config* current_config = configs[[tableView selectedRow]];
-	if([current_config protect])
-		return;
-	[configs removeObjectAtIndex: [tableView selectedRow]];
+
+- (IBAction)removePressed:(id)sender {
+    if (tableView.selectedRow == 0)
+        return;
+
+	Config *current_config = configs[tableView.selectedRow];
+	[configs removeObjectAtIndex:tableView.selectedRow];
 	
 	// remove all "switch to configuration" actions
     for (Config *config in configs) {
 		NSMutableDictionary *entries = config.entries;
 		for (id key in entries) {
 			Target *target = entries[key];
-			if([target isKindOfClass:[TargetConfig class]] && [(TargetConfig *)target config] == current_config)
+			if ([target isKindOfClass:[TargetConfig class]]
+                && [(TargetConfig *)target config] == current_config)
 				[entries removeObjectForKey: key];
 		}
 	}
-	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
-	
+	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];	
 	[tableView reloadData];
 }
 
--(void)tableViewSelectionDidChange:(NSNotification*) notify {
-    if (tableView.selectedRow < configs.count)
-        [self activateConfig: (Config*)configs[[tableView selectedRow]] forApplication: NULL];
+-(void)tableViewSelectionDidChange:(NSNotification *)notify {
+    if (tableView.selectedRow >= 0)
+        [self activateConfig:configs[tableView.selectedRow] forApplication: NULL];
 }
 	
--(id) tableView: (NSTableView*)view objectValueForTableColumn: (NSTableColumn*) column row: (int) index {
-    NSParameterAssert(index >= 0 && index < [configs count]);
+- (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(int)index {
 	return [configs[index] name];
 }
 
--(void) tableView: (NSTableView*) view setObjectValue:obj forTableColumn:(NSTableColumn*) col row: (int)index {
-    NSParameterAssert(index >= 0 && index < [configs count]);
+- (void)tableView:(NSTableView *)view setObjectValue:obj forTableColumn:(NSTableColumn *)col row:(int)index {
 	/* ugly hack so stringification doesn't fail */
 	NSString* newName = [(NSString*)obj stringByReplacingOccurrencesOfString: @"~" withString: @""];
-	[(Config*)configs[index] setName: newName];
+	[(Config *)configs[index] setName:newName];
 	[targetController refreshConfigsPreservingSelection:YES];
 	[tableView reloadData];
 	[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 }
 
--(int)numberOfRowsInTableView: (NSTableView*)table {
+- (int)numberOfRowsInTableView:(NSTableView*)table {
 	return [configs count];
 }
 
--(BOOL)tableView: (NSTableView*)view shouldEditTableColumn: (NSTableColumn*) column row: (int) index {
-	return ![configs[index] protect];
+- (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(int)index {
+	return index > 0;
 }	
 
--(Config*) currentConfig {
+- (Config *)currentConfig {
 	return currentConfig;
 }
 
--(Config*) currentNeutralConfig {
-	if(neutralConfig)
+- (Config *)currentNeutralConfig {
+	if (neutralConfig)
 		return neutralConfig;
 	return currentConfig;
 }
@@ -156,7 +156,6 @@
 		[cfg setName: ary[i][@"name"]];		
 		[newConfigs addObject: cfg];
 	}
-	[configs[0] setProtect: YES];
 	for(int i=0; i<[ary count]; i++) {
 		NSDictionary* dict = ary[i][@"entries"];
 		for(id key in dict) {

@@ -11,7 +11,8 @@
     NSMutableDictionary *entries;
 }
 
-@synthesize protect, name, entries;
+@synthesize name;
+@synthesize entries;
 
 - (id)init {
     if ((self = [super init])) {
