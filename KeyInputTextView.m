@@ -187,6 +187,11 @@
     }
 }
 
+- (void)mouseDown:(NSEvent *)theEvent {
+    [targetController keyChanged];
+    [self.window makeFirstResponder:self];
+}
+
 - (void)flagsChanged:(NSEvent *)evt {
     self.vk = evt.keyCode;
     [targetController keyChanged];
