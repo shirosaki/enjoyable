@@ -10,7 +10,9 @@
 
 #import "JoystickController.h"
 
-@implementation TargetMouseMove
+@implementation TargetMouseMove {
+    int sign;
+}
 
 -(BOOL) isContinuous {
     return true;
@@ -34,19 +36,28 @@
 }
 
 - (BOOL)update:(JoystickController *)jc {
-    //printf("Dir %d inputValue %f\n", [self dir], [self inputValue]);
-    if (fabs(self.magnitude) < 0.01)
+    if (fabsf(self.magnitude) < 0.01) {
+        sign = 0;
         return NO; // dead zone
+    }
+
+    // If the action crossed over High/Low, this target is done.
+    if (!sign)
+        sign = self.magnitude < 0 ? -1 : 1;
+    else if (sign / self.magnitude < 0) {
+        sign = 0;
+        return NO;
+    }
     
     NSRect screenRect = [[NSScreen mainScreen] frame];
     NSInteger height = screenRect.size.height;
     
     // TODO
-    float speed = 4.0;
+    float speed = 4.f;
     if ([jc frontWindowOnly])
-        speed = 12.0;
-    float dx = 0.0, dy = 0.0;
-    if ([self dir] == 0)
+        speed = 12.f;
+    float dx = 0.f, dy = 0.f;
+    if (self.dir == 0)
         dx = self.magnitude * speed;
     else
         dy = self.magnitude * speed;
@@ -72,7 +83,7 @@
     }
     
     CFRelease(move);
-    return dx || dy;
+    return YES;
 }
 
 @end

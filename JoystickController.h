@@ -24,7 +24,6 @@
 @property (readonly) Config *currentConfig;
 @property (readonly) JSAction *selectedAction;
 @property (readonly) NSMutableArray *joysticks;
-@property (readonly) NSMutableArray *runningTargets;
 @property (assign) NSPoint mouseLoc;
 @property (assign) BOOL frontWindowOnly;
 

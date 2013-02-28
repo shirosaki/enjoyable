@@ -18,10 +18,10 @@
 @implementation JoystickController {
     IOHIDManagerRef hidManager;
     NSTimer *continuousTimer;
+    NSMutableArray *runningTargets;
 }
 
 @synthesize joysticks;
-@synthesize runningTargets;
 @synthesize selectedAction;
 @synthesize frontWindowOnly;
 @synthesize mouseLoc;
@@ -47,8 +47,9 @@
 }
 
 - (void)addRunningTarget:(Target *)target {
-    if (![runningTargets containsObject:target])
+    if (![runningTargets containsObject:target]) {
         [runningTargets addObject:target];
+    }
     if (!continuousTimer) {
         continuousTimer = [NSTimer scheduledTimerWithTimeInterval:1.f/60.f
                                                            target:self
@@ -130,11 +131,13 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 
 - (void)updateContinuousActions:(NSTimer *)timer {
     self.mouseLoc = [NSEvent mouseLocation];
-    for (Target *target in [self.runningTargets copy]) {
-        if (![target update:self])
-            [self.runningTargets removeObject:target];
+    for (Target *target in [runningTargets copy]) {
+        if (![target update:self]) {
+            [runningTargets removeObject:target];
+            NSLog(@"Removing action, now running %lu.", runningTargets.count);
+        }
     }
-    if (!self.runningTargets.count) {
+    if (!runningTargets.count) {
         [continuousTimer invalidate];
         continuousTimer = nil;
         NSLog(@"Unscheduled continuous target timer.");
