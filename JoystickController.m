@@ -158,7 +158,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     
     IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     IOReturn ret = IOHIDManagerOpen(hidManager, kIOHIDOptionsTypeNone);
-    if (ret == kIOReturnSuccess) {
+    if (ret != kIOReturnSuccess) {
         [[NSAlert alertWithMessageText:@"Input devices are unavailable"
                          defaultButton:nil
                        alternateButton:nil
