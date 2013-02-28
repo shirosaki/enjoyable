@@ -18,11 +18,11 @@
 @property (copy) NSString *name;
 @property (assign) BOOL active;
 @property (readonly) float magnitude;
+@property (readonly) NSString *uid;
 
 - (id)initWithName:(NSString *)newName base:(JSAction *)newBase;
 
 - (void)notifyEvent:(IOHIDValueRef)value;
-- (NSString *)stringify;
 - (id)findSubActionForValue:(IOHIDValueRef)value;
 
 @end

@@ -20,6 +20,7 @@
 @property (assign) IOHIDDeviceRef device;
 @property (copy) NSArray *children;
 @property (readonly) NSString *name;
+@property (readonly) NSString *uid;
 
 - (id)initWithDevice:(IOHIDDeviceRef)device;
 - (id)handlerForEvent:(IOHIDValueRef)value;

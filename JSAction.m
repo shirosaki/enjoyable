@@ -28,11 +28,8 @@
     return NULL;
 }
 
-- (NSString *)stringify {
-    if (cookie)
-        return [NSString stringWithFormat: @"%@~%p", [base stringify], cookie];
-    else
-        return [NSString stringWithFormat: @"%@~%@", [base stringify], name];
+- (NSString *)uid {
+    return [NSString stringWithFormat:@"%@~%@", [self.base uid], self.name];
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {

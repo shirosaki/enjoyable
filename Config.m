@@ -7,7 +7,9 @@
 
 #import "Config.h"
 
-@implementation Config
+@implementation Config {
+    NSMutableDictionary *entries;
+}
 
 @synthesize protect, name, entries;
 
@@ -18,12 +20,17 @@
     return self;
 }
 
-- (void)setTarget:(Target *)target forAction:(JSAction *)jsa {
-    entries[[jsa stringify]] = target;
+- (Target *)objectForKeyedSubscript:(JSAction *)action {
+    return action ? entries[action.uid] : nil;
 }
 
-- (Target *)getTargetForAction:(JSAction *)jsa {
-    return entries[[jsa stringify]];
+- (void)setObject:(Target *)target forKeyedSubscript:(JSAction *)action {
+    if (action) {
+        if (target)
+            entries[action.uid] = target;
+        else
+            [entries removeObjectForKey:action.uid];
+    }
 }
 
 @end

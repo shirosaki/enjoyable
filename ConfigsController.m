@@ -68,11 +68,11 @@
 	[configs removeObjectAtIndex: [tableView selectedRow]];
 	
 	// remove all "switch to configuration" actions
-	for(int i=0; i<[configs count]; i++) {
-		NSMutableDictionary* entries = [(Config*)configs[i] entries];
-		for(id key in entries) {
-			Target* target = (Target*) entries[key];
-			if([target isKindOfClass: [TargetConfig class]] && [(TargetConfig*)target config] == current_config)
+    for (Config *config in configs) {
+		NSMutableDictionary *entries = config.entries;
+		for (id key in entries) {
+			Target *target = entries[key];
+			if([target isKindOfClass:[TargetConfig class]] && [(TargetConfig *)target config] == current_config)
 				[entries removeObjectForKey: key];
 		}
 	}

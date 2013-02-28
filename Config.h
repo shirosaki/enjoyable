@@ -17,7 +17,7 @@
 @property (copy) NSString *name;
 @property (readonly) NSMutableDictionary *entries;
 
-- (void)setTarget:(Target *)target forAction:(JSAction *)jsa;
-- (Target *)getTargetForAction:(JSAction *)sa;
+- (Target *)objectForKeyedSubscript:(JSAction *)action;
+- (void)setObject:(Target *)target forKeyedSubscript:(JSAction *)action;
 
 @end

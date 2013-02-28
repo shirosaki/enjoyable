@@ -62,7 +62,7 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
         [mainAction notifyEvent:value];
         NSArray *children = mainAction.children ? mainAction.children : mainAction ? @[mainAction] : @[];
         for (JSAction *subaction in children) {
-            Target *target = [controller.currentConfig getTargetForAction:subaction];
+            Target *target = controller.currentConfig[subaction];
             target.magnitude = mainAction.magnitude;
             target.running = subaction.active;
             if (target.running && target.isContinuous)

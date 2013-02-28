@@ -78,12 +78,11 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
 }
 
 - (id)base {
-    // FIXME(jfw): This is a hack because actions get joysticks as their base.
     return nil;
 }
 
-- (NSString *)stringify {
-    return [[NSString alloc] initWithFormat: @"%d~%d~%d", vendorId, productId, index];
+- (NSString *)uid {
+    return [NSString stringWithFormat: @"%d:%d:%d", vendorId, productId, index];
 }
 
 - (JSAction *)findActionByCookie:(void *)cookie {

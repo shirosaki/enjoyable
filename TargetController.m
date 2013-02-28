@@ -93,10 +93,9 @@
 }
 
 -(void) commit {
-	id action = [joystickController selectedAction];
-	if(action) {
-		Target* target = [self state];
-		[[configsController currentConfig] setTarget: target forAction: action];
+	JSAction *action = [joystickController selectedAction];
+	if (action) {
+        configsController.currentConfig[action] = self.state;
 	}
 }
 
@@ -131,7 +130,7 @@
 	} else {
 		[self setEnabled: YES];
 	}
-	Target* target = [[configsController currentConfig] getTargetForAction: jsaction];
+	Target* target = configsController.currentConfig[jsaction];
 	
 	id act = jsaction;
 	NSString* actFullName = [act name];
