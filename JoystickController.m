@@ -7,7 +7,6 @@
 
 #import "JoystickController.h"
 
-#import "ApplicationController.h"
 #import "Config.h"
 #import "ConfigsController.h"
 #import "Joystick.h"
@@ -25,6 +24,7 @@
 @synthesize selectedAction;
 @synthesize frontWindowOnly;
 @synthesize mouseLoc;
+@synthesize sendingRealEvents;
 
 - (id)init {
     if ((self = [super init])) {
@@ -65,7 +65,7 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
     
     Joystick *js = [controller findJoystickByRef:device];
-    if (((ApplicationController *)[NSApplication sharedApplication].delegate).active) {
+    if (controller.sendingRealEvents) {
         JSAction *mainAction = [js actionForEvent:value];
         [mainAction notifyEvent:value];
         NSArray *children = mainAction.children ? mainAction.children : mainAction ? @[mainAction] : @[];
@@ -78,7 +78,6 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
         }
     } else if ([NSApplication sharedApplication].isActive
                && [NSApplication sharedApplication].mainWindow.isVisible) {
-        // joysticks not active, use it to select stuff
         JSAction *handler = [js handlerForEvent:value];
         if (!handler)
             return;
@@ -158,7 +157,17 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     IOHIDManagerSetDeviceMatchingMultiple(hidManager, (__bridge CFArrayRef)criteria);
     
     IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    IOHIDManagerOpen(hidManager, kIOHIDOptionsTypeNone); // FIXME: If an error happens, report it!
+    IOReturn ret = IOHIDManagerOpen(hidManager, kIOHIDOptionsTypeNone);
+    if (ret == kIOReturnSuccess) {
+        [[NSAlert alertWithMessageText:@"Input devices are unavailable"
+                         defaultButton:nil
+                       alternateButton:nil
+                           otherButton:nil
+             informativeTextWithFormat:@"Error 0x%08x occured trying to access your devices. "
+                                       @"Input may not be correctly detected or mapped.",
+                                       ret]
+         runModal];
+    }
     
     IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self);
     IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);

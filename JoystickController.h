@@ -26,5 +26,6 @@
 @property (readonly) NSMutableArray *joysticks;
 @property (assign) NSPoint mouseLoc;
 @property (assign) BOOL frontWindowOnly;
+@property (assign) BOOL sendingRealEvents;
 
 @end

@@ -21,7 +21,6 @@
 @property (strong) IBOutlet JoystickController *jsController;
 @property (strong) IBOutlet TargetController *targetController;
 @property (strong) IBOutlet ConfigsController *configsController;
-@property (assign) BOOL active;
 
 - (IBAction)toggleActivity:(id)sender;
 - (void)configsChanged;

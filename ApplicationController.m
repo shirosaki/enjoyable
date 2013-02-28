@@ -28,7 +28,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     [drawer open];
     self.targetController.enabled = NO;
-    self.active = NO;
     [self.jsController setup];
     [self.configsController load];
     [[NSWorkspace sharedWorkspace].notificationCenter
@@ -46,22 +45,12 @@
      object:nil];
 }
 
-// TODO: Active state should probably be in the ConfigsController or
-// JoystickController, not here.
-
-- (BOOL)active {
-    return active;
-}
-
-- (void)setActive:(BOOL)newActive {
-    activeButton.label = newActive ? @"Stop" : @"Start";
-    activeButton.image = [NSImage imageNamed:newActive ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate"];
-    activeMenuItem.state = newActive;
-    active = newActive;
-}
-
 - (IBAction)toggleActivity:(id)sender {
-    self.active = !self.active;
+    BOOL sendRealEvents = !self.jsController.sendingRealEvents;
+    self.jsController.sendingRealEvents = sendRealEvents;
+    activeButton.label = sendRealEvents ? @"Stop" : @"Start";
+    activeButton.image = [NSImage imageNamed:sendRealEvents ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate"];
+    activeMenuItem.state = sendRealEvents;
 }
 
 - (NSUInteger)firstConfigMenuIndex {
