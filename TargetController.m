@@ -131,6 +131,7 @@
 
 - (void)commit {
     configsController.currentConfig[joystickController.selectedAction] = [self makeTarget];
+    [configsController save];
 }
 
 - (void)reset {

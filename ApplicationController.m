@@ -39,9 +39,7 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // TODO: Save immediately / shortly after changing and then enable
-    // sudden termination support.
-    [configsController save];
+	[[NSUserDefaults standardUserDefaults] synchronize];
     [[NSWorkspace sharedWorkspace].notificationCenter
      removeObserver:self
      name:NSWorkspaceDidActivateApplicationNotification
