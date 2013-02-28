@@ -6,7 +6,7 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@class JoystickController;
 
 @interface Target : NSObject
 

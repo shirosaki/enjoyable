@@ -7,6 +7,14 @@
 
 #import "JoystickController.h"
 
+#import "ApplicationController.h"
+#import "Config.h"
+#import "ConfigsController.h"
+#import "Joystick.h"
+#import "JSAction.h"
+#import "Target.h"
+#import "TargetController.h"
+
 @implementation JoystickController {
     IOHIDManagerRef hidManager;
     BOOL programmaticallySelecting;

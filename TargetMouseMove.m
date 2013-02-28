@@ -8,6 +8,8 @@
 
 #import "TargetMouseMove.h"
 
+#import "JoystickController.h"
+
 @implementation TargetMouseMove
 
 -(BOOL) isContinuous {

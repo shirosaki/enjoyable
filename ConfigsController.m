@@ -5,6 +5,14 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
+#import "ConfigsController.h"
+
+#import "ApplicationController.h"
+#import "Config.h"
+#import "ConfigsController.h"
+#import "Target.h"
+#import "TargetController.h"
+
 @implementation ConfigsController {
     NSMutableArray *configs;
 	Config *manualConfig;

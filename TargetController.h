@@ -6,12 +6,10 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 @class KeyInputTextView;
 @class ConfigsController;
 @class JoystickController;
 @class Target;
-
 @class TargetMouseMove;
 
 @interface TargetController : NSObject {

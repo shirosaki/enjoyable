@@ -5,6 +5,15 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
+#import "Target.h"
+
+#import "TargetKeyboard.h"
+#import "TargetConfig.h"
+#import "TargetMouseMove.h"
+#import "TargetMouseBtn.h"
+#import "TargetMouseScroll.h"
+#import "TargetToggleMouseScope.h"
+
 @implementation Target {
     BOOL running;
 }

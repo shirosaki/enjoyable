@@ -6,9 +6,6 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <IOKit/hid/IOHIDLib.h>
-
 @class Joystick;
 @class JSAction;
 @class ConfigsController;

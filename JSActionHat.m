@@ -5,6 +5,8 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
+#import "JSActionHat.h"
+
 static BOOL active_eightway[36] = {
     NO,  NO,  NO,  NO , // center
     YES, NO,  NO,  NO , // N

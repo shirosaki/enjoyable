@@ -7,22 +7,3 @@
 #endif
 
 #import <IOKit/hid/IOHIDLib.h>
-
-#import "ApplicationController.h"
-#import "Config.h"
-#import "ConfigsController.h"
-#import "Joystick.h"
-#import "JoystickController.h"
-#import "JSAction.h"
-#import "JSActionAnalog.h"
-#import "JSActionButton.h"
-#import "JSActionHat.h"
-#import "KeyInputTextView.h"
-#import "Target.h"
-#import "TargetConfig.h"
-#import "TargetController.h"
-#import "TargetKeyboard.h"
-#import "TargetMouseMove.h"
-#import "TargetMouseBtn.h"
-#import "TargetMouseScroll.h"
-#import "TargetToggleMouseScope.h"

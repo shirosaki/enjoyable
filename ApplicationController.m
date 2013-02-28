@@ -5,6 +5,13 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
+#import "ApplicationController.h"
+
+#import "Config.h"
+#import "ConfigsController.h"
+#import "JoystickController.h"
+#import "TargetController.h"
+
 @implementation ApplicationController {
     BOOL active;
 }

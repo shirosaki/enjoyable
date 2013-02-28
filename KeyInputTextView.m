@@ -7,6 +7,8 @@
 
 #import "KeyInputTextView.h"
 
+#import "TargetController.h"
+
 @implementation KeyInputTextView {
     int vk;
     BOOL enabled;

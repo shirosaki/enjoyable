@@ -7,6 +7,10 @@
 
 #import "TargetConfig.h"
 
+#import "ApplicationController.h"
+#import "Config.h"
+#import "ConfigsController.h"
+
 @implementation TargetConfig
 
 - (NSString *)stringify {

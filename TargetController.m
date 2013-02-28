@@ -5,6 +5,21 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
+#import "TargetController.h"
+
+#import "ConfigsController.h"
+#import "Config.h"
+#import "JSAction.h"
+#import "JoystickController.h"
+#import "KeyInputTextView.h"
+#import "TargetConfig.h"
+#import "TargetController.h"
+#import "TargetKeyboard.h"
+#import "TargetMouseBtn.h"
+#import "TargetMouseMove.h"
+#import "TargetMouseScroll.h"
+#import "TargetToggleMouseScope.h"
+
 @implementation TargetController
 
 -(void) keyChanged {

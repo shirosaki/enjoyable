@@ -6,9 +6,6 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <IOKit/hid/IOHIDBase.h>
-
 @interface JSAction : NSObject
 
 @property (assign) void *cookie;

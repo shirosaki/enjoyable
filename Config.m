@@ -7,6 +7,8 @@
 
 #import "Config.h"
 
+#import "JSAction.h"
+
 @implementation Config {
     NSMutableDictionary *entries;
 }

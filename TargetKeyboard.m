@@ -5,6 +5,8 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
+#import "TargetKeyboard.h"
+
 @implementation TargetKeyboard
 
 @synthesize vk, descr;

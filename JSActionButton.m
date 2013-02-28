@@ -5,6 +5,8 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
+#import "JSActionButton.h"
+
 @implementation JSActionButton {
     BOOL active;
 }

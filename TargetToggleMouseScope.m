@@ -8,6 +8,9 @@
 
 #import "TargetToggleMouseScope.h"
 
+#import "ApplicationController.h"
+#import "JoystickController.h"
+
 @implementation TargetToggleMouseScope
 
 -(NSString*) stringify {

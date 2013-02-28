@@ -6,8 +6,6 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-
 @class Config;
 @class TargetController;
 

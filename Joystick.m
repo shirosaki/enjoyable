@@ -7,6 +7,11 @@
 
 #import "Joystick.h"
 
+#import "JSAction.h"
+#import "JSActionAnalog.h"
+#import "JSActionButton.h"
+#import "JSActionHat.h"
+
 static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
     NSMutableArray *children = [NSMutableArray arrayWithCapacity:CFArrayGetCount(elements)];
