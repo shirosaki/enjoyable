@@ -44,17 +44,15 @@
 - (IBAction)toggleActivity:(id)sender {
     BOOL sendRealEvents = !self.jsController.sendingRealEvents;
     self.jsController.sendingRealEvents = sendRealEvents;
-    activeButton.label = sendRealEvents ? @"Stop" : @"Start";
     activeButton.image = [NSImage imageNamed:sendRealEvents ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate"];
     activeMenuItem.state = sendRealEvents;
 }
 
 - (NSInteger)firstConfigMenuIndex {
-    NSInteger count = dockMenuBase.numberOfItems;
-    for (int i = 0; i < count; ++i)
+    for (NSInteger i = dockMenuBase.numberOfItems - 1; i >= 0; --i)
         if ([dockMenuBase itemAtIndex:i].isSeparatorItem)
             return i + 1;
-    return count;
+    return dockMenuBase.numberOfItems;
 }
 
 - (void)configsChanged {

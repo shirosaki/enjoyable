@@ -33,6 +33,7 @@
 		D5F809710FB093400006A4DE /* TargetConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F809700FB093400006A4DE /* TargetConfig.m */; };
 		D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D5617A080FAEAF8300928B3A /* icon.icns */; };
 		EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */; };
+		EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,8 @@
 		D5F809700FB093400006A4DE /* TargetConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetConfig.m; sourceTree = "<group>"; };
 		EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+FirstResponder.h"; sourceTree = "<group>"; };
 		EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+FirstResponder.m"; sourceTree = "<group>"; };
+		EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Description.h"; sourceTree = "<group>"; };
+		EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Description.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +192,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */,
+				EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */,
 				32CA4F630368D1EE00C91783 /* Enjoyable_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */,
@@ -305,6 +310,7 @@
 				8BEFAD9C15C46BFF00823AEC /* TargetMouseScroll.m in Sources */,
 				8BEFADA015C476DC00823AEC /* TargetToggleMouseScope.m in Sources */,
 				EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */,
+				EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

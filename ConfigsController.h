@@ -19,8 +19,12 @@
 @property (readonly) Config *currentConfig;
 @property (readonly) NSArray *configs;
 
+- (Config *)objectForKeyedSubscript:(NSString *)name;
+
+
 - (IBAction)addPressed:(id)sender;
 - (IBAction)removePressed:(id)sender;
+- (IBAction)importPressed:(id)sender;
 - (IBAction)exportPressed:(id)sender;
 - (void)activateConfig:(Config *)config;
 - (void)activateConfigForProcess:(NSString *)processName;

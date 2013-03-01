@@ -148,6 +148,80 @@
     }
 }
 
+- (void)importPressed:(id)sender {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.allowedFileTypes = @[ @"enjoyable", @"json", @"txt" ];
+    if ([panel runModal] == NSFileHandlingPanelOKButton) {
+        NSError *error;
+        NSInputStream *stream = [NSInputStream inputStreamWithURL:panel.URL];
+        [stream open];
+        NSDictionary *serialization = !error
+            ? [NSJSONSerialization JSONObjectWithStream:stream options:0 error:&error]
+            : nil;
+        [stream close];
+        
+        if (!([serialization isKindOfClass:[NSDictionary class]]
+              && serialization[@"entries"])) {
+            error = [NSError errorWithDomain:@"Enjoyable"
+                                        code:0
+                                 description:@"This isn't a valid mapping file."];
+        }
+        
+        
+        if (!error) {
+            NSDictionary *entries = serialization[@"entries"];
+            Config *cfg = [[Config alloc] initWithName:serialization[@"name"]];
+            Config *mergeInto = self[cfg.name];
+            BOOL conflict = NO;
+            for (id key in entries) {
+                cfg.entries[key] = [Target targetDeserialize:entries[key]
+                                                    withConfigs:_configs];
+                if (mergeInto.entries[key])
+                    conflict = YES;
+            }
+            
+            if (conflict) {
+                NSAlert *conflictAlert = [[NSAlert alloc] init];
+                conflictAlert.messageText = @"Replace existing mappings?";
+                conflictAlert.informativeText =
+                    [NSString stringWithFormat:
+                     @"This file contains inputs you've already mapped in \"%@\". Do you "
+                     @"want to merge them and replace your existing mappings, or import this "
+                     @"as a separate mapping?", cfg.name];
+                [conflictAlert addButtonWithTitle:@"Merge"];
+                [conflictAlert addButtonWithTitle:@"Cancel"];
+                [conflictAlert addButtonWithTitle:@"New Mapping"];
+                NSInteger res = [conflictAlert runModal];
+                if (res == NSAlertSecondButtonReturn)
+                    return;
+                else if (res == NSAlertThirdButtonReturn)
+                    mergeInto = nil;
+            }
+            
+            if (mergeInto) {
+                [mergeInto.entries addEntriesFromDictionary:cfg.entries];
+                cfg = mergeInto;
+            } else {
+                [_configs addObject:cfg];
+                [tableView reloadData];
+            }
+
+            [self save];
+            [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+            [self activateConfig:cfg];
+            [targetController loadCurrent];
+            
+            if (conflict && !mergeInto) {
+                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
+                [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
+            }
+        }
+        
+        if (error)
+            [[NSAlert alertWithError:error] runModal];
+    }
+}
+
 - (void)exportPressed:(id)sender {
     NSSavePanel *panel = [NSSavePanel savePanel];
     panel.allowedFileTypes = @[ @"enjoyable" ];

@@ -13,7 +13,7 @@
 
 - (id)initWithName:(NSString *)name {
     if ((self = [super init])) {
-        self.name = name;
+        self.name = name ? name : @"Untitled";
         _entries = [[NSMutableDictionary alloc] init];
     }
     return self;
