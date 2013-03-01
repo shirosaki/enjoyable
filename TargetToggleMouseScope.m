@@ -31,7 +31,6 @@
     ApplicationController *ac = [NSApplication sharedApplication].delegate;
     JoystickController *jc = ac.jsController;
     [jc setFrontWindowOnly: ![jc frontWindowOnly]];
-    printf("Front window only: %d\n", [jc frontWindowOnly]);
 }
 
 @end
