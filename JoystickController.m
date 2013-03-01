@@ -177,7 +177,10 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
              informativeTextWithFormat:@"Error 0x%08x occured trying to access your devices. "
                                        @"Input may not be correctly detected or mapped.",
                                        ret]
-         runModal];
+         beginSheetModalForWindow:outlineView.window
+                    modalDelegate:nil
+                   didEndSelector:nil
+                      contextInfo:nil];
     }
     
     IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self);
