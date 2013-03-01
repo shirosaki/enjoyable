@@ -212,9 +212,14 @@
 - (void)refreshConfigs {
     // TODO: This doesn't work when removing configs.
     NSInteger initialIndex = configPopup.indexOfSelectedItem;
-    [configPopup removeAllItems];
-    for (Config *config in configsController.configs)
-        [configPopup addItemWithTitle:config.name];
+    [configPopup.menu removeAllItems];
+    for (Config *config in configsController.configs) {
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:config.name
+                                                      action:@selector(configChosen:)
+                                               keyEquivalent:@""];
+        item.target = self;
+        [configPopup.menu addItem:item];
+    }
     [configPopup selectItemAtIndex:initialIndex];
 }
 
