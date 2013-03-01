@@ -13,7 +13,6 @@
     IBOutlet NSButton *removeButton;
     IBOutlet NSTableView *tableView;
     IBOutlet TargetController *targetController;
-    IBOutlet NSButton *exportButton;
 }
 
 @property (nonatomic, readonly) Config *currentConfig;
