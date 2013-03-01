@@ -192,10 +192,10 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */,
-				EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */,
 				32CA4F630368D1EE00C91783 /* Enjoyable_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */,
+				EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */,
 				EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */,
 				EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */,
 			);
