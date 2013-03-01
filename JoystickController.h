@@ -10,7 +10,6 @@
 @class JSAction;
 @class ConfigsController;
 @class TargetController;
-@class Config;
 
 @interface JoystickController : NSObject {
 	IBOutlet NSOutlineView *outlineView;
@@ -21,9 +20,7 @@
 - (void)setup;
 - (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device;
 
-@property (readonly) Config *currentConfig;
 @property (readonly) JSAction *selectedAction;
-@property (readonly) NSMutableArray *joysticks;
 @property (assign) NSPoint mouseLoc;
 @property (assign) BOOL frontWindowOnly;
 @property (assign) BOOL sendingRealEvents;

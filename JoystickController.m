@@ -18,6 +18,7 @@
     IOHIDManagerRef hidManager;
     NSTimer *continuousTimer;
     NSMutableArray *runningTargets;
+    NSMutableArray *_joysticks;
 }
 
 - (id)init {
@@ -54,31 +55,39 @@
     }
 }
 
+- (void)runTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
+    Joystick *js = [self findJoystickByRef:device];
+    JSAction *mainAction = [js actionForEvent:value];
+    [mainAction notifyEvent:value];
+    NSArray *children = mainAction.children ? mainAction.children : mainAction ? @[mainAction] : @[];
+    for (JSAction *subaction in children) {
+        Target *target = configsController.currentConfig[subaction];
+        target.magnitude = mainAction.magnitude;
+        target.running = subaction.active;
+        if (target.running && target.isContinuous)
+            [self addRunningTarget:target];
+    }
+}
+
+- (void)showTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
+    Joystick *js = [self findJoystickByRef:device];
+    JSAction *handler = [js handlerForEvent:value];
+    if (!handler)
+        return;
+    
+    [self expandRecursive:handler];
+    [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[outlineView rowForItem:handler]] byExtendingSelection: NO];
+    [targetController focusKey];
+}
+
 static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
     JoystickController *controller = (__bridge JoystickController *)ctx;
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
     
-    Joystick *js = [controller findJoystickByRef:device];
     if (controller.sendingRealEvents) {
-        JSAction *mainAction = [js actionForEvent:value];
-        [mainAction notifyEvent:value];
-        NSArray *children = mainAction.children ? mainAction.children : mainAction ? @[mainAction] : @[];
-        for (JSAction *subaction in children) {
-            Target *target = controller.currentConfig[subaction];
-            target.magnitude = mainAction.magnitude;
-            target.running = subaction.active;
-            if (target.running && target.isContinuous)
-                [controller addRunningTarget:target];
-        }
-    } else if ([NSApplication sharedApplication].isActive
-               && [NSApplication sharedApplication].mainWindow.isVisible) {
-        JSAction *handler = [js handlerForEvent:value];
-        if (!handler)
-            return;
-        
-        [controller expandRecursive:handler];
-        [controller->outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[controller->outlineView rowForItem:handler]] byExtendingSelection: NO];
-        [controller->targetController focusKey];
+        [controller runTargetForDevice:device value:value];
+    } else if ([NSApplication sharedApplication].mainWindow.isVisible) {
+        [controller showTargetForDevice:device value:value];
     }
 }
 
@@ -96,13 +105,17 @@ static int findAvailableIndex(NSArray *list, Joystick *js) {
     }
 }
 
+- (void)addJoystickForDevice:(IOHIDDeviceRef)device {
+    IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)self);
+    Joystick *js = [[Joystick alloc] initWithDevice:device];
+    js.index = findAvailableIndex(_joysticks, js);
+    [_joysticks addObject:js];
+    [outlineView reloadData];
+}
+
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
     JoystickController *controller = (__bridge JoystickController *)ctx;
-    IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)controller);
-    Joystick *js = [[Joystick alloc] initWithDevice:device];
-    js.index = findAvailableIndex(controller.joysticks, js);
-    [[controller joysticks] addObject:js];
-    [controller->outlineView reloadData];
+    [controller addJoystickForDevice:device];
 }
 
 - (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device {
@@ -114,12 +127,17 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
 
 static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
     JoystickController *controller = (__bridge JoystickController *)ctx;
-    Joystick *match = [controller findJoystickByRef:device];
+    [controller removeJoystickForDevice:device];
+}
+
+- (void)removeJoystickForDevice:(IOHIDDeviceRef)device {
+    Joystick *match = [self findJoystickByRef:device];
     IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
     if (match) {
-        [controller.joysticks removeObject:match];
-        [controller->outlineView reloadData];
+        [_joysticks removeObject:match];
+        [outlineView reloadData];
     }
+    
 }
 
 - (void)updateContinuousActions:(NSTimer *)timer {
@@ -164,10 +182,6 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     
     IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self);
     IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
-}
-
-- (Config *)currentConfig {
-    return configsController.currentConfig;
 }
 
 - (JSAction *)selectedAction {
