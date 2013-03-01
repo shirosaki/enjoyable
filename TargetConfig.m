@@ -20,7 +20,7 @@
 - (NSDictionary *)serialize {
     return _config
         ? @{ @"type": @"cfg", @"name": _config.name }
-        : @{};
+        : nil;
 }
 
 + (TargetConfig *)targetDeserialize:(NSDictionary *)serialization

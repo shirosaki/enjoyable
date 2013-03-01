@@ -34,8 +34,11 @@
 
 - (NSDictionary *)serialize {
     NSMutableDictionary* cfgEntries = [[NSMutableDictionary alloc] initWithCapacity:_entries.count];
-    for (id key in _entries)
-        cfgEntries[key] = [_entries[key] serialize];
+    for (id key in _entries) {
+        id serialized = [_entries[key] serialize];
+        if (serialized)
+            cfgEntries[key] = serialized;
+    }
     return @{ @"name": _name, @"entries": cfgEntries };
 }
 

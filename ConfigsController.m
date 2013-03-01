@@ -77,6 +77,7 @@
     
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
     [tableView reloadData];
+    [self save];
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notify {
@@ -132,9 +133,12 @@
     for (unsigned i = 0; i < storedConfigs.count; ++i) {
         NSDictionary *entries = storedConfigs[i][@"entries"];
         Config *config = newConfigs[i];
-        for (id key in entries)
-            config.entries[key] = [Target targetDeserialize:entries[key]
-                                                withConfigs:newConfigs];
+        for (id key in entries) {
+            Target *target = [Target targetDeserialize:entries[key]
+                                            withConfigs:newConfigs];
+            if (target)
+                config.entries[key] = target;
+        }
     }
     
     if (newConfigs.count) {

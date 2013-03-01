@@ -175,8 +175,13 @@
         keyInput.vk = [(TargetKeyboard*)target vk];
     } else if ([target isKindOfClass:[TargetConfig class]]) {
         [radioButtons selectCellAtRow:2 column:0];
-        [configPopup selectItemAtIndex:[configsController.configs
-                                        indexOfObject:[(TargetConfig *)target config]]];
+        NSUInteger idx = [configsController.configs
+                          indexOfObject:[(TargetConfig *)target config]];
+        if (idx == NSNotFound) {
+            [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
+            [configPopup selectItemAtIndex:-1];
+        } else
+            [configPopup selectItemAtIndex:idx];
     }
     else if ([target isKindOfClass:[TargetMouseMove class]]) {
         [radioButtons selectCellAtRow:3 column:0];
