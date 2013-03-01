@@ -214,7 +214,7 @@
 								</object>
 								<object class="NSMenuItem" id="187155117">
 									<reference key="NSMenu" ref="720053764"/>
-									<string key="NSTitle">Import...</string>
+									<string key="NSTitle">Import…</string>
 									<string key="NSKeyEquiv">o</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -223,7 +223,7 @@
 								</object>
 								<object class="NSMenuItem" id="888617891">
 									<reference key="NSMenu" ref="720053764"/>
-									<string key="NSTitle">Export...</string>
+									<string key="NSTitle">Export…</string>
 									<string key="NSKeyEquiv">s</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1021,7 +1021,7 @@
 										<double key="NSIntercellSpacingHeight">2</double>
 										<reference key="NSBackgroundColor" ref="834857663"/>
 										<reference key="NSGridColor" ref="133906332"/>
-										<double key="NSRowHeight">17</double>
+										<double key="NSRowHeight">20</double>
 										<int key="NSTvFlags">46170112</int>
 										<reference key="NSDelegate"/>
 										<reference key="NSDataSource"/>
