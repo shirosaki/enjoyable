@@ -61,8 +61,14 @@
     NSInteger removeFrom = [self firstConfigMenuIndex];
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
-    for (Config *config in self.configsController.configs)
-        [dockMenuBase addItemWithTitle:config.name action:@selector(chooseConfig:) keyEquivalent:@""];
+    int added = 0;
+    for (Config *config in self.configsController.configs) {
+        NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
+        [dockMenuBase addItemWithTitle:config.name
+                                action:@selector(chooseConfig:)
+                         keyEquivalent:keyEquiv];
+        
+    }
     [_targetController refreshConfigs];
     [self configChanged];
 }
