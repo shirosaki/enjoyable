@@ -215,7 +215,6 @@
 }
 
 - (void)refreshConfigs {
-    // TODO: This doesn't work when removing configs.
     NSInteger initialIndex = configPopup.indexOfSelectedItem;
     [configPopup.menu removeAllItems];
     for (Config *config in configsController.configs) {

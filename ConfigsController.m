@@ -67,16 +67,10 @@
     if (tableView.selectedRow == 0)
         return;
     
-    Config *toRemove = _configs[tableView.selectedRow];
     [_configs removeObjectAtIndex:tableView.selectedRow];
-    
-    if (toRemove == _currentConfig)
-        _currentConfig = _configs[0];
-    if (toRemove == manualConfig)
-        manualConfig = _configs[0];
-    
-    [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
     [tableView reloadData];
+    [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+    [self activateConfig:_configs[0]];
     [self save];
 }
 
