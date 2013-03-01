@@ -12,6 +12,6 @@
 
 @interface JSActionAnalog : JSAction
 
-- (id)initWithIndex:(int)index rawMin:(int)rawMin rawMax:(int)rawMax;
+- (id)initWithIndex:(int)index rawMin:(long)rawMin rawMax:(long)rawMax;
 
 @end

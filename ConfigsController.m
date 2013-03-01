@@ -60,7 +60,7 @@
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
     [tableView reloadData];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
-    [tableView editColumn:0 row:[_configs count] - 1 withEvent:nil select:YES];
+    [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
 }
 
 - (IBAction)removePressed:(id)sender {
@@ -84,21 +84,21 @@
         [self activateConfig:_configs[tableView.selectedRow]];
 }
 
-- (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(int)index {
+- (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)index {
     return [_configs[index] name];
 }
 
-- (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(int)index {
+- (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(NSInteger)index {
     [(Config *)_configs[index] setName:obj];
     [tableView reloadData];
     [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
 }
 
-- (int)numberOfRowsInTableView:(NSTableView*)table {
-    return [_configs count];
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return _configs.count;
 }
 
-- (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(int)index {
+- (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)index {
     return index > 0;
 }
 
@@ -136,7 +136,7 @@
         [newConfigs addObject:cfg];
     }
 
-    for (int i = 0; i < storedConfigs.count; ++i) {
+    for (unsigned i = 0; i < storedConfigs.count; ++i) {
         NSDictionary *entries = storedConfigs[i][@"entries"];
         Config *config = newConfigs[i];
         for (id key in entries)
@@ -145,7 +145,7 @@
     }
     
     if (newConfigs.count) {
-        int current = [envelope[@"selectedConfiguration"] unsignedIntValue];
+        unsigned current = [envelope[@"selectedConfiguration"] unsignedIntValue];
         if (current >= newConfigs.count)
             current = 0;
         _configs = newConfigs;

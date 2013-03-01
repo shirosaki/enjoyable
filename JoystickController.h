@@ -11,7 +11,7 @@
 @class ConfigsController;
 @class TargetController;
 
-@interface JoystickController : NSObject {
+@interface JoystickController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
 	IBOutlet NSOutlineView *outlineView;
 	IBOutlet TargetController *targetController;
 	IBOutlet ConfigsController *configsController;

@@ -8,10 +8,10 @@
 #import "JSActionButton.h"
 
 @implementation JSActionButton {
-    int _max;
+    long _max;
 }
 
-- (id)initWithName:(NSString *)name idx:(int)idx max:(int)max {
+- (id)initWithName:(NSString *)name idx:(int)idx max:(long)max {
     if ((self = [super init])) {
         _max = max;
         if (name.length)

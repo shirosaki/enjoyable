@@ -189,7 +189,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     return [item children] ? nil : item;
 }
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     return item ? [[item children] count] : _joysticks.count;
 }
 
@@ -197,7 +197,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     return item ? [[item children] count] > 0: YES;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item {
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item {
     return item ? [item children][index] : _joysticks[index];
 }
 

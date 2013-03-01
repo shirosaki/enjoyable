@@ -9,7 +9,7 @@
 @class Config;
 @class TargetController;
 
-@interface ConfigsController : NSObject {
+@interface ConfigsController : NSObject <NSTableViewDataSource, NSTableViewDelegate> {
     IBOutlet NSButton *removeButton;
     IBOutlet NSTableView *tableView;
     IBOutlet TargetController *targetController;

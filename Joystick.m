@@ -23,10 +23,10 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     for (int i = 0; i < CFArrayGetCount(elements); i++) {
         IOHIDElementRef element = (IOHIDElementRef)CFArrayGetValueAtIndex(elements, i);
         int type = IOHIDElementGetType(element);
-        int usage = IOHIDElementGetUsage(element);
-        int usagePage = IOHIDElementGetUsagePage(element);
-        int max = IOHIDElementGetPhysicalMax(element);
-        int min = IOHIDElementGetPhysicalMin(element);
+        unsigned usage = IOHIDElementGetUsage(element);
+        unsigned usagePage = IOHIDElementGetUsagePage(element);
+        long max = IOHIDElementGetPhysicalMax(element);
+        long min = IOHIDElementGetPhysicalMin(element);
         CFStringRef elName = IOHIDElementGetName(element);
         
         JSAction *action = nil;
@@ -88,7 +88,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     return [NSString stringWithFormat: @"%d:%d:%d", vendorId, productId, _index];
 }
 
-- (JSAction *)findActionByCookie:(void *)cookie {
+- (JSAction *)findActionByCookie:(IOHIDElementCookie)cookie {
     for (JSAction *child in _children)
         if (child.cookie == cookie)
             return child;
@@ -102,7 +102,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
 
 - (JSAction *)actionForEvent:(IOHIDValueRef)value {
     IOHIDElementRef elt = IOHIDValueGetElement(value);
-    void *cookie = IOHIDElementGetCookie(elt);
+    IOHIDElementCookie cookie = IOHIDElementGetCookie(elt);
     return [self findActionByCookie:cookie];
 }
 

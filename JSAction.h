@@ -8,7 +8,7 @@
 
 @interface JSAction : NSObject
 
-@property (assign) void *cookie;
+@property (assign) IOHIDElementCookie cookie;
 @property (copy) NSArray *children;
 @property (weak) id base;
 @property (copy) NSString *name;

@@ -48,7 +48,7 @@
     }
     
     NSRect screenRect = [[NSScreen mainScreen] frame];
-    NSInteger height = screenRect.size.height;
+    CGFloat height = screenRect.size.height;
     
     // TODO
     float speed = 4.f;
@@ -68,8 +68,8 @@
                                               CGPointMake(mouseLoc.x, height - mouseLoc.y),
                                               0);
     CGEventSetType(move, kCGEventMouseMoved);
-    CGEventSetIntegerValueField(move, kCGMouseEventDeltaX, dx);
-    CGEventSetIntegerValueField(move, kCGMouseEventDeltaY, dy);
+    CGEventSetIntegerValueField(move, kCGMouseEventDeltaX, (int)dx);
+    CGEventSetIntegerValueField(move, kCGMouseEventDeltaY, (int)dy);
     
     if ([jc frontWindowOnly]) {
         ProcessSerialNumber psn;

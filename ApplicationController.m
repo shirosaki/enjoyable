@@ -49,8 +49,8 @@
     activeMenuItem.state = sendRealEvents;
 }
 
-- (NSUInteger)firstConfigMenuIndex {
-    NSUInteger count = dockMenuBase.numberOfItems;
+- (NSInteger)firstConfigMenuIndex {
+    NSInteger count = dockMenuBase.numberOfItems;
     for (int i = 0; i < count; ++i)
         if ([dockMenuBase itemAtIndex:i].isSeparatorItem)
             return i + 1;
@@ -58,7 +58,7 @@
 }
 
 - (void)configsChanged {
-    NSUInteger removeFrom = [self firstConfigMenuIndex];
+    NSInteger removeFrom = [self firstConfigMenuIndex];
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     for (Config *config in self.configsController.configs)
@@ -68,7 +68,7 @@
 }
 
 - (void)configChanged {
-    NSUInteger firstConfig = [self firstConfigMenuIndex];
+    NSInteger firstConfig = [self firstConfigMenuIndex];
     Config *current = self.configsController.currentConfig;
     NSArray *configs = self.configsController.configs;
     for (int i = 0; i < configs.count; ++i)
@@ -76,7 +76,7 @@
 }
 
 - (void)chooseConfig:(id)sender {
-    int idx = [dockMenuBase indexOfItem:sender] - [self firstConfigMenuIndex];
+    NSInteger idx = [dockMenuBase indexOfItem:sender] - [self firstConfigMenuIndex];
     Config *chosen = self.configsController.configs[idx];
     [_configsController activateConfig:chosen];
 }

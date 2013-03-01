@@ -9,17 +9,17 @@
 
 #import "JSActionAnalog.h"
 
-static float normalize(int p, int min, int max) {
+static float normalize(long p, long min, long max) {
     return 2 * (p - min) / (float)(max - min) - 1;
 }
 
 @implementation JSActionAnalog {
     float magnitude;
-    int rawMin;
-    int rawMax;
+    long rawMin;
+    long rawMax;
 }
 
-- (id)initWithIndex:(int)index rawMin:(int)rawMin_ rawMax:(int)rawMax_ {
+- (id)initWithIndex:(int)index rawMin:(long)rawMin_ rawMax:(long)rawMax_ {
     if ((self = [super init])) {
         self.name = [[NSString alloc] initWithFormat: @"Axis %d", index];
         self.children = @[[[JSAction alloc] initWithName:@"Low" base:self],

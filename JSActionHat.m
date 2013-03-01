@@ -41,7 +41,7 @@ static BOOL active_fourway[20] = {
 }
 
 - (id)findSubActionForValue:(IOHIDValueRef)value {
-    int parsed = IOHIDValueGetIntegerValue(value);
+    long parsed = IOHIDValueGetIntegerValue(value);
     switch (IOHIDElementGetLogicalMax(IOHIDValueGetElement(value))) {
         case 7: // 8-way switch, 0-7.
             switch (parsed) {
@@ -81,8 +81,8 @@ static BOOL active_fourway[20] = {
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {
-    int parsed = IOHIDValueGetIntegerValue(value);
-    int size = IOHIDElementGetLogicalMax(IOHIDValueGetElement(value));
+    long parsed = IOHIDValueGetIntegerValue(value);
+    long size = IOHIDElementGetLogicalMax(IOHIDValueGetElement(value));
     // Skip first row in table if 0 is not neutral.
     if (size & 1) {
         parsed++;

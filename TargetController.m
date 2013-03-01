@@ -211,7 +211,7 @@
 
 - (void)refreshConfigs {
     // TODO: This doesn't work when removing configs.
-    int initialIndex = configPopup.indexOfSelectedItem;
+    NSInteger initialIndex = configPopup.indexOfSelectedItem;
     [configPopup removeAllItems];
     for (Config *config in configsController.configs)
         [configPopup addItemWithTitle:config.name];

@@ -10,6 +10,6 @@
 
 @interface JSActionButton : JSAction
 
-- (id)initWithName:(NSString *)name idx:(int)idx max:(int)max;
+- (id)initWithName:(NSString *)name idx:(int)idx max:(long)max;
 
 @end
