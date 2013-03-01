@@ -7,7 +7,9 @@
 
 #import "TargetMouseScroll.h"
 
-@implementation TargetMouseScroll
+@implementation TargetMouseScroll {
+    int sign;
+}
 
 + (NSString *)serializationCode {
     return @"mscroll";
@@ -23,13 +25,45 @@
     target.amount = [serialization[@"amount"] intValue];
 	return target;
 }
--(void) trigger {
+
+- (void)trigger {
+    if (!self.magnitude) {
+        CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
+                                                          kCGScrollEventUnitLine,
+                                                          1,
+                                                          _amount);
+        CGEventPost(kCGHIDEventTap, scroll);
+        CFRelease(scroll);
+    }
+}
+
+- (BOOL)update:(JoystickController *)jc {
+    if (fabsf(self.magnitude) < 0.01f) {
+        sign = 0;
+        return NO; // dead zone
+    }
+    
+    // If the action crossed over High/Low, this target is done.
+    if (!sign)
+        sign = self.magnitude < 0 ? -1 : 1;
+    else if (sign / self.magnitude < 0) {
+        sign = 0;
+        return NO;
+    }
+
+    int amount = (int)(16.f * fabsf(self.magnitude) * _amount);
     CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
-                                                      kCGScrollEventUnitLine,
+                                                      kCGScrollEventUnitPixel,
                                                       1,
-                                                      _amount);
+                                                      amount);
     CGEventPost(kCGHIDEventTap, scroll);
     CFRelease(scroll);
+
+    return YES;
+}
+
+- (BOOL)isContinuous {
+    return YES;
 }
 
 @end
