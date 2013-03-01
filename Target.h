@@ -10,9 +10,9 @@
 
 @interface Target : NSObject
 
-@property (assign) float magnitude;
-@property (assign) BOOL running;
-@property (readonly) BOOL isContinuous;
+@property (nonatomic, assign) float magnitude;
+@property (nonatomic, assign) BOOL running;
+@property (nonatomic, readonly) BOOL isContinuous;
 
 - (void)trigger;
 - (void)untrigger;

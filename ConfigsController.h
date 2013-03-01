@@ -16,8 +16,8 @@
     IBOutlet NSButton *exportButton;
 }
 
-@property (readonly) Config *currentConfig;
-@property (readonly) NSArray *configs;
+@property (nonatomic, readonly) Config *currentConfig;
+@property (nonatomic, readonly) NSArray *configs;
 
 - (Config *)objectForKeyedSubscript:(NSString *)name;
 

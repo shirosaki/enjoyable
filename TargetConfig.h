@@ -12,6 +12,6 @@
 
 @interface TargetConfig : Target
 
-@property (weak) Config *config;
+@property (nonatomic, weak) Config *config;
 
 @end

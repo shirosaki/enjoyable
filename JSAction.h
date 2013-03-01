@@ -8,12 +8,12 @@
 
 @interface JSAction : NSObject
 
-@property (assign) IOHIDElementCookie cookie;
-@property (copy) NSArray *children;
-@property (weak) id base;
-@property (copy) NSString *name;
-@property (assign) BOOL active;
-@property (readonly) float magnitude;
+@property (nonatomic, assign) IOHIDElementCookie cookie;
+@property (nonatomic, copy) NSArray *children;
+@property (nonatomic, weak) id base;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, assign) BOOL active;
+@property (nonatomic, readonly) float magnitude;
 @property (readonly) NSString *uid;
 
 - (id)initWithName:(NSString *)newName base:(JSAction *)newBase;

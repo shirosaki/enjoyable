@@ -11,8 +11,8 @@
 
 @interface Config : NSObject
 
-@property (copy) NSString *name;
-@property (readonly) NSMutableDictionary *entries;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, readonly) NSMutableDictionary *entries;
 
 - (id)initWithName:(NSString *)name;
 - (Target *)objectForKeyedSubscript:(JSAction *)action;

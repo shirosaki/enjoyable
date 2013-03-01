@@ -20,9 +20,9 @@
 - (void)setup;
 - (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device;
 
-@property (readonly) JSAction *selectedAction;
-@property (assign) NSPoint mouseLoc;
-@property (assign) BOOL frontWindowOnly;
-@property (assign) BOOL sendingRealEvents;
+@property (nonatomic, readonly) JSAction *selectedAction;
+@property (nonatomic, assign) NSPoint mouseLoc;
+@property (nonatomic, assign) BOOL frontWindowOnly;
+@property (nonatomic, assign) BOOL sendingRealEvents;
 
 @end

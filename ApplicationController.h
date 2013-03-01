@@ -18,9 +18,9 @@
     IBOutlet NSMenu *dockMenuBase;
 }
 
-@property (strong) IBOutlet JoystickController *jsController;
-@property (strong) IBOutlet TargetController *targetController;
-@property (strong) IBOutlet ConfigsController *configsController;
+@property (nonatomic, strong) IBOutlet JoystickController *jsController;
+@property (nonatomic, strong) IBOutlet TargetController *targetController;
+@property (nonatomic, strong) IBOutlet ConfigsController *configsController;
 
 - (IBAction)toggleActivity:(id)sender;
 - (void)configsChanged;

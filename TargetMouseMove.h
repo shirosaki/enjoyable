@@ -9,6 +9,6 @@
 
 @interface TargetMouseMove : Target
 
-@property (assign) int axis;
+@property (nonatomic, assign) int axis;
 
 @end

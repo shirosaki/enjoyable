@@ -10,6 +10,6 @@
 
 @interface TargetKeyboard : Target
 
-@property (assign) CGKeyCode vk;
+@property (nonatomic, assign) CGKeyCode vk;
 
 @end

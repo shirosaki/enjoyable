@@ -9,6 +9,6 @@
 
 @interface TargetMouseScroll : Target
 
-@property (assign) int amount;
+@property (nonatomic, assign) int amount;
 
 @end

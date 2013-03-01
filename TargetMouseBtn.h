@@ -9,6 +9,6 @@
 
 @interface TargetMouseBtn : Target
 
-@property (assign) CGMouseButton button;
+@property (nonatomic, assign) CGMouseButton button;
 
 @end

@@ -10,11 +10,11 @@
 
 @interface Joystick : NSObject
 
-@property (assign) int index;
-@property (copy) NSString *productName;
-@property (assign) IOHIDDeviceRef device;
-@property (copy) NSArray *children;
-@property (readonly) NSString *name;
+@property (nonatomic, assign) int index;
+@property (nonatomic, copy) NSString *productName;
+@property (nonatomic, assign) IOHIDDeviceRef device;
+@property (nonatomic, copy) NSArray *children;
+@property (nonatomic, readonly) NSString *name;
 @property (readonly) NSString *uid;
 
 - (id)initWithDevice:(IOHIDDeviceRef)device;

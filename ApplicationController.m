@@ -75,7 +75,7 @@
     NSInteger firstConfig = [self firstConfigMenuIndex];
     Config *current = self.configsController.currentConfig;
     NSArray *configs = self.configsController.configs;
-    for (int i = 0; i < configs.count; ++i)
+    for (NSUInteger i = 0; i < configs.count; ++i)
         [dockMenuBase itemAtIndex:i + firstConfig].state = configs[i] == current;
 }
 
