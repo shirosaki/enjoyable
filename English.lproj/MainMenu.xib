@@ -784,7 +784,7 @@
 												<object class="NSButtonCell" id="339215895">
 													<int key="NSCellFlags">603979776</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Switch to configuration</string>
+													<string key="NSContents">Switch to mapping</string>
 													<reference key="NSSupport" ref="45863614"/>
 													<reference key="NSControlView" ref="120408205"/>
 													<int key="NSButtonFlags">1211912448</int>
@@ -840,7 +840,7 @@
 												<object class="NSButtonCell" id="211076068">
 													<int key="NSCellFlags">603979776</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Toggle mouse scope</string>
+													<string key="NSContents">Switch mouse mode</string>
 													<reference key="NSSupport" ref="45863614"/>
 													<reference key="NSControlView" ref="120408205"/>
 													<int key="NSButtonFlags">1211912448</int>
