@@ -113,21 +113,14 @@
 
 - (NSDictionary *)dumpAll {
     NSMutableArray *ary = [[NSMutableArray alloc] initWithCapacity:_configs.count];
-    for (Config *config in _configs) {
-        NSMutableDictionary* cfgEntries = [[NSMutableDictionary alloc] initWithCapacity:config.entries.count];
-        for (id key in config.entries)
-            cfgEntries[key] = [config.entries[key] serialize];
-        [ary addObject:@{ @"name": config.name,
-                          @"entries": cfgEntries,
-                        }];
-    }
+    for (Config *config in _configs)
+        [ary addObject:[config serialize]];
     NSUInteger current = _currentConfig ? [_configs indexOfObject:_currentConfig] : 0;
-    return @{ @"configurationList": ary,
-              @"selectedConfiguration": @(current) };
+    return @{ @"configurations": ary, @"selected": @(current) };
 }
 
 - (void)loadAllFrom:(NSDictionary*) envelope{
-    NSArray *storedConfigs = envelope[@"configurationList"];
+    NSArray *storedConfigs = envelope[@"configurations"];
     NSMutableArray* newConfigs = [[NSMutableArray alloc] initWithCapacity:storedConfigs.count];
 
     // have to do two passes in case config1 refers to config2 via a TargetConfig
@@ -145,13 +138,30 @@
     }
     
     if (newConfigs.count) {
-        unsigned current = [envelope[@"selectedConfiguration"] unsignedIntValue];
+        unsigned current = [envelope[@"selected"] unsignedIntValue];
         if (current >= newConfigs.count)
             current = 0;
         _configs = newConfigs;
         [tableView reloadData];
         [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
         [self activateConfig:_configs[current]];
+    }
+}
+
+- (void)exportPressed:(id)sender {
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    panel.allowedFileTypes = @[ @"enjoyable" ];
+    if ([panel runModal] == NSFileHandlingPanelOKButton) {
+        NSError *error;
+        NSDictionary *serialization = [_currentConfig serialize];
+        NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+        if (!error)
+            [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
+        
+        if (error)
+            [[NSAlert alertWithError:error] runModal];
     }
 }
 

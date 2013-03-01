@@ -9,10 +9,11 @@
 @class Config;
 @class TargetController;
 
-@interface ConfigsController : NSObject <NSTableViewDataSource, NSTableViewDelegate> {
+@interface ConfigsController : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSOpenSavePanelDelegate> {
     IBOutlet NSButton *removeButton;
     IBOutlet NSTableView *tableView;
     IBOutlet TargetController *targetController;
+    IBOutlet NSButton *exportButton;
 }
 
 @property (readonly) Config *currentConfig;
@@ -20,6 +21,7 @@
 
 - (IBAction)addPressed:(id)sender;
 - (IBAction)removePressed:(id)sender;
+- (IBAction)exportPressed:(id)sender;
 - (void)activateConfig:(Config *)config;
 - (void)activateConfigForProcess:(NSString *)processName;
 
