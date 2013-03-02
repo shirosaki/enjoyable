@@ -26,7 +26,7 @@
     self.targetController.enabled = NO;
     [self.jsController setup];
     [self.configsController load];
-    [[NSWorkspace sharedWorkspace].notificationCenter
+    [NSWorkspace.sharedWorkspace.notificationCenter
      addObserver:self
      selector:@selector(didSwitchApplication:)
      name:NSWorkspaceDidActivateApplicationNotification
@@ -34,8 +34,8 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-	[[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSWorkspace sharedWorkspace].notificationCenter
+	[NSUserDefaults.standardUserDefaults synchronize];
+    [NSWorkspace.sharedWorkspace.notificationCenter
      removeObserver:self
      name:NSWorkspaceDidActivateApplicationNotification
      object:nil];
@@ -56,7 +56,7 @@
 }
 
 - (void)configsChanged {
-    NSInteger removeFrom = [self firstConfigMenuIndex];
+    NSInteger removeFrom = self.firstConfigMenuIndex;
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     int added = 0;
@@ -72,7 +72,7 @@
 }
 
 - (void)configChanged {
-    NSInteger firstConfig = [self firstConfigMenuIndex];
+    NSInteger firstConfig = self.firstConfigMenuIndex;
     Config *current = self.configsController.currentConfig;
     NSArray *configs = self.configsController.configs;
     for (NSUInteger i = 0; i < configs.count; ++i)
@@ -80,7 +80,7 @@
 }
 
 - (void)chooseConfig:(id)sender {
-    NSInteger idx = [dockMenuBase indexOfItem:sender] - [self firstConfigMenuIndex];
+    NSInteger idx = [dockMenuBase indexOfItem:sender] - self.firstConfigMenuIndex;
     Config *chosen = self.configsController.configs[idx];
     [_configsController activateConfig:chosen];
 }

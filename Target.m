@@ -31,17 +31,17 @@
 + (Target *)targetDeserialize:(NSDictionary *)serialization
                   withConfigs:(NSArray *)configs {
     // Don't crash loading old configs (but don't load them either).
-    if (![serialization isKindOfClass:[NSDictionary class]])
+    if (![serialization isKindOfClass:NSDictionary.class])
         return nil;
     NSString *type = serialization[@"type"];
-    for (Class cls in @[[TargetKeyboard class],
-                        [TargetConfig class],
-                        [TargetMouseMove class],
-                        [TargetMouseBtn class],
-                        [TargetMouseScroll class],
-                        [TargetToggleMouseScope class]
+    for (Class cls in @[TargetKeyboard.class,
+                        TargetConfig.class,
+                        TargetMouseMove.class,
+                        TargetMouseBtn.class,
+                        TargetMouseScroll.class,
+                        TargetToggleMouseScope.class
          ]) {
-        if ([type isEqualToString:[cls serializationCode]])
+        if ([type isEqualToString:cls.serializationCode])
             return [cls targetDeserialize:serialization withConfigs:configs];
     }
     

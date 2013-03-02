@@ -25,9 +25,8 @@
 }
 
 -(void) trigger {
-    NSRect screenRect = [[NSScreen mainScreen] frame];
-    CGFloat height = screenRect.size.height;
-    NSPoint mouseLoc = [NSEvent mouseLocation];
+    CGFloat height = NSScreen.mainScreen.frame.size.height;
+    NSPoint mouseLoc = NSEvent.mouseLocation;
     CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseDown : kCGEventRightMouseDown;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,
@@ -38,9 +37,8 @@
 }
 
 -(void) untrigger {
-    NSRect screenRect = [[NSScreen mainScreen] frame];
-    CGFloat height = screenRect.size.height;
-    NSPoint mouseLoc = [NSEvent mouseLocation];
+    CGFloat height = NSScreen.mainScreen.frame.size.height;
+    NSPoint mouseLoc = NSEvent.mouseLocation;
     CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,

@@ -170,10 +170,10 @@
         title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, actFullName];
     }
 
-    if ([target isKindOfClass:[TargetKeyboard class]]) {
+    if ([target isKindOfClass:TargetKeyboard.class]) {
         [radioButtons selectCellAtRow:1 column:0];
         keyInput.vk = [(TargetKeyboard*)target vk];
-    } else if ([target isKindOfClass:[TargetConfig class]]) {
+    } else if ([target isKindOfClass:TargetConfig.class]) {
         [radioButtons selectCellAtRow:2 column:0];
         NSUInteger idx = [configsController.configs
                           indexOfObject:[(TargetConfig *)target config]];
@@ -183,19 +183,19 @@
         } else
             [configPopup selectItemAtIndex:idx];
     }
-    else if ([target isKindOfClass:[TargetMouseMove class]]) {
+    else if ([target isKindOfClass:TargetMouseMove.class]) {
         [radioButtons selectCellAtRow:3 column:0];
         [mouseDirSelect setSelectedSegment:[(TargetMouseMove *)target axis]];
     }
-    else if ([target isKindOfClass:[TargetMouseBtn class]]) {
+    else if ([target isKindOfClass:TargetMouseBtn.class]) {
         [radioButtons selectCellAtRow:4 column:0];
         mouseBtnSelect.selectedSegment = [(TargetMouseBtn *)target button] == kCGMouseButtonLeft ? 0 : 1;
     }
-    else if ([target isKindOfClass:[TargetMouseScroll class]]) {
+    else if ([target isKindOfClass:TargetMouseScroll.class]) {
         [radioButtons selectCellAtRow:5 column:0];
         scrollDirSelect.selectedSegment = [(TargetMouseScroll *)target amount] > 0;
     }
-    else if ([target isKindOfClass:[TargetToggleMouseScope class]]) {
+    else if ([target isKindOfClass:TargetToggleMouseScope.class]) {
         [radioButtons selectCellAtRow:6 column:0];
     } else {
         [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
@@ -204,7 +204,7 @@
 }
 
 - (void)loadCurrent {
-    [self loadTarget:[self currentTarget] forAction:joystickController.selectedAction];
+    [self loadTarget:self.currentTarget forAction:joystickController.selectedAction];
 }
 
 - (void)focusKey {

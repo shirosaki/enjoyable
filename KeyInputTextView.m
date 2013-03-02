@@ -161,12 +161,12 @@
 }
 
 - (BOOL)becomeFirstResponder {
-    [self setBackgroundColor:[NSColor selectedTextBackgroundColor]];
+    self.backgroundColor = NSColor.selectedTextBackgroundColor;
     return [super becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-    [self setBackgroundColor:[NSColor textBackgroundColor]];
+    self.backgroundColor = NSColor.textBackgroundColor;
     return [super resignFirstResponder];
 }
 

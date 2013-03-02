@@ -37,7 +37,8 @@
 }
 
 - (void)trigger {
-    [[(ApplicationController *)[[NSApplication sharedApplication] delegate] configsController] activateConfig:_config];
+    ApplicationController *ctrl = NSApplication.sharedApplication.delegate;
+    [ctrl.configsController activateConfig:_config];
 }
 
 @end

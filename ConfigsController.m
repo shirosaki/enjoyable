@@ -50,14 +50,14 @@
     _currentConfig = config;
     [removeButton setEnabled:_configs[0] != config];
     [targetController loadCurrent];
-    [(ApplicationController *)[[NSApplication sharedApplication] delegate] configChanged];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate configChanged];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_configs indexOfObject:config]] byExtendingSelection:NO];
 }
 
 - (IBAction)addPressed:(id)sender {
     Config *newConfig = [[Config alloc] initWithName:@"Untitled"];
     [_configs addObject:newConfig];
-    [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
     [tableView reloadData];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
     [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
@@ -69,7 +69,7 @@
     
     [_configs removeObjectAtIndex:tableView.selectedRow];
     [tableView reloadData];
-    [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
     [self activateConfig:_configs[0]];
     [self save];
 }
@@ -86,7 +86,7 @@
 - (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(NSInteger)index {
     [(Config *)_configs[index] setName:obj];
     [tableView reloadData];
-    [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
@@ -99,11 +99,11 @@
 
 - (void)save {
     NSLog(@"Saving defaults.");
-    [[NSUserDefaults standardUserDefaults] setObject:[self dumpAll] forKey:@"configurations"];
+    [NSUserDefaults.standardUserDefaults setObject:[self dumpAll] forKey:@"configurations"];
 }
 
 - (void)load {
-    [self loadAllFrom:[[NSUserDefaults standardUserDefaults] objectForKey:@"configurations"]];
+    [self loadAllFrom:[NSUserDefaults.standardUserDefaults objectForKey:@"configurations"]];
 }
 
 - (NSDictionary *)dumpAll {
@@ -141,7 +141,7 @@
             current = 0;
         _configs = newConfigs;
         [tableView reloadData];
-        [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+        [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
         [self activateConfig:_configs[current]];
     }
 }
@@ -154,7 +154,7 @@
         : nil;
     [stream close];
     
-    if (!([serialization isKindOfClass:[NSDictionary class]]
+    if (!([serialization isKindOfClass:NSDictionary.class]
           && serialization[@"entries"])) {
         *error = [NSError errorWithDomain:@"Enjoyable"
                                     code:0
@@ -220,7 +220,7 @@
                           }
                           
                           [self save];
-                          [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+                          [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
                           [self activateConfig:cfg];
                           [targetController loadCurrent];
                           

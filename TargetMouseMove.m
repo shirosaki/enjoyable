@@ -46,12 +46,11 @@
         return NO;
     }
     
-    NSRect screenRect = [[NSScreen mainScreen] frame];
-    CGFloat height = screenRect.size.height;
+    CGFloat height = NSScreen.mainScreen.frame.size.height;
     
     // TODO
     float speed = 4.f;
-    if ([jc frontWindowOnly])
+    if (jc.frontWindowOnly)
         speed = 12.f;
     float dx = 0.f, dy = 0.f;
     if (_axis == 0)
@@ -70,7 +69,7 @@
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaX, (int)dx);
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaY, (int)dy);
     
-    if ([jc frontWindowOnly]) {
+    if (jc.frontWindowOnly) {
         ProcessSerialNumber psn;
         GetFrontProcess(&psn);
         CGEventPostToPSN(&psn, move);
