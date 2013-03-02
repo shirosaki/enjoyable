@@ -11,6 +11,7 @@
 #import "ConfigsController.h"
 #import "JoystickController.h"
 #import "TargetController.h"
+#import "NJEvents.h"
 
 @implementation ApplicationController {
     BOOL active;
@@ -26,19 +27,15 @@
     self.targetController.enabled = NO;
     [self.jsController setup];
     [self.configsController load];
-    [NSWorkspace.sharedWorkspace.notificationCenter
-     addObserver:self
-     selector:@selector(didSwitchApplication:)
-     name:NSWorkspaceDidActivateApplicationNotification
-     object:nil];
+    [NSNotificationCenter.defaultCenter
+        addObserver:self
+        selector:@selector(mappingDidChange:)
+        name:NJEventMappingChanged
+        object:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[NSUserDefaults.standardUserDefaults synchronize];
-    [NSWorkspace.sharedWorkspace.notificationCenter
-     removeObserver:self
-     name:NSWorkspaceDidActivateApplicationNotification
-     object:nil];
 }
 
 - (IBAction)toggleActivity:(id)sender {
@@ -46,6 +43,22 @@
     self.jsController.sendingRealEvents = sendRealEvents;
     activeButton.image = [NSImage imageNamed:sendRealEvents ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate"];
     activeMenuItem.state = sendRealEvents;
+    
+    if (sendRealEvents) {
+        [NSWorkspace.sharedWorkspace.notificationCenter
+            addObserver:self
+            selector:@selector(didSwitchApplication:)
+            name:NSWorkspaceDidActivateApplicationNotification
+            object:nil];
+        NSLog(@"Listening for application changes.");
+    } else {
+        [NSWorkspace.sharedWorkspace.notificationCenter
+            removeObserver:self
+            name:NSWorkspaceDidActivateApplicationNotification
+            object:nil];
+        NSLog(@"Ignoring application changes.");
+    }
+
 }
 
 - (NSInteger)firstConfigMenuIndex {
@@ -68,12 +81,11 @@
         
     }
     [_targetController refreshConfigs];
-    [self configChanged];
 }
 
-- (void)configChanged {
+- (void)mappingDidChange:(NSNotification *)note {
     NSInteger firstConfig = self.firstConfigMenuIndex;
-    Config *current = self.configsController.currentConfig;
+    Config *current = note.object;
     NSArray *configs = self.configsController.configs;
     for (NSUInteger i = 0; i < configs.count; ++i)
         [dockMenuBase itemAtIndex:i + firstConfig].state = configs[i] == current;

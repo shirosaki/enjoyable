@@ -24,6 +24,5 @@
 
 - (IBAction)toggleActivity:(id)sender;
 - (void)configsChanged;
-- (void)configChanged;
 
 @end

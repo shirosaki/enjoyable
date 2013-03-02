@@ -12,6 +12,7 @@
 #import "ConfigsController.h"
 #import "Target.h"
 #import "TargetController.h"
+#import "NJEvents.h"
 
 @implementation ConfigsController {
     NSMutableArray *_configs;
@@ -37,20 +38,24 @@
 
 - (void)activateConfigForProcess:(NSString *)processName {
     Config *oldConfig = manualConfig;
-    [self activateConfig:self[processName]];
+    Config *newConfig = self[processName];
+    if (!newConfig)
+        newConfig = oldConfig;
+    if (newConfig != _currentConfig)
+        [self activateConfig:newConfig];
     manualConfig = oldConfig;
 }
 
 - (void)activateConfig:(Config *)config {
     if (!config)
         config = manualConfig;
-    if (_currentConfig == config)
-        return;
+    NSLog(@"Switching to mapping %@.", config.name);
     manualConfig = config;
     _currentConfig = config;
     [removeButton setEnabled:_configs[0] != config];
     [targetController loadCurrent];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate configChanged];
+    [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
+                                                      object:_currentConfig];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_configs indexOfObject:config]] byExtendingSelection:NO];
 }
 
@@ -61,6 +66,7 @@
     [tableView reloadData];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
     [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
+    [self activateConfig:newConfig];
 }
 
 - (IBAction)removePressed:(id)sender {
@@ -98,7 +104,7 @@
 }
 
 - (void)save {
-    NSLog(@"Saving defaults.");
+    NSLog(@"Saving mappings to defaults.");
     [NSUserDefaults.standardUserDefaults setObject:[self dumpAll] forKey:@"configurations"];
 }
 
