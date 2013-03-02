@@ -155,18 +155,25 @@
     [stream close];
     
     if (!([serialization isKindOfClass:NSDictionary.class]
-          && serialization[@"entries"])) {
+          && [serialization[@"name"] isKindOfClass:NSString.class]
+          && [serialization[@"entries"] isKindOfClass:NSDictionary.class])) {
         *error = [NSError errorWithDomain:@"Enjoyable"
-                                    code:0
-                             description:@"This isn't a valid mapping file."];
+                                     code:0
+                              description:@"This isn't a valid mapping file."];
         return nil;
     }
 
     NSDictionary *entries = serialization[@"entries"];
     Config *cfg = [[Config alloc] initWithName:serialization[@"name"]];
-    for (id key in entries)
-        cfg.entries[key] = [Target targetDeserialize:entries[key]
-                                         withConfigs:_configs];
+    for (id key in entries) {
+        NSDictionary *value = entries[key];
+        if ([key isKindOfClass:NSString.class]) {
+            Target *target = [Target targetDeserialize:value
+                                           withConfigs:_configs];
+            if (target)
+                cfg.entries[key] = target;
+        }
+    }
     return cfg;
 }
 
