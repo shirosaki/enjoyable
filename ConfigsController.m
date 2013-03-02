@@ -146,95 +146,131 @@
     }
 }
 
+- (Config *)configWithURL:(NSURL *)url error:(NSError **)error {
+    NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
+    [stream open];
+    NSDictionary *serialization = !*error
+        ? [NSJSONSerialization JSONObjectWithStream:stream options:0 error:error]
+        : nil;
+    [stream close];
+    
+    if (!([serialization isKindOfClass:[NSDictionary class]]
+          && serialization[@"entries"])) {
+        *error = [NSError errorWithDomain:@"Enjoyable"
+                                    code:0
+                             description:@"This isn't a valid mapping file."];
+        return nil;
+    }
+
+    NSDictionary *entries = serialization[@"entries"];
+    Config *cfg = [[Config alloc] initWithName:serialization[@"name"]];
+    for (id key in entries)
+        cfg.entries[key] = [Target targetDeserialize:entries[key]
+                                         withConfigs:_configs];
+    return cfg;
+}
+
 - (void)importPressed:(id)sender {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     panel.allowedFileTypes = @[ @"enjoyable", @"json", @"txt" ];
-    if ([panel runModal] == NSFileHandlingPanelOKButton) {
-        NSError *error;
-        NSInputStream *stream = [NSInputStream inputStreamWithURL:panel.URL];
-        [stream open];
-        NSDictionary *serialization = !error
-            ? [NSJSONSerialization JSONObjectWithStream:stream options:0 error:&error]
-            : nil;
-        [stream close];
-        
-        if (!([serialization isKindOfClass:[NSDictionary class]]
-              && serialization[@"entries"])) {
-            error = [NSError errorWithDomain:@"Enjoyable"
-                                        code:0
-                                 description:@"This isn't a valid mapping file."];
-        }
-        
-        
-        if (!error) {
-            NSDictionary *entries = serialization[@"entries"];
-            Config *cfg = [[Config alloc] initWithName:serialization[@"name"]];
-            Config *mergeInto = self[cfg.name];
-            BOOL conflict = NO;
-            for (id key in entries) {
-                cfg.entries[key] = [Target targetDeserialize:entries[key]
-                                                    withConfigs:_configs];
-                if (mergeInto.entries[key])
-                    conflict = YES;
-            }
-            
-            if (conflict) {
-                NSAlert *conflictAlert = [[NSAlert alloc] init];
-                conflictAlert.messageText = @"Replace existing mappings?";
-                conflictAlert.informativeText =
-                    [NSString stringWithFormat:
-                     @"This file contains inputs you've already mapped in \"%@\". Do you "
-                     @"want to merge them and replace your existing mappings, or import this "
-                     @"as a separate mapping?", cfg.name];
-                [conflictAlert addButtonWithTitle:@"Merge"];
-                [conflictAlert addButtonWithTitle:@"Cancel"];
-                [conflictAlert addButtonWithTitle:@"New Mapping"];
-                NSInteger res = [conflictAlert runModal];
-                if (res == NSAlertSecondButtonReturn)
-                    return;
-                else if (res == NSAlertThirdButtonReturn)
-                    mergeInto = nil;
-            }
-            
-            if (mergeInto) {
-                [mergeInto.entries addEntriesFromDictionary:cfg.entries];
-                cfg = mergeInto;
-            } else {
-                [_configs addObject:cfg];
-                [tableView reloadData];
-            }
+    NSWindow *window = NSApplication.sharedApplication.keyWindow;
+    [panel beginSheetModalForWindow:window
+                  completionHandler:^(NSInteger result) {
+                      if (result != NSFileHandlingPanelOKButton)
+                          return;
 
-            [self save];
-            [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
-            [self activateConfig:cfg];
-            [targetController loadCurrent];
-            
-            if (conflict && !mergeInto) {
-                [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
-                [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
-            }
-        }
-        
-        if (error)
-            [[NSAlert alertWithError:error] runModal];
-    }
+                      [panel close];
+                      NSError *error;
+                      Config *cfg = [self configWithURL:panel.URL error:&error];
+                      
+                      if (!error) {
+                          BOOL conflict;
+                          Config *mergeInto = self[cfg.name];
+                          for (id key in cfg.entries) {
+                              if (mergeInto.entries[key]) {
+                                  conflict = YES;
+                                  break;
+                              }
+                          }
+                          
+                          if (conflict) {
+                              NSAlert *conflictAlert = [[NSAlert alloc] init];
+                              conflictAlert.messageText = @"Replace existing mappings?";
+                              conflictAlert.informativeText =
+                                  [NSString stringWithFormat:
+                                   @"This file contains inputs you've already mapped in \"%@\". Do you "
+                                   @"want to merge them and replace your existing mappings, or import this "
+                                   @"as a separate mapping?", cfg.name];
+                              [conflictAlert addButtonWithTitle:@"Merge"];
+                              [conflictAlert addButtonWithTitle:@"Cancel"];
+                              [conflictAlert addButtonWithTitle:@"New Mapping"];
+                              NSInteger res = [conflictAlert runModal];
+                              if (res == NSAlertSecondButtonReturn)
+                                  return;
+                              else if (res == NSAlertThirdButtonReturn)
+                                  mergeInto = nil;
+                          }
+                          
+                          if (mergeInto) {
+                              [mergeInto.entries addEntriesFromDictionary:cfg.entries];
+                              cfg = mergeInto;
+                          } else {
+                              [_configs addObject:cfg];
+                              [tableView reloadData];
+                          }
+                          
+                          [self save];
+                          [(ApplicationController *)[[NSApplication sharedApplication] delegate] configsChanged];
+                          [self activateConfig:cfg];
+                          [targetController loadCurrent];
+                          
+                          if (conflict && !mergeInto) {
+                              [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
+                              [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
+                          }
+                      }
+                      
+                      if (error) {
+                          [[NSAlert alertWithError:error] beginSheetModalForWindow:window
+                                                                     modalDelegate:nil
+                                                                    didEndSelector:nil
+                                                                       contextInfo:nil];
+                      }
+                  }];
+     
 }
 
 - (void)exportPressed:(id)sender {
     NSSavePanel *panel = [NSSavePanel savePanel];
     panel.allowedFileTypes = @[ @"enjoyable" ];
-    if ([panel runModal] == NSFileHandlingPanelOKButton) {
-        NSError *error;
-        NSDictionary *serialization = [_currentConfig serialize];
-        NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-        if (!error)
-            [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
-        
-        if (error)
-            [[NSAlert alertWithError:error] runModal];
-    }
+    Config *cfg = _currentConfig;
+    panel.nameFieldStringValue = cfg.name;
+    NSWindow *window = NSApplication.sharedApplication.keyWindow;
+    [panel beginSheetModalForWindow:window
+                  completionHandler:^(NSInteger result) {
+                      if (result == NSFileHandlingPanelOKButton) {
+                          NSError *error;
+                          NSDictionary *serialization = [cfg serialize];
+                          NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
+                                                                         options:NSJSONWritingPrettyPrinted
+                                                                           error:&error];
+                          if (!error)
+                              [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
+                          
+                          if (error) {
+                              // FIXME: Ideally, this sheet is attached to the
+                              // panel, and the panel doesn't close, so you
+                              // can maybe fix what is wrong and try saving
+                              // again. But it seems to be impossible to force
+                              // the panel to stay open.
+                              [panel close];
+                              [[NSAlert alertWithError:error] beginSheetModalForWindow:window
+                                                                         modalDelegate:nil
+                                                                        didEndSelector:nil
+                                                                           contextInfo:nil];
+                          }
+                      }
+                  }];
 }
 
 @end
