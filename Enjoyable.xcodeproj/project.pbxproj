@@ -89,6 +89,7 @@
 		EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+FirstResponder.m"; sourceTree = "<group>"; };
 		EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Description.h"; sourceTree = "<group>"; };
 		EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Description.m"; sourceTree = "<group>"; };
+		EEF86B7316E2241000674B87 /* NJActionPathElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJActionPathElement.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 				8BEFAD9B15C46BFF00823AEC /* TargetMouseScroll.m */,
 				8BEFAD9E15C476DC00823AEC /* TargetToggleMouseScope.h */,
 				8BEFAD9F15C476DC00823AEC /* TargetToggleMouseScope.m */,
+				EEF86B7316E2241000674B87 /* NJActionPathElement.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

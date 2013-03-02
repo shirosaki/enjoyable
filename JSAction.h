@@ -6,7 +6,9 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@interface JSAction : NSObject
+#import "NJActionPathElement.h"
+
+@interface JSAction : NSObject <NJActionPathElement>
 
 @property (nonatomic, assign) IOHIDElementCookie cookie;
 @property (nonatomic, copy) NSArray *children;
@@ -16,7 +18,7 @@
 @property (nonatomic, readonly) float magnitude;
 @property (readonly) NSString *uid;
 
-- (id)initWithName:(NSString *)newName base:(JSAction *)newBase;
+- (id)initWithName:(NSString *)newName base:(id <NJActionPathElement>)newBase;
 
 - (void)notifyEvent:(IOHIDValueRef)value;
 - (id)findSubActionForValue:(IOHIDValueRef)value;

@@ -95,7 +95,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     return nil;
 }
 
-- (id)handlerForEvent:(IOHIDValueRef) value {
+- (JSAction *)handlerForEvent:(IOHIDValueRef)value {
     JSAction *mainAction = [self actionForEvent:value];
     return [mainAction findSubActionForValue:value];
 }

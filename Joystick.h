@@ -6,9 +6,11 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
+#import "NJActionPathElement.h"
+
 @class JSAction;
 
-@interface Joystick : NSObject
+@interface Joystick : NSObject <NJActionPathElement>
 
 @property (nonatomic, assign) int index;
 @property (nonatomic, copy) NSString *productName;
@@ -18,7 +20,7 @@
 @property (readonly) NSString *uid;
 
 - (id)initWithDevice:(IOHIDDeviceRef)device;
-- (id)handlerForEvent:(IOHIDValueRef)value;
+- (JSAction *)handlerForEvent:(IOHIDValueRef)value;
 - (JSAction *)actionForEvent:(IOHIDValueRef)value;
 
 @end

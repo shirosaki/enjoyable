@@ -10,7 +10,7 @@
 @class TargetController;
 @class ConfigsController;
 
-@interface ApplicationController : NSObject {
+@interface ApplicationController : NSObject <NSApplicationDelegate> {
     IBOutlet NSDrawer *drawer;
     IBOutlet NSWindow *mainWindow;
     IBOutlet NSToolbarItem *activeButton;

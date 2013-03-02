@@ -35,10 +35,11 @@
     CFRelease(hidManager);
 }
 
-- (void)expandRecursive:(id)handler {
-    if ([handler base])
-        [self expandRecursive:[handler base]];
-    [outlineView expandItem:handler];
+- (void)expandRecursive:(id <NJActionPathElement>)pathElement {
+    if (pathElement) {
+        [self expandRecursive:pathElement.base];
+        [outlineView expandItem:pathElement];
+    }
 }
 
 - (void)addRunningTarget:(Target *)target {
@@ -188,26 +189,30 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 }
 
 - (JSAction *)selectedAction {
-    id item = [outlineView itemAtRow:outlineView.selectedRow];
-    return [item children] ? nil : item;
+    id <NJActionPathElement> item = [outlineView itemAtRow:outlineView.selectedRow];
+    return (!item.children && item.base) ? item : nil;
 }
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
-    return item ? [[item children] count] : _joysticks.count;
+- (NSInteger)outlineView:(NSOutlineView *)outlineView
+  numberOfChildrenOfItem:(id <NJActionPathElement>)item {
+    return item ? item.children.count : _joysticks.count;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
+- (BOOL)outlineView:(NSOutlineView *)outlineView
+   isItemExpandable:(id <NJActionPathElement>)item {
     return item ? [[item children] count] > 0: YES;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item {
-    return item ? [item children][index] : _joysticks[index];
+- (id)outlineView:(NSOutlineView *)outlineView
+            child:(NSInteger)index
+           ofItem:(id <NJActionPathElement>)item {
+    return item ? item.children[index] : _joysticks[index];
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item  {
-    if(item == nil)
-        return @"root";
-    return [item name];
+- (id)outlineView:(NSOutlineView *)outlineView
+objectValueForTableColumn:(NSTableColumn *)tableColumn
+           byItem:(id <NJActionPathElement>)item  {
+    return item ? item.name : @"root";
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {

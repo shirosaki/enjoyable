@@ -164,7 +164,7 @@
     } else {
         self.enabled = YES;
         NSString *actFullName = action.name;
-        for (JSAction *cur = action.base; cur; cur = cur.base) {
+        for (id <NJActionPathElement> cur = action.base; cur; cur = cur.base) {
             actFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, actFullName];
         }
         title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, actFullName];

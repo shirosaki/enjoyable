@@ -9,7 +9,7 @@
 
 @implementation JSAction
 
-- (id)initWithName:(NSString *)newName base:(JSAction *)newBase {
+- (id)initWithName:(NSString *)newName base:(id <NJActionPathElement>)newBase {
     if ((self = [super init])) {
         self.name = newName;
         self.base = newBase;
