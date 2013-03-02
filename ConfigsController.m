@@ -231,10 +231,11 @@
                       }
                       
                       if (error) {
-                          [[NSAlert alertWithError:error] beginSheetModalForWindow:window
-                                                                     modalDelegate:nil
-                                                                    didEndSelector:nil
-                                                                       contextInfo:nil];
+                          [window presentError:error
+                                modalForWindow:window
+                                      delegate:nil
+                            didPresentSelector:nil
+                                   contextInfo:nil];
                       }
                   }];
      
@@ -248,27 +249,23 @@
     NSWindow *window = NSApplication.sharedApplication.keyWindow;
     [panel beginSheetModalForWindow:window
                   completionHandler:^(NSInteger result) {
-                      if (result == NSFileHandlingPanelOKButton) {
-                          NSError *error;
-                          NSDictionary *serialization = [cfg serialize];
-                          NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
-                                                                         options:NSJSONWritingPrettyPrinted
-                                                                           error:&error];
-                          if (!error)
-                              [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
-                          
-                          if (error) {
-                              // FIXME: Ideally, this sheet is attached to the
-                              // panel, and the panel doesn't close, so you
-                              // can maybe fix what is wrong and try saving
-                              // again. But it seems to be impossible to force
-                              // the panel to stay open.
-                              [panel close];
-                              [[NSAlert alertWithError:error] beginSheetModalForWindow:window
-                                                                         modalDelegate:nil
-                                                                        didEndSelector:nil
-                                                                           contextInfo:nil];
-                          }
+                      if (result != NSFileHandlingPanelOKButton)
+                          return;
+                      [panel close];
+                      NSError *error;
+                      NSDictionary *serialization = [cfg serialize];
+                      NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
+                                                                     options:NSJSONWritingPrettyPrinted
+                                                                       error:&error];
+                      if (!error)
+                          [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
+                      
+                      if (error) {
+                          [window presentError:error
+                                modalForWindow:window
+                                      delegate:nil
+                            didPresentSelector:nil
+                                   contextInfo:nil];
                       }
                   }];
 }
