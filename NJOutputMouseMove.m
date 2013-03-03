@@ -7,7 +7,7 @@
 
 #import "NJOutputMouseMove.h"
 
-#import "NJInputController.h"
+#import "NJDeviceController.h"
 
 @implementation NJOutputMouseMove {
     int sign;
@@ -32,7 +32,7 @@
 	return output;
 }
 
-- (BOOL)update:(NJInputController *)jc {
+- (BOOL)update:(NJDeviceController *)jc {
     if (fabsf(self.magnitude) < 0.01) {
         sign = 0;
         return NO; // dead zone

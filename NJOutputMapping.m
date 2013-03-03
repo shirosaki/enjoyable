@@ -7,7 +7,7 @@
 
 #import "NJOutputMapping.h"
 
-#import "ApplicationController.h"
+#import "EnjoyableApplicationDelegate.h"
 #import "NJMapping.h"
 #import "NJMappingsController.h"
 
@@ -37,7 +37,7 @@
 }
 
 - (void)trigger {
-    ApplicationController *ctrl = NSApplication.sharedApplication.delegate;
+    EnjoyableApplicationDelegate *ctrl = NSApplication.sharedApplication.delegate;
     [ctrl.mappingsController activateMapping:_mapping];
 }
 

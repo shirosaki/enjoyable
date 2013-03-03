@@ -10,7 +10,7 @@
 #import "NJMappingsController.h"
 #import "NJMapping.h"
 #import "NJInput.h"
-#import "NJInputController.h"
+#import "NJDeviceController.h"
 #import "NJKeyInputField.h"
 #import "NJOutputMapping.h"
 #import "NJOutputController.h"

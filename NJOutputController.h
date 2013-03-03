@@ -9,7 +9,7 @@
 #import "NJKeyInputField.h"
 
 @class NJMappingsController;
-@class NJInputController;
+@class NJDeviceController;
 @class NJOutput;
 @class NJOutputMouseMove;
 
@@ -22,7 +22,7 @@
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *mappingPopup;
     IBOutlet NJMappingsController *mappingsController;
-    IBOutlet NJInputController *inputController;
+    IBOutlet NJDeviceController *inputController;
 }
 
 @property (assign) BOOL enabled;

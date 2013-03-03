@@ -1,5 +1,5 @@
 //
-//  NJInputController.h
+//  NJDeviceController.h
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
@@ -11,7 +11,7 @@
 @class NJMappingsController;
 @class NJOutputController;
 
-@interface NJInputController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
+@interface NJDeviceController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
 	IBOutlet NSOutlineView *outlineView;
 	IBOutlet NJOutputController *outputController;
 	IBOutlet NJMappingsController *mappingsController;

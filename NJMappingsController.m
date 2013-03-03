@@ -7,7 +7,7 @@
 
 #import "NJMappingsController.h"
 
-#import "ApplicationController.h"
+#import "EnjoyableApplicationDelegate.h"
 #import "NJMapping.h"
 #import "NJMappingsController.h"
 #import "NJOutput.h"
@@ -62,7 +62,7 @@
 - (IBAction)addPressed:(id)sender {
     NJMapping *newMapping = [[NJMapping alloc] initWithName:@"Untitled"];
     [_mappings addObject:newMapping];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+    [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
     [tableView reloadData];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
     [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
@@ -75,7 +75,7 @@
     
     [_mappings removeObjectAtIndex:tableView.selectedRow];
     [tableView reloadData];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+    [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
     [self activateMapping:_mappings[0]];
     [self save];
 }
@@ -92,7 +92,7 @@
 - (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(NSInteger)index {
     [(NJMapping *)_mappings[index] setName:obj];
     [tableView reloadData];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+    [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
@@ -147,7 +147,7 @@
             current = 0;
         _mappings = newMappings;
         [tableView reloadData];
-        [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+        [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
         [self activateMapping:_mappings[current]];
     }
 }
@@ -234,7 +234,7 @@
                           }
                           
                           [self save];
-                          [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+                          [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
                           [self activateMapping:mapping];
                           [outputController loadCurrent];
                           

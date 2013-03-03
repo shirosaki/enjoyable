@@ -1,20 +1,20 @@
 //
-//  ApplicationController.m
+//  EnjoyableApplicationDelegate.m
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "ApplicationController.h"
+#import "EnjoyableApplicationDelegate.h"
 
 #import "NJMapping.h"
 #import "NJMappingsController.h"
-#import "NJInputController.h"
+#import "NJDeviceController.h"
 #import "NJOutputController.h"
 #import "NJEvents.h"
 
-@implementation ApplicationController {
-    BOOL active;
+@implementation EnjoyableApplicationDelegate {
+    NSInteger mappingsMenuIndex;
 }
 
 - (void)didSwitchApplication:(NSNotification *)notification {
@@ -23,25 +23,30 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    [NSNotificationCenter.defaultCenter
+        addObserver:self
+        selector:@selector(mappingDidChange:)
+        name:NJEventMappingChanged
+        object:nil];
+    [NSNotificationCenter.defaultCenter
+        addObserver:self
+        selector:@selector(eventTranslationActivated:)
+        name:NJEventTranslationActivated
+        object:nil];
+    [NSNotificationCenter.defaultCenter
+        addObserver:self
+        selector:@selector(eventTranslationDeactivated:)
+        name:NJEventTranslationDeactivated
+        object:nil];
+
+    mappingsMenuIndex = dockMenuBase.numberOfItems;
+    while (![dockMenuBase itemAtIndex:mappingsMenuIndex - 1].isSeparatorItem)
+        --mappingsMenuIndex;
+    
     [drawer open];
     self.outputController.enabled = NO;
     [self.inputController setup];
     [self.mappingsController load];
-    [NSNotificationCenter.defaultCenter
-     addObserver:self
-     selector:@selector(mappingDidChange:)
-     name:NJEventMappingChanged
-     object:nil];
-    [NSNotificationCenter.defaultCenter
-     addObserver:self
-     selector:@selector(eventTranslationActivated:)
-     name:NJEventTranslationActivated
-     object:nil];
-    [NSNotificationCenter.defaultCenter
-     addObserver:self
-     selector:@selector(eventTranslationDeactivated:)
-     name:NJEventTranslationDeactivated
-     object:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -73,15 +78,8 @@
     self.inputController.translatingEvents = !self.inputController.translatingEvents;
 }
 
-- (NSInteger)firstMappingMenuIndex {
-    for (NSInteger i = dockMenuBase.numberOfItems - 1; i >= 0; --i)
-        if ([dockMenuBase itemAtIndex:i].isSeparatorItem)
-            return i + 1;
-    return dockMenuBase.numberOfItems;
-}
-
 - (void)mappingsChanged {
-    NSInteger removeFrom = self.firstMappingMenuIndex;
+    NSInteger removeFrom = mappingsMenuIndex;
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     int added = 0;
@@ -96,16 +94,16 @@
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
-    NSInteger firstMapping = self.firstMappingMenuIndex;
     NJMapping *current = note.object;
     NSArray *mappings = self.mappingsController.mappings;
     for (NSUInteger i = 0; i < mappings.count; ++i)
-        [dockMenuBase itemAtIndex:i + firstMapping].state = mappings[i] == current;
+        [dockMenuBase itemAtIndex:i + mappingsMenuIndex].state = mappings[i] == current;
 }
 
 - (void)chooseMapping:(id)sender {
-    NSInteger idx = [dockMenuBase indexOfItem:sender] - self.firstMappingMenuIndex;
+    NSInteger idx = [dockMenuBase indexOfItem:sender] - mappingsMenuIndex;
     NJMapping *chosen = self.mappingsController.mappings[idx];
     [_mappingsController activateMapping:chosen];
 }
+
 @end

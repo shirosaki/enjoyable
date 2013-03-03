@@ -7,8 +7,8 @@
 
 #import "NJOutputSwitchMouseMode.h"
 
-#import "ApplicationController.h"
-#import "NJInputController.h"
+#import "EnjoyableApplicationDelegate.h"
+#import "NJDeviceController.h"
 
 @implementation NJOutputSwitchMouseMode
 
@@ -27,8 +27,8 @@
 - (void)trigger {
     // FIXME: It's hacky to get at the controller this way, but it's
     // also hacky to pass it. Shouldn't need to do either.
-    ApplicationController *ac = NSApplication.sharedApplication.delegate;
-    NJInputController *jc = ac.inputController;
+    EnjoyableApplicationDelegate *ac = NSApplication.sharedApplication.delegate;
+    NJDeviceController *jc = ac.inputController;
     jc.frontWindowOnly = !jc.frontWindowOnly;
 }
 

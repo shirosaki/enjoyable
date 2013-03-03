@@ -1,11 +1,11 @@
 //
-//  NJInputController.h
+//  NJDeviceController.m
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "NJInputController.h"
+#import "NJDeviceController.h"
 
 #import "NJMapping.h"
 #import "NJMappingsController.h"
@@ -15,7 +15,7 @@
 #import "NJOutputController.h"
 #import "NJEvents.h"
 
-@implementation NJInputController {
+@implementation NJDeviceController {
     IOHIDManagerRef hidManager;
     NSTimer *continuousTimer;
     NSMutableArray *runningOutputs;
@@ -83,7 +83,7 @@
 }
 
 static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
-    NJInputController *controller = (__bridge NJInputController *)ctx;
+    NJDeviceController *controller = (__bridge NJDeviceController *)ctx;
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
     
     if (controller.translatingEvents) {
@@ -116,7 +116,7 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
 }
 
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-    NJInputController *controller = (__bridge NJInputController *)ctx;
+    NJDeviceController *controller = (__bridge NJDeviceController *)ctx;
     [controller addDeviceForDevice:device];
 }
 
@@ -128,7 +128,7 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
 }
 
 static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-    NJInputController *controller = (__bridge NJInputController *)ctx;
+    NJDeviceController *controller = (__bridge NJDeviceController *)ctx;
     [controller removeDeviceForDevice:device];
 }
 
