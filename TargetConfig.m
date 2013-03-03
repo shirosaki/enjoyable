@@ -8,28 +8,28 @@
 #import "TargetConfig.h"
 
 #import "ApplicationController.h"
-#import "Config.h"
-#import "ConfigsController.h"
+#import "NJMapping.h"
+#import "NJMappingsController.h"
 
 @implementation TargetConfig
 
 + (NSString *)serializationCode {
-    return @"cfg";
+    return @"mapping";
 }
 
 - (NSDictionary *)serialize {
-    return _config
-        ? @{ @"type": @"cfg", @"name": _config.name }
+    return _mapping
+        ? @{ @"type": @"mapping", @"name": _mapping.name }
         : nil;
 }
 
 + (TargetConfig *)targetDeserialize:(NSDictionary *)serialization
-                        withConfigs:(NSArray *)configs {
+                        withMappings:(NSArray *)mappings {
     NSString *name = serialization[@"name"];
     TargetConfig *target = [[TargetConfig alloc] init];
-    for (Config *config in configs) {
-        if ([config.name isEqualToString:name]) {
-            target.config = config;
+    for (NJMapping *mapping in mappings) {
+        if ([mapping.name isEqualToString:name]) {
+            target.mapping = mapping;
             return target;
         }
     }
@@ -38,7 +38,7 @@
 
 - (void)trigger {
     ApplicationController *ctrl = NSApplication.sharedApplication.delegate;
-    [ctrl.configsController activateConfig:_config];
+    [ctrl.mappingsController activateMapping:_mapping];
 }
 
 @end

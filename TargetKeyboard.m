@@ -20,7 +20,7 @@
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withConfigs:(NSArray *)configs {
+                  withMappings:(NSArray *)mappings {
     TargetKeyboard *target = [[TargetKeyboard alloc] init];
     target.vk = [serialization[@"key"] intValue];
     return target;

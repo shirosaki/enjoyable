@@ -1,15 +1,15 @@
 //
-//  Config.m
+//  NJMapping.m
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "Config.h"
+#import "NJMapping.h"
 
 #import "NJInput.h"
 
-@implementation Config
+@implementation NJMapping
 
 - (id)initWithName:(NSString *)name {
     if ((self = [super init])) {
@@ -33,13 +33,13 @@
 }
 
 - (NSDictionary *)serialize {
-    NSMutableDictionary* cfgEntries = [[NSMutableDictionary alloc] initWithCapacity:_entries.count];
+    NSMutableDictionary *entries = [[NSMutableDictionary alloc] initWithCapacity:_entries.count];
     for (id key in _entries) {
         id serialized = [_entries[key] serialize];
         if (serialized)
-            cfgEntries[key] = serialized;
+            entries[key] = serialized;
     }
-    return @{ @"name": _name, @"entries": cfgEntries };
+    return @{ @"name": _name, @"entries": entries };
 }
 
 @end

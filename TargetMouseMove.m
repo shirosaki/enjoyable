@@ -26,7 +26,7 @@
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withConfigs:(NSArray *)configs {
+                  withMappings:(NSArray *)mappings {
 	TargetMouseMove *target = [[TargetMouseMove alloc] init];
     target.axis = [serialization[@"axis"] intValue];
 	return target;

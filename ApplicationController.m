@@ -7,8 +7,8 @@
 
 #import "ApplicationController.h"
 
-#import "Config.h"
-#import "ConfigsController.h"
+#import "NJMapping.h"
+#import "NJMappingsController.h"
 #import "NJInputController.h"
 #import "TargetController.h"
 #import "NJEvents.h"
@@ -19,14 +19,14 @@
 
 - (void)didSwitchApplication:(NSNotification *)notification {
     NSRunningApplication *currentApp = notification.userInfo[NSWorkspaceApplicationKey];
-    [self.configsController activateConfigForProcess:currentApp.localizedName];
+    [self.mappingsController activateMappingForProcess:currentApp.localizedName];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     [drawer open];
     self.targetController.enabled = NO;
-    [self.jsController setup];
-    [self.configsController load];
+    [self.inputController setup];
+    [self.mappingsController load];
     [NSNotificationCenter.defaultCenter
      addObserver:self
      selector:@selector(mappingDidChange:)
@@ -70,42 +70,42 @@
 }
 
 - (IBAction)toggleActivity:(id)sender {
-    self.jsController.translatingEvents = !self.jsController.translatingEvents;
+    self.inputController.translatingEvents = !self.inputController.translatingEvents;
 }
 
-- (NSInteger)firstConfigMenuIndex {
+- (NSInteger)firstMappingMenuIndex {
     for (NSInteger i = dockMenuBase.numberOfItems - 1; i >= 0; --i)
         if ([dockMenuBase itemAtIndex:i].isSeparatorItem)
             return i + 1;
     return dockMenuBase.numberOfItems;
 }
 
-- (void)configsChanged {
-    NSInteger removeFrom = self.firstConfigMenuIndex;
+- (void)mappingsChanged {
+    NSInteger removeFrom = self.firstMappingMenuIndex;
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     int added = 0;
-    for (Config *config in self.configsController.configs) {
+    for (NJMapping *mapping in self.mappingsController.mappings) {
         NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
-        [dockMenuBase addItemWithTitle:config.name
-                                action:@selector(chooseConfig:)
+        [dockMenuBase addItemWithTitle:mapping.name
+                                action:@selector(chooseMapping:)
                          keyEquivalent:keyEquiv];
         
     }
-    [_targetController refreshConfigs];
+    [_targetController refreshMappings];
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
-    NSInteger firstConfig = self.firstConfigMenuIndex;
-    Config *current = note.object;
-    NSArray *configs = self.configsController.configs;
-    for (NSUInteger i = 0; i < configs.count; ++i)
-        [dockMenuBase itemAtIndex:i + firstConfig].state = configs[i] == current;
+    NSInteger firstMapping = self.firstMappingMenuIndex;
+    NJMapping *current = note.object;
+    NSArray *mappings = self.mappingsController.mappings;
+    for (NSUInteger i = 0; i < mappings.count; ++i)
+        [dockMenuBase itemAtIndex:i + firstMapping].state = mappings[i] == current;
 }
 
-- (void)chooseConfig:(id)sender {
-    NSInteger idx = [dockMenuBase indexOfItem:sender] - self.firstConfigMenuIndex;
-    Config *chosen = self.configsController.configs[idx];
-    [_configsController activateConfig:chosen];
+- (void)chooseMapping:(id)sender {
+    NSInteger idx = [dockMenuBase indexOfItem:sender] - self.firstMappingMenuIndex;
+    NJMapping *chosen = self.mappingsController.mappings[idx];
+    [_mappingsController activateMapping:chosen];
 }
 @end

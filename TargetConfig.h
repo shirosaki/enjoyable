@@ -8,10 +8,10 @@
 
 #import "Target.h"
 
-@class Config;
+@class NJMapping;
 
 @interface TargetConfig : Target
 
-@property (nonatomic, weak) Config *config;
+@property (nonatomic, weak) NJMapping *mapping;
 
 @end

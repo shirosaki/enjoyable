@@ -8,7 +8,7 @@
 
 @class NJInputController;
 @class TargetController;
-@class ConfigsController;
+@class NJMappingsController;
 
 @interface ApplicationController : NSObject <NSApplicationDelegate> {
     IBOutlet NSDrawer *drawer;
@@ -18,11 +18,11 @@
     IBOutlet NSMenu *dockMenuBase;
 }
 
-@property (nonatomic, strong) IBOutlet NJInputController *jsController;
+@property (nonatomic, strong) IBOutlet NJInputController *inputController;
 @property (nonatomic, strong) IBOutlet TargetController *targetController;
-@property (nonatomic, strong) IBOutlet ConfigsController *configsController;
+@property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 
 - (IBAction)toggleActivity:(id)sender;
-- (void)configsChanged;
+- (void)mappingsChanged;
 
 @end

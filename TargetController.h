@@ -8,7 +8,7 @@
 
 #import "NJKeyInputField.h"
 
-@class ConfigsController;
+@class NJMappingsController;
 @class NJInputController;
 @class Target;
 @class TargetMouseMove;
@@ -20,16 +20,15 @@
     IBOutlet NSSegmentedControl *mouseBtnSelect;
     IBOutlet NSSegmentedControl *scrollDirSelect;
     IBOutlet NSTextField *title;
-    IBOutlet NSPopUpButton *configPopup;
-    IBOutlet ConfigsController *configsController;
+    IBOutlet NSPopUpButton *mappingPopup;
+    IBOutlet NJMappingsController *mappingsController;
     IBOutlet NJInputController *joystickController;
 }
 
 @property (assign) BOOL enabled;
 
 - (void)loadCurrent;
-- (void)refreshConfigs;
-- (IBAction)configChosen:(id)sender;
+- (void)refreshMappings;
 - (IBAction)radioChanged:(id)sender;
 - (IBAction)mdirChanged:(id)sender;
 - (IBAction)mbtnChanged:(id)sender;

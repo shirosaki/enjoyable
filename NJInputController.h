@@ -8,13 +8,13 @@
 
 @class NJDevice;
 @class NJInput;
-@class ConfigsController;
+@class NJMappingsController;
 @class TargetController;
 
 @interface NJInputController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
 	IBOutlet NSOutlineView *outlineView;
 	IBOutlet TargetController *targetController;
-	IBOutlet ConfigsController *configsController;
+	IBOutlet NJMappingsController *mappingsController;
 }
 
 - (void)setup;

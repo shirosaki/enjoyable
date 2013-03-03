@@ -1,102 +1,102 @@
 //
-//  ConfigsController.m
+//  NJMappingsController.m
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "ConfigsController.h"
+#import "NJMappingsController.h"
 
 #import "ApplicationController.h"
-#import "Config.h"
-#import "ConfigsController.h"
+#import "NJMapping.h"
+#import "NJMappingsController.h"
 #import "Target.h"
 #import "TargetController.h"
 #import "NJEvents.h"
 
-@implementation ConfigsController {
-    NSMutableArray *_configs;
-    Config *manualConfig;
+@implementation NJMappingsController {
+    NSMutableArray *_mappings;
+    NJMapping *manualMapping;
 }
 
 - (id)init {
     if ((self = [super init])) {
-        _configs = [[NSMutableArray alloc] init];
-        _currentConfig = [[Config alloc] initWithName:@"(default)"];
-        manualConfig = _currentConfig;
-        [_configs addObject:_currentConfig];
+        _mappings = [[NSMutableArray alloc] init];
+        _currentMapping = [[NJMapping alloc] initWithName:@"(default)"];
+        manualMapping = _currentMapping;
+        [_mappings addObject:_currentMapping];
     }
     return self;
 }
 
-- (Config *)objectForKeyedSubscript:(NSString *)name {
-    for (Config *config in _configs)
-        if ([name isEqualToString:config.name])
-            return config;
+- (NJMapping *)objectForKeyedSubscript:(NSString *)name {
+    for (NJMapping *mapping in _mappings)
+        if ([name isEqualToString:mapping.name])
+            return mapping;
     return nil;
 }
 
-- (void)activateConfigForProcess:(NSString *)processName {
-    Config *oldConfig = manualConfig;
-    Config *newConfig = self[processName];
-    if (!newConfig)
-        newConfig = oldConfig;
-    if (newConfig != _currentConfig)
-        [self activateConfig:newConfig];
-    manualConfig = oldConfig;
+- (void)activateMappingForProcess:(NSString *)processName {
+    NJMapping *oldMapping = manualMapping;
+    NJMapping *newMapping = self[processName];
+    if (!newMapping)
+        newMapping = oldMapping;
+    if (newMapping != _currentMapping)
+        [self activateMapping:newMapping];
+    manualMapping = oldMapping;
 }
 
-- (void)activateConfig:(Config *)config {
-    if (!config)
-        config = manualConfig;
-    NSLog(@"Switching to mapping %@.", config.name);
-    manualConfig = config;
-    _currentConfig = config;
-    [removeButton setEnabled:_configs[0] != config];
+- (void)activateMapping:(NJMapping *)mapping {
+    if (!mapping)
+        mapping = manualMapping;
+    NSLog(@"Switching to mapping %@.", mapping.name);
+    manualMapping = mapping;
+    _currentMapping = mapping;
+    [removeButton setEnabled:_mappings[0] != mapping];
     [targetController loadCurrent];
     [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
-                                                      object:_currentConfig];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_configs indexOfObject:config]] byExtendingSelection:NO];
+                                                      object:_currentMapping];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_mappings indexOfObject:mapping]] byExtendingSelection:NO];
 }
 
 - (IBAction)addPressed:(id)sender {
-    Config *newConfig = [[Config alloc] initWithName:@"Untitled"];
-    [_configs addObject:newConfig];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
+    NJMapping *newMapping = [[NJMapping alloc] initWithName:@"Untitled"];
+    [_mappings addObject:newMapping];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
     [tableView reloadData];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
-    [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
-    [self activateConfig:newConfig];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
+    [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
+    [self activateMapping:newMapping];
 }
 
 - (IBAction)removePressed:(id)sender {
     if (tableView.selectedRow == 0)
         return;
     
-    [_configs removeObjectAtIndex:tableView.selectedRow];
+    [_mappings removeObjectAtIndex:tableView.selectedRow];
     [tableView reloadData];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
-    [self activateConfig:_configs[0]];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+    [self activateMapping:_mappings[0]];
     [self save];
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notify {
     if (tableView.selectedRow >= 0)
-        [self activateConfig:_configs[tableView.selectedRow]];
+        [self activateMapping:_mappings[tableView.selectedRow]];
 }
 
 - (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)index {
-    return [_configs[index] name];
+    return [_mappings[index] name];
 }
 
 - (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(NSInteger)index {
-    [(Config *)_configs[index] setName:obj];
+    [(NJMapping *)_mappings[index] setName:obj];
     [tableView reloadData];
-    [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
+    [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return _configs.count;
+    return _mappings.count;
 }
 
 - (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)index {
@@ -105,54 +105,54 @@
 
 - (void)save {
     NSLog(@"Saving mappings to defaults.");
-    [NSUserDefaults.standardUserDefaults setObject:[self dumpAll] forKey:@"configurations"];
+    [NSUserDefaults.standardUserDefaults setValuesForKeysWithDictionary:[self dumpAll]];
 }
 
 - (void)load {
-    [self loadAllFrom:[NSUserDefaults.standardUserDefaults objectForKey:@"configurations"]];
+    [self loadAllFrom:NSUserDefaults.standardUserDefaults.dictionaryRepresentation];
 }
 
 - (NSDictionary *)dumpAll {
-    NSMutableArray *ary = [[NSMutableArray alloc] initWithCapacity:_configs.count];
-    for (Config *config in _configs)
-        [ary addObject:[config serialize]];
-    NSUInteger current = _currentConfig ? [_configs indexOfObject:_currentConfig] : 0;
-    return @{ @"configurations": ary, @"selected": @(current) };
+    NSMutableArray *ary = [[NSMutableArray alloc] initWithCapacity:_mappings.count];
+    for (NJMapping *mapping in _mappings)
+        [ary addObject:[mapping serialize]];
+    NSUInteger current = _currentMapping ? [_mappings indexOfObject:_currentMapping] : 0;
+    return @{ @"mappings": ary, @"selected": @(current) };
 }
 
-- (void)loadAllFrom:(NSDictionary*) envelope{
-    NSArray *storedConfigs = envelope[@"configurations"];
-    NSMutableArray* newConfigs = [[NSMutableArray alloc] initWithCapacity:storedConfigs.count];
+- (void)loadAllFrom:(NSDictionary*)envelope {
+    NSArray *storedMappings = envelope[@"mappings"];
+    NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
-    // have to do two passes in case config1 refers to config2 via a TargetConfig
-    for (NSDictionary *storedConfig in storedConfigs) {
-        Config *cfg = [[Config alloc] initWithName:storedConfig[@"name"]];
-        [newConfigs addObject:cfg];
+    // have to do two passes in case mapping1 refers to mapping2 via a TargetMapping
+    for (NSDictionary *storedMapping in storedMappings) {
+        NJMapping *mapping = [[NJMapping alloc] initWithName:storedMapping[@"name"]];
+        [newMappings addObject:mapping];
     }
 
-    for (unsigned i = 0; i < storedConfigs.count; ++i) {
-        NSDictionary *entries = storedConfigs[i][@"entries"];
-        Config *config = newConfigs[i];
+    for (unsigned i = 0; i < storedMappings.count; ++i) {
+        NSDictionary *entries = storedMappings[i][@"entries"];
+        NJMapping *mapping = newMappings[i];
         for (id key in entries) {
             Target *target = [Target targetDeserialize:entries[key]
-                                            withConfigs:newConfigs];
+                                            withMappings:newMappings];
             if (target)
-                config.entries[key] = target;
+                mapping.entries[key] = target;
         }
     }
     
-    if (newConfigs.count) {
+    if (newMappings.count) {
         unsigned current = [envelope[@"selected"] unsignedIntValue];
-        if (current >= newConfigs.count)
+        if (current >= newMappings.count)
             current = 0;
-        _configs = newConfigs;
+        _mappings = newMappings;
         [tableView reloadData];
-        [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
-        [self activateConfig:_configs[current]];
+        [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+        [self activateMapping:_mappings[current]];
     }
 }
 
-- (Config *)configWithURL:(NSURL *)url error:(NSError **)error {
+- (NJMapping *)mappingWithURL:(NSURL *)url error:(NSError **)error {
     NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
     [stream open];
     NSDictionary *serialization = !*error
@@ -170,17 +170,17 @@
     }
 
     NSDictionary *entries = serialization[@"entries"];
-    Config *cfg = [[Config alloc] initWithName:serialization[@"name"]];
+    NJMapping *mapping = [[NJMapping alloc] initWithName:serialization[@"name"]];
     for (id key in entries) {
         NSDictionary *value = entries[key];
         if ([key isKindOfClass:NSString.class]) {
             Target *target = [Target targetDeserialize:value
-                                           withConfigs:_configs];
+                                           withMappings:_mappings];
             if (target)
-                cfg.entries[key] = target;
+                mapping.entries[key] = target;
         }
     }
-    return cfg;
+    return mapping;
 }
 
 - (void)importPressed:(id)sender {
@@ -194,14 +194,14 @@
 
                       [panel close];
                       NSError *error;
-                      Config *cfg = [self configWithURL:panel.URL error:&error];
+                      NJMapping *mapping = [self mappingWithURL:panel.URL error:&error];
                       
                       if (!error) {
-                          BOOL conflict;
-                          Config *mergeInto = self[cfg.name];
-                          for (id key in cfg.entries) {
+                          BOOL conflict = NO;
+                          NJMapping *mergeInto = self[mapping.name];
+                          for (id key in mapping.entries) {
                               if (mergeInto.entries[key]
-                                  && ![mergeInto.entries[key] isEqual:cfg.entries[key]]) {
+                                  && ![mergeInto.entries[key] isEqual:mapping.entries[key]]) {
                                   conflict = YES;
                                   break;
                               }
@@ -214,7 +214,7 @@
                                   [NSString stringWithFormat:
                                    @"This file contains inputs you've already mapped in \"%@\". Do you "
                                    @"want to merge them and replace your existing mappings, or import this "
-                                   @"as a separate mapping?", cfg.name];
+                                   @"as a separate mapping?", mapping.name];
                               [conflictAlert addButtonWithTitle:@"Merge"];
                               [conflictAlert addButtonWithTitle:@"Cancel"];
                               [conflictAlert addButtonWithTitle:@"New Mapping"];
@@ -226,21 +226,21 @@
                           }
                           
                           if (mergeInto) {
-                              [mergeInto.entries addEntriesFromDictionary:cfg.entries];
-                              cfg = mergeInto;
+                              [mergeInto.entries addEntriesFromDictionary:mapping.entries];
+                              mapping = mergeInto;
                           } else {
-                              [_configs addObject:cfg];
+                              [_mappings addObject:mapping];
                               [tableView reloadData];
                           }
                           
                           [self save];
-                          [(ApplicationController *)NSApplication.sharedApplication.delegate configsChanged];
-                          [self activateConfig:cfg];
+                          [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
+                          [self activateMapping:mapping];
                           [targetController loadCurrent];
                           
                           if (conflict && !mergeInto) {
-                              [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_configs.count - 1] byExtendingSelection:NO];
-                              [tableView editColumn:0 row:_configs.count - 1 withEvent:nil select:YES];
+                              [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
+                              [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
                           }
                       }
                       
@@ -258,8 +258,8 @@
 - (void)exportPressed:(id)sender {
     NSSavePanel *panel = [NSSavePanel savePanel];
     panel.allowedFileTypes = @[ @"enjoyable" ];
-    Config *cfg = _currentConfig;
-    panel.nameFieldStringValue = cfg.name;
+    NJMapping *mapping = _currentMapping;
+    panel.nameFieldStringValue = mapping.name;
     NSWindow *window = NSApplication.sharedApplication.keyWindow;
     [panel beginSheetModalForWindow:window
                   completionHandler:^(NSInteger result) {
@@ -267,7 +267,7 @@
                           return;
                       [panel close];
                       NSError *error;
-                      NSDictionary *serialization = [cfg serialize];
+                      NSDictionary *serialization = [mapping serialize];
                       NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
                                                                      options:NSJSONWritingPrettyPrinted
                                                                        error:&error];

@@ -18,7 +18,7 @@
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withConfigs:(NSArray *)configs {
+                  withMappings:(NSArray *)mappings {
 	TargetMouseBtn *target = [[TargetMouseBtn alloc] init];
     target.button = [serialization[@"button"] intValue];
 	return target;

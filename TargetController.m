@@ -7,8 +7,8 @@
 
 #import "TargetController.h"
 
-#import "ConfigsController.h"
-#import "Config.h"
+#import "NJMappingsController.h"
+#import "NJMapping.h"
 #import "NJInput.h"
 #import "NJInputController.h"
 #import "NJKeyInputField.h"
@@ -31,10 +31,10 @@
     }
     
     if (row != 2) {
-        [configPopup selectItemAtIndex:-1];
-        [configPopup resignIfFirstResponder];
-    } else if (!configPopup.selectedItem)
-        [configPopup selectItemAtIndex:0];
+        [mappingPopup selectItemAtIndex:-1];
+        [mappingPopup resignIfFirstResponder];
+    } else if (!mappingPopup.selectedItem)
+        [mappingPopup selectItemAtIndex:0];
     
     if (row != 3) {
         mouseDirSelect.selectedSegment = -1;
@@ -73,9 +73,9 @@
     [self commit];
 }
 
-- (void)configChosen:(id)sender {
+- (void)mappingChosen:(id)sender {
     [radioButtons selectCellAtRow:2 column:0];
-    [configPopup.window makeFirstResponder:configPopup];
+    [mappingPopup.window makeFirstResponder:mappingPopup];
     [self commit];
 }
 
@@ -98,7 +98,7 @@
 }
 
 - (Target *)currentTarget {
-    return configsController.currentConfig[joystickController.selectedInput];
+    return mappingsController.currentMapping[joystickController.selectedInput];
 }
 
 - (Target *)makeTarget {
@@ -116,7 +116,7 @@
             break;
         case 2: {
             TargetConfig *c = [[TargetConfig alloc] init];
-            c.config = configsController.configs[configPopup.indexOfSelectedItem];
+            c.mapping = mappingsController.mappings[mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {
@@ -145,8 +145,8 @@
 
 - (void)commit {
     [self cleanUpInterface];
-    configsController.currentConfig[joystickController.selectedInput] = [self makeTarget];
-    [configsController save];
+    mappingsController.currentMapping[joystickController.selectedInput] = [self makeTarget];
+    [mappingsController save];
 }
 
 - (BOOL)enabled {
@@ -156,7 +156,7 @@
 - (void)setEnabled:(BOOL)enabled {
     [radioButtons setEnabled:enabled];
     [keyInput setEnabled:enabled];
-    [configPopup setEnabled:enabled];
+    [mappingPopup setEnabled:enabled];
     [mouseDirSelect setEnabled:enabled];
     [mouseBtnSelect setEnabled:enabled];
     [scrollDirSelect setEnabled:enabled];
@@ -172,7 +172,7 @@
         for (id <NJInputPathElement> cur = input.base; cur; cur = cur.base) {
             inpFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, inpFullName];
         }
-        title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, inpFullName];
+        title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", mappingsController.currentMapping.name, inpFullName];
     }
 
     if ([target isKindOfClass:TargetKeyboard.class]) {
@@ -180,13 +180,13 @@
         keyInput.keyCode = [(TargetKeyboard*)target vk];
     } else if ([target isKindOfClass:TargetConfig.class]) {
         [radioButtons selectCellAtRow:2 column:0];
-        NSUInteger idx = [configsController.configs
-                          indexOfObject:[(TargetConfig *)target config]];
+        NSUInteger idx = [mappingsController.mappings
+                          indexOfObject:[(TargetConfig *)target mapping]];
         if (idx == NSNotFound) {
             [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
-            [configPopup selectItemAtIndex:-1];
+            [mappingPopup selectItemAtIndex:-1];
         } else
-            [configPopup selectItemAtIndex:idx];
+            [mappingPopup selectItemAtIndex:idx];
     }
     else if ([target isKindOfClass:TargetMouseMove.class]) {
         [radioButtons selectCellAtRow:3 column:0];
@@ -219,17 +219,17 @@
         [keyInput resignIfFirstResponder];
 }
 
-- (void)refreshConfigs {
-    NSInteger initialIndex = configPopup.indexOfSelectedItem;
-    [configPopup.menu removeAllItems];
-    for (Config *config in configsController.configs) {
-        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:config.name
-                                                      action:@selector(configChosen:)
+- (void)refreshMappings {
+    NSInteger initialIndex = mappingPopup.indexOfSelectedItem;
+    [mappingPopup.menu removeAllItems];
+    for (NJMapping *mapping in mappingsController.mappings) {
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
+                                                      action:@selector(mappingChosen:)
                                                keyEquivalent:@""];
         item.target = self;
-        [configPopup.menu addItem:item];
+        [mappingPopup.menu addItem:item];
     }
-    [configPopup selectItemAtIndex:initialIndex];
+    [mappingPopup selectItemAtIndex:initialIndex];
 }
 
 @end

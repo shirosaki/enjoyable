@@ -16,8 +16,8 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D549CA4C0FBB441B00BC8203 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D549CA4B0FBB441B00BC8203 /* Credits.rtf */; };
-		D5617A360FAEB74000928B3A /* ConfigsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617A350FAEB74000928B3A /* ConfigsController.m */; };
-		D5617A390FAEBA1800928B3A /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617A380FAEBA1800928B3A /* Config.m */; };
+		D5617A360FAEB74000928B3A /* NJMappingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617A350FAEB74000928B3A /* NJMappingsController.m */; };
+		D5617A390FAEBA1800928B3A /* NJMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617A380FAEBA1800928B3A /* NJMapping.m */; };
 		D5617D1A0FAF568100928B3A /* NJInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D190FAF568100928B3A /* NJInputButton.m */; };
 		D5617D260FAF579300928B3A /* NJInputHat.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D250FAF579300928B3A /* NJInputHat.m */; };
 		D5617D2B0FAF579A00928B3A /* NJInputAnalog.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D2A0FAF579A00928B3A /* NJInputAnalog.m */; };
@@ -56,10 +56,10 @@
 		8D1107320486CEB800E47090 /* Enjoyable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enjoyable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D549CA4B0FBB441B00BC8203 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		D5617A080FAEAF8300928B3A /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
-		D5617A340FAEB74000928B3A /* ConfigsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigsController.h; sourceTree = "<group>"; };
-		D5617A350FAEB74000928B3A /* ConfigsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigsController.m; sourceTree = "<group>"; };
-		D5617A370FAEBA1800928B3A /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		D5617A380FAEBA1800928B3A /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		D5617A340FAEB74000928B3A /* NJMappingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJMappingsController.h; sourceTree = "<group>"; };
+		D5617A350FAEB74000928B3A /* NJMappingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJMappingsController.m; sourceTree = "<group>"; };
+		D5617A370FAEBA1800928B3A /* NJMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJMapping.h; sourceTree = "<group>"; };
+		D5617A380FAEBA1800928B3A /* NJMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJMapping.m; sourceTree = "<group>"; };
 		D5617D180FAF568100928B3A /* NJInputButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJInputButton.h; sourceTree = "<group>"; };
 		D5617D190FAF568100928B3A /* NJInputButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJInputButton.m; sourceTree = "<group>"; };
 		D5617D240FAF579300928B3A /* NJInputHat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJInputHat.h; sourceTree = "<group>"; };
@@ -123,10 +123,10 @@
 				D594BEF80FAE6FF2007A85F2 /* NJInputController.m */,
 				D594BF810FAE9661007A85F2 /* ApplicationController.h */,
 				D594BF820FAE9661007A85F2 /* ApplicationController.m */,
-				D5617A340FAEB74000928B3A /* ConfigsController.h */,
-				D5617A350FAEB74000928B3A /* ConfigsController.m */,
-				D5617A370FAEBA1800928B3A /* Config.h */,
-				D5617A380FAEBA1800928B3A /* Config.m */,
+				D5617A340FAEB74000928B3A /* NJMappingsController.h */,
+				D5617A350FAEB74000928B3A /* NJMappingsController.m */,
+				D5617A370FAEBA1800928B3A /* NJMapping.h */,
+				D5617A380FAEBA1800928B3A /* NJMapping.m */,
 				D5F8096F0FB093400006A4DE /* TargetConfig.h */,
 				D5F809700FB093400006A4DE /* TargetConfig.m */,
 				D5617FD40FAFD06000928B3A /* Target.h */,
@@ -295,8 +295,8 @@
 				D594BE8A0FAE64AD007A85F2 /* NJInput.m in Sources */,
 				D594BEF90FAE6FF2007A85F2 /* NJInputController.m in Sources */,
 				D594BF830FAE9661007A85F2 /* ApplicationController.m in Sources */,
-				D5617A360FAEB74000928B3A /* ConfigsController.m in Sources */,
-				D5617A390FAEBA1800928B3A /* Config.m in Sources */,
+				D5617A360FAEB74000928B3A /* NJMappingsController.m in Sources */,
+				D5617A390FAEBA1800928B3A /* NJMapping.m in Sources */,
 				D5617D1A0FAF568100928B3A /* NJInputButton.m in Sources */,
 				D5617D260FAF579300928B3A /* NJInputHat.m in Sources */,
 				D5617D2B0FAF579A00928B3A /* NJInputAnalog.m in Sources */,

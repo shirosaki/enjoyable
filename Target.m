@@ -38,8 +38,8 @@
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withConfigs:(NSArray *)configs {
-    // Don't crash loading old configs (but don't load them either).
+                  withMappings:(NSArray *)mappings {
+    // Don't crash loading old/bad mappings (but don't load them either).
     if (![serialization isKindOfClass:NSDictionary.class])
         return nil;
     NSString *type = serialization[@"type"];
@@ -51,7 +51,7 @@
                         TargetToggleMouseScope.class
          ]) {
         if ([type isEqualToString:cls.serializationCode])
-            return [cls targetDeserialize:serialization withConfigs:configs];
+            return [cls targetDeserialize:serialization withMappings:mappings];
     }
     
     return nil;

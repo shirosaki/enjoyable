@@ -20,7 +20,7 @@
 }
 
 + (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withConfigs:(NSArray *)configs {
+                  withMappings:(NSArray *)mappings {
 	TargetMouseScroll *target = [[TargetMouseScroll alloc] init];
     target.amount = [serialization[@"amount"] intValue];
 	return target;

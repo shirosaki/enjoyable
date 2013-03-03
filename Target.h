@@ -20,7 +20,7 @@
 
 - (NSDictionary *)serialize;
 + (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withConfigs:(NSArray *)configs;
+                  withMappings:(NSArray *)mappings;
 + (NSString *)serializationCode;
 
 @end

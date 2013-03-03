@@ -1,5 +1,5 @@
 //
-//  Config.h
+//  NJMapping.h
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
@@ -9,7 +9,7 @@
 @class Target;
 @class NJInput;
 
-@interface Config : NSObject
+@interface NJMapping : NSObject
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, readonly) NSMutableDictionary *entries;

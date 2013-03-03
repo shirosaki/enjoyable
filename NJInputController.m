@@ -7,8 +7,8 @@
 
 #import "NJInputController.h"
 
-#import "Config.h"
-#import "ConfigsController.h"
+#import "NJMapping.h"
+#import "NJMappingsController.h"
 #import "NJDevice.h"
 #import "NJInput.h"
 #import "Target.h"
@@ -58,12 +58,12 @@
 }
 
 - (void)runTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
-    NJDevice *js = [self findJoystickByRef:device];
-    NJInput *mainInput = [js inputForEvent:value];
+    NJDevice *dev = [self findJoystickByRef:device];
+    NJInput *mainInput = [dev inputForEvent:value];
     [mainInput notifyEvent:value];
     NSArray *children = mainInput.children ? mainInput.children : mainInput ? @[mainInput] : @[];
     for (NJInput *subInput in children) {
-        Target *target = configsController.currentConfig[subInput];
+        Target *target = mappingsController.currentMapping[subInput];
         target.magnitude = mainInput.magnitude;
         target.running = subInput.active;
         if (target.running && target.isContinuous)
@@ -72,8 +72,8 @@
 }
 
 - (void)showTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
-    NJDevice *js = [self findJoystickByRef:device];
-    NJInput *handler = [js handlerForEvent:value];
+    NJDevice *dev = [self findJoystickByRef:device];
+    NJInput *handler = [dev handlerForEvent:value];
     if (!handler)
         return;
     
@@ -93,11 +93,11 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
     }
 }
 
-static int findAvailableIndex(NSArray *list, NJDevice *js) {
+static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     for (int index = 1; ; index++) {
         BOOL available = YES;
         for (NJDevice *used in list) {
-            if ([used.productName isEqualToString:js.productName] && used.index == index) {
+            if ([used.productName isEqualToString:dev.productName] && used.index == index) {
                 available = NO;
                 break;
             }
@@ -109,9 +109,9 @@ static int findAvailableIndex(NSArray *list, NJDevice *js) {
 
 - (void)addJoystickForDevice:(IOHIDDeviceRef)device {
     IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)self);
-    NJDevice *js = [[NJDevice alloc] initWithDevice:device];
-    js.index = findAvailableIndex(_joysticks, js);
-    [_joysticks addObject:js];
+    NJDevice *dev = [[NJDevice alloc] initWithDevice:device];
+    dev.index = findAvailableIndex(_joysticks, dev);
+    [_joysticks addObject:dev];
     [outlineView reloadData];
 }
 
@@ -121,9 +121,9 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
 }
 
 - (NJDevice *)findJoystickByRef:(IOHIDDeviceRef)device {
-    for (NJDevice *js in _joysticks)
-        if (js.device == device)
-            return js;
+    for (NJDevice *dev in _joysticks)
+        if (dev.device == device)
+            return dev;
     return nil;
 }
 
