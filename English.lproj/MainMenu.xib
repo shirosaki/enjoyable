@@ -632,7 +632,6 @@
 											<string key="NSFrame">{{227, 55}, {180, 24}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSSegmentedCell" key="NSCell" id="301345285">
@@ -700,7 +699,7 @@
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="194275224"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
-											<string key="NSClassName">KeyInputTextView</string>
+											<string key="NSClassName">NJKeyInputField</string>
 										</object>
 										<object class="NSPopUpButton" id="194275224">
 											<reference key="NSNextResponder" ref="606740242"/>
@@ -1114,7 +1113,6 @@
 						<string key="NSFrame">{{57, 4}, {39, 28}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1008023024">
 							<int key="NSCellFlags">603979776</int>
@@ -1586,19 +1584,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">targetController</string>
+						<string key="label">keyDelegate</string>
 						<reference key="source" ref="57697638"/>
 						<reference key="destination" ref="801536542"/>
 					</object>
-					<int key="connectionID">779</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">window</string>
-						<reference key="source" ref="57697638"/>
-						<reference key="destination" ref="808667431"/>
-					</object>
-					<int key="connectionID">780</int>
+					<int key="connectionID">818</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2270,7 +2260,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">816</int>
+			<int key="maxID">818</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2365,16 +2355,11 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="exportButton">NSButton</string>
 						<string key="removeButton">NSButton</string>
 						<string key="tableView">NSTableView</string>
 						<string key="targetController">TargetController</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="exportButton">
-							<string key="name">exportButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="removeButton">
 							<string key="name">removeButton</string>
 							<string key="candidateClassName">NSButton</string>
@@ -2421,25 +2406,22 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KeyInputTextView</string>
+					<string key="className">NJKeyInputField</string>
 					<string key="superclassName">NSTextField</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="targetController">TargetController</string>
-						<string key="window">NSWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="targetController">
-							<string key="name">targetController</string>
-							<string key="candidateClassName">TargetController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">keyDelegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">keyDelegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">keyDelegate</string>
+							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="window">
-							<string key="name">window</string>
-							<string key="candidateClassName">NSWindow</string>
-						</object>
-					</dictionary>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/KeyInputTextView.h</string>
+						<string key="minorKey">./Classes/NJKeyInputField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2478,7 +2460,7 @@
 						<string key="configPopup">NSPopUpButton</string>
 						<string key="configsController">ConfigsController</string>
 						<string key="joystickController">JoystickController</string>
-						<string key="keyInput">KeyInputTextView</string>
+						<string key="keyInput">NJKeyInputField</string>
 						<string key="mouseBtnSelect">NSSegmentedControl</string>
 						<string key="mouseDirSelect">NSSegmentedControl</string>
 						<string key="radioButtons">NSMatrix</string>
@@ -2500,7 +2482,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="keyInput">
 							<string key="name">keyInput</string>
-							<string key="candidateClassName">KeyInputTextView</string>
+							<string key="candidateClassName">NJKeyInputField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mouseBtnSelect">
 							<string key="name">mouseBtnSelect</string>

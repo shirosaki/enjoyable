@@ -7,7 +7,7 @@
 
 #import "TargetKeyboard.h"
 
-#import "KeyInputTextView.h"
+#import "NJKeyInputField.h"
 
 @implementation TargetKeyboard
 

@@ -24,7 +24,7 @@
 		D5617FD60FAFD06000928B3A /* Target.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD50FAFD06000928B3A /* Target.m */; };
 		D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */; };
 		D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE30FAFD7B000928B3A /* TargetController.m */; };
-		D5617FE70FAFDB5800928B3A /* KeyInputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE60FAFDB5800928B3A /* KeyInputTextView.m */; };
+		D5617FE70FAFDB5800928B3A /* NJKeyInputField.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE60FAFDB5800928B3A /* NJKeyInputField.m */; };
 		D594BE860FAE6219007A85F2 /* Joystick.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BE850FAE6219007A85F2 /* Joystick.m */; };
 		D594BE8A0FAE64AD007A85F2 /* JSAction.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BE890FAE64AD007A85F2 /* JSAction.m */; };
 		D594BEF90FAE6FF2007A85F2 /* JoystickController.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BEF80FAE6FF2007A85F2 /* JoystickController.m */; };
@@ -72,8 +72,8 @@
 		D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetKeyboard.m; sourceTree = "<group>"; };
 		D5617FE20FAFD7B000928B3A /* TargetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetController.h; sourceTree = "<group>"; };
 		D5617FE30FAFD7B000928B3A /* TargetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetController.m; sourceTree = "<group>"; };
-		D5617FE50FAFDB5800928B3A /* KeyInputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyInputTextView.h; sourceTree = "<group>"; };
-		D5617FE60FAFDB5800928B3A /* KeyInputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyInputTextView.m; sourceTree = "<group>"; };
+		D5617FE50FAFDB5800928B3A /* NJKeyInputField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKeyInputField.h; sourceTree = "<group>"; };
+		D5617FE60FAFDB5800928B3A /* NJKeyInputField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKeyInputField.m; sourceTree = "<group>"; };
 		D594BE840FAE6219007A85F2 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
 		D594BE850FAE6219007A85F2 /* Joystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Joystick.m; sourceTree = "<group>"; };
 		D594BE880FAE64AD007A85F2 /* JSAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSAction.h; sourceTree = "<group>"; };
@@ -135,8 +135,8 @@
 				D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */,
 				D5617FE20FAFD7B000928B3A /* TargetController.h */,
 				D5617FE30FAFD7B000928B3A /* TargetController.m */,
-				D5617FE50FAFDB5800928B3A /* KeyInputTextView.h */,
-				D5617FE60FAFDB5800928B3A /* KeyInputTextView.m */,
+				D5617FE50FAFDB5800928B3A /* NJKeyInputField.h */,
+				D5617FE60FAFDB5800928B3A /* NJKeyInputField.m */,
 				8BD9B54115C230FE00929C5D /* TargetMouseMove.h */,
 				8BD9B54215C230FE00929C5D /* TargetMouseMove.m */,
 				8B7E476A15C314A200C588FA /* TargetMouseBtn.h */,
@@ -303,7 +303,7 @@
 				D5617FD60FAFD06000928B3A /* Target.m in Sources */,
 				D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */,
 				D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */,
-				D5617FE70FAFDB5800928B3A /* KeyInputTextView.m in Sources */,
+				D5617FE70FAFDB5800928B3A /* NJKeyInputField.m in Sources */,
 				D5F809710FB093400006A4DE /* TargetConfig.m in Sources */,
 				8BD9B54315C230FF00929C5D /* TargetMouseMove.m in Sources */,
 				8B7E476C15C314A200C588FA /* TargetMouseBtn.m in Sources */,

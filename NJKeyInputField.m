@@ -1,18 +1,15 @@
 //
-//  KeyInputTextView.m
-//  Enjoy
+//  NJKeyInputField.h
+//  Enjoyable
 //
-//  Created by Sam McCall on 5/05/09.
+//  Copyright 2013 Joe Wreschnig.
 //
 
-#import "KeyInputTextView.h"
+#import "NJKeyInputField.h"
 
-#import "TargetController.h"
+CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 
-@implementation KeyInputTextView {
-    int vk;
-    BOOL enabled;
-}
+@implementation NJKeyInputField
 
 - (id)initWithFrame:(NSRect)frameRect {
     if ((self = [super initWithFrame:frameRect])) {
@@ -24,18 +21,18 @@
 }
 
 - (void)clear {
-    self.vk = -1;
-    [targetController keyChanged];
+    self.keyCode = NJKeyInputFieldEmpty;
+    [self.keyDelegate keyInputFieldDidClear:self];
     [self resignIfFirstResponder];
 }
 
-- (BOOL)hasKey {
-    return self.vk >= 0;
+- (BOOL)hasKeyCode {
+    return self.keyCode >= 0;
 }
 
-+ (NSString *)stringForKeyCode:(int)keycode {
-    switch(keycode) {
-        case   -1: return @"";
++ (NSString *)stringForKeyCode:(CGKeyCode)keyCode {
+    switch (keyCode) {
+        case 0xffff: return @"";
         case 0x7a: return @"F1";
         case 0x78: return @"F2";
         case 0x63: return @"F3";
@@ -73,15 +70,15 @@
         case 0x18: return @"=";
             
         case 0x3f: return @"Fn";
-        case 0x39: return @"Caps Lock";
-        case 0x38: return @"Left Shift";
-        case 0x3b: return @"Left Control";
-        case 0x3a: return @"Left Option";
-        case 0x37: return @"Left Command";
         case 0x36: return @"Right Command";
+        case 0x37: return @"Left Command";
+        case 0x38: return @"Left Shift";
+        case 0x39: return @"Caps Lock";
+        case 0x3a: return @"Left Option";
+        case 0x3b: return @"Left Control";
+        case 0x3c: return @"Right Shift";
         case 0x3d: return @"Right Option";
         case 0x3e: return @"Right Control";
-        case 0x3c: return @"Right Shift";
             
         case 0x73: return @"Home";
         case 0x74: return @"Page Up";
@@ -152,12 +149,13 @@
         case 0x7d: return @"Down";
         case 0x7b: return @"Left";
         case 0x7c: return @"Right";
+        default:
+            return [[NSString alloc] initWithFormat:@"Key 0x%x", keyCode];
     }
-    return [[NSString alloc] initWithFormat: @"Key 0x%x",keycode];
 }
 
 - (BOOL)acceptsFirstResponder {
-    return self.enabled;
+    return self.isEnabled;
 }
 
 - (BOOL)becomeFirstResponder {
@@ -170,44 +168,42 @@
     return [super resignFirstResponder];
 }
 
-- (void)setVk:(int)key {
-    vk = key;
-    [self setStringValue:[KeyInputTextView stringForKeyCode:key]];
+- (void)setKeyCode:(CGKeyCode)keyCode {
+    _keyCode = keyCode;
+    self.stringValue = [NJKeyInputField stringForKeyCode:keyCode];
 }
 
-- (int)vk {
-    return vk;
-}
-
-- (void)keyDown:(NSEvent *)evt {
-    if (!evt.isARepeat) {
-        self.vk = evt.keyCode;
-        [targetController keyChanged];
+- (void)keyDown:(NSEvent *)theEvent {
+    if (!theEvent.isARepeat) {
+        if ((theEvent.modifierFlags & NSAlternateKeyMask)
+            && theEvent.keyCode == 0x35) {
+            // Allow Alt+Escape to clear the field.
+            self.keyCode = NJKeyInputFieldEmpty;
+            [self.keyDelegate keyInputFieldDidClear:self];
+        } else {
+            self.keyCode = theEvent.keyCode;
+            [self.keyDelegate keyInputField:self didChangeKey:_keyCode];
+        }
         [self resignIfFirstResponder];
     }
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {
-    [targetController keyChanged];
-    [self.window makeFirstResponder:self];
+    if (self.acceptsFirstResponder)
+        [self.window makeFirstResponder:self];
 }
 
-- (void)flagsChanged:(NSEvent *)evt {
-    self.vk = evt.keyCode;
-    [targetController keyChanged];
-    [self resignIfFirstResponder];
+- (void)flagsChanged:(NSEvent *)theEvent {
+    // Many keys are only available on MacBook keyboards by using the
+    // Fn modifier key (e.g. Fn+Left for Home), so delay processing
+    // modifiers until the up event is received in order to let the
+    // user type these virtual keys. However, there is no actual event
+    // for modifier key up - so detect it by checking to see if any
+    // modifiers are still down.
+    if (!(theEvent.modifierFlags & NSDeviceIndependentModifierFlagsMask)) {
+        self.keyCode = theEvent.keyCode;
+        [self.keyDelegate keyInputField:self didChangeKey:_keyCode];
+    }
 }
-
-- (void)setEnabled:(BOOL)newEnabled {
-    enabled = newEnabled;
-
-    if (!enabled)
-        [self resignIfFirstResponder];
-}
-
-- (BOOL)enabled {
-    return enabled;
-}
-
 
 @end

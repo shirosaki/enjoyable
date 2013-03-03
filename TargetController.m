@@ -11,7 +11,7 @@
 #import "Config.h"
 #import "JSAction.h"
 #import "JoystickController.h"
-#import "KeyInputTextView.h"
+#import "NJKeyInputField.h"
 #import "TargetConfig.h"
 #import "TargetController.h"
 #import "TargetKeyboard.h"
@@ -26,7 +26,7 @@
     NSInteger row = radioButtons.selectedRow;
     
     if (row != 1) {
-        keyInput.vk = -1;
+        keyInput.keyCode = -1;
         [keyInput resignIfFirstResponder];
     }
     
@@ -62,9 +62,14 @@
     [self commit];
 }
 
-- (void)keyChanged {
+- (void)keyInputField:(NJKeyInputField *)keyInput didChangeKey:(CGKeyCode)keyCode {
     [radioButtons selectCellAtRow:1 column:0];
     [radioButtons.window makeFirstResponder:radioButtons];
+    [self commit];
+}
+
+- (void)keyInputFieldDidClear:(NJKeyInputField *)keyInput {
+    [radioButtons selectCellAtRow:0 column:0];
     [self commit];
 }
 
@@ -101,9 +106,9 @@
         case 0:
             return nil;
         case 1:
-            if (keyInput.hasKey) {
+            if (keyInput.hasKeyCode) {
                 TargetKeyboard *k = [[TargetKeyboard alloc] init];
-                k.vk = keyInput.vk;
+                k.vk = keyInput.keyCode;
                 return k;
             } else {
                 return nil;
@@ -172,7 +177,7 @@
 
     if ([target isKindOfClass:TargetKeyboard.class]) {
         [radioButtons selectCellAtRow:1 column:0];
-        keyInput.vk = [(TargetKeyboard*)target vk];
+        keyInput.keyCode = [(TargetKeyboard*)target vk];
     } else if ([target isKindOfClass:TargetConfig.class]) {
         [radioButtons selectCellAtRow:2 column:0];
         NSUInteger idx = [configsController.configs

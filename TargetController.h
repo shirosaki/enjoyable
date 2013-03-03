@@ -6,14 +6,15 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class KeyInputTextView;
+#import "NJKeyInputField.h"
+
 @class ConfigsController;
 @class JoystickController;
 @class Target;
 @class TargetMouseMove;
 
-@interface TargetController : NSObject {
-    IBOutlet KeyInputTextView *keyInput;
+@interface TargetController : NSObject <NJKeyInputFieldDelegate> {
+    IBOutlet NJKeyInputField *keyInput;
     IBOutlet NSMatrix *radioButtons;
     IBOutlet NSSegmentedControl *mouseDirSelect;
     IBOutlet NSSegmentedControl *mouseBtnSelect;
@@ -26,7 +27,6 @@
 
 @property (assign) BOOL enabled;
 
-- (void)keyChanged;
 - (void)loadCurrent;
 - (void)refreshConfigs;
 - (IBAction)configChosen:(id)sender;
