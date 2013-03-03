@@ -28,37 +28,49 @@
     [self.jsController setup];
     [self.configsController load];
     [NSNotificationCenter.defaultCenter
-        addObserver:self
-        selector:@selector(mappingDidChange:)
-        name:NJEventMappingChanged
-        object:nil];
+     addObserver:self
+     selector:@selector(mappingDidChange:)
+     name:NJEventMappingChanged
+     object:nil];
+    [NSNotificationCenter.defaultCenter
+     addObserver:self
+     selector:@selector(eventTranslationActivated:)
+     name:NJEventTranslationActivated
+     object:nil];
+    [NSNotificationCenter.defaultCenter
+     addObserver:self
+     selector:@selector(eventTranslationDeactivated:)
+     name:NJEventTranslationDeactivated
+     object:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[NSUserDefaults.standardUserDefaults synchronize];
 }
 
-- (IBAction)toggleActivity:(id)sender {
-    BOOL sendRealEvents = !self.jsController.sendingRealEvents;
-    self.jsController.sendingRealEvents = sendRealEvents;
-    activeButton.image = [NSImage imageNamed:sendRealEvents ? @"NSStopProgressFreestandingTemplate" : @"NSGoRightTemplate"];
-    activeMenuItem.state = sendRealEvents;
-    
-    if (sendRealEvents) {
-        [NSWorkspace.sharedWorkspace.notificationCenter
-            addObserver:self
-            selector:@selector(didSwitchApplication:)
-            name:NSWorkspaceDidActivateApplicationNotification
-            object:nil];
-        NSLog(@"Listening for application changes.");
-    } else {
-        [NSWorkspace.sharedWorkspace.notificationCenter
-            removeObserver:self
-            name:NSWorkspaceDidActivateApplicationNotification
-            object:nil];
-        NSLog(@"Ignoring application changes.");
-    }
+- (void)eventTranslationActivated:(NSNotification *)note {
+    activeButton.image = [NSImage imageNamed:@"NSStopProgressFreestandingTemplate"];
+    activeMenuItem.state = [note.object translatingEvents];
+    [NSWorkspace.sharedWorkspace.notificationCenter
+     addObserver:self
+     selector:@selector(didSwitchApplication:)
+     name:NSWorkspaceDidActivateApplicationNotification
+     object:nil];
+    NSLog(@"Listening for application changes.");
+}
 
+- (void)eventTranslationDeactivated:(NSNotification *)note {
+    activeButton.image = [NSImage imageNamed:@"NSGoRightTemplate"];
+    activeMenuItem.state = [note.object translatingEvents];
+    [NSWorkspace.sharedWorkspace.notificationCenter
+     removeObserver:self
+     name:NSWorkspaceDidActivateApplicationNotification
+     object:nil];
+    NSLog(@"Ignoring application changes.");
+}
+
+- (IBAction)toggleActivity:(id)sender {
+    self.jsController.translatingEvents = !self.jsController.translatingEvents;
 }
 
 - (NSInteger)firstConfigMenuIndex {

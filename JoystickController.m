@@ -13,6 +13,7 @@
 #import "JSAction.h"
 #import "Target.h"
 #import "TargetController.h"
+#import "NJEvents.h"
 
 @implementation JoystickController {
     IOHIDManagerRef hidManager;
@@ -85,7 +86,7 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
     JoystickController *controller = (__bridge JoystickController *)ctx;
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
     
-    if (controller.sendingRealEvents) {
+    if (controller.translatingEvents) {
         [controller runTargetForDevice:device value:value];
     } else if ([NSApplication sharedApplication].mainWindow.isVisible) {
         [controller showTargetForDevice:device value:value];
@@ -216,7 +217,19 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {
+    
     [targetController loadCurrent];
+}
+
+- (void)setTranslatingEvents:(BOOL)translatingEvents {
+    if (translatingEvents != _translatingEvents) {
+        _translatingEvents = translatingEvents;
+        NSString *name = translatingEvents
+            ? NJEventTranslationActivated
+            : NJEventTranslationDeactivated;
+        [NSNotificationCenter.defaultCenter postNotificationName:name
+                                                          object:self];
+    }
 }
 
 @end

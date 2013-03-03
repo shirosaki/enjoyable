@@ -23,6 +23,6 @@
 @property (nonatomic, readonly) JSAction *selectedAction;
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL frontWindowOnly;
-@property (nonatomic, assign) BOOL sendingRealEvents;
+@property (nonatomic, assign) BOOL translatingEvents;
 
 @end
