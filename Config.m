@@ -7,7 +7,7 @@
 
 #import "Config.h"
 
-#import "JSAction.h"
+#import "NJInput.h"
 
 @implementation Config
 
@@ -19,16 +19,16 @@
     return self;
 }
 
-- (Target *)objectForKeyedSubscript:(JSAction *)action {
-    return action ? _entries[action.uid] : nil;
+- (Target *)objectForKeyedSubscript:(NJInput *)input {
+    return input ? _entries[input.uid] : nil;
 }
 
-- (void)setObject:(Target *)target forKeyedSubscript:(JSAction *)action {
-    if (action) {
+- (void)setObject:(Target *)target forKeyedSubscript:(NJInput *)input {
+    if (input) {
         if (target)
-            _entries[action.uid] = target;
+            _entries[input.uid] = target;
         else
-            [_entries removeObjectForKey:action.uid];
+            [_entries removeObjectForKey:input.uid];
     }
 }
 

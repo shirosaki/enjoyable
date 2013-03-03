@@ -1,14 +1,14 @@
 //
-//  JSActionButton.h
+//  NJInputButton.h
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import "JSAction.h"
+#import "NJInput.h"
 
-@interface JSActionButton : JSAction
+@interface NJInputButton : NJInput
 
 - (id)initWithName:(NSString *)name idx:(int)idx max:(long)max;
 

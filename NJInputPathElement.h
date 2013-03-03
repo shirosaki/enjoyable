@@ -1,9 +1,9 @@
 #import <Foundation/Foundation.h>
 
-@protocol NJActionPathElement <NSObject>
+@protocol NJInputPathElement <NSObject>
 
 - (NSArray *)children;
-- (id <NJActionPathElement>) base;
+- (id <NJInputPathElement>) base;
 - (NSString *)name;
 
 @end

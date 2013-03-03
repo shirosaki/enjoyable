@@ -1,18 +1,18 @@
 //
-//  Joystick.m
+//  NJDevice.m
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "Joystick.h"
+#import "NJDevice.h"
 
-#import "JSAction.h"
-#import "JSActionAnalog.h"
-#import "JSActionButton.h"
-#import "JSActionHat.h"
+#import "NJInput.h"
+#import "NJInputAnalog.h"
+#import "NJInputHat.h"
+#import "NJInputButton.h"
 
-static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
+static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
     CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
     NSMutableArray *children = [NSMutableArray arrayWithCapacity:CFArrayGetCount(elements)];
     
@@ -29,7 +29,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
         long min = IOHIDElementGetPhysicalMin(element);
         CFStringRef elName = IOHIDElementGetName(element);
         
-        JSAction *action = nil;
+        NJInput *input = nil;
         
         if (!(type == kIOHIDElementTypeInput_Misc
               || type == kIOHIDElementTypeInput_Axis
@@ -37,30 +37,30 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
              continue;
         
         if (max - min == 1 || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
-            action = [[JSActionButton alloc] initWithName:(__bridge NSString *)elName
-                                                      idx:++buttons
-                                                      max:max];
+            input = [[NJInputButton alloc] initWithName:(__bridge NSString *)elName
+                                                    idx:++buttons
+                                                    max:max];
         } else if (usage == kHIDUsage_GD_Hatswitch) {
-            action = [[JSActionHat alloc] initWithIndex:++hats];
+            input = [[NJInputHat alloc] initWithIndex:++hats];
         } else if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
-            action = [[JSActionAnalog alloc] initWithIndex:++axes
-                                                    rawMin:min
-                                                    rawMax:max];
+            input = [[NJInputAnalog alloc] initWithIndex:++axes
+                                                  rawMin:min
+                                                  rawMax:max];
         } else {
             continue;
         }
         
         // TODO(jfw): Should be moved into better constructors.
-        action.base = base;
-        action.cookie = IOHIDElementGetCookie(element);
-        [children addObject:action];
+        input.base = base;
+        input.cookie = IOHIDElementGetCookie(element);
+        [children addObject:input];
     }
 
     CFRelease(elements);
     return children;
 }
 
-@implementation Joystick {
+@implementation NJDevice {
     int vendorId;
     int productId;
 }
@@ -71,7 +71,7 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
         self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
         vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
         productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
-        self.children = ActionsForElement(dev, self);
+        self.children = InputsForElement(dev, self);
     }
     return self;
 }
@@ -88,22 +88,22 @@ static NSArray *ActionsForElement(IOHIDDeviceRef device, id base) {
     return [NSString stringWithFormat: @"%d:%d:%d", vendorId, productId, _index];
 }
 
-- (JSAction *)findActionByCookie:(IOHIDElementCookie)cookie {
-    for (JSAction *child in _children)
+- (NJInput *)findInputByCookie:(IOHIDElementCookie)cookie {
+    for (NJInput *child in _children)
         if (child.cookie == cookie)
             return child;
     return nil;
 }
 
-- (JSAction *)handlerForEvent:(IOHIDValueRef)value {
-    JSAction *mainAction = [self actionForEvent:value];
-    return [mainAction findSubActionForValue:value];
+- (NJInput *)handlerForEvent:(IOHIDValueRef)value {
+    NJInput *mainInput = [self inputForEvent:value];
+    return [mainInput findSubInputForValue:value];
 }
 
-- (JSAction *)actionForEvent:(IOHIDValueRef)value {
+- (NJInput *)inputForEvent:(IOHIDValueRef)value {
     IOHIDElementRef elt = IOHIDValueGetElement(value);
     IOHIDElementCookie cookie = IOHIDElementGetCookie(elt);
-    return [self findActionByCookie:cookie];
+    return [self findInputByCookie:cookie];
 }
 
 @end

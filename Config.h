@@ -7,7 +7,7 @@
 //
 
 @class Target;
-@class JSAction;
+@class NJInput;
 
 @interface Config : NSObject
 
@@ -15,8 +15,8 @@
 @property (nonatomic, readonly) NSMutableDictionary *entries;
 
 - (id)initWithName:(NSString *)name;
-- (Target *)objectForKeyedSubscript:(JSAction *)action;
-- (void)setObject:(Target *)target forKeyedSubscript:(JSAction *)action;
+- (Target *)objectForKeyedSubscript:(NJInput *)input;
+- (void)setObject:(Target *)target forKeyedSubscript:(NJInput *)input;
 - (NSDictionary *)serialize;
 
 @end

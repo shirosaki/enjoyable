@@ -63,7 +63,7 @@
 - (void)untrigger {
 }
 
-- (BOOL)update:(JoystickController *)jc {
+- (BOOL)update:(NJInputController *)jc {
     return NO;
 }
 

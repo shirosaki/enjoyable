@@ -6,7 +6,7 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class JoystickController;
+@class NJInputController;
 
 @interface Target : NSObject
 
@@ -16,7 +16,7 @@
 
 - (void)trigger;
 - (void)untrigger;
-- (BOOL)update:(JoystickController *)jc;
+- (BOOL)update:(NJInputController *)jc;
 
 - (NSDictionary *)serialize;
 + (Target *)targetDeserialize:(NSDictionary *)serialization

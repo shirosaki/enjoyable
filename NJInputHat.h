@@ -1,14 +1,14 @@
 //
-//  JSActionHat.h
+//  NJInputHat.h
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import "JSAction.h"
+#import "NJInput.h"
 
-@interface JSActionHat : JSAction
+@interface NJInputHat : NJInput
 
 - (id)initWithIndex:(int)index;
 

@@ -1,15 +1,15 @@
 //
-//  JSAction.m
+//  NJInput.m
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "JSAction.h"
+#import "NJInput.h"
 
-@implementation JSAction
+@implementation NJInput
 
-- (id)initWithName:(NSString *)newName base:(id <NJActionPathElement>)newBase {
+- (id)initWithName:(NSString *)newName base:(id <NJInputPathElement>)newBase {
     if ((self = [super init])) {
         self.name = newName;
         self.base = newBase;
@@ -17,7 +17,7 @@
     return self;
 }
 
-- (id)findSubActionForValue:(IOHIDValueRef)value {
+- (id)findSubInputForValue:(IOHIDValueRef)value {
     return NULL;
 }
 

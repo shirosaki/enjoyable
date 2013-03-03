@@ -1,5 +1,5 @@
 //
-//  JSActionAnalog.m
+//  NJInputAnalog.m
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
@@ -7,13 +7,13 @@
 
 #define DEAD_ZONE 0.3
 
-#import "JSActionAnalog.h"
+#import "NJInputAnalog.h"
 
 static float normalize(long p, long min, long max) {
     return 2 * (p - min) / (float)(max - min) - 1;
 }
 
-@implementation JSActionAnalog {
+@implementation NJInputAnalog {
     float magnitude;
     long rawMin;
     long rawMax;
@@ -22,15 +22,15 @@ static float normalize(long p, long min, long max) {
 - (id)initWithIndex:(int)index rawMin:(long)rawMin_ rawMax:(long)rawMax_ {
     if ((self = [super init])) {
         self.name = [[NSString alloc] initWithFormat: @"Axis %d", index];
-        self.children = @[[[JSAction alloc] initWithName:@"Low" base:self],
-                          [[JSAction alloc] initWithName:@"High" base:self]];
+        self.children = @[[[NJInput alloc] initWithName:@"Low" base:self],
+                          [[NJInput alloc] initWithName:@"High" base:self]];
         rawMax = rawMax_;
         rawMin = rawMin_;
     }
     return self;
 }
 
-- (id)findSubActionForValue:(IOHIDValueRef)value {
+- (id)findSubInputForValue:(IOHIDValueRef)value {
     float mag = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
     if (mag < -DEAD_ZONE)
         return self.children[0];

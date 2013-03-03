@@ -1,13 +1,13 @@
 //
-//  JSActionButton.m
+//  NJInputButton.m
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //
 
-#import "JSActionButton.h"
+#import "NJInputButton.h"
 
-@implementation JSActionButton {
+@implementation NJInputButton {
     long _max;
 }
 
@@ -22,7 +22,7 @@
     return self;
 }
 
-- (id)findSubActionForValue:(IOHIDValueRef)val {
+- (id)findSubInputForValue:(IOHIDValueRef)val {
     return (IOHIDValueGetIntegerValue(val) == _max) ? self : nil;
 }
 

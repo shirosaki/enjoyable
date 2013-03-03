@@ -1,11 +1,11 @@
 //
-//  JSActionHat.m
+//  NJInputHat.m
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //
 
-#import "JSActionHat.h"
+#import "NJInputHat.h"
 
 static BOOL active_eightway[36] = {
     NO,  NO,  NO,  NO , // center
@@ -27,20 +27,20 @@ static BOOL active_fourway[20] = {
     NO,  NO,  YES, NO , // W
 };
 
-@implementation JSActionHat
+@implementation NJInputHat
 
 - (id)initWithIndex:(int)index {
     if ((self = [super init])) {
-        self.children = @[[[JSAction alloc] initWithName:@"Up" base:self],
-                          [[JSAction alloc] initWithName:@"Down" base:self],
-                          [[JSAction alloc] initWithName:@"Left" base:self],
-                          [[JSAction alloc] initWithName:@"Right" base:self]];
+        self.children = @[[[NJInput alloc] initWithName:@"Up" base:self],
+                          [[NJInput alloc] initWithName:@"Down" base:self],
+                          [[NJInput alloc] initWithName:@"Left" base:self],
+                          [[NJInput alloc] initWithName:@"Right" base:self]];
         self.name = [NSString stringWithFormat:@"Hat Switch %d", index];
     }
     return self;
 }
 
-- (id)findSubActionForValue:(IOHIDValueRef)value {
+- (id)findSubInputForValue:(IOHIDValueRef)value {
     long parsed = IOHIDValueGetIntegerValue(value);
     switch (IOHIDElementGetLogicalMax(IOHIDValueGetElement(value))) {
         case 7: // 8-way switch, 0-7.

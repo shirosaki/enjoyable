@@ -37,13 +37,13 @@
     }
 }
 
-- (BOOL)update:(JoystickController *)jc {
+- (BOOL)update:(NJInputController *)jc {
     if (fabsf(self.magnitude) < 0.01f) {
         sign = 0;
         return NO; // dead zone
     }
     
-    // If the action crossed over High/Low, this target is done.
+    // If the input crossed over High/Low, this target is done.
     if (!sign)
         sign = self.magnitude < 0 ? -1 : 1;
     else if (sign / self.magnitude < 0) {

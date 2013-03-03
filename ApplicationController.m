@@ -9,7 +9,7 @@
 
 #import "Config.h"
 #import "ConfigsController.h"
-#import "JoystickController.h"
+#import "NJInputController.h"
 #import "TargetController.h"
 #import "NJEvents.h"
 

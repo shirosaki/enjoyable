@@ -6,7 +6,7 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class JoystickController;
+@class NJInputController;
 @class TargetController;
 @class ConfigsController;
 
@@ -18,7 +18,7 @@
     IBOutlet NSMenu *dockMenuBase;
 }
 
-@property (nonatomic, strong) IBOutlet JoystickController *jsController;
+@property (nonatomic, strong) IBOutlet NJInputController *jsController;
 @property (nonatomic, strong) IBOutlet TargetController *targetController;
 @property (nonatomic, strong) IBOutlet ConfigsController *configsController;
 

@@ -1,16 +1,16 @@
 //
-//  Joystick.h
+//  NJDevice.h
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import "NJActionPathElement.h"
+#import "NJInputPathElement.h"
 
-@class JSAction;
+@class NJInput;
 
-@interface Joystick : NSObject <NJActionPathElement>
+@interface NJDevice : NSObject <NJInputPathElement>
 
 @property (nonatomic, assign) int index;
 @property (nonatomic, copy) NSString *productName;
@@ -20,7 +20,7 @@
 @property (readonly) NSString *uid;
 
 - (id)initWithDevice:(IOHIDDeviceRef)device;
-- (JSAction *)handlerForEvent:(IOHIDValueRef)value;
-- (JSAction *)actionForEvent:(IOHIDValueRef)value;
+- (NJInput *)handlerForEvent:(IOHIDValueRef)value;
+- (NJInput *)inputForEvent:(IOHIDValueRef)value;
 
 @end

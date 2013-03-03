@@ -9,7 +9,7 @@
 #import "NJKeyInputField.h"
 
 @class ConfigsController;
-@class JoystickController;
+@class NJInputController;
 @class Target;
 @class TargetMouseMove;
 
@@ -22,7 +22,7 @@
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *configPopup;
     IBOutlet ConfigsController *configsController;
-    IBOutlet JoystickController *joystickController;
+    IBOutlet NJInputController *joystickController;
 }
 
 @property (assign) BOOL enabled;

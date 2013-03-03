@@ -9,8 +9,8 @@
 
 #import "ConfigsController.h"
 #import "Config.h"
-#import "JSAction.h"
-#import "JoystickController.h"
+#import "NJInput.h"
+#import "NJInputController.h"
 #import "NJKeyInputField.h"
 #import "TargetConfig.h"
 #import "TargetController.h"
@@ -98,7 +98,7 @@
 }
 
 - (Target *)currentTarget {
-    return configsController.currentConfig[joystickController.selectedAction];
+    return configsController.currentConfig[joystickController.selectedInput];
 }
 
 - (Target *)makeTarget {
@@ -145,7 +145,7 @@
 
 - (void)commit {
     [self cleanUpInterface];
-    configsController.currentConfig[joystickController.selectedAction] = [self makeTarget];
+    configsController.currentConfig[joystickController.selectedInput] = [self makeTarget];
     [configsController save];
 }
 
@@ -162,17 +162,17 @@
     [scrollDirSelect setEnabled:enabled];
 }
 
-- (void)loadTarget:(Target *)target forAction:(JSAction *)action {
-    if (!action) {
+- (void)loadTarget:(Target *)target forInput:(NJInput *)input {
+    if (!input) {
         self.enabled = NO;
         title.stringValue = @"";
     } else {
         self.enabled = YES;
-        NSString *actFullName = action.name;
-        for (id <NJActionPathElement> cur = action.base; cur; cur = cur.base) {
-            actFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, actFullName];
+        NSString *inpFullName = input.name;
+        for (id <NJInputPathElement> cur = input.base; cur; cur = cur.base) {
+            inpFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, inpFullName];
         }
-        title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, actFullName];
+        title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", configsController.currentConfig.name, inpFullName];
     }
 
     if ([target isKindOfClass:TargetKeyboard.class]) {
@@ -209,7 +209,7 @@
 }
 
 - (void)loadCurrent {
-    [self loadTarget:self.currentTarget forAction:joystickController.selectedAction];
+    [self loadTarget:self.currentTarget forInput:joystickController.selectedInput];
 }
 
 - (void)focusKey {

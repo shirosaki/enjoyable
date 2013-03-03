@@ -1,21 +1,21 @@
 //
-//  JoystickController.m
+//  NJInputController.h
 //  Enjoy
 //
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import "JoystickController.h"
+#import "NJInputController.h"
 
 #import "Config.h"
 #import "ConfigsController.h"
-#import "Joystick.h"
-#import "JSAction.h"
+#import "NJDevice.h"
+#import "NJInput.h"
 #import "Target.h"
 #import "TargetController.h"
 #import "NJEvents.h"
 
-@implementation JoystickController {
+@implementation NJInputController {
     IOHIDManagerRef hidManager;
     NSTimer *continuousTimer;
     NSMutableArray *runningTargets;
@@ -36,7 +36,7 @@
     CFRelease(hidManager);
 }
 
-- (void)expandRecursive:(id <NJActionPathElement>)pathElement {
+- (void)expandRecursive:(id <NJInputPathElement>)pathElement {
     if (pathElement) {
         [self expandRecursive:pathElement.base];
         [outlineView expandItem:pathElement];
@@ -50,7 +50,7 @@
     if (!continuousTimer) {
         continuousTimer = [NSTimer scheduledTimerWithTimeInterval:1.f/60.f
                                                            target:self
-                                                         selector:@selector(updateContinuousActions:)
+                                                         selector:@selector(updateContinuousInputs:)
                                                          userInfo:nil
                                                           repeats:YES];
         NSLog(@"Scheduled continuous target timer.");
@@ -58,22 +58,22 @@
 }
 
 - (void)runTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
-    Joystick *js = [self findJoystickByRef:device];
-    JSAction *mainAction = [js actionForEvent:value];
-    [mainAction notifyEvent:value];
-    NSArray *children = mainAction.children ? mainAction.children : mainAction ? @[mainAction] : @[];
-    for (JSAction *subaction in children) {
-        Target *target = configsController.currentConfig[subaction];
-        target.magnitude = mainAction.magnitude;
-        target.running = subaction.active;
+    NJDevice *js = [self findJoystickByRef:device];
+    NJInput *mainInput = [js inputForEvent:value];
+    [mainInput notifyEvent:value];
+    NSArray *children = mainInput.children ? mainInput.children : mainInput ? @[mainInput] : @[];
+    for (NJInput *subInput in children) {
+        Target *target = configsController.currentConfig[subInput];
+        target.magnitude = mainInput.magnitude;
+        target.running = subInput.active;
         if (target.running && target.isContinuous)
             [self addRunningTarget:target];
     }
 }
 
 - (void)showTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
-    Joystick *js = [self findJoystickByRef:device];
-    JSAction *handler = [js handlerForEvent:value];
+    NJDevice *js = [self findJoystickByRef:device];
+    NJInput *handler = [js handlerForEvent:value];
     if (!handler)
         return;
     
@@ -83,7 +83,7 @@
 }
 
 static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
-    JoystickController *controller = (__bridge JoystickController *)ctx;
+    NJInputController *controller = (__bridge NJInputController *)ctx;
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
     
     if (controller.translatingEvents) {
@@ -93,10 +93,10 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
     }
 }
 
-static int findAvailableIndex(NSArray *list, Joystick *js) {
+static int findAvailableIndex(NSArray *list, NJDevice *js) {
     for (int index = 1; ; index++) {
         BOOL available = YES;
-        for (Joystick *used in list) {
+        for (NJDevice *used in list) {
             if ([used.productName isEqualToString:js.productName] && used.index == index) {
                 available = NO;
                 break;
@@ -109,31 +109,31 @@ static int findAvailableIndex(NSArray *list, Joystick *js) {
 
 - (void)addJoystickForDevice:(IOHIDDeviceRef)device {
     IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)self);
-    Joystick *js = [[Joystick alloc] initWithDevice:device];
+    NJDevice *js = [[NJDevice alloc] initWithDevice:device];
     js.index = findAvailableIndex(_joysticks, js);
     [_joysticks addObject:js];
     [outlineView reloadData];
 }
 
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-    JoystickController *controller = (__bridge JoystickController *)ctx;
+    NJInputController *controller = (__bridge NJInputController *)ctx;
     [controller addJoystickForDevice:device];
 }
 
-- (Joystick *)findJoystickByRef:(IOHIDDeviceRef)device {
-    for (Joystick *js in _joysticks)
+- (NJDevice *)findJoystickByRef:(IOHIDDeviceRef)device {
+    for (NJDevice *js in _joysticks)
         if (js.device == device)
             return js;
     return nil;
 }
 
 static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-    JoystickController *controller = (__bridge JoystickController *)ctx;
+    NJInputController *controller = (__bridge NJInputController *)ctx;
     [controller removeJoystickForDevice:device];
 }
 
 - (void)removeJoystickForDevice:(IOHIDDeviceRef)device {
-    Joystick *match = [self findJoystickByRef:device];
+    NJDevice *match = [self findJoystickByRef:device];
     IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
     if (match) {
         [_joysticks removeObject:match];
@@ -142,7 +142,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     
 }
 
-- (void)updateContinuousActions:(NSTimer *)timer {
+- (void)updateContinuousInputs:(NSTimer *)timer {
     self.mouseLoc = [NSEvent mouseLocation];
     for (Target *target in [runningTargets copy]) {
         if (![target update:self]) {
@@ -189,30 +189,30 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
 }
 
-- (JSAction *)selectedAction {
-    id <NJActionPathElement> item = [outlineView itemAtRow:outlineView.selectedRow];
+- (NJInput *)selectedInput {
+    id <NJInputPathElement> item = [outlineView itemAtRow:outlineView.selectedRow];
     return (!item.children && item.base) ? item : nil;
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView
-  numberOfChildrenOfItem:(id <NJActionPathElement>)item {
+  numberOfChildrenOfItem:(id <NJInputPathElement>)item {
     return item ? item.children.count : _joysticks.count;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
-   isItemExpandable:(id <NJActionPathElement>)item {
+   isItemExpandable:(id <NJInputPathElement>)item {
     return item ? [[item children] count] > 0: YES;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
             child:(NSInteger)index
-           ofItem:(id <NJActionPathElement>)item {
+           ofItem:(id <NJInputPathElement>)item {
     return item ? item.children[index] : _joysticks[index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
 objectValueForTableColumn:(NSTableColumn *)tableColumn
-           byItem:(id <NJActionPathElement>)item  {
+           byItem:(id <NJInputPathElement>)item  {
     return item ? item.name : @"root";
 }
 

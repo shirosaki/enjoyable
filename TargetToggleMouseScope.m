@@ -8,7 +8,7 @@
 #import "TargetToggleMouseScope.h"
 
 #import "ApplicationController.h"
-#import "JoystickController.h"
+#import "NJInputController.h"
 
 @implementation TargetToggleMouseScope
 
@@ -29,7 +29,7 @@
     // FIXME: It's hacky to get at the controller this way, but it's
     // also hacky to pass it. Shouldn't need to do either.
     ApplicationController *ac = NSApplication.sharedApplication.delegate;
-    JoystickController *jc = ac.jsController;
+    NJInputController *jc = ac.jsController;
     jc.frontWindowOnly = !jc.frontWindowOnly;
 }
 
