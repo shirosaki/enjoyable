@@ -28,6 +28,15 @@
     return nil;    
 }
 
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:Target.class]
+        && [[self serialize] isEqual:[object serialize]];
+}
+
+- (NSUInteger)hash {
+    return [[self serialize] hash];
+}
+
 + (Target *)targetDeserialize:(NSDictionary *)serialization
                   withConfigs:(NSArray *)configs {
     // Don't crash loading old configs (but don't load them either).

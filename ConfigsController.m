@@ -200,7 +200,8 @@
                           BOOL conflict;
                           Config *mergeInto = self[cfg.name];
                           for (id key in cfg.entries) {
-                              if (mergeInto.entries[key]) {
+                              if (mergeInto.entries[key]
+                                  && ![mergeInto.entries[key] isEqual:cfg.entries[key]]) {
                                   conflict = YES;
                                   break;
                               }
