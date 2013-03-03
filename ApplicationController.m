@@ -10,7 +10,7 @@
 #import "NJMapping.h"
 #import "NJMappingsController.h"
 #import "NJInputController.h"
-#import "TargetController.h"
+#import "NJOutputController.h"
 #import "NJEvents.h"
 
 @implementation ApplicationController {
@@ -24,7 +24,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     [drawer open];
-    self.targetController.enabled = NO;
+    self.outputController.enabled = NO;
     [self.inputController setup];
     [self.mappingsController load];
     [NSNotificationCenter.defaultCenter
@@ -92,7 +92,7 @@
                          keyEquivalent:keyEquiv];
         
     }
-    [_targetController refreshMappings];
+    [_outputController refreshMappings];
 }
 
 - (void)mappingDidChange:(NSNotification *)note {

@@ -1,20 +1,20 @@
 //
-//  Target.m
+//  NJOutput.m
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //
 
-#import "Target.h"
+#import "NJOutput.h"
 
-#import "TargetKeyboard.h"
-#import "TargetConfig.h"
-#import "TargetMouseMove.h"
-#import "TargetMouseBtn.h"
-#import "TargetMouseScroll.h"
-#import "TargetToggleMouseScope.h"
+#import "NJOutputKeyPress.h"
+#import "NJOutputMapping.h"
+#import "NJOutputMouseMove.h"
+#import "NJOutputMouseButton.h"
+#import "NJOutputMouseScroll.h"
+#import "NJOutputSwitchMouseMode.h"
 
-@implementation Target {
+@implementation NJOutput {
     BOOL running;
 }
 
@@ -29,7 +29,7 @@
 }
 
 - (BOOL)isEqual:(id)object {
-    return [object isKindOfClass:Target.class]
+    return [object isKindOfClass:NJOutput.class]
         && [[self serialize] isEqual:[object serialize]];
 }
 
@@ -37,21 +37,21 @@
     return [[self serialize] hash];
 }
 
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
     // Don't crash loading old/bad mappings (but don't load them either).
     if (![serialization isKindOfClass:NSDictionary.class])
         return nil;
     NSString *type = serialization[@"type"];
-    for (Class cls in @[TargetKeyboard.class,
-                        TargetConfig.class,
-                        TargetMouseMove.class,
-                        TargetMouseBtn.class,
-                        TargetMouseScroll.class,
-                        TargetToggleMouseScope.class
+    for (Class cls in @[NJOutputKeyPress.class,
+                        NJOutputMapping.class,
+                        NJOutputMouseMove.class,
+                        NJOutputMouseButton.class,
+                        NJOutputMouseScroll.class,
+                        NJOutputSwitchMouseMode.class
          ]) {
         if ([type isEqualToString:cls.serializationCode])
-            return [cls targetDeserialize:serialization withMappings:mappings];
+            return [cls outputDeserialize:serialization withMappings:mappings];
     }
     
     return nil;

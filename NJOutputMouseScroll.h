@@ -1,13 +1,13 @@
 //
-//  TargetMouseScroll.h
+//  NJOutputMouseScroll.h
 //  Enjoy
 //
 //  Created by Yifeng Huang on 7/28/12.
 //
 
-#import "Target.h"
+#import "NJOutput.h"
 
-@interface TargetMouseScroll : Target
+@interface NJOutputMouseScroll : NJOutput
 
 @property (nonatomic, assign) int amount;
 

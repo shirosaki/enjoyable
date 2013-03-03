@@ -1,17 +1,17 @@
 //
-//  TargetConfig.m
+//  NJOutputMapping.m
 //  Enjoy
 //
 //  Created by Sam McCall on 6/05/09.
 //
 
-#import "TargetConfig.h"
+#import "NJOutputMapping.h"
 
 #import "ApplicationController.h"
 #import "NJMapping.h"
 #import "NJMappingsController.h"
 
-@implementation TargetConfig
+@implementation NJOutputMapping
 
 + (NSString *)serializationCode {
     return @"mapping";
@@ -23,14 +23,14 @@
         : nil;
 }
 
-+ (TargetConfig *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutputMapping *)outputDeserialize:(NSDictionary *)serialization
                         withMappings:(NSArray *)mappings {
     NSString *name = serialization[@"name"];
-    TargetConfig *target = [[TargetConfig alloc] init];
+    NJOutputMapping *output = [[NJOutputMapping alloc] init];
     for (NJMapping *mapping in mappings) {
         if ([mapping.name isEqualToString:name]) {
-            target.mapping = mapping;
-            return target;
+            output.mapping = mapping;
+            return output;
         }
     }
     return nil;

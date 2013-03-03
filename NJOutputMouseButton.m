@@ -1,27 +1,27 @@
 //
-//  TargetMouseBtn.m
+//  NJOutputMouseButton.m
 //  Enjoy
 //
 //  Created by Yifeng Huang on 7/27/12.
 //
 
-#import "TargetMouseBtn.h"
+#import "NJOutputMouseButton.h"
 
-@implementation TargetMouseBtn
+@implementation NJOutputMouseButton
 
 + (NSString *)serializationCode {
-    return @"mbtn";
+    return @"mouse button";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mbtn", @"button": @(_button) };
+    return @{ @"type": @"mouse button", @"button": @(_button) };
 }
 
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	TargetMouseBtn *target = [[TargetMouseBtn alloc] init];
-    target.button = [serialization[@"button"] intValue];
-	return target;
+	NJOutputMouseButton *output = [[NJOutputMouseButton alloc] init];
+    output.button = [serialization[@"button"] intValue];
+	return output;
 }
 
 -(void) trigger {

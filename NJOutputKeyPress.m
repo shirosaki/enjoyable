@@ -1,29 +1,29 @@
 //
-//  TargetKeyboard.m
+//  NJOutputKeyPress.m
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //
 
-#import "TargetKeyboard.h"
+#import "NJOutputKeyPress.h"
 
 #import "NJKeyInputField.h"
 
-@implementation TargetKeyboard
+@implementation NJOutputKeyPress
 
 + (NSString *)serializationCode {
     return @"key";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"key", @"key": @(_vk) };
+    return @{ @"type": @"key press", @"key": @(_vk) };
 }
 
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-    TargetKeyboard *target = [[TargetKeyboard alloc] init];
-    target.vk = [serialization[@"key"] intValue];
-    return target;
+    NJOutputKeyPress *output = [[NJOutputKeyPress alloc] init];
+    output.vk = [serialization[@"key"] intValue];
+    return output;
 }
 
 - (void)trigger {

@@ -9,16 +9,16 @@
 @class NJDevice;
 @class NJInput;
 @class NJMappingsController;
-@class TargetController;
+@class NJOutputController;
 
 @interface NJInputController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
 	IBOutlet NSOutlineView *outlineView;
-	IBOutlet TargetController *targetController;
+	IBOutlet NJOutputController *outputController;
 	IBOutlet NJMappingsController *mappingsController;
 }
 
 - (void)setup;
-- (NJDevice *)findJoystickByRef:(IOHIDDeviceRef)device;
+- (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device;
 
 @property (nonatomic, readonly) NJInput *selectedInput;
 @property (nonatomic, assign) NSPoint mouseLoc;

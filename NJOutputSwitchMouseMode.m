@@ -1,29 +1,28 @@
 //
-//  TargetToggleMouseScope.m
+//  NJOutputSwitchMouseMode.m
 //  Enjoy
 //
 //  Created by Yifeng Huang on 7/28/12.
 //
 
-#import "TargetToggleMouseScope.h"
+#import "NJOutputSwitchMouseMode.h"
 
 #import "ApplicationController.h"
 #import "NJInputController.h"
 
-@implementation TargetToggleMouseScope
+@implementation NJOutputSwitchMouseMode
 
 + (NSString *)serializationCode {
-    return @"mtoggle";
+    return @"switch mouse mode";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mtoggle" };
+    return @{ @"type": @"switch mouse mode" };
 }
 
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	TargetToggleMouseScope *target = [[TargetToggleMouseScope alloc] init];
-	return target;
+    return [[NJOutputSwitchMouseMode alloc] init];
 }
 - (void)trigger {
     // FIXME: It's hacky to get at the controller this way, but it's

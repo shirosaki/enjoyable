@@ -11,21 +11,21 @@
 #import "NJMappingsController.h"
 #import "NJDevice.h"
 #import "NJInput.h"
-#import "Target.h"
-#import "TargetController.h"
+#import "NJOutput.h"
+#import "NJOutputController.h"
 #import "NJEvents.h"
 
 @implementation NJInputController {
     IOHIDManagerRef hidManager;
     NSTimer *continuousTimer;
-    NSMutableArray *runningTargets;
-    NSMutableArray *_joysticks;
+    NSMutableArray *runningOutputs;
+    NSMutableArray *_devices;
 }
 
 - (id)init {
     if ((self = [super init])) {
-        _joysticks = [[NSMutableArray alloc] initWithCapacity:16];
-        runningTargets = [[NSMutableArray alloc] initWithCapacity:32];
+        _devices = [[NSMutableArray alloc] initWithCapacity:16];
+        runningOutputs = [[NSMutableArray alloc] initWithCapacity:32];
     }
     return self;
 }
@@ -43,9 +43,9 @@
     }
 }
 
-- (void)addRunningTarget:(Target *)target {
-    if (![runningTargets containsObject:target]) {
-        [runningTargets addObject:target];
+- (void)addRunningOutput:(NJOutput *)output {
+    if (![runningOutputs containsObject:output]) {
+        [runningOutputs addObject:output];
     }
     if (!continuousTimer) {
         continuousTimer = [NSTimer scheduledTimerWithTimeInterval:1.f/60.f
@@ -53,33 +53,33 @@
                                                          selector:@selector(updateContinuousInputs:)
                                                          userInfo:nil
                                                           repeats:YES];
-        NSLog(@"Scheduled continuous target timer.");
+        NSLog(@"Scheduled continuous output timer.");
     }
 }
 
-- (void)runTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
-    NJDevice *dev = [self findJoystickByRef:device];
+- (void)runOutputForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
+    NJDevice *dev = [self findDeviceByRef:device];
     NJInput *mainInput = [dev inputForEvent:value];
     [mainInput notifyEvent:value];
     NSArray *children = mainInput.children ? mainInput.children : mainInput ? @[mainInput] : @[];
     for (NJInput *subInput in children) {
-        Target *target = mappingsController.currentMapping[subInput];
-        target.magnitude = mainInput.magnitude;
-        target.running = subInput.active;
-        if (target.running && target.isContinuous)
-            [self addRunningTarget:target];
+        NJOutput *output = mappingsController.currentMapping[subInput];
+        output.magnitude = mainInput.magnitude;
+        output.running = subInput.active;
+        if (output.running && output.isContinuous)
+            [self addRunningOutput:output];
     }
 }
 
-- (void)showTargetForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
-    NJDevice *dev = [self findJoystickByRef:device];
+- (void)showOutputForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
+    NJDevice *dev = [self findDeviceByRef:device];
     NJInput *handler = [dev handlerForEvent:value];
     if (!handler)
         return;
     
     [self expandRecursive:handler];
     [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[outlineView rowForItem:handler]] byExtendingSelection: NO];
-    [targetController focusKey];
+    [outputController focusKey];
 }
 
 static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
@@ -87,9 +87,9 @@ static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDVa
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
     
     if (controller.translatingEvents) {
-        [controller runTargetForDevice:device value:value];
+        [controller runOutputForDevice:device value:value];
     } else if ([NSApplication sharedApplication].mainWindow.isVisible) {
-        [controller showTargetForDevice:device value:value];
+        [controller showOutputForDevice:device value:value];
     }
 }
 
@@ -107,21 +107,21 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     }
 }
 
-- (void)addJoystickForDevice:(IOHIDDeviceRef)device {
+- (void)addDeviceForDevice:(IOHIDDeviceRef)device {
     IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)self);
     NJDevice *dev = [[NJDevice alloc] initWithDevice:device];
-    dev.index = findAvailableIndex(_joysticks, dev);
-    [_joysticks addObject:dev];
+    dev.index = findAvailableIndex(_devices, dev);
+    [_devices addObject:dev];
     [outlineView reloadData];
 }
 
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
     NJInputController *controller = (__bridge NJInputController *)ctx;
-    [controller addJoystickForDevice:device];
+    [controller addDeviceForDevice:device];
 }
 
-- (NJDevice *)findJoystickByRef:(IOHIDDeviceRef)device {
-    for (NJDevice *dev in _joysticks)
+- (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device {
+    for (NJDevice *dev in _devices)
         if (dev.device == device)
             return dev;
     return nil;
@@ -129,14 +129,14 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
 
 static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
     NJInputController *controller = (__bridge NJInputController *)ctx;
-    [controller removeJoystickForDevice:device];
+    [controller removeDeviceForDevice:device];
 }
 
-- (void)removeJoystickForDevice:(IOHIDDeviceRef)device {
-    NJDevice *match = [self findJoystickByRef:device];
+- (void)removeDeviceForDevice:(IOHIDDeviceRef)device {
+    NJDevice *match = [self findDeviceByRef:device];
     IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
     if (match) {
-        [_joysticks removeObject:match];
+        [_devices removeObject:match];
         [outlineView reloadData];
     }
     
@@ -144,15 +144,15 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 
 - (void)updateContinuousInputs:(NSTimer *)timer {
     self.mouseLoc = [NSEvent mouseLocation];
-    for (Target *target in [runningTargets copy]) {
-        if (![target update:self]) {
-            [runningTargets removeObject:target];
+    for (NJOutput *output in [runningOutputs copy]) {
+        if (![output update:self]) {
+            [runningOutputs removeObject:output];
         }
     }
-    if (!runningTargets.count) {
+    if (!runningOutputs.count) {
         [continuousTimer invalidate];
         continuousTimer = nil;
-        NSLog(@"Unscheduled continuous target timer.");
+        NSLog(@"Unscheduled continuous output timer.");
     }
 }
 
@@ -196,7 +196,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView
   numberOfChildrenOfItem:(id <NJInputPathElement>)item {
-    return item ? item.children.count : _joysticks.count;
+    return item ? item.children.count : _devices.count;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
@@ -207,7 +207,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 - (id)outlineView:(NSOutlineView *)outlineView
             child:(NSInteger)index
            ofItem:(id <NJInputPathElement>)item {
-    return item ? item.children[index] : _joysticks[index];
+    return item ? item.children[index] : _devices[index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
@@ -218,7 +218,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {
     
-    [targetController loadCurrent];
+    [outputController loadCurrent];
 }
 
 - (void)setTranslatingEvents:(BOOL)translatingEvents {

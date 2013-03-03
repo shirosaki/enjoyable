@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		8B7E476C15C314A200C588FA /* TargetMouseBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E476B15C314A200C588FA /* TargetMouseBtn.m */; };
-		8BD9B54315C230FF00929C5D /* TargetMouseMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD9B54215C230FE00929C5D /* TargetMouseMove.m */; };
-		8BEFAD9C15C46BFF00823AEC /* TargetMouseScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFAD9B15C46BFF00823AEC /* TargetMouseScroll.m */; };
-		8BEFADA015C476DC00823AEC /* TargetToggleMouseScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFAD9F15C476DC00823AEC /* TargetToggleMouseScope.m */; };
+		8B7E476C15C314A200C588FA /* NJOutputMouseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E476B15C314A200C588FA /* NJOutputMouseButton.m */; };
+		8BD9B54315C230FF00929C5D /* NJOutputMouseMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD9B54215C230FE00929C5D /* NJOutputMouseMove.m */; };
+		8BEFAD9C15C46BFF00823AEC /* NJOutputMouseScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFAD9B15C46BFF00823AEC /* NJOutputMouseScroll.m */; };
+		8BEFADA015C476DC00823AEC /* NJOutputSwitchMouseMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEFAD9F15C476DC00823AEC /* NJOutputSwitchMouseMode.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -21,16 +21,16 @@
 		D5617D1A0FAF568100928B3A /* NJInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D190FAF568100928B3A /* NJInputButton.m */; };
 		D5617D260FAF579300928B3A /* NJInputHat.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D250FAF579300928B3A /* NJInputHat.m */; };
 		D5617D2B0FAF579A00928B3A /* NJInputAnalog.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D2A0FAF579A00928B3A /* NJInputAnalog.m */; };
-		D5617FD60FAFD06000928B3A /* Target.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD50FAFD06000928B3A /* Target.m */; };
-		D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */; };
-		D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE30FAFD7B000928B3A /* TargetController.m */; };
+		D5617FD60FAFD06000928B3A /* NJOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD50FAFD06000928B3A /* NJOutput.m */; };
+		D5617FD90FAFD1E600928B3A /* NJOutputKeyPress.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FD80FAFD1E600928B3A /* NJOutputKeyPress.m */; };
+		D5617FE40FAFD7B000928B3A /* NJOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE30FAFD7B000928B3A /* NJOutputController.m */; };
 		D5617FE70FAFDB5800928B3A /* NJKeyInputField.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617FE60FAFDB5800928B3A /* NJKeyInputField.m */; };
 		D594BE860FAE6219007A85F2 /* NJDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BE850FAE6219007A85F2 /* NJDevice.m */; };
 		D594BE8A0FAE64AD007A85F2 /* NJInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BE890FAE64AD007A85F2 /* NJInput.m */; };
 		D594BEF90FAE6FF2007A85F2 /* NJInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BEF80FAE6FF2007A85F2 /* NJInputController.m */; };
 		D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D594BEFF0FAE7397007A85F2 /* IOKit.framework */; };
 		D594BF830FAE9661007A85F2 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BF820FAE9661007A85F2 /* ApplicationController.m */; };
-		D5F809710FB093400006A4DE /* TargetConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F809700FB093400006A4DE /* TargetConfig.m */; };
+		D5F809710FB093400006A4DE /* NJOutputMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F809700FB093400006A4DE /* NJOutputMapping.m */; };
 		D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D5617A080FAEAF8300928B3A /* icon.icns */; };
 		EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */; };
 		EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */; };
@@ -44,14 +44,14 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* Enjoyable_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enjoyable_Prefix.pch; sourceTree = "<group>"; };
-		8B7E476A15C314A200C588FA /* TargetMouseBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetMouseBtn.h; sourceTree = "<group>"; };
-		8B7E476B15C314A200C588FA /* TargetMouseBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetMouseBtn.m; sourceTree = "<group>"; };
-		8BD9B54115C230FE00929C5D /* TargetMouseMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetMouseMove.h; sourceTree = "<group>"; };
-		8BD9B54215C230FE00929C5D /* TargetMouseMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetMouseMove.m; sourceTree = "<group>"; };
-		8BEFAD9A15C46BFF00823AEC /* TargetMouseScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetMouseScroll.h; sourceTree = "<group>"; };
-		8BEFAD9B15C46BFF00823AEC /* TargetMouseScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetMouseScroll.m; sourceTree = "<group>"; };
-		8BEFAD9E15C476DC00823AEC /* TargetToggleMouseScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetToggleMouseScope.h; sourceTree = "<group>"; };
-		8BEFAD9F15C476DC00823AEC /* TargetToggleMouseScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetToggleMouseScope.m; sourceTree = "<group>"; };
+		8B7E476A15C314A200C588FA /* NJOutputMouseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputMouseButton.h; sourceTree = "<group>"; };
+		8B7E476B15C314A200C588FA /* NJOutputMouseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputMouseButton.m; sourceTree = "<group>"; };
+		8BD9B54115C230FE00929C5D /* NJOutputMouseMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputMouseMove.h; sourceTree = "<group>"; };
+		8BD9B54215C230FE00929C5D /* NJOutputMouseMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputMouseMove.m; sourceTree = "<group>"; };
+		8BEFAD9A15C46BFF00823AEC /* NJOutputMouseScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputMouseScroll.h; sourceTree = "<group>"; };
+		8BEFAD9B15C46BFF00823AEC /* NJOutputMouseScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputMouseScroll.m; sourceTree = "<group>"; };
+		8BEFAD9E15C476DC00823AEC /* NJOutputSwitchMouseMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputSwitchMouseMode.h; sourceTree = "<group>"; };
+		8BEFAD9F15C476DC00823AEC /* NJOutputSwitchMouseMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputSwitchMouseMode.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Enjoyable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enjoyable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D549CA4B0FBB441B00BC8203 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -66,12 +66,12 @@
 		D5617D250FAF579300928B3A /* NJInputHat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJInputHat.m; sourceTree = "<group>"; };
 		D5617D290FAF579A00928B3A /* NJInputAnalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJInputAnalog.h; sourceTree = "<group>"; };
 		D5617D2A0FAF579A00928B3A /* NJInputAnalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJInputAnalog.m; sourceTree = "<group>"; };
-		D5617FD40FAFD06000928B3A /* Target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Target.h; sourceTree = "<group>"; };
-		D5617FD50FAFD06000928B3A /* Target.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Target.m; sourceTree = "<group>"; };
-		D5617FD70FAFD1E600928B3A /* TargetKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetKeyboard.h; sourceTree = "<group>"; };
-		D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetKeyboard.m; sourceTree = "<group>"; };
-		D5617FE20FAFD7B000928B3A /* TargetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetController.h; sourceTree = "<group>"; };
-		D5617FE30FAFD7B000928B3A /* TargetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetController.m; sourceTree = "<group>"; };
+		D5617FD40FAFD06000928B3A /* NJOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutput.h; sourceTree = "<group>"; };
+		D5617FD50FAFD06000928B3A /* NJOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutput.m; sourceTree = "<group>"; };
+		D5617FD70FAFD1E600928B3A /* NJOutputKeyPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputKeyPress.h; sourceTree = "<group>"; };
+		D5617FD80FAFD1E600928B3A /* NJOutputKeyPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputKeyPress.m; sourceTree = "<group>"; };
+		D5617FE20FAFD7B000928B3A /* NJOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputController.h; sourceTree = "<group>"; };
+		D5617FE30FAFD7B000928B3A /* NJOutputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputController.m; sourceTree = "<group>"; };
 		D5617FE50FAFDB5800928B3A /* NJKeyInputField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKeyInputField.h; sourceTree = "<group>"; };
 		D5617FE60FAFDB5800928B3A /* NJKeyInputField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKeyInputField.m; sourceTree = "<group>"; };
 		D594BE840FAE6219007A85F2 /* NJDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJDevice.h; sourceTree = "<group>"; };
@@ -83,8 +83,8 @@
 		D594BEFF0FAE7397007A85F2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		D594BF810FAE9661007A85F2 /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
 		D594BF820FAE9661007A85F2 /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
-		D5F8096F0FB093400006A4DE /* TargetConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetConfig.h; sourceTree = "<group>"; };
-		D5F809700FB093400006A4DE /* TargetConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetConfig.m; sourceTree = "<group>"; };
+		D5F8096F0FB093400006A4DE /* NJOutputMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputMapping.h; sourceTree = "<group>"; };
+		D5F809700FB093400006A4DE /* NJOutputMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputMapping.m; sourceTree = "<group>"; };
 		EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+FirstResponder.h"; sourceTree = "<group>"; };
 		EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+FirstResponder.m"; sourceTree = "<group>"; };
 		EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Description.h"; sourceTree = "<group>"; };
@@ -127,24 +127,24 @@
 				D5617A350FAEB74000928B3A /* NJMappingsController.m */,
 				D5617A370FAEBA1800928B3A /* NJMapping.h */,
 				D5617A380FAEBA1800928B3A /* NJMapping.m */,
-				D5F8096F0FB093400006A4DE /* TargetConfig.h */,
-				D5F809700FB093400006A4DE /* TargetConfig.m */,
-				D5617FD40FAFD06000928B3A /* Target.h */,
-				D5617FD50FAFD06000928B3A /* Target.m */,
-				D5617FD70FAFD1E600928B3A /* TargetKeyboard.h */,
-				D5617FD80FAFD1E600928B3A /* TargetKeyboard.m */,
-				D5617FE20FAFD7B000928B3A /* TargetController.h */,
-				D5617FE30FAFD7B000928B3A /* TargetController.m */,
+				D5F8096F0FB093400006A4DE /* NJOutputMapping.h */,
+				D5F809700FB093400006A4DE /* NJOutputMapping.m */,
+				D5617FD40FAFD06000928B3A /* NJOutput.h */,
+				D5617FD50FAFD06000928B3A /* NJOutput.m */,
+				D5617FD70FAFD1E600928B3A /* NJOutputKeyPress.h */,
+				D5617FD80FAFD1E600928B3A /* NJOutputKeyPress.m */,
+				D5617FE20FAFD7B000928B3A /* NJOutputController.h */,
+				D5617FE30FAFD7B000928B3A /* NJOutputController.m */,
 				D5617FE50FAFDB5800928B3A /* NJKeyInputField.h */,
 				D5617FE60FAFDB5800928B3A /* NJKeyInputField.m */,
-				8BD9B54115C230FE00929C5D /* TargetMouseMove.h */,
-				8BD9B54215C230FE00929C5D /* TargetMouseMove.m */,
-				8B7E476A15C314A200C588FA /* TargetMouseBtn.h */,
-				8B7E476B15C314A200C588FA /* TargetMouseBtn.m */,
-				8BEFAD9A15C46BFF00823AEC /* TargetMouseScroll.h */,
-				8BEFAD9B15C46BFF00823AEC /* TargetMouseScroll.m */,
-				8BEFAD9E15C476DC00823AEC /* TargetToggleMouseScope.h */,
-				8BEFAD9F15C476DC00823AEC /* TargetToggleMouseScope.m */,
+				8BD9B54115C230FE00929C5D /* NJOutputMouseMove.h */,
+				8BD9B54215C230FE00929C5D /* NJOutputMouseMove.m */,
+				8B7E476A15C314A200C588FA /* NJOutputMouseButton.h */,
+				8B7E476B15C314A200C588FA /* NJOutputMouseButton.m */,
+				8BEFAD9A15C46BFF00823AEC /* NJOutputMouseScroll.h */,
+				8BEFAD9B15C46BFF00823AEC /* NJOutputMouseScroll.m */,
+				8BEFAD9E15C476DC00823AEC /* NJOutputSwitchMouseMode.h */,
+				8BEFAD9F15C476DC00823AEC /* NJOutputSwitchMouseMode.m */,
 				EEF86B7316E2241000674B87 /* NJInputPathElement.h */,
 				EEF86B7416E298CD00674B87 /* NJEvents.h */,
 			);
@@ -300,15 +300,15 @@
 				D5617D1A0FAF568100928B3A /* NJInputButton.m in Sources */,
 				D5617D260FAF579300928B3A /* NJInputHat.m in Sources */,
 				D5617D2B0FAF579A00928B3A /* NJInputAnalog.m in Sources */,
-				D5617FD60FAFD06000928B3A /* Target.m in Sources */,
-				D5617FD90FAFD1E600928B3A /* TargetKeyboard.m in Sources */,
-				D5617FE40FAFD7B000928B3A /* TargetController.m in Sources */,
+				D5617FD60FAFD06000928B3A /* NJOutput.m in Sources */,
+				D5617FD90FAFD1E600928B3A /* NJOutputKeyPress.m in Sources */,
+				D5617FE40FAFD7B000928B3A /* NJOutputController.m in Sources */,
 				D5617FE70FAFDB5800928B3A /* NJKeyInputField.m in Sources */,
-				D5F809710FB093400006A4DE /* TargetConfig.m in Sources */,
-				8BD9B54315C230FF00929C5D /* TargetMouseMove.m in Sources */,
-				8B7E476C15C314A200C588FA /* TargetMouseBtn.m in Sources */,
-				8BEFAD9C15C46BFF00823AEC /* TargetMouseScroll.m in Sources */,
-				8BEFADA015C476DC00823AEC /* TargetToggleMouseScope.m in Sources */,
+				D5F809710FB093400006A4DE /* NJOutputMapping.m in Sources */,
+				8BD9B54315C230FF00929C5D /* NJOutputMouseMove.m in Sources */,
+				8B7E476C15C314A200C588FA /* NJOutputMouseButton.m in Sources */,
+				8BEFAD9C15C46BFF00823AEC /* NJOutputMouseScroll.m in Sources */,
+				8BEFADA015C476DC00823AEC /* NJOutputSwitchMouseMode.m in Sources */,
 				EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */,
 				EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */,
 			);

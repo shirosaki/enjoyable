@@ -1,15 +1,15 @@
 //
-//  TargetMouseMove.m
+//  NJOutputMouseMove.m
 //  Enjoy
 //
 //  Created by Yifeng Huang on 7/26/12.
 //
 
-#import "TargetMouseMove.h"
+#import "NJOutputMouseMove.h"
 
 #import "NJInputController.h"
 
-@implementation TargetMouseMove {
+@implementation NJOutputMouseMove {
     int sign;
 }
 
@@ -18,18 +18,18 @@
 }
 
 + (NSString *)serializationCode {
-    return @"mmove";
+    return @"mouse move";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mmove", @"axis": @(_axis) };
+    return @{ @"type": @"mouse move", @"axis": @(_axis) };
 }
 
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	TargetMouseMove *target = [[TargetMouseMove alloc] init];
-    target.axis = [serialization[@"axis"] intValue];
-	return target;
+	NJOutputMouseMove *output = [[NJOutputMouseMove alloc] init];
+    output.axis = [serialization[@"axis"] intValue];
+	return output;
 }
 
 - (BOOL)update:(NJInputController *)jc {
@@ -38,7 +38,7 @@
         return NO; // dead zone
     }
 
-    // If the input crossed over High/Low, this target is done.
+    // If the input crossed over High/Low, this output is done.
     if (!sign)
         sign = self.magnitude < 0 ? -1 : 1;
     else if (sign / self.magnitude < 0) {

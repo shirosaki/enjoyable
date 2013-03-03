@@ -1,29 +1,29 @@
 //
-//  TargetMouseScroll.m
+//  NJOutputMouseScroll.m
 //  Enjoy
 //
 //  Created by Yifeng Huang on 7/28/12.
 //
 
-#import "TargetMouseScroll.h"
+#import "NJOutputMouseScroll.h"
 
-@implementation TargetMouseScroll {
+@implementation NJOutputMouseScroll {
     int sign;
 }
 
 + (NSString *)serializationCode {
-    return @"mscroll";
+    return @"mouse scroll";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mscroll", @"amount": @(_amount) };
+    return @{ @"type": @"mouse scroll", @"amount": @(_amount) };
 }
 
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	TargetMouseScroll *target = [[TargetMouseScroll alloc] init];
-    target.amount = [serialization[@"amount"] intValue];
-	return target;
+	NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
+    output.amount = [serialization[@"amount"] intValue];
+	return output;
 }
 
 - (void)trigger {
@@ -43,7 +43,7 @@
         return NO; // dead zone
     }
     
-    // If the input crossed over High/Low, this target is done.
+    // If the input crossed over High/Low, this output is done.
     if (!sign)
         sign = self.magnitude < 0 ? -1 : 1;
     else if (sign / self.magnitude < 0) {

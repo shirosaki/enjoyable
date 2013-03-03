@@ -1,5 +1,5 @@
 //
-//  Target.h
+//  NJOutput.h
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
@@ -8,7 +8,7 @@
 
 @class NJInputController;
 
-@interface Target : NSObject
+@interface NJOutput : NSObject
 
 @property (nonatomic, assign) float magnitude;
 @property (nonatomic, assign) BOOL running;
@@ -19,8 +19,8 @@
 - (BOOL)update:(NJInputController *)jc;
 
 - (NSDictionary *)serialize;
-+ (Target *)targetDeserialize:(NSDictionary *)serialization
-                  withMappings:(NSArray *)mappings;
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
+                   withMappings:(NSArray *)mappings;
 + (NSString *)serializationCode;
 
 @end

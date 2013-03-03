@@ -1,13 +1,13 @@
 //
-//  TargetMouseMove.h
+//  NJOutputMouseMove.h
 //  Enjoy
 //
 //  Created by Yifeng Huang on 7/26/12.
 //
 
-#import "Target.h"
+#import "NJOutput.h"
 
-@interface TargetMouseMove : Target
+@interface NJOutputMouseMove : NJOutput
 
 @property (nonatomic, assign) int axis;
 

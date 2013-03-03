@@ -1134,7 +1134,7 @@
 				<string key="NSClassName">NJInputController</string>
 			</object>
 			<object class="NSCustomObject" id="801536542">
-				<string key="NSClassName">TargetController</string>
+				<string key="NSClassName">NJOutputController</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1277,19 +1277,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">targetController</string>
-						<reference key="source" ref="1007832501"/>
-						<reference key="destination" ref="801536542"/>
-					</object>
-					<int key="connectionID">695</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">mappingsController</string>
 						<reference key="source" ref="1007832501"/>
 						<reference key="destination" ref="468285243"/>
 					</object>
 					<int key="connectionID">822</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">outputController</string>
+						<reference key="source" ref="1007832501"/>
+						<reference key="destination" ref="801536542"/>
+					</object>
+					<int key="connectionID">826</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1341,14 +1341,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">targetController</string>
-						<reference key="source" ref="207406104"/>
-						<reference key="destination" ref="801536542"/>
-					</object>
-					<int key="connectionID">712</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">dockMenuBase</string>
 						<reference key="source" ref="207406104"/>
 						<reference key="destination" ref="720053764"/>
@@ -1370,6 +1362,14 @@
 						<reference key="destination" ref="468285243"/>
 					</object>
 					<int key="connectionID">820</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">outputController</string>
+						<reference key="source" ref="207406104"/>
+						<reference key="destination" ref="801536542"/>
+					</object>
+					<int key="connectionID">825</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1404,14 +1404,6 @@
 					<int key="connectionID">520</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">targetController</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="801536542"/>
-					</object>
-					<int key="connectionID">697</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">exportPressed:</string>
 						<reference key="source" ref="468285243"/>
@@ -1426,6 +1418,14 @@
 						<reference key="destination" ref="187155117"/>
 					</object>
 					<int key="connectionID">816</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">outputController</string>
+						<reference key="source" ref="468285243"/>
+						<reference key="destination" ref="801536542"/>
+					</object>
+					<int key="connectionID">827</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1450,14 +1450,6 @@
 						<reference key="destination" ref="120408205"/>
 					</object>
 					<int key="connectionID">692</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">joystickController</string>
-						<reference key="source" ref="801536542"/>
-						<reference key="destination" ref="1007832501"/>
-					</object>
-					<int key="connectionID">694</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1554,6 +1546,14 @@
 						<reference key="destination" ref="194275224"/>
 					</object>
 					<int key="connectionID">824</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">inputController</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="1007832501"/>
+					</object>
+					<int key="connectionID">828</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2233,7 +2233,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">824</int>
+			<int key="maxID">828</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

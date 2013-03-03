@@ -1,5 +1,5 @@
 //
-//  TargetController.h
+//  NJOutputController.h
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
@@ -10,10 +10,10 @@
 
 @class NJMappingsController;
 @class NJInputController;
-@class Target;
-@class TargetMouseMove;
+@class NJOutput;
+@class NJOutputMouseMove;
 
-@interface TargetController : NSObject <NJKeyInputFieldDelegate> {
+@interface NJOutputController : NSObject <NJKeyInputFieldDelegate> {
     IBOutlet NJKeyInputField *keyInput;
     IBOutlet NSMatrix *radioButtons;
     IBOutlet NSSegmentedControl *mouseDirSelect;
@@ -22,7 +22,7 @@
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *mappingPopup;
     IBOutlet NJMappingsController *mappingsController;
-    IBOutlet NJInputController *joystickController;
+    IBOutlet NJInputController *inputController;
 }
 
 @property (assign) BOOL enabled;

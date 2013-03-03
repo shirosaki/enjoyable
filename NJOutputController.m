@@ -1,26 +1,26 @@
 //
-//  TargetController.m
+//  NJOutputController.m
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //
 
-#import "TargetController.h"
+#import "NJOutputController.h"
 
 #import "NJMappingsController.h"
 #import "NJMapping.h"
 #import "NJInput.h"
 #import "NJInputController.h"
 #import "NJKeyInputField.h"
-#import "TargetConfig.h"
-#import "TargetController.h"
-#import "TargetKeyboard.h"
-#import "TargetMouseBtn.h"
-#import "TargetMouseMove.h"
-#import "TargetMouseScroll.h"
-#import "TargetToggleMouseScope.h"
+#import "NJOutputMapping.h"
+#import "NJOutputController.h"
+#import "NJOutputKeyPress.h"
+#import "NJOutputMouseButton.h"
+#import "NJOutputMouseMove.h"
+#import "NJOutputMouseScroll.h"
+#import "NJOutputSwitchMouseMode.h"
 
-@implementation TargetController
+@implementation NJOutputController
 
 - (void)cleanUpInterface {
     NSInteger row = radioButtons.selectedRow;
@@ -97,17 +97,17 @@
     [self commit];
 }
 
-- (Target *)currentTarget {
-    return mappingsController.currentMapping[joystickController.selectedInput];
+- (NJOutput *)currentOutput {
+    return mappingsController.currentMapping[inputController.selectedInput];
 }
 
-- (Target *)makeTarget {
+- (NJOutput *)makeOutput {
     switch (radioButtons.selectedRow) {
         case 0:
             return nil;
         case 1:
             if (keyInput.hasKeyCode) {
-                TargetKeyboard *k = [[TargetKeyboard alloc] init];
+                NJOutputKeyPress *k = [[NJOutputKeyPress alloc] init];
                 k.vk = keyInput.keyCode;
                 return k;
             } else {
@@ -115,27 +115,27 @@
             }
             break;
         case 2: {
-            TargetConfig *c = [[TargetConfig alloc] init];
+            NJOutputMapping *c = [[NJOutputMapping alloc] init];
             c.mapping = mappingsController.mappings[mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {
-            TargetMouseMove *mm = [[TargetMouseMove alloc] init];
+            NJOutputMouseMove *mm = [[NJOutputMouseMove alloc] init];
             mm.axis = mouseDirSelect.selectedSegment;
             return mm;
         }
         case 4: {
-            TargetMouseBtn *mb = [[TargetMouseBtn alloc] init];
+            NJOutputMouseButton *mb = [[NJOutputMouseButton alloc] init];
             mb.button = mouseBtnSelect.selectedSegment == 0 ? kCGMouseButtonLeft : kCGMouseButtonRight;
             return mb;
         }
         case 5: {
-            TargetMouseScroll *ms = [[TargetMouseScroll alloc] init];
+            NJOutputMouseScroll *ms = [[NJOutputMouseScroll alloc] init];
             ms.amount = scrollDirSelect.selectedSegment ? 1 : -1;
             return ms;
         }
         case 6: {
-            TargetToggleMouseScope *tms = [[TargetToggleMouseScope alloc] init];
+            NJOutputSwitchMouseMode *tms = [[NJOutputSwitchMouseMode alloc] init];
             return tms;
         }
         default:
@@ -145,7 +145,7 @@
 
 - (void)commit {
     [self cleanUpInterface];
-    mappingsController.currentMapping[joystickController.selectedInput] = [self makeTarget];
+    mappingsController.currentMapping[inputController.selectedInput] = [self makeOutput];
     [mappingsController save];
 }
 
@@ -162,7 +162,7 @@
     [scrollDirSelect setEnabled:enabled];
 }
 
-- (void)loadTarget:(Target *)target forInput:(NJInput *)input {
+- (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {
     if (!input) {
         self.enabled = NO;
         title.stringValue = @"";
@@ -175,32 +175,32 @@
         title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", mappingsController.currentMapping.name, inpFullName];
     }
 
-    if ([target isKindOfClass:TargetKeyboard.class]) {
+    if ([output isKindOfClass:NJOutputKeyPress.class]) {
         [radioButtons selectCellAtRow:1 column:0];
-        keyInput.keyCode = [(TargetKeyboard*)target vk];
-    } else if ([target isKindOfClass:TargetConfig.class]) {
+        keyInput.keyCode = [(NJOutputKeyPress*)output vk];
+    } else if ([output isKindOfClass:NJOutputMapping.class]) {
         [radioButtons selectCellAtRow:2 column:0];
         NSUInteger idx = [mappingsController.mappings
-                          indexOfObject:[(TargetConfig *)target mapping]];
+                          indexOfObject:[(NJOutputMapping *)output mapping]];
         if (idx == NSNotFound) {
             [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
             [mappingPopup selectItemAtIndex:-1];
         } else
             [mappingPopup selectItemAtIndex:idx];
     }
-    else if ([target isKindOfClass:TargetMouseMove.class]) {
+    else if ([output isKindOfClass:NJOutputMouseMove.class]) {
         [radioButtons selectCellAtRow:3 column:0];
-        [mouseDirSelect setSelectedSegment:[(TargetMouseMove *)target axis]];
+        [mouseDirSelect setSelectedSegment:[(NJOutputMouseMove *)output axis]];
     }
-    else if ([target isKindOfClass:TargetMouseBtn.class]) {
+    else if ([output isKindOfClass:NJOutputMouseButton.class]) {
         [radioButtons selectCellAtRow:4 column:0];
-        mouseBtnSelect.selectedSegment = [(TargetMouseBtn *)target button] == kCGMouseButtonLeft ? 0 : 1;
+        mouseBtnSelect.selectedSegment = [(NJOutputMouseButton *)output button] == kCGMouseButtonLeft ? 0 : 1;
     }
-    else if ([target isKindOfClass:TargetMouseScroll.class]) {
+    else if ([output isKindOfClass:NJOutputMouseScroll.class]) {
         [radioButtons selectCellAtRow:5 column:0];
-        scrollDirSelect.selectedSegment = [(TargetMouseScroll *)target amount] > 0;
+        scrollDirSelect.selectedSegment = [(NJOutputMouseScroll *)output amount] > 0;
     }
-    else if ([target isKindOfClass:TargetToggleMouseScope.class]) {
+    else if ([output isKindOfClass:NJOutputSwitchMouseMode.class]) {
         [radioButtons selectCellAtRow:6 column:0];
     } else {
         [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
@@ -209,7 +209,7 @@
 }
 
 - (void)loadCurrent {
-    [self loadTarget:self.currentTarget forInput:joystickController.selectedInput];
+    [self loadOutput:self.currentOutput forInput:inputController.selectedInput];
 }
 
 - (void)focusKey {

@@ -6,7 +6,7 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class Target;
+@class NJOutput;
 @class NJInput;
 
 @interface NJMapping : NSObject
@@ -15,8 +15,8 @@
 @property (nonatomic, readonly) NSMutableDictionary *entries;
 
 - (id)initWithName:(NSString *)name;
-- (Target *)objectForKeyedSubscript:(NJInput *)input;
-- (void)setObject:(Target *)target forKeyedSubscript:(NJInput *)input;
+- (NJOutput *)objectForKeyedSubscript:(NJInput *)input;
+- (void)setObject:(NJOutput *)output forKeyedSubscript:(NJInput *)input;
 - (NSDictionary *)serialize;
 
 @end

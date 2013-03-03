@@ -10,8 +10,8 @@
 #import "ApplicationController.h"
 #import "NJMapping.h"
 #import "NJMappingsController.h"
-#import "Target.h"
-#import "TargetController.h"
+#import "NJOutput.h"
+#import "NJOutputController.h"
 #import "NJEvents.h"
 
 @implementation NJMappingsController {
@@ -53,7 +53,7 @@
     manualMapping = mapping;
     _currentMapping = mapping;
     [removeButton setEnabled:_mappings[0] != mapping];
-    [targetController loadCurrent];
+    [outputController loadCurrent];
     [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
                                                       object:_currentMapping];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_mappings indexOfObject:mapping]] byExtendingSelection:NO];
@@ -124,7 +124,7 @@
     NSArray *storedMappings = envelope[@"mappings"];
     NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
-    // have to do two passes in case mapping1 refers to mapping2 via a TargetMapping
+    // have to do two passes in case mapping1 refers to mapping2 via a NJOutputMapping
     for (NSDictionary *storedMapping in storedMappings) {
         NJMapping *mapping = [[NJMapping alloc] initWithName:storedMapping[@"name"]];
         [newMappings addObject:mapping];
@@ -134,10 +134,10 @@
         NSDictionary *entries = storedMappings[i][@"entries"];
         NJMapping *mapping = newMappings[i];
         for (id key in entries) {
-            Target *target = [Target targetDeserialize:entries[key]
-                                            withMappings:newMappings];
-            if (target)
-                mapping.entries[key] = target;
+            NJOutput *output = [NJOutput outputDeserialize:entries[key]
+                                              withMappings:newMappings];
+            if (output)
+                mapping.entries[key] = output;
         }
     }
     
@@ -174,10 +174,10 @@
     for (id key in entries) {
         NSDictionary *value = entries[key];
         if ([key isKindOfClass:NSString.class]) {
-            Target *target = [Target targetDeserialize:value
-                                           withMappings:_mappings];
-            if (target)
-                mapping.entries[key] = target;
+            NJOutput *output = [NJOutput outputDeserialize:value
+                                              withMappings:_mappings];
+            if (output)
+                mapping.entries[key] = output;
         }
     }
     return mapping;
@@ -236,7 +236,7 @@
                           [self save];
                           [(ApplicationController *)NSApplication.sharedApplication.delegate mappingsChanged];
                           [self activateMapping:mapping];
-                          [targetController loadCurrent];
+                          [outputController loadCurrent];
                           
                           if (conflict && !mergeInto) {
                               [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];

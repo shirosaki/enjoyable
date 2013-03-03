@@ -19,14 +19,14 @@
     return self;
 }
 
-- (Target *)objectForKeyedSubscript:(NJInput *)input {
+- (NJOutput *)objectForKeyedSubscript:(NJInput *)input {
     return input ? _entries[input.uid] : nil;
 }
 
-- (void)setObject:(Target *)target forKeyedSubscript:(NJInput *)input {
+- (void)setObject:(NJOutput *)output forKeyedSubscript:(NJInput *)input {
     if (input) {
-        if (target)
-            _entries[input.uid] = target;
+        if (output)
+            _entries[input.uid] = output;
         else
             [_entries removeObjectForKey:input.uid];
     }

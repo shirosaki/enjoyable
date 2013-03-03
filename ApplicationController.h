@@ -7,7 +7,7 @@
 //
 
 @class NJInputController;
-@class TargetController;
+@class NJOutputController;
 @class NJMappingsController;
 
 @interface ApplicationController : NSObject <NSApplicationDelegate> {
@@ -19,7 +19,7 @@
 }
 
 @property (nonatomic, strong) IBOutlet NJInputController *inputController;
-@property (nonatomic, strong) IBOutlet TargetController *targetController;
+@property (nonatomic, strong) IBOutlet NJOutputController *outputController;
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 
 - (IBAction)toggleActivity:(id)sender;

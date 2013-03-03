@@ -1,16 +1,16 @@
 //
-//  TargetConfig.h
+//  NJOutputMapping.h
 //  Enjoy
 //
 //  Created by Sam McCall on 6/05/09.
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import "Target.h"
+#import "NJOutput.h"
 
 @class NJMapping;
 
-@interface TargetConfig : Target
+@interface NJOutputMapping : NJOutput
 
 @property (nonatomic, weak) NJMapping *mapping;
 

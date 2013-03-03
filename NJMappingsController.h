@@ -7,14 +7,14 @@
 //
 
 @class NJMapping;
-@class TargetController;
+@class NJOutputController;
 
 @interface NJMappingsController : NSObject <NSTableViewDataSource,
                                             NSTableViewDelegate,
                                             NSOpenSavePanelDelegate> {
     IBOutlet NSButton *removeButton;
     IBOutlet NSTableView *tableView;
-    IBOutlet TargetController *targetController;
+    IBOutlet NJOutputController *outputController;
 }
 
 @property (nonatomic, readonly) NJMapping *currentMapping;

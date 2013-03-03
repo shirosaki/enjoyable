@@ -1,14 +1,14 @@
 //
-//  TargetKeyboard.h
+//  NJOutputKeyPress.h
 //  Enjoy
 //
 //  Created by Sam McCall on 5/05/09.
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-#import "Target.h"
+#import "NJOutput.h"
 
-@interface TargetKeyboard : Target
+@interface NJOutputKeyPress : NJOutput
 
 @property (nonatomic, assign) CGKeyCode vk;
 
