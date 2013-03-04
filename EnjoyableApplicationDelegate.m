@@ -30,6 +30,11 @@
         object:nil];
     [NSNotificationCenter.defaultCenter
         addObserver:self
+        selector:@selector(mappingListDidChange:)
+        name:NJEventMappingListChanged
+        object:nil];
+    [NSNotificationCenter.defaultCenter
+        addObserver:self
         selector:@selector(eventTranslationActivated:)
         name:NJEventTranslationActivated
         object:nil];
@@ -48,6 +53,7 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[NSUserDefaults.standardUserDefaults synchronize];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 - (void)eventTranslationActivated:(NSNotification *)note {
@@ -67,12 +73,13 @@
     NSLog(@"Ignoring application changes.");
 }
 
-- (void)mappingsChanged {
+- (void)mappingListDidChange:(NSNotification *)note {
+    NSArray *mappings = note.object;
     NSInteger removeFrom = mappingsMenuIndex;
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     int added = 0;
-    for (NJMapping *mapping in self.mappingsController) {
+    for (NJMapping *mapping in mappings) {
         NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
         [dockMenuBase addItemWithTitle:mapping.name
                                 action:@selector(chooseMapping:)

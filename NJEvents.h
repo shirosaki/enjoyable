@@ -7,5 +7,6 @@
 //
 
 #define NJEventMappingChanged @"NJEventMappingChanged"
+#define NJEventMappingListChanged @"NJEventMappingListChanged"
 #define NJEventTranslationActivated @"NJEventTranslationActivated"
 #define NJEventTranslationDeactivated @"NJEventTranslationDeactivated"

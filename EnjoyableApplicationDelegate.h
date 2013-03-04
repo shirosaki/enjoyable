@@ -18,6 +18,4 @@
 @property (nonatomic, strong) IBOutlet NJOutputController *outputController;
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 
-- (void)mappingsChanged;
-
 @end

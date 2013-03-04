@@ -7,7 +7,6 @@
 
 #import "NJMappingsController.h"
 
-#import "EnjoyableApplicationDelegate.h"
 #import "NJMapping.h"
 #import "NJMappingsController.h"
 #import "NJOutput.h"
@@ -38,6 +37,14 @@
 
 - (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx {
     return idx < _mappings.count ? _mappings[idx] : nil;
+}
+
+- (void)mappingsChanged {
+    [self save];
+    [tableView reloadData];
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:NJEventMappingListChanged
+        object:_mappings];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
@@ -76,11 +83,9 @@
 - (IBAction)addPressed:(id)sender {
     NJMapping *newMapping = [[NJMapping alloc] initWithName:@"Untitled"];
     [_mappings addObject:newMapping];
-    [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
-    [tableView reloadData];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
-    [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
+    [self mappingsChanged];
     [self activateMapping:newMapping];
+    [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
 }
 
 - (IBAction)removePressed:(id)sender {
@@ -88,15 +93,12 @@
         return;
     
     [_mappings removeObjectAtIndex:tableView.selectedRow];
-    [tableView reloadData];
-    [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
+    [self mappingsChanged];
     [self activateMapping:_mappings[0]];
-    [self save];
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notify {
-    if (tableView.selectedRow >= 0)
-        [self activateMapping:_mappings[tableView.selectedRow]];
+    [self activateMapping:self[tableView.selectedRow]];
 }
 
 - (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)index {
@@ -108,9 +110,7 @@
    forTableColumn:(NSTableColumn *)col
               row:(NSInteger)index {
     self[index].name = obj;
-    [self save];
-    [tableView reloadData];
-    [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
+    [self mappingsChanged];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
@@ -164,8 +164,7 @@
         if (current >= newMappings.count)
             current = 0;
         _mappings = newMappings;
-        [tableView reloadData];
-        [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
+        [self mappingsChanged];
         [self activateMapping:_mappings[current]];
     }
 }
@@ -248,11 +247,9 @@
                               mapping = mergeInto;
                           } else {
                               [_mappings addObject:mapping];
-                              [tableView reloadData];
                           }
                           
-                          [self save];
-                          [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
+                          [self mappingsChanged];
                           [self activateMapping:mapping];
                           [outputController loadCurrent];
                           
