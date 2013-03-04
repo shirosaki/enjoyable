@@ -39,9 +39,7 @@
         name:NJEventTranslationDeactivated
         object:nil];
 
-    mappingsMenuIndex = dockMenuBase.numberOfItems;
-    while (![dockMenuBase itemAtIndex:mappingsMenuIndex - 1].isSeparatorItem)
-        --mappingsMenuIndex;
+    while (![dockMenuBase itemAtIndex:mappingsMenuIndex++].tag);
     
     self.outputController.enabled = NO;
     [self.inputController setup];
@@ -67,10 +65,6 @@
         name:NSWorkspaceDidActivateApplicationNotification
         object:nil];
     NSLog(@"Ignoring application changes.");
-}
-
-- (IBAction)toggleActivity:(id)sender {
-    self.inputController.translatingEvents = !self.inputController.translatingEvents;
 }
 
 - (void)mappingsChanged {

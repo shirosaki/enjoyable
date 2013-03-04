@@ -11,7 +11,6 @@
 @class NJMappingsController;
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate> {
-    IBOutlet NSMenuItem *activeMenuItem;
     IBOutlet NSMenu *dockMenuBase;
 }
 
