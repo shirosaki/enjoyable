@@ -375,13 +375,13 @@
 							<object class="NSMutableString" key="NSToolbarItemIdentifier">
 								<characters key="NS.bytes">94389EFE-310F-4DB5-95F6-D4AEE8839979</characters>
 							</object>
-							<string key="NSToolbarItemLabel">Translation Enabled</string>
-							<string key="NSToolbarItemPaletteLabel">Translation Enabled</string>
+							<string key="NSToolbarItemLabel">Translation Switch</string>
+							<string key="NSToolbarItemPaletteLabel">Translation Switch</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSSegmentedControl" key="NSToolbarItemView" id="679083346">
 								<reference key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{23, 14}, {67, 25}}</string>
+								<string key="NSFrame">{{19, 14}, {67, 25}}</string>
 								<reference key="NSSuperview"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -397,9 +397,8 @@
 											<double key="NSSegmentItemWidth">32</double>
 											<object class="NSCustomResource" key="NSSegmentItemImage">
 												<string key="NSClassName">NSImage</string>
-												<string key="NSResourceName">NSPathTemplate</string>
+												<string key="NSResourceName">NSActionTemplate</string>
 											</object>
-											<string key="NSSegmentItemLabel"/>
 											<string key="NSSegmentItemTooltip">Show and remap inputs</string>
 											<bool key="NSSegmentItemSelected">YES</bool>
 											<int key="NSSegmentItemImageScaling">0</int>
@@ -408,9 +407,8 @@
 											<double key="NSSegmentItemWidth">32</double>
 											<object class="NSCustomResource" key="NSSegmentItemImage">
 												<string key="NSClassName">NSImage</string>
-												<string key="NSResourceName">NSActionTemplate</string>
+												<string key="NSResourceName">NSRightFacingTriangleTemplate</string>
 											</object>
-											<string key="NSSegmentItemLabel"/>
 											<string key="NSSegmentItemTooltip">Run mapped actions</string>
 											<int key="NSSegmentItemTag">1</int>
 											<int key="NSSegmentItemImageScaling">0</int>
@@ -464,7 +462,7 @@
 						<reference ref="981531896"/>
 						<reference ref="658903347"/>
 					</array>
-					<array key="NSToolbarIBDefaultItems">
+					<array class="NSMutableArray" key="NSToolbarIBDefaultItems">
 						<reference ref="496378711"/>
 						<reference ref="658903347"/>
 						<reference ref="981531896"/>
@@ -2185,11 +2183,6 @@
 						<reference key="parent" ref="606740242"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">810</int>
-						<reference key="object" ref="914355947"/>
-						<reference key="parent" ref="720053764"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">812</int>
 						<reference key="object" ref="580069611"/>
 						<reference key="parent" ref="720053764"/>
@@ -2293,6 +2286,11 @@
 						<reference key="object" ref="517346822"/>
 						<reference key="parent" ref="149148392"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">810</int>
+						<reference key="object" ref="914355947"/>
+						<reference key="parent" ref="720053764"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2386,7 +2384,7 @@
 				<string key="837.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="837.toolbarItem.selectable"/>
 				<string key="840.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="0" key="841.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="1" key="841.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="841.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="842.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="849.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2400,7 +2398,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">863</int>
+			<int key="maxID">864</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2657,9 +2655,9 @@
 			<string key="NSListViewTemplate">{11, 10}</string>
 			<string key="NSMenuCheckmark">{11, 11}</string>
 			<string key="NSMenuMixedState">{10, 3}</string>
-			<string key="NSPathTemplate">{13, 10}</string>
 			<string key="NSRadioButton">{16, 15}</string>
 			<string key="NSRemoveTemplate">{8, 8}</string>
+			<string key="NSRightFacingTriangleTemplate">{9, 9}</string>
 		</dictionary>
 	</data>
 </archive>
