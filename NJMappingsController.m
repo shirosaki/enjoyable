@@ -42,6 +42,7 @@
 - (void)mappingsChanged {
     [self save];
     [tableView reloadData];
+    popoverActivate.title = _currentMapping.name;
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
         object:_mappings];
@@ -69,15 +70,19 @@
 - (void)activateMapping:(NJMapping *)mapping {
     if (!mapping)
         mapping = manualMapping;
+    if (mapping == _currentMapping)
+        return;
     NSLog(@"Switching to mapping %@.", mapping.name);
     manualMapping = mapping;
     _currentMapping = mapping;
     [removeButton setEnabled:_mappings[0] != mapping];
     [outputController loadCurrent];
     popoverActivate.title = _currentMapping.name;
+    NSUInteger selected = [_mappings indexOfObject:mapping];
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected] byExtendingSelection:NO];
+    [NSUserDefaults.standardUserDefaults setInteger:selected forKey:@"selected"];
     [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
                                                       object:_currentMapping];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_mappings indexOfObject:mapping]] byExtendingSelection:NO];
 }
 
 - (IBAction)addPressed:(id)sender {
@@ -118,28 +123,24 @@
 }
 
 - (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)index {
-    return index > 0;
+    return YES;
 }
 
 - (void)save {
     NSLog(@"Saving mappings to defaults.");
-    [NSUserDefaults.standardUserDefaults setValuesForKeysWithDictionary:[self dumpAll]];
-}
-
-- (void)load {
-    [self loadAllFrom:NSUserDefaults.standardUserDefaults.dictionaryRepresentation];
-}
-
-- (NSDictionary *)dumpAll {
     NSMutableArray *ary = [[NSMutableArray alloc] initWithCapacity:_mappings.count];
     for (NJMapping *mapping in _mappings)
         [ary addObject:[mapping serialize]];
-    NSUInteger current = _currentMapping ? [_mappings indexOfObject:_currentMapping] : 0;
-    return @{ @"mappings": ary, @"selected": @(current) };
+    [NSUserDefaults.standardUserDefaults setObject:ary forKey:@"mappings"];
 }
 
-- (void)loadAllFrom:(NSDictionary*)envelope {
-    NSArray *storedMappings = envelope[@"mappings"];
+- (void)load {
+    NSUInteger selected = [NSUserDefaults.standardUserDefaults integerForKey:@"selected"];
+    NSArray *mappings = [NSUserDefaults.standardUserDefaults arrayForKey:@"mappings"];
+    [self loadAllFrom:mappings andActivate:selected];
+}
+
+- (void)loadAllFrom:(NSArray *)storedMappings andActivate:(NSUInteger)selected {
     NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
     // have to do two passes in case mapping1 refers to mapping2 via a NJOutputMapping
@@ -160,12 +161,11 @@
     }
     
     if (newMappings.count) {
-        unsigned current = [envelope[@"selected"] unsignedIntValue];
-        if (current >= newMappings.count)
-            current = 0;
         _mappings = newMappings;
+        if (selected >= newMappings.count)
+            selected = 0;
         [self mappingsChanged];
-        [self activateMapping:_mappings[current]];
+        [self activateMapping:_mappings[selected]];
     }
 }
 

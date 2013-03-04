@@ -13,9 +13,7 @@
 #import "NJOutputController.h"
 #import "NJEvents.h"
 
-@implementation EnjoyableApplicationDelegate {
-    NSInteger mappingsMenuIndex;
-}
+@implementation EnjoyableApplicationDelegate
 
 - (void)didSwitchApplication:(NSNotification *)notification {
     NSRunningApplication *currentApp = notification.userInfo[NSWorkspaceApplicationKey];
@@ -44,9 +42,6 @@
         name:NJEventTranslationDeactivated
         object:nil];
 
-    while (![dockMenuBase itemAtIndex:mappingsMenuIndex++].tag);
-    
-    self.outputController.enabled = NO;
     [self.inputController setup];
     [self.mappingsController load];
 }
@@ -75,31 +70,29 @@
 
 - (void)mappingListDidChange:(NSNotification *)note {
     NSArray *mappings = note.object;
-    NSInteger removeFrom = mappingsMenuIndex;
-    while (dockMenuBase.numberOfItems > removeFrom)
-        [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
+    while (dockMenuBase.lastItem.representedObject)
+        [dockMenuBase removeLastItem];
     int added = 0;
     for (NJMapping *mapping in mappings) {
         NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
-        [dockMenuBase addItemWithTitle:mapping.name
-                                action:@selector(chooseMapping:)
-                         keyEquivalent:keyEquiv];
-        
+        NSMenuItem *item = [dockMenuBase addItemWithTitle:mapping.name
+                                                   action:@selector(chooseMapping:)
+                                            keyEquivalent:keyEquiv];
+        item.representedObject = mapping;
     }
     [_outputController refreshMappings];
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
     NJMapping *current = note.object;
-    NSArray *mappings = self.mappingsController.mappings;
-    for (NSUInteger i = 0; i < mappings.count; ++i)
-        [dockMenuBase itemAtIndex:i + mappingsMenuIndex].state = mappings[i] == current;
+    for (NSMenuItem *item in dockMenuBase.itemArray)
+        if (item.representedObject)
+            item.state = item.representedObject == current;
 }
 
-- (void)chooseMapping:(id)sender {
-    NSInteger idx = [dockMenuBase indexOfItem:sender] - mappingsMenuIndex;
-    NJMapping *chosen = self.mappingsController[idx];
-    [_mappingsController activateMapping:chosen];
+- (void)chooseMapping:(NSMenuItem *)sender {
+    NJMapping *chosen = sender.representedObject;
+    [self.mappingsController activateMapping:chosen];
 }
 
 @end

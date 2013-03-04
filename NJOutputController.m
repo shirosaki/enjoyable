@@ -180,12 +180,10 @@
         keyInput.keyCode = [(NJOutputKeyPress*)output vk];
     } else if ([output isKindOfClass:NJOutputMapping.class]) {
         [radioButtons selectCellAtRow:2 column:0];
-        NSUInteger idx = [mappingPopup indexOfItemWithRepresentedObject:[(NJOutputMapping *)output mapping]];
-        if (idx == NSNotFound) {
+        NSMenuItem *item = [mappingPopup itemWithRepresentedObject:[(NJOutputMapping *)output mapping]];
+        [mappingPopup selectItem:item];
+        if (!item)
             [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
-            [mappingPopup selectItemAtIndex:-1];
-        } else
-            [mappingPopup selectItemAtIndex:idx];
     }
     else if ([output isKindOfClass:NJOutputMouseMove.class]) {
         [radioButtons selectCellAtRow:3 column:0];
@@ -229,7 +227,7 @@
         item.representedObject = mapping;
         [mappingPopup.menu addItem:item];
     }
-    [mappingPopup selectItemAtIndex:[mappingPopup indexOfItemWithRepresentedObject:current]];
+    [mappingPopup selectItemWithRepresentedObject:current];
 }
 
 @end
