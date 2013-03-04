@@ -26,7 +26,7 @@
     NSInteger row = radioButtons.selectedRow;
     
     if (row != 1) {
-        keyInput.keyCode = -1;
+        keyInput.keyCode = NJKeyInputFieldEmpty;
         [keyInput resignIfFirstResponder];
     }
     
