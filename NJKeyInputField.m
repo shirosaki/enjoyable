@@ -27,7 +27,7 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 }
 
 - (BOOL)hasKeyCode {
-    return self.keyCode >= 0;
+    return self.keyCode != NJKeyInputFieldEmpty;
 }
 
 + (NSString *)stringForKeyCode:(CGKeyCode)keyCode {
