@@ -36,6 +36,19 @@
     return nil;
 }
 
+- (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx {
+    return idx < _mappings.count ? _mappings[idx] : nil;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                  objects:(__unsafe_unretained id [])buffer
+                                    count:(NSUInteger)len {
+    return [_mappings countByEnumeratingWithState:state
+                                          objects:buffer
+                                            count:len];
+}
+
+
 - (void)activateMappingForProcess:(NSString *)processName {
     NJMapping *oldMapping = manualMapping;
     NJMapping *newMapping = self[processName];
@@ -54,6 +67,7 @@
     _currentMapping = mapping;
     [removeButton setEnabled:_mappings[0] != mapping];
     [outputController loadCurrent];
+    popoverActivate.title = _currentMapping.name;
     [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
                                                       object:_currentMapping];
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_mappings indexOfObject:mapping]] byExtendingSelection:NO];
@@ -86,11 +100,15 @@
 }
 
 - (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)index {
-    return [_mappings[index] name];
+    return self[index].name;
 }
 
-- (void)tableView:(NSTableView *)view setObjectValue:(NSString *)obj forTableColumn:(NSTableColumn *)col row:(NSInteger)index {
-    [(NJMapping *)_mappings[index] setName:obj];
+- (void)tableView:(NSTableView *)view
+   setObjectValue:(NSString *)obj
+   forTableColumn:(NSTableColumn *)col
+              row:(NSInteger)index {
+    self[index].name = obj;
+    [self save];
     [tableView reloadData];
     [(EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate mappingsChanged];
 }
@@ -282,6 +300,10 @@
                                    contextInfo:nil];
                       }
                   }];
+}
+
+- (IBAction)mappingPressed:(id)sender {
+    [popover showRelativeToRect:popoverActivate.bounds ofView:popoverActivate preferredEdge:NSMinXEdge];
 }
 
 @end

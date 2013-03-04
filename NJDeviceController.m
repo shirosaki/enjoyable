@@ -224,6 +224,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)setTranslatingEvents:(BOOL)translatingEvents {
     if (translatingEvents != _translatingEvents) {
         _translatingEvents = translatingEvents;
+        translatingEventsSetting.selectedSegment = !!translatingEvents;
         NSString *name = translatingEvents
             ? NJEventTranslationActivated
             : NJEventTranslationDeactivated;
@@ -231,5 +232,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
                                                           object:self];
     }
 }
+
+- (IBAction)translatingEventsChanged:(id)sender {
+    self.translatingEvents = translatingEventsSetting.selectedSegment;
+}
+
 
 @end

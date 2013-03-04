@@ -43,7 +43,6 @@
     while (![dockMenuBase itemAtIndex:mappingsMenuIndex - 1].isSeparatorItem)
         --mappingsMenuIndex;
     
-    [drawer open];
     self.outputController.enabled = NO;
     [self.inputController setup];
     [self.mappingsController load];
@@ -54,23 +53,19 @@
 }
 
 - (void)eventTranslationActivated:(NSNotification *)note {
-    activeButton.image = [NSImage imageNamed:@"NSStopProgressFreestandingTemplate"];
-    activeMenuItem.state = [note.object translatingEvents];
     [NSWorkspace.sharedWorkspace.notificationCenter
-     addObserver:self
-     selector:@selector(didSwitchApplication:)
-     name:NSWorkspaceDidActivateApplicationNotification
-     object:nil];
+        addObserver:self
+        selector:@selector(didSwitchApplication:)
+        name:NSWorkspaceDidActivateApplicationNotification
+        object:nil];
     NSLog(@"Listening for application changes.");
 }
 
 - (void)eventTranslationDeactivated:(NSNotification *)note {
-    activeButton.image = [NSImage imageNamed:@"NSGoRightTemplate"];
-    activeMenuItem.state = [note.object translatingEvents];
     [NSWorkspace.sharedWorkspace.notificationCenter
-     removeObserver:self
-     name:NSWorkspaceDidActivateApplicationNotification
-     object:nil];
+        removeObserver:self
+        name:NSWorkspaceDidActivateApplicationNotification
+        object:nil];
     NSLog(@"Ignoring application changes.");
 }
 
@@ -83,7 +78,7 @@
     while (dockMenuBase.numberOfItems > removeFrom)
         [dockMenuBase removeItemAtIndex:dockMenuBase.numberOfItems - 1];
     int added = 0;
-    for (NJMapping *mapping in self.mappingsController.mappings) {
+    for (NJMapping *mapping in self.mappingsController) {
         NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
         [dockMenuBase addItemWithTitle:mapping.name
                                 action:@selector(chooseMapping:)
@@ -102,7 +97,7 @@
 
 - (void)chooseMapping:(id)sender {
     NSInteger idx = [dockMenuBase indexOfItem:sender] - mappingsMenuIndex;
-    NJMapping *chosen = self.mappingsController.mappings[idx];
+    NJMapping *chosen = self.mappingsController[idx];
     [_mappingsController activateMapping:chosen];
 }
 

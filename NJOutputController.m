@@ -116,7 +116,7 @@
             break;
         case 2: {
             NJOutputMapping *c = [[NJOutputMapping alloc] init];
-            c.mapping = mappingsController.mappings[mappingPopup.indexOfSelectedItem];
+            c.mapping = mappingsController[mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {
@@ -222,7 +222,7 @@
 - (void)refreshMappings {
     NSInteger initialIndex = mappingPopup.indexOfSelectedItem;
     [mappingPopup.menu removeAllItems];
-    for (NJMapping *mapping in mappingsController.mappings) {
+    for (NJMapping *mapping in mappingsController) {
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
                                                       action:@selector(mappingChosen:)
                                                keyEquivalent:@""];

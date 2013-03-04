@@ -11,9 +11,6 @@
 @class NJMappingsController;
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate> {
-    IBOutlet NSDrawer *drawer;
-    IBOutlet NSWindow *mainWindow;
-    IBOutlet NSToolbarItem *activeButton;
     IBOutlet NSMenuItem *activeMenuItem;
     IBOutlet NSMenu *dockMenuBase;
 }
@@ -22,7 +19,6 @@
 @property (nonatomic, strong) IBOutlet NJOutputController *outputController;
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 
-- (IBAction)toggleActivity:(id)sender;
 - (void)mappingsChanged;
 
 @end

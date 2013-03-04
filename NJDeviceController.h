@@ -15,14 +15,17 @@
 	IBOutlet NSOutlineView *outlineView;
 	IBOutlet NJOutputController *outputController;
 	IBOutlet NJMappingsController *mappingsController;
+    IBOutlet NSSegmentedControl *translatingEventsSetting;
 }
-
-- (void)setup;
-- (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device;
 
 @property (nonatomic, readonly) NJInput *selectedInput;
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL frontWindowOnly;
 @property (nonatomic, assign) BOOL translatingEvents;
+
+- (void)setup;
+- (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device;
+
+- (IBAction)translatingEventsChanged:(id)sender;
 
 @end
