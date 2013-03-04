@@ -12,6 +12,7 @@
 @interface NJMappingsController : NSObject <NSTableViewDataSource,
                                             NSTableViewDelegate,
                                             NSOpenSavePanelDelegate,
+                                            NSPopoverDelegate,
                                             NSFastEnumeration>
 {
     IBOutlet NSButton *removeButton;

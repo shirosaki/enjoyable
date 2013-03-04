@@ -306,4 +306,12 @@
     [popover showRelativeToRect:popoverActivate.bounds ofView:popoverActivate preferredEdge:NSMinXEdge];
 }
 
+- (void)popoverWillShow:(NSNotification *)notification {
+    popoverActivate.state = NSOnState;
+}
+
+- (void)popoverWillClose:(NSNotification *)notification {
+    popoverActivate.state = NSOffState;
+}
+
 @end
