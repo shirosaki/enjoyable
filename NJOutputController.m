@@ -172,7 +172,7 @@
         for (id <NJInputPathElement> cur = input.base; cur; cur = cur.base) {
             inpFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, inpFullName];
         }
-        title.stringValue = [[NSString alloc] initWithFormat:@"%@ > %@", mappingsController.currentMapping.name, inpFullName];
+        title.stringValue = inpFullName;
     }
 
     if ([output isKindOfClass:NJOutputKeyPress.class]) {
@@ -180,8 +180,7 @@
         keyInput.keyCode = [(NJOutputKeyPress*)output vk];
     } else if ([output isKindOfClass:NJOutputMapping.class]) {
         [radioButtons selectCellAtRow:2 column:0];
-        NSUInteger idx = [mappingsController.mappings
-                          indexOfObject:[(NJOutputMapping *)output mapping]];
+        NSUInteger idx = [mappingPopup indexOfItemWithRepresentedObject:[(NJOutputMapping *)output mapping]];
         if (idx == NSNotFound) {
             [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
             [mappingPopup selectItemAtIndex:-1];
@@ -220,16 +219,17 @@
 }
 
 - (void)refreshMappings {
-    NSInteger initialIndex = mappingPopup.indexOfSelectedItem;
+    NJMapping *current = mappingPopup.selectedItem.representedObject;
     [mappingPopup.menu removeAllItems];
     for (NJMapping *mapping in mappingsController) {
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
                                                       action:@selector(mappingChosen:)
                                                keyEquivalent:@""];
         item.target = self;
+        item.representedObject = mapping;
         [mappingPopup.menu addItem:item];
     }
-    [mappingPopup selectItemAtIndex:initialIndex];
+    [mappingPopup selectItemAtIndex:[mappingPopup indexOfItemWithRepresentedObject:current]];
 }
 
 @end
