@@ -12,7 +12,7 @@
 @implementation NJOutputKeyPress
 
 + (NSString *)serializationCode {
-    return @"key";
+    return @"key press";
 }
 
 - (NSDictionary *)serialize {
