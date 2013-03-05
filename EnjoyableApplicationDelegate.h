@@ -12,6 +12,7 @@
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate> {
     IBOutlet NSMenu *dockMenuBase;
+    IBOutlet NSWindow *window;
 }
 
 @property (nonatomic, strong) IBOutlet NJDeviceController *inputController;

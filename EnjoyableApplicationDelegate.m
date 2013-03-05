@@ -15,8 +15,8 @@
 
 @implementation EnjoyableApplicationDelegate
 
-- (void)didSwitchApplication:(NSNotification *)notification {
-    NSRunningApplication *currentApp = notification.userInfo[NSWorkspaceApplicationKey];
+- (void)didSwitchApplication:(NSNotification *)note {
+    NSRunningApplication *currentApp = note.userInfo[NSWorkspaceApplicationKey];
     [self.mappingsController activateMappingForProcess:currentApp.localizedName];
 }
 
@@ -46,12 +46,18 @@
     [self.mappingsController load];
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-	[NSUserDefaults.standardUserDefaults synchronize];
-    [NSNotificationCenter.defaultCenter removeObserver:self];
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    [window makeKeyAndOrderFront:nil];
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
+                    hasVisibleWindows:(BOOL)flag {
+    [window makeKeyAndOrderFront:nil];
+    return NO;
 }
 
 - (void)eventTranslationActivated:(NSNotification *)note {
+    [NSProcessInfo.processInfo disableAutomaticTermination:@"Input translation is active."];
     [NSWorkspace.sharedWorkspace.notificationCenter
         addObserver:self
         selector:@selector(didSwitchApplication:)
@@ -61,6 +67,7 @@
 }
 
 - (void)eventTranslationDeactivated:(NSNotification *)note {
+    [NSProcessInfo.processInfo enableAutomaticTermination:@"Input translation is active."];
     [NSWorkspace.sharedWorkspace.notificationCenter
         removeObserver:self
         name:NSWorkspaceDidActivateApplicationNotification
@@ -75,10 +82,12 @@
     int added = 0;
     for (NJMapping *mapping in mappings) {
         NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
-        NSMenuItem *item = [dockMenuBase addItemWithTitle:mapping.name
-                                                   action:@selector(chooseMapping:)
-                                            keyEquivalent:keyEquiv];
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
+                                                      action:@selector(chooseMapping:)
+                                               keyEquivalent:keyEquiv];
         item.representedObject = mapping;
+        item.state = mapping == self.mappingsController.currentMapping;
+        [dockMenuBase addItem:item];
     }
     [_outputController refreshMappings];
 }

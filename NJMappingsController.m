@@ -281,6 +281,7 @@
                       if (result != NSFileHandlingPanelOKButton)
                           return;
                       [panel close];
+                      [NSProcessInfo.processInfo disableSuddenTermination];
                       NSError *error;
                       NSDictionary *serialization = [mapping serialize];
                       NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
@@ -289,6 +290,7 @@
                       if (!error)
                           [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
                       
+                      [NSProcessInfo.processInfo enableSuddenTermination];
                       if (error) {
                           [window presentError:error
                                 modalForWindow:window
