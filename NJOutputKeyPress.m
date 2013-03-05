@@ -16,7 +16,9 @@
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"key press", @"key": @(_vk) };
+    return _vk != NJKeyInputFieldEmpty
+        ? @{ @"type": self.class.serializationCode, @"key": @(_vk) }
+        : nil;
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization

@@ -19,7 +19,7 @@
 
 - (NSDictionary *)serialize {
     return _mapping
-        ? @{ @"type": @"mapping", @"name": _mapping.name }
+        ? @{ @"type": self.class.serializationCode, @"name": _mapping.name }
         : nil;
 }
 

@@ -17,7 +17,7 @@
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"switch mouse mode" };
+    return @{ @"type": self.class.serializationCode };
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization

@@ -22,7 +22,7 @@
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mouse move", @"axis": @(_axis) };
+    return @{ @"type": self.class.serializationCode, @"axis": @(_axis) };
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization

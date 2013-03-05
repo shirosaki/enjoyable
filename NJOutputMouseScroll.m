@@ -16,7 +16,7 @@
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mouse scroll", @"amount": @(_amount) };
+    return @{ @"type": self.class.serializationCode, @"amount": @(_amount) };
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization

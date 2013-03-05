@@ -14,7 +14,7 @@
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": @"mouse button", @"button": @(_button) };
+    return @{ @"type": self.class.serializationCode, @"button": @(_button) };
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
