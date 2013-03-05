@@ -329,10 +329,9 @@
 							<string key="NSToolbarItemPaletteLabel">Mapping Selector</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="227597319">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {140, 25}}</string>
-								<reference key="NSSuperview"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="850080795">
@@ -378,10 +377,9 @@
 							<string key="NSToolbarItemPaletteLabel">Translation Switch</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSSegmentedControl" key="NSToolbarItemView" id="679083346">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{19, 14}, {67, 25}}</string>
-								<reference key="NSSuperview"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSegmentedCell" key="NSCell" id="594076765">
@@ -1410,14 +1408,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">outputController</string>
-						<reference key="source" ref="207406104"/>
-						<reference key="destination" ref="801536542"/>
-					</object>
-					<int key="connectionID">825</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">window</string>
 						<reference key="source" ref="207406104"/>
 						<reference key="destination" ref="808667431"/>
@@ -2413,7 +2403,6 @@
 						<string key="dockMenuBase">NSMenu</string>
 						<string key="inputController">NJDeviceController</string>
 						<string key="mappingsController">NJMappingsController</string>
-						<string key="outputController">NJOutputController</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -2428,10 +2417,6 @@
 						<object class="IBToOneOutletInfo" key="mappingsController">
 							<string key="name">mappingsController</string>
 							<string key="candidateClassName">NJMappingsController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="outputController">
-							<string key="name">outputController</string>
-							<string key="candidateClassName">NJOutputController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="window">
 							<string key="name">window</string>

@@ -28,7 +28,6 @@
 @property (assign) BOOL enabled;
 
 - (void)loadCurrent;
-- (void)refreshMappings;
 - (IBAction)radioChanged:(id)sender;
 - (IBAction)mdirChanged:(id)sender;
 - (IBAction)mbtnChanged:(id)sender;

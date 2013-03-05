@@ -89,7 +89,6 @@
         item.state = mapping == self.mappingsController.currentMapping;
         [dockMenuBase addItem:item];
     }
-    [_outputController refreshMappings];
 }
 
 - (void)mappingDidChange:(NSNotification *)note {

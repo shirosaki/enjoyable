@@ -10,6 +10,7 @@
 #import "NJMappingsController.h"
 #import "NJMapping.h"
 #import "NJInput.h"
+#import "NJEvents.h"
 #import "NJDeviceController.h"
 #import "NJKeyInputField.h"
 #import "NJOutputMapping.h"
@@ -21,6 +22,21 @@
 #import "NJOutputSwitchMouseMode.h"
 
 @implementation NJOutputController
+
+- (id)init {
+    if ((self = [super init])) {
+        [NSNotificationCenter.defaultCenter
+            addObserver:self
+            selector:@selector(mappingListDidChange:)
+            name:NJEventMappingListChanged
+            object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+}
 
 - (void)cleanUpInterface {
     NSInteger row = radioButtons.selectedRow;
@@ -216,10 +232,11 @@
         [keyInput resignIfFirstResponder];
 }
 
-- (void)refreshMappings {
+- (void)mappingListDidChange:(NSNotification *)note {
+    NSArray *mappings = note.object;
     NJMapping *current = mappingPopup.selectedItem.representedObject;
     [mappingPopup.menu removeAllItems];
-    for (NJMapping *mapping in mappingsController) {
+    for (NJMapping *mapping in mappings) {
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
                                                       action:@selector(mappingChosen:)
                                                keyEquivalent:@""];
