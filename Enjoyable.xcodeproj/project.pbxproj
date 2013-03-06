@@ -14,7 +14,6 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		D549CA4C0FBB441B00BC8203 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D549CA4B0FBB441B00BC8203 /* Credits.rtf */; };
 		D5617A360FAEB74000928B3A /* NJMappingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617A350FAEB74000928B3A /* NJMappingsController.m */; };
 		D5617A390FAEBA1800928B3A /* NJMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617A380FAEBA1800928B3A /* NJMapping.m */; };
 		D5617D1A0FAF568100928B3A /* NJInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5617D190FAF568100928B3A /* NJInputButton.m */; };
@@ -53,7 +52,6 @@
 		8BEFAD9B15C46BFF00823AEC /* NJOutputMouseScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputMouseScroll.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Enjoyable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enjoyable.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D549CA4B0FBB441B00BC8203 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		D5617A080FAEAF8300928B3A /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		D5617A340FAEB74000928B3A /* NJMappingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJMappingsController.h; sourceTree = "<group>"; };
 		D5617A350FAEB74000928B3A /* NJMappingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJMappingsController.m; sourceTree = "<group>"; };
@@ -203,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				EE03150C16E63481002B2DCE /* Enjoyable Help */,
-				D549CA4B0FBB441B00BC8203 /* Credits.rtf */,
 				D5617A080FAEAF8300928B3A /* icon.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -290,7 +287,6 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */,
-				D549CA4C0FBB441B00BC8203 /* Credits.rtf in Resources */,
 				EE03150D16E63481002B2DCE /* Enjoyable Help in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
