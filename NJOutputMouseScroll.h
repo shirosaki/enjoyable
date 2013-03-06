@@ -9,6 +9,7 @@
 
 @interface NJOutputMouseScroll : NJOutput
 
-@property (nonatomic, assign) int amount;
+@property (nonatomic, assign) int direction;
+@property (nonatomic, assign) float speed;
 
 @end

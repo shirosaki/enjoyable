@@ -20,6 +20,7 @@
     IBOutlet NSSlider *mouseSpeedSlider;
     IBOutlet NSSegmentedControl *mouseBtnSelect;
     IBOutlet NSSegmentedControl *scrollDirSelect;
+    IBOutlet NSSlider *scrollSpeedSlider;
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *mappingPopup;
     IBOutlet NJMappingsController *mappingsController;
@@ -34,6 +35,7 @@
 - (IBAction)mbtnChanged:(id)sender;
 - (IBAction)sdirChanged:(id)sender;
 - (IBAction)mouseSpeedChanged:(id)sender;
+- (IBAction)scrollSpeedChanged:(id)sender;
 
 - (void)focusKey;
 

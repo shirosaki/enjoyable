@@ -71,9 +71,19 @@
     
     if (row != 5) {
         scrollDirSelect.selectedSegment = -1;
+        scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
         [scrollDirSelect resignIfFirstResponder];
-    } else if (scrollDirSelect.selectedSegment == -1)
-        scrollDirSelect.selectedSegment = 0;    
+    } else {
+        if (scrollDirSelect.selectedSegment == -1)
+            scrollDirSelect.selectedSegment = 0;
+        if (scrollDirSelect.selectedSegment < 2
+            && !scrollSpeedSlider.floatValue)
+            scrollSpeedSlider.floatValue = 15.f;
+        else if (scrollDirSelect.selectedSegment >= 2
+                 && scrollSpeedSlider.floatValue)
+            scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
+    }
+        
 }
 
 - (IBAction)radioChanged:(NSView *)sender {
@@ -124,6 +134,16 @@
     [self commit];
 }
 
+- (void)scrollSpeedChanged:(NSSlider *)sender {
+    [radioButtons selectCellAtRow:5 column:0];
+    [sender.window makeFirstResponder:sender];
+    if (!sender.floatValue && scrollDirSelect.selectedSegment < 2)
+        scrollDirSelect.selectedSegment += 2;
+    else if (sender.floatValue && scrollDirSelect.selectedSegment >= 2)
+        scrollDirSelect.selectedSegment -= 2;
+    [self commit];
+}
+
 - (NJOutput *)currentOutput {
     return mappingsController.currentMapping[inputController.selectedInput];
 }
@@ -159,7 +179,10 @@
         }
         case 5: {
             NJOutputMouseScroll *ms = [[NJOutputMouseScroll alloc] init];
-            ms.amount = scrollDirSelect.selectedSegment ? 1 : -1;
+            ms.direction = (scrollDirSelect.selectedSegment & 1) ? 1 : -1;
+            ms.speed = scrollDirSelect.selectedSegment < 2
+                ? scrollSpeedSlider.floatValue
+                : 0.f;
             return ms;
         }
         case 6: {
@@ -225,7 +248,10 @@
     }
     else if ([output isKindOfClass:NJOutputMouseScroll.class]) {
         [radioButtons selectCellAtRow:5 column:0];
-        scrollDirSelect.selectedSegment = [(NJOutputMouseScroll *)output amount] > 0;
+        int direction = [(NJOutputMouseScroll *)output direction];
+        float speed = [(NJOutputMouseScroll *)output speed];
+        scrollDirSelect.selectedSegment = (direction > 0) + !speed * 2;
+        scrollSpeedSlider.floatValue = speed;
     }
     else if ([output isKindOfClass:NJOutputSwitchMouseMode.class]) {
         [radioButtons selectCellAtRow:6 column:0];

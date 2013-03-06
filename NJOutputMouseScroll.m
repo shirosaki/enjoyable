@@ -7,51 +7,47 @@
 
 #import "NJOutputMouseScroll.h"
 
-@implementation NJOutputMouseScroll {
-    int sign;
-}
+@implementation NJOutputMouseScroll
 
 + (NSString *)serializationCode {
     return @"mouse scroll";
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": self.class.serializationCode, @"amount": @(_amount) };
+    return @{ @"type": self.class.serializationCode,
+              @"direction": @(_direction),
+              @"speed": @(_speed)
+              };
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
 	NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
-    output.amount = [serialization[@"amount"] intValue];
+    output.direction = [serialization[@"direction"] intValue];
+    output.speed = [serialization[@"direction"] floatValue];
 	return output;
 }
 
+- (BOOL)isContinuous {
+    return !!self.speed;
+}
+
 - (void)trigger {
-    if (!self.magnitude) {
+    if (!self.speed) {
         CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
                                                           kCGScrollEventUnitLine,
                                                           1,
-                                                          _amount);
+                                                          _direction);
         CGEventPost(kCGHIDEventTap, scroll);
         CFRelease(scroll);
     }
 }
 
 - (BOOL)update:(NJDeviceController *)jc {
-    if (fabsf(self.magnitude) < 0.01f) {
-        sign = 0;
+    if (self.magnitude < 0.05f)
         return NO; // dead zone
-    }
     
-    // If the input crossed over High/Low, this output is done.
-    if (!sign)
-        sign = self.magnitude < 0 ? -1 : 1;
-    else if (sign / self.magnitude < 0) {
-        sign = 0;
-        return NO;
-    }
-
-    int amount = (int)(16.f * fabsf(self.magnitude) * _amount);
+    int amount = (int)(_speed * self.magnitude * _direction);
     CGEventRef scroll = CGEventCreateScrollWheelEvent(NULL,
                                                       kCGScrollEventUnitPixel,
                                                       1,
@@ -59,10 +55,6 @@
     CGEventPost(kCGHIDEventTap, scroll);
     CFRelease(scroll);
 
-    return YES;
-}
-
-- (BOOL)isContinuous {
     return YES;
 }
 

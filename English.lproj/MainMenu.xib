@@ -507,7 +507,7 @@
 															<string key="NSFrameSize">{200, 298}</string>
 															<reference key="NSSuperview" ref="698362889"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="1036252745"/>
+															<reference key="NSNextKeyView" ref="892486973"/>
 															<bool key="NSEnabled">YES</bool>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -637,7 +637,7 @@
 											<string key="NSFrameSize">{202, 300}</string>
 											<reference key="NSSuperview" ref="977242492"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="892486973"/>
+											<reference key="NSNextKeyView" ref="698362889"/>
 											<int key="NSsFlags">150034</int>
 											<reference key="NSVScroller" ref="1036252745"/>
 											<reference key="NSHScroller" ref="892486973"/>
@@ -658,6 +658,31 @@
 									<reference key="NSNextResponder" ref="206489479"/>
 									<int key="NSvFlags">256</int>
 									<array class="NSMutableArray" key="NSSubviews">
+										<object class="NSSlider" id="792189805">
+											<reference key="NSNextResponder" ref="606740242"/>
+											<int key="NSvFlags">268</int>
+											<string key="NSFrame">{{228, 52}, {140, 12}}</string>
+											<reference key="NSSuperview" ref="606740242"/>
+											<reference key="NSWindow"/>
+											<string key="NSReuseIdentifierKey">_NS:9</string>
+											<bool key="NSEnabled">YES</bool>
+											<object class="NSSliderCell" key="NSCell" id="423057230">
+												<int key="NSCellFlags">-2080374784</int>
+												<int key="NSCellFlags2">262144</int>
+												<string key="NSContents"/>
+												<string key="NSCellIdentifier">_NS:9</string>
+												<reference key="NSControlView" ref="792189805"/>
+												<double key="NSMaxValue">30</double>
+												<double key="NSMinValue">0.0</double>
+												<double key="NSValue">15</double>
+												<double key="NSAltIncValue">0.0</double>
+												<int key="NSNumberOfTickMarks">0</int>
+												<int key="NSTickMarkPosition">1</int>
+												<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
+												<bool key="NSVertical">NO</bool>
+											</object>
+											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+										</object>
 										<object class="NSSlider" id="385416822">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">268</int>
@@ -687,7 +712,7 @@
 										<object class="NSSegmentedControl" id="875916470">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{226, 132}, {179, 15}}</string>
+											<string key="NSFrame">{{227, 132}, {178, 15}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="385416822"/>
@@ -722,7 +747,7 @@
 														<int key="NSSegmentItemImageScaling">0</int>
 													</object>
 													<object class="NSSegmentItem">
-														<double key="NSSegmentItemWidth">42</double>
+														<double key="NSSegmentItemWidth">41</double>
 														<string key="NSSegmentItemLabel">↓</string>
 														<int key="NSSegmentItemImageScaling">0</int>
 													</object>
@@ -734,33 +759,41 @@
 										<object class="NSSegmentedControl" id="921829691">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{226, 55}, {180, 24}}</string>
+											<string key="NSFrame">{{227, 64}, {178, 15}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSNextKeyView" ref="792189805"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSSegmentedCell" key="NSCell" id="301345285">
 												<int key="NSCellFlags">67108864</int>
-												<int key="NSCellFlags2">0</int>
-												<object class="NSFont" key="NSSupport" id="515740949">
-													<string key="NSName">LucidaGrande</string>
-													<double key="NSSize">13</double>
-													<int key="NSfFlags">16</int>
-												</object>
+												<int key="NSCellFlags2">262144</int>
+												<reference key="NSSupport" ref="22"/>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="921829691"/>
 												<array class="NSMutableArray" key="NSSegmentImages">
 													<object class="NSSegmentItem">
-														<double key="NSSegmentItemWidth">87</double>
-														<string key="NSSegmentItemLabel">Up</string>
+														<double key="NSSegmentItemWidth">68</double>
+														<string key="NSSegmentItemLabel">↑</string>
+														<string key="NSSegmentItemTooltip">Scroll up continuously</string>
 														<bool key="NSSegmentItemSelected">YES</bool>
 														<int key="NSSegmentItemImageScaling">0</int>
 													</object>
 													<object class="NSSegmentItem">
-														<double key="NSSegmentItemWidth">86</double>
-														<string key="NSSegmentItemLabel">Down</string>
+														<double key="NSSegmentItemWidth">67</double>
+														<string key="NSSegmentItemLabel">↓</string>
+														<string key="NSSegmentItemTooltip">Scroll down continuously</string>
 														<int key="NSSegmentItemTag">1</int>
+														<int key="NSSegmentItemImageScaling">0</int>
+													</object>
+													<object class="NSSegmentItem">
+														<string key="NSSegmentItemLabel">⤒</string>
+														<string key="NSSegmentItemTooltip">Scroll up one step</string>
+														<int key="NSSegmentItemImageScaling">0</int>
+													</object>
+													<object class="NSSegmentItem">
+														<string key="NSSegmentItemLabel">⤓</string>
+														<string key="NSSegmentItemTooltip">Scroll down one step</string>
 														<int key="NSSegmentItemImageScaling">0</int>
 													</object>
 												</array>
@@ -780,7 +813,11 @@
 											<object class="NSSegmentedCell" key="NSCell" id="514491330">
 												<int key="NSCellFlags">67108864</int>
 												<int key="NSCellFlags2">0</int>
-												<reference key="NSSupport" ref="515740949"/>
+												<object class="NSFont" key="NSSupport">
+													<string key="NSName">LucidaGrande</string>
+													<double key="NSSize">13</double>
+													<int key="NSfFlags">16</int>
+												</object>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="125828224"/>
 												<array class="NSMutableArray" key="NSSegmentImages">
@@ -1086,7 +1123,7 @@
 										<string key="NSFrameSize">{198, 198}</string>
 										<reference key="NSSuperview" ref="947403733"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="968378655"/>
+										<reference key="NSNextKeyView" ref="553414014"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1178,7 +1215,7 @@
 						<string key="NSFrame">{{0, 20}, {200, 200}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="553414014"/>
+						<reference key="NSNextKeyView" ref="947403733"/>
 						<int key="NSsFlags">150034</int>
 						<reference key="NSVScroller" ref="968378655"/>
 						<reference key="NSHScroller" ref="553414014"/>
@@ -1194,7 +1231,6 @@
 						<string key="NSFrame">{{66, -1}, {134, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="517346822">
@@ -1699,6 +1735,22 @@
 					<int key="connectionID">886</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">scrollSpeedChanged:</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="792189805"/>
+					</object>
+					<int key="connectionID">890</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">scrollSpeedSlider</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="792189805"/>
+					</object>
+					<int key="connectionID">891</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">keyDelegate</string>
 						<reference key="source" ref="57697638"/>
@@ -2112,6 +2164,7 @@
 							<reference ref="194275224"/>
 							<reference ref="57697638"/>
 							<reference ref="385416822"/>
+							<reference ref="792189805"/>
 						</array>
 						<reference key="parent" ref="206489479"/>
 						<string key="objectName">Output Editor Pane</string>
@@ -2420,6 +2473,19 @@
 						<reference key="object" ref="5417367"/>
 						<reference key="parent" ref="385416822"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">887</int>
+						<reference key="object" ref="792189805"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="423057230"/>
+						</array>
+						<reference key="parent" ref="606740242"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">888</int>
+						<reference key="object" ref="423057230"/>
+						<reference key="parent" ref="792189805"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2508,11 +2574,11 @@
 				<string key="734.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="735.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="744.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="0" key="745.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="1" key="745.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="745.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="748.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="749.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="0" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="3" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="754.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="0" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
@@ -2565,13 +2631,23 @@
 				</object>
 				<string key="883.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="884.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="887.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="792189805"/>
+						<string key="toolTip">Mouse scroll speed</string>
+					</object>
+				</object>
+				<string key="887.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="888.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">886</int>
+			<int key="maxID">891</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2748,6 +2824,7 @@
 						<string key="mdirChanged:">id</string>
 						<string key="mouseSpeedChanged:">id</string>
 						<string key="radioChanged:">id</string>
+						<string key="scrollSpeedChanged:">id</string>
 						<string key="sdirChanged:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -2767,6 +2844,10 @@
 							<string key="name">radioChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="scrollSpeedChanged:">
+							<string key="name">scrollSpeedChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="sdirChanged:">
 							<string key="name">sdirChanged:</string>
 							<string key="candidateClassName">id</string>
@@ -2782,6 +2863,7 @@
 						<string key="mouseSpeedSlider">NSSlider</string>
 						<string key="radioButtons">NSMatrix</string>
 						<string key="scrollDirSelect">NSSegmentedControl</string>
+						<string key="scrollSpeedSlider">NSSlider</string>
 						<string key="title">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -2820,6 +2902,10 @@
 						<object class="IBToOneOutletInfo" key="scrollDirSelect">
 							<string key="name">scrollDirSelect</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrollSpeedSlider">
+							<string key="name">scrollSpeedSlider</string>
+							<string key="candidateClassName">NSSlider</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="title">
 							<string key="name">title</string>
