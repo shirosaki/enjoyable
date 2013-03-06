@@ -15,7 +15,8 @@
 	IBOutlet NSOutlineView *outlineView;
 	IBOutlet NJOutputController *outputController;
 	IBOutlet NJMappingsController *mappingsController;
-    IBOutlet NSSegmentedControl *translatingEventsSetting;
+    IBOutlet NSButton *translatingEventsButton;
+    IBOutlet NSMenuItem *translatingEventsMenu;
 }
 
 @property (nonatomic, readonly) NJInput *selectedInput;

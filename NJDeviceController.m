@@ -224,7 +224,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)setTranslatingEvents:(BOOL)translatingEvents {
     if (translatingEvents != _translatingEvents) {
         _translatingEvents = translatingEvents;
-        translatingEventsSetting.selectedSegment = !!translatingEvents;
+        NSInteger state = translatingEvents ? NSOnState : NSOffState;
+        translatingEventsButton.state = state;
+        translatingEventsMenu.title = translatingEvents ? @"Disable" : @"Enable";
         NSString *name = translatingEvents
             ? NJEventTranslationActivated
             : NJEventTranslationDeactivated;
@@ -233,8 +235,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     }
 }
 
-- (IBAction)translatingEventsChanged:(id)sender {
-    self.translatingEvents = translatingEventsSetting.selectedSegment;
+- (IBAction)translatingEventsChanged:(NSButton *)sender {
+    self.translatingEvents = sender.state == NSOnState;
 }
 
 

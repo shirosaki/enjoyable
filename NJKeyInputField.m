@@ -176,10 +176,14 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 - (void)keyDown:(NSEvent *)theEvent {
     if (!theEvent.isARepeat) {
         if ((theEvent.modifierFlags & NSAlternateKeyMask)
-            && theEvent.keyCode == 0x35) {
-            // Allow Alt+Escape to clear the field.
+            && theEvent.keyCode == 0x33) {
+            // Allow Alt+Backspace to clear the field.
             self.keyCode = NJKeyInputFieldEmpty;
             [self.keyDelegate keyInputFieldDidClear:self];
+        } else if ((theEvent.modifierFlags & NSAlternateKeyMask)
+                && theEvent.keyCode == 0x35) {
+                // Allow Alt+Escape to cancel.
+            ;
         } else {
             self.keyCode = theEvent.keyCode;
             [self.keyDelegate keyInputField:self didChangeKey:_keyCode];
