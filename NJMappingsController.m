@@ -13,6 +13,8 @@
 #import "NJOutputController.h"
 #import "NJEvents.h"
 
+#define PB_ROW @"com.yukkurigames.Enjoyable.MappingRow"
+
 @implementation NJMappingsController {
     NSMutableArray *_mappings;
     NJMapping *manualMapping;
@@ -26,6 +28,10 @@
         [_mappings addObject:_currentMapping];
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    [tableView registerForDraggedTypes:@[PB_ROW]];
 }
 
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name {
@@ -99,8 +105,8 @@
 - (IBAction)addPressed:(id)sender {
     NJMapping *newMapping = [[NJMapping alloc] initWithName:@"Untitled"];
     [_mappings addObject:newMapping];
-    [self mappingsChanged];
     [self activateMapping:newMapping];
+    [self mappingsChanged];
     [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
 }
 
@@ -109,8 +115,8 @@
         return;
     
     [_mappings removeObjectAtIndex:tableView.selectedRow];
-    [self mappingsChanged];
     [self activateMapping:_mappings[0]];
+    [self mappingsChanged];
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notify {
@@ -260,9 +266,8 @@
                               [_mappings addObject:mapping];
                           }
                           
-                          [self mappingsChanged];
                           [self activateMapping:mapping];
-                          [outputController loadCurrent];
+                          [self mappingsChanged];
                           
                           if (conflict && !mergeInto) {
                               [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
@@ -340,5 +345,46 @@
     }
 }
 
+- (BOOL)tableView:(NSTableView *)tableView
+       acceptDrop:(id <NSDraggingInfo>)info
+              row:(NSInteger)row
+    dropOperation:(NSTableViewDropOperation)dropOperation {
+    NSPasteboard *pboard = [info draggingPasteboard];
+    if ([pboard.types containsObject:PB_ROW]) {
+        NSString *value = [pboard stringForType:PB_ROW];
+        NSUInteger srcRow = [value intValue];
+        [_mappings moveObjectAtIndex:srcRow toIndex:row];
+        [self mappingsChanged];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (NSDragOperation)tableView:(NSTableView *)tableView_
+                validateDrop:(id <NSDraggingInfo>)info
+                 proposedRow:(NSInteger)row
+       proposedDropOperation:(NSTableViewDropOperation)dropOperation {
+    NSPasteboard *pboard = [info draggingPasteboard];
+    if ([pboard.types containsObject:PB_ROW]) {
+        [tableView_ setDropRow:MAX(1, row) dropOperation:NSTableViewDropAbove];
+        return NSDragOperationGeneric;
+    } else {
+        return NSDragOperationNone;
+    }
+}
+
+- (BOOL)tableView:(NSTableView *)tableView
+writeRowsWithIndexes:(NSIndexSet *)rowIndexes
+     toPasteboard:(NSPasteboard *)pboard {
+    if (rowIndexes.count == 1 && rowIndexes.firstIndex != 0) {
+        [pboard declareTypes:@[PB_ROW] owner:nil];
+        [pboard setString:@(rowIndexes.firstIndex).stringValue forType:PB_ROW];
+        return YES;
+    } else {
+        return NO;
+    }
+    
+}
 
 @end

@@ -11,3 +11,4 @@
 #import "NSError+Description.h"
 #import "NSMenu+RepresentedObjectAccessors.h"
 #import "NSView+FirstResponder.h"
+#import "NSMutableArray+MoveObject.h"

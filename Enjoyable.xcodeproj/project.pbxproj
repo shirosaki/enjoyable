@@ -34,6 +34,7 @@
 		EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */; };
 		EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */; };
 		EE96929416E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */; };
+		EEAA9CE116E808E600256B64 /* NSMutableArray+MoveObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,8 @@
 		EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Description.m"; sourceTree = "<group>"; };
 		EE96929216E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenu+RepresentedObjectAccessors.h"; sourceTree = "<group>"; };
 		EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+RepresentedObjectAccessors.m"; sourceTree = "<group>"; };
+		EEAA9CDF16E808E600256B64 /* NSMutableArray+MoveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MoveObject.h"; sourceTree = "<group>"; };
+		EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MoveObject.m"; sourceTree = "<group>"; };
 		EEF86B7316E2241000674B87 /* NJInputPathElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJInputPathElement.h; sourceTree = "<group>"; };
 		EEF86B7416E298CD00674B87 /* NJEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJEvents.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,6 +230,8 @@
 				EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */,
 				EE96929216E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.h */,
 				EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */,
+				EEAA9CDF16E808E600256B64 /* NSMutableArray+MoveObject.h */,
+				EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -337,6 +342,7 @@
 				EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */,
 				EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */,
 				EE96929416E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m in Sources */,
+				EEAA9CE116E808E600256B64 /* NSMutableArray+MoveObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
