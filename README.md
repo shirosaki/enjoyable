@@ -8,13 +8,12 @@ to use a joystick or gamepad, then Enjoyable is the program for you.
 
 Enjoyable supports
 
-    * Mapping gamepad and joystick buttons to keyboard and mouse
-      actions
-    * Fine control over mouse movement and scrolling using analog axis
-      inputs
-    * Automatic and dynamic switching between different input mappings
-    * Downloading and sharing input presets for different applications
-    * Modern OS X features like resume and automatic termination
+ * Mapping gamepad and joystick buttons to keyboard and mouse actions
+ * Fine control over mouse movement and scrolling using analog axis
+   inputs
+ * Automatic and dynamic switching between different input mappings
+ * Downloading and sharing input presets for different applications
+ * Modern OS X features like resume and automatic termination
 
 Enjoyable is free software written by Joe Wreschnig and is based on
 the Enjoy codebase written by [Yifeng Huang](htty://nongraphical.com)
