@@ -54,9 +54,14 @@
     
     if (row != 3) {
         mouseDirSelect.selectedSegment = -1;
+        mouseSpeedSlider.floatValue = mouseSpeedSlider.minValue;
         [mouseDirSelect resignIfFirstResponder];
-    } else if (mouseDirSelect.selectedSegment == -1)
-        mouseDirSelect.selectedSegment = 0;
+    } else {
+        if (mouseDirSelect.selectedSegment == -1)
+            mouseDirSelect.selectedSegment = 0;
+        if (!mouseSpeedSlider.floatValue)
+            mouseSpeedSlider.floatValue = 4;
+    }
     
     if (row != 4) {
         mouseBtnSelect.selectedSegment = -1;
@@ -101,6 +106,12 @@
     [self commit];
 }
 
+- (void)mouseSpeedChanged:(NSSlider *)sender {
+    [radioButtons selectCellAtRow:3 column:0];
+    [sender.window makeFirstResponder:sender];
+    [self commit];
+}
+
 - (void)mbtnChanged:(NSView *)sender {
     [radioButtons selectCellAtRow:4 column:0];
     [sender.window makeFirstResponder:sender];
@@ -138,6 +149,7 @@
         case 3: {
             NJOutputMouseMove *mm = [[NJOutputMouseMove alloc] init];
             mm.axis = mouseDirSelect.selectedSegment;
+            mm.speed = mouseSpeedSlider.floatValue;
             return mm;
         }
         case 4: {
@@ -174,6 +186,7 @@
     [keyInput setEnabled:enabled];
     [mappingPopup setEnabled:enabled];
     [mouseDirSelect setEnabled:enabled];
+    [mouseSpeedSlider setEnabled:enabled];
     [mouseBtnSelect setEnabled:enabled];
     [scrollDirSelect setEnabled:enabled];
 }
@@ -203,7 +216,8 @@
     }
     else if ([output isKindOfClass:NJOutputMouseMove.class]) {
         [radioButtons selectCellAtRow:3 column:0];
-        [mouseDirSelect setSelectedSegment:[(NJOutputMouseMove *)output axis]];
+        mouseDirSelect.selectedSegment = [(NJOutputMouseMove *)output axis];
+        mouseSpeedSlider.floatValue = [(NJOutputMouseMove *)output speed];
     }
     else if ([output isKindOfClass:NJOutputMouseButton.class]) {
         [radioButtons selectCellAtRow:4 column:0];

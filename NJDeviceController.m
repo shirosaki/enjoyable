@@ -64,9 +64,9 @@
     NSArray *children = mainInput.children ? mainInput.children : mainInput ? @[mainInput] : @[];
     for (NJInput *subInput in children) {
         NJOutput *output = mappingsController.currentMapping[subInput];
-        output.magnitude = mainInput.magnitude;
+        output.magnitude = subInput.magnitude;
         output.running = subInput.active;
-        if (output.running && output.isContinuous)
+        if ((output.running || output.magnitude) && output.isContinuous)
             [self addRunningOutput:output];
     }
 }

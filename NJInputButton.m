@@ -28,6 +28,7 @@
 
 - (void)notifyEvent:(IOHIDValueRef)value {
     self.active = IOHIDValueGetIntegerValue(value) == _max;
+    self.magnitude = IOHIDValueGetIntegerValue(value) / (float)_max;
 }
 
 @end

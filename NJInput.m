@@ -29,8 +29,4 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
-- (float)magnitude {
-    return 0.f;
-}
-
 @end

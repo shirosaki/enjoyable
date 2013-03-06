@@ -9,9 +9,7 @@
 
 #import "NJDeviceController.h"
 
-@implementation NJOutputMouseMove {
-    int sign;
-}
+@implementation NJOutputMouseMove
 
 -(BOOL) isContinuous {
     return YES;
@@ -22,41 +20,43 @@
 }
 
 - (NSDictionary *)serialize {
-    return @{ @"type": self.class.serializationCode, @"axis": @(_axis) };
+    return @{ @"type": self.class.serializationCode,
+              @"axis": @(_axis),
+              @"speed": @(_speed),
+              };
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
 	NJOutputMouseMove *output = [[NJOutputMouseMove alloc] init];
     output.axis = [serialization[@"axis"] intValue];
+    output.speed = [serialization[@"speed"] floatValue];
+    if (!output.speed)
+        output.speed = 4;
 	return output;
 }
 
 - (BOOL)update:(NJDeviceController *)jc {
-    if (fabsf(self.magnitude) < 0.01) {
-        sign = 0;
+    if (self.magnitude < 0.05)
         return NO; // dead zone
-    }
-
-    // If the input crossed over High/Low, this output is done.
-    if (!sign)
-        sign = self.magnitude < 0 ? -1 : 1;
-    else if (sign / self.magnitude < 0) {
-        sign = 0;
-        return NO;
-    }
     
     CGFloat height = NSScreen.mainScreen.frame.size.height;
     
-    // TODO
-    float speed = 4.f;
-    if (jc.frontWindowOnly)
-        speed = 12.f;
     float dx = 0.f, dy = 0.f;
-    if (_axis == 0)
-        dx = self.magnitude * speed;
-    else
-        dy = self.magnitude * speed;
+    switch (_axis) {
+        case 0:
+            dx = -self.magnitude * _speed;
+            break;
+        case 1:
+            dx = self.magnitude * _speed;
+            break;
+        case 2:
+            dy = -self.magnitude * _speed;
+            break;
+        case 3:
+            dy = self.magnitude * _speed;
+            break;
+    }
     NSPoint mouseLoc = jc.mouseLoc;
     mouseLoc.x += dx;
     mouseLoc.y -= dy;

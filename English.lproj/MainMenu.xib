@@ -27,6 +27,8 @@
 			<string>NSScroller</string>
 			<string>NSSegmentedCell</string>
 			<string>NSSegmentedControl</string>
+			<string>NSSlider</string>
+			<string>NSSliderCell</string>
 			<string>NSSplitView</string>
 			<string>NSTableColumn</string>
 			<string>NSTableView</string>
@@ -353,12 +355,9 @@
 							<string key="NSToolbarItemPaletteLabel">Enabled</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="385218002">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{7, 14}, {36, 25}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="422366518">
@@ -404,12 +403,9 @@
 							<string key="NSToolbarItemPaletteLabel">Mapping Selector</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSButton" key="NSToolbarItemView" id="227597319">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {140, 25}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="850080795">
@@ -662,36 +658,72 @@
 									<reference key="NSNextResponder" ref="206489479"/>
 									<int key="NSvFlags">256</int>
 									<array class="NSMutableArray" key="NSSubviews">
-										<object class="NSSegmentedControl" id="875916470">
+										<object class="NSSlider" id="385416822">
 											<reference key="NSNextResponder" ref="606740242"/>
-											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{227, 123}, {180, 24}}</string>
+											<int key="NSvFlags">268</int>
+											<string key="NSFrame">{{228, 120}, {176, 12}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="125828224"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
+											<object class="NSSliderCell" key="NSCell" id="5417367">
+												<int key="NSCellFlags">-2080374784</int>
+												<int key="NSCellFlags2">262144</int>
+												<string key="NSContents"/>
+												<string key="NSCellIdentifier">_NS:9</string>
+												<reference key="NSControlView" ref="385416822"/>
+												<double key="NSMaxValue">20</double>
+												<double key="NSMinValue">0.0</double>
+												<double key="NSValue">4</double>
+												<double key="NSAltIncValue">0.0</double>
+												<int key="NSNumberOfTickMarks">0</int>
+												<int key="NSTickMarkPosition">1</int>
+												<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
+												<bool key="NSVertical">NO</bool>
+											</object>
+											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+										</object>
+										<object class="NSSegmentedControl" id="875916470">
+											<reference key="NSNextResponder" ref="606740242"/>
+											<int key="NSvFlags">265</int>
+											<string key="NSFrame">{{226, 132}, {179, 15}}</string>
+											<reference key="NSSuperview" ref="606740242"/>
+											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="385416822"/>
+											<string key="NSReuseIdentifierKey">_NS:9</string>
+											<bool key="NSEnabled">YES</bool>
 											<object class="NSSegmentedCell" key="NSCell" id="241270212">
 												<int key="NSCellFlags">67108864</int>
-												<int key="NSCellFlags2">0</int>
-												<object class="NSFont" key="NSSupport" id="515740949">
+												<int key="NSCellFlags2">262144</int>
+												<object class="NSFont" key="NSSupport" id="22">
 													<string key="NSName">LucidaGrande</string>
-													<double key="NSSize">13</double>
-													<int key="NSfFlags">16</int>
+													<double key="NSSize">9</double>
+													<int key="NSfFlags">3614</int>
 												</object>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="875916470"/>
 												<array class="NSMutableArray" key="NSSegmentImages">
 													<object class="NSSegmentItem">
-														<double key="NSSegmentItemWidth">87</double>
-														<string key="NSSegmentItemLabel">Horizontal</string>
+														<double key="NSSegmentItemWidth">43</double>
+														<string key="NSSegmentItemLabel">←</string>
 														<bool key="NSSegmentItemSelected">YES</bool>
 														<int key="NSSegmentItemImageScaling">0</int>
 													</object>
 													<object class="NSSegmentItem">
-														<double key="NSSegmentItemWidth">86</double>
-														<string key="NSSegmentItemLabel">Vertical</string>
+														<double key="NSSegmentItemWidth">43</double>
+														<string key="NSSegmentItemLabel">→</string>
 														<int key="NSSegmentItemTag">1</int>
+														<int key="NSSegmentItemImageScaling">0</int>
+													</object>
+													<object class="NSSegmentItem">
+														<double key="NSSegmentItemWidth">42</double>
+														<string key="NSSegmentItemLabel">↑</string>
+														<int key="NSSegmentItemImageScaling">0</int>
+													</object>
+													<object class="NSSegmentItem">
+														<double key="NSSegmentItemWidth">42</double>
+														<string key="NSSegmentItemLabel">↓</string>
 														<int key="NSSegmentItemImageScaling">0</int>
 													</object>
 												</array>
@@ -702,7 +734,7 @@
 										<object class="NSSegmentedControl" id="921829691">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{227, 55}, {180, 24}}</string>
+											<string key="NSFrame">{{226, 55}, {180, 24}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView"/>
@@ -711,7 +743,11 @@
 											<object class="NSSegmentedCell" key="NSCell" id="301345285">
 												<int key="NSCellFlags">67108864</int>
 												<int key="NSCellFlags2">0</int>
-												<reference key="NSSupport" ref="515740949"/>
+												<object class="NSFont" key="NSSupport" id="515740949">
+													<string key="NSName">LucidaGrande</string>
+													<double key="NSSize">13</double>
+													<int key="NSfFlags">16</int>
+												</object>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="921829691"/>
 												<array class="NSMutableArray" key="NSSegmentImages">
@@ -735,7 +771,7 @@
 										<object class="NSSegmentedControl" id="125828224">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{227, 89}, {180, 24}}</string>
+											<string key="NSFrame">{{226, 89}, {180, 24}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="921829691"/>
@@ -768,7 +804,7 @@
 										<object class="NSCustomView" id="57697638">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{229, 190}, {176, 24}}</string>
+											<string key="NSFrame">{{228, 190}, {176, 24}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="194275224"/>
@@ -778,7 +814,7 @@
 										<object class="NSPopUpButton" id="194275224">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{226, 156}, {182, 26}}</string>
+											<string key="NSFrame">{{225, 156}, {182, 26}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="875916470"/>
@@ -811,7 +847,7 @@
 										<object class="NSMatrix" id="120408205">
 											<reference key="NSNextResponder" ref="606740242"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{20, 16}, {201, 236}}</string>
+											<string key="NSFrame">{{20, 16}, {200, 236}}</string>
 											<reference key="NSSuperview" ref="606740242"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="57697638"/>
@@ -925,7 +961,7 @@
 													<int key="NSPeriodicInterval">75</int>
 												</object>
 											</array>
-											<string key="NSCellSize">{201, 32}</string>
+											<string key="NSCellSize">{200, 32}</string>
 											<string key="NSIntercellSpacing">{4, 2}</string>
 											<int key="NSMatrixFlags">1353195520</int>
 											<string key="NSCellClass">NSActionCell</string>
@@ -1165,11 +1201,7 @@
 							<int key="NSCellFlags">-2080374784</int>
 							<int key="NSCellFlags2">168034304</int>
 							<string key="NSContents"/>
-							<object class="NSFont" key="NSSupport" id="22">
-								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">9</double>
-								<int key="NSfFlags">3614</int>
-							</object>
+							<reference key="NSSupport" ref="22"/>
 							<string key="NSCellIdentifier">_NS:22</string>
 							<reference key="NSControlView" ref="149148392"/>
 							<int key="NSButtonFlags">1221349376</int>
@@ -1651,6 +1683,22 @@
 					<int key="connectionID">828</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">mouseSpeedChanged:</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="385416822"/>
+					</object>
+					<int key="connectionID">885</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mouseSpeedSlider</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="385416822"/>
+					</object>
+					<int key="connectionID">886</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">keyDelegate</string>
 						<reference key="source" ref="57697638"/>
@@ -2063,6 +2111,7 @@
 							<reference ref="1016088174"/>
 							<reference ref="194275224"/>
 							<reference ref="57697638"/>
+							<reference ref="385416822"/>
 						</array>
 						<reference key="parent" ref="206489479"/>
 						<string key="objectName">Output Editor Pane</string>
@@ -2358,6 +2407,19 @@
 						<reference key="object" ref="422366518"/>
 						<reference key="parent" ref="385218002"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">883</int>
+						<reference key="object" ref="385416822"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="5417367"/>
+						</array>
+						<reference key="parent" ref="606740242"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">884</int>
+						<reference key="object" ref="5417367"/>
+						<reference key="parent" ref="385416822"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2453,7 +2515,7 @@
 				<integer value="0" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="754.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="1" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="0" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="755.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="778.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2493,13 +2555,23 @@
 				<string key="872.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="873.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="874.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="883.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="385416822"/>
+						<string key="toolTip">Maximum mouse speed</string>
+					</object>
+				</object>
+				<string key="883.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="884.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">880</int>
+			<int key="maxID">886</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2674,6 +2746,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="mbtnChanged:">id</string>
 						<string key="mdirChanged:">id</string>
+						<string key="mouseSpeedChanged:">id</string>
 						<string key="radioChanged:">id</string>
 						<string key="sdirChanged:">id</string>
 					</dictionary>
@@ -2684,6 +2757,10 @@
 						</object>
 						<object class="IBActionInfo" key="mdirChanged:">
 							<string key="name">mdirChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="mouseSpeedChanged:">
+							<string key="name">mouseSpeedChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="radioChanged:">
@@ -2702,6 +2779,7 @@
 						<string key="mappingsController">NJMappingsController</string>
 						<string key="mouseBtnSelect">NSSegmentedControl</string>
 						<string key="mouseDirSelect">NSSegmentedControl</string>
+						<string key="mouseSpeedSlider">NSSlider</string>
 						<string key="radioButtons">NSMatrix</string>
 						<string key="scrollDirSelect">NSSegmentedControl</string>
 						<string key="title">NSTextField</string>
@@ -2730,6 +2808,10 @@
 						<object class="IBToOneOutletInfo" key="mouseDirSelect">
 							<string key="name">mouseDirSelect</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mouseSpeedSlider">
+							<string key="name">mouseSpeedSlider</string>
+							<string key="candidateClassName">NSSlider</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="radioButtons">
 							<string key="name">radioButtons</string>

@@ -15,7 +15,7 @@
 @property (nonatomic, weak) id base;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) BOOL active;
-@property (nonatomic, readonly) float magnitude;
+@property (nonatomic, assign) float magnitude;
 @property (readonly) NSString *uid;
 
 - (id)initWithName:(NSString *)newName base:(id <NJInputPathElement>)newBase;

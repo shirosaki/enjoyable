@@ -42,6 +42,8 @@ static float normalize(long p, long min, long max) {
 
 - (void)notifyEvent:(IOHIDValueRef)value {
     magnitude = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
+    [self.children[0] setMagnitude:fabsf(MIN(magnitude, 0))];
+    [self.children[1] setMagnitude:fabsf(MAX(magnitude, 0))];
     [self.children[0] setActive:magnitude < -DEAD_ZONE];
     [self.children[1] setActive:magnitude > DEAD_ZONE];
 }

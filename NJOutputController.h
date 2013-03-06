@@ -17,6 +17,7 @@
     IBOutlet NJKeyInputField *keyInput;
     IBOutlet NSMatrix *radioButtons;
     IBOutlet NSSegmentedControl *mouseDirSelect;
+    IBOutlet NSSlider *mouseSpeedSlider;
     IBOutlet NSSegmentedControl *mouseBtnSelect;
     IBOutlet NSSegmentedControl *scrollDirSelect;
     IBOutlet NSTextField *title;
@@ -32,6 +33,8 @@
 - (IBAction)mdirChanged:(id)sender;
 - (IBAction)mbtnChanged:(id)sender;
 - (IBAction)sdirChanged:(id)sender;
+- (IBAction)mouseSpeedChanged:(id)sender;
+
 - (void)focusKey;
 
 @end

@@ -10,5 +10,6 @@
 @interface NJOutputMouseMove : NJOutput
 
 @property (nonatomic, assign) int axis;
+@property (nonatomic, assign) float speed;
 
 @end
