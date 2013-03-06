@@ -30,10 +30,11 @@
 		D594BF830FAE9661007A85F2 /* EnjoyableApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D594BF820FAE9661007A85F2 /* EnjoyableApplicationDelegate.m */; };
 		D5F809710FB093400006A4DE /* NJOutputMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F809700FB093400006A4DE /* NJOutputMapping.m */; };
 		D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D5617A080FAEAF8300928B3A /* icon.icns */; };
-		EE03150D16E63481002B2DCE /* Enjoyable Help in Resources */ = {isa = PBXBuildFile; fileRef = EE03150C16E63481002B2DCE /* Enjoyable Help */; };
+		EE03150D16E63481002B2DCE /* Help in Resources */ = {isa = PBXBuildFile; fileRef = EE03150C16E63481002B2DCE /* Help */; };
 		EE1D7C9216E01E7000B000EB /* NSView+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */; };
 		EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */; };
 		EE96929416E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */; };
+		EED7E81516E7ADBB004A0BA4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EED7E81416E7ADBB004A0BA4 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,13 +83,14 @@
 		D594BF820FAE9661007A85F2 /* EnjoyableApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnjoyableApplicationDelegate.m; sourceTree = "<group>"; };
 		D5F8096F0FB093400006A4DE /* NJOutputMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJOutputMapping.h; sourceTree = "<group>"; };
 		D5F809700FB093400006A4DE /* NJOutputMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJOutputMapping.m; sourceTree = "<group>"; };
-		EE03150C16E63481002B2DCE /* Enjoyable Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Enjoyable Help"; sourceTree = "<group>"; };
+		EE03150C16E63481002B2DCE /* Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Help; sourceTree = "<group>"; };
 		EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+FirstResponder.h"; sourceTree = "<group>"; };
 		EE1D7C9116E01E7000B000EB /* NSView+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+FirstResponder.m"; sourceTree = "<group>"; };
 		EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Description.h"; sourceTree = "<group>"; };
 		EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Description.m"; sourceTree = "<group>"; };
 		EE96929216E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenu+RepresentedObjectAccessors.h"; sourceTree = "<group>"; };
 		EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+RepresentedObjectAccessors.m"; sourceTree = "<group>"; };
+		EED7E81416E7ADBB004A0BA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Help/Contents/Info.plist; sourceTree = "<group>"; };
 		EEF86B7316E2241000674B87 /* NJInputPathElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJInputPathElement.h; sourceTree = "<group>"; };
 		EEF86B7416E298CD00674B87 /* NJEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJEvents.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +179,7 @@
 		29B97314FDCFA39411CA2CEA /* Enjoy */ = {
 			isa = PBXGroup;
 			children = (
+				EED7E81416E7ADBB004A0BA4 /* Info.plist */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				EE1D5F8B16E403D600749C36 /* Categories */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -200,7 +203,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EE03150C16E63481002B2DCE /* Enjoyable Help */,
+				EE03150C16E63481002B2DCE /* Help */,
 				D5617A080FAEAF8300928B3A /* icon.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -238,6 +241,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Enjoyable" */;
 			buildPhases = (
+				EED7E81616E7B547004A0BA4 /* ShellScript */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -287,11 +291,28 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */,
-				EE03150D16E63481002B2DCE /* Enjoyable Help in Resources */,
+				EE03150D16E63481002B2DCE /* Help in Resources */,
+				EED7E81516E7ADBB004A0BA4 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EED7E81616E7B547004A0BA4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SOURCE_ROOT}/Help/Contents/Resources/English.lproj\nmake\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {

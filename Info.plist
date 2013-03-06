@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleHelpBookName</key>
-	<string>Enjoyable Help</string>
+	<string>com.yukkurigames.Enjoyable.help</string>
 	<key>CFBundleHelpBookFolder</key>
-	<string>Enjoyable Help</string>
+	<string>Help</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<string>YES</string>
 	<key>NSSupportsSuddenTermination</key>
