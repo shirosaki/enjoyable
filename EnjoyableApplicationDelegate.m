@@ -130,4 +130,19 @@
         [splitView adjustSubviews];
 }
 
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
+    NSMenu *menu = [[NSMenu alloc] init];
+    int added = 0;
+    for (NJMapping *mapping in self.mappingsController) {
+        NSString *keyEquiv = ++added < 10 ? @(added).stringValue : @"";
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
+                                                      action:@selector(chooseMapping:)
+                                               keyEquivalent:keyEquiv];
+        item.representedObject = mapping;
+        item.state = mapping == self.mappingsController.currentMapping;
+        [menu addItem:item];
+    }
+    return menu;
+}
+
 @end
