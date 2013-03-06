@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Troubleshooting</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="robots" content="anchors" />
+    <link href="../sty/default.css"
+          rel="stylesheet"
+          type="text/css"
+          media="all"/>
+  </head>
+  
+  <body>
+    <a name="problems"></a>
+    
+    <div id="navbox">
+      <div id="navleftbox">
+        <a class="navlink_left"
+           href="help:anchor='home' bookID='Enjoyable Help'">
+          Home
+        </a>
+      </div>
+    </div>
+    
+    <div id="headerbox">
+      <div id="iconbox">
+        <img id="iconimg"
+             src="../gfx/Icon.png"
+             alt="Icon"
+             height="32" width="32"/>
+      </div>
+      <h1>Troubleshooting</h1>
+    </div>
+
+    <h3>
+      <a name="unavailable"></a>
+      When I start Enjoyable, it says "Input devices are unavailable"
+    </h3>
+    <p>
+      This happens if Enjoyable is refused access to your input
+      devices by Mac OS X. This usually happens if another application
+      has requested exclusive access to them. Try quitting any other
+      applications using your input devices. If that doesn't work, try
+      disconnecting and reconnecting the device, then restarting
+      Enjoyable. If it still doesn't work you may need to reboot.
+    </p>
+
+    <h3>
+      <a name="noswitch"></a>
+      Enjoyable never switches to my application mapping
+    </h3>
+    <p>
+      Make sure it matches the name of the application exactly. If you
+      still have trouble, name the mapping <kbd>@Application</kbd> and
+      switch back to have Enjoyable try to deduce the correct name
+      automatically.
+    </p>
+
+    <h3>
+      Mouse clicks and drags don't work
+      <a name="brokenmouse"></a>
+    </h3>
+    <p>
+      This is a known issue with Cocoa applications, as they require
+      more specially-crafted mouse events. We hope to fix it in a
+      future version.
+    </p>
+  </body>
+</html>
