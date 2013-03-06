@@ -6,9 +6,15 @@ joystick inputs like a mouse or keyboard. If you've ever played a
 video game which only supports mouse and keyboard input but you want
 to use a joystick or gamepad, then Enjoyable is the program for you.
 
-Enjoyable supports multiple configurations (for different games or
-programs) and you can even map joystick buttons to change
-configurations on-the-fly.
+Enjoyable supports
+
+    * Mapping gamepad and joystick buttons to keyboard and mouse
+      actions
+    * Fine control over mouse movement and scrolling using analog axis
+      inputs
+    * Automatic and dynamic switching between different input mappings
+    * Downloading and sharing input presets for different applications
+    * Modern OS X features like resume and automatic termination
 
 Enjoyable is free software written by Joe Wreschnig and is based on
 the Enjoy codebase written by [Yifeng Huang](htty://nongraphical.com)
@@ -16,46 +22,17 @@ and [Sam McCall](http://abstractable.net/enjoy/).
 
 ## How to Use
 
-At startup, and when Enjoyable is paused, press any button or move any
-analog stick to jump to the configuration for that button or stick.
-From there, select one of the mapping options from the choices on the
-right.
-
-To quickly map a joystick to keyboard actions, you can simply press
-the joystick button or axis, then the keyboard key you wish to map
-it to, and repeat.
-
-Once you've done that, click the Start button and begin using your
-joystick as a keyboard and mouse.
-
-If you name a configuration after the title of a program (e.g. what
-appears when you hover over it in the dock) that configuration will
-automatically be selected when you switch to that program.
-
-### Mouse Mapping Compatibility
-
-Enjoyable offers two mouse mapping modes: global and single-window.
-Enjoyable starts in global mode, but you can set any joystick button to
-the "toggle mouse scope" action, which will change the mode. If you
-are using Enjoy2 to play a video game, you may find that one or the
-other mode offers better compatibility with your game's specific
-requirements.
+To start, just press a button on your joystick or gamepad, then press
+the key you want to map it for. Then press the ▶ button and switch
+back to your game. For more details, Enjoyable has a in-application
+manual available in Help Viewer via `⌘?`.
 
 ## Requirements
 
 * Mac OS X 10.7+
-* HID-compatible (e.g. USB or Bluetooth) input device
-
-## Changes
-
-Version 1
-
-* Forked from Enjoy/Enjoy2. The code has been modernized and optimized.
-  Many bugs and UI issues were fixed.
+* One or more HID-compatible (e.g. USB or Bluetooth) input devices
 
 ## License
-
-Enjoyable is based on Enjoy and Enjoy2, by Sam McCall and Yifeng Huang.
 
 Copyright 2013 Joe Wreschnig
           2012 Yifeng Huang
