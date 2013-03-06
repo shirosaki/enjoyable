@@ -20,6 +20,8 @@
     IBOutlet NJOutputController *outputController;
     IBOutlet NSButton *popoverActivate;
     IBOutlet NSPopover *popover;
+    IBOutlet NSButton *moveUp;
+    IBOutlet NSButton *moveDown;
 }
 
 @property (nonatomic, readonly) NJMapping *currentMapping;
@@ -35,6 +37,8 @@
 - (IBAction)mappingPressed:(id)sender;
 - (IBAction)addPressed:(id)sender;
 - (IBAction)removePressed:(id)sender;
+- (IBAction)moveUpPressed:(id)sender;
+- (IBAction)moveDownPressed:(id)sender;
 - (IBAction)importPressed:(id)sender;
 - (IBAction)exportPressed:(id)sender;
 

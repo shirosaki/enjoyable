@@ -1223,10 +1223,10 @@
 					<object class="NSButton" id="149148392">
 						<reference key="NSNextResponder" ref="671181514"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{66, -1}, {134, 23}}</string>
+						<string key="NSFrame">{{66, -1}, {68, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="1023366520"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="517346822">
@@ -1271,6 +1271,52 @@
 							</object>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent">n</string>
+							<int key="NSPeriodicDelay">400</int>
+							<int key="NSPeriodicInterval">75</int>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
+					<object class="NSButton" id="1043784903">
+						<reference key="NSNextResponder" ref="671181514"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{166, -1}, {34, 23}}</string>
+						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="828611353">
+							<int key="NSCellFlags">67108864</int>
+							<int key="NSCellFlags2">134479872</int>
+							<string key="NSContents">⬇</string>
+							<reference key="NSSupport" ref="22"/>
+							<reference key="NSControlView" ref="1043784903"/>
+							<int key="NSButtonFlags">-2033434624</int>
+							<int key="NSButtonFlags2">268435618</int>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"></string>
+							<int key="NSPeriodicDelay">400</int>
+							<int key="NSPeriodicInterval">75</int>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
+					<object class="NSButton" id="1023366520">
+						<reference key="NSNextResponder" ref="671181514"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{133, -1}, {34, 23}}</string>
+						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="1043784903"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="57592747">
+							<int key="NSCellFlags">67108864</int>
+							<int key="NSCellFlags2">134479872</int>
+							<string key="NSContents">⬆</string>
+							<reference key="NSSupport" ref="22"/>
+							<reference key="NSControlView" ref="1023366520"/>
+							<int key="NSButtonFlags">-2033434624</int>
+							<int key="NSButtonFlags2">268435618</int>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"></string>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
@@ -1597,6 +1643,38 @@
 						<reference key="destination" ref="861276216"/>
 					</object>
 					<int key="connectionID">515</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveUpPressed:</string>
+						<reference key="source" ref="468285243"/>
+						<reference key="destination" ref="1023366520"/>
+					</object>
+					<int key="connectionID">899</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveDownPressed:</string>
+						<reference key="source" ref="468285243"/>
+						<reference key="destination" ref="1043784903"/>
+					</object>
+					<int key="connectionID">900</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">moveUp</string>
+						<reference key="source" ref="468285243"/>
+						<reference key="destination" ref="1023366520"/>
+					</object>
+					<int key="connectionID">901</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">moveDown</string>
+						<reference key="source" ref="468285243"/>
+						<reference key="destination" ref="1043784903"/>
+					</object>
+					<int key="connectionID">902</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2000,6 +2078,8 @@
 							<reference ref="456935010"/>
 							<reference ref="149148392"/>
 							<reference ref="861276216"/>
+							<reference ref="1023366520"/>
+							<reference ref="1043784903"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Mapping List Popover Content</string>
@@ -2487,6 +2567,34 @@
 						<reference key="object" ref="423057230"/>
 						<reference key="parent" ref="792189805"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">893</int>
+						<reference key="object" ref="1023366520"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="57592747"/>
+						</array>
+						<reference key="parent" ref="671181514"/>
+						<string key="objectName">Move Mapping Up</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">894</int>
+						<reference key="object" ref="57592747"/>
+						<reference key="parent" ref="1023366520"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">896</int>
+						<reference key="object" ref="1043784903"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="828611353"/>
+						</array>
+						<reference key="parent" ref="671181514"/>
+						<string key="objectName">Move Mapping Down</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">897</int>
+						<reference key="object" ref="828611353"/>
+						<reference key="parent" ref="1043784903"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2641,13 +2749,33 @@
 				</object>
 				<string key="887.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="888.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="893.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="1023366520"/>
+						<string key="toolTip">Move the selected mapping up the list</string>
+					</object>
+				</object>
+				<string key="893.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="894.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="896.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="1043784903"/>
+						<string key="toolTip">Move the selected mapping down the list</string>
+					</object>
+				</object>
+				<string key="896.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="897.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">892</int>
+			<int key="maxID">902</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2758,6 +2886,8 @@
 						<string key="exportPressed:">id</string>
 						<string key="importPressed:">id</string>
 						<string key="mappingPressed:">id</string>
+						<string key="moveDownPressed:">id</string>
+						<string key="moveUpPressed:">id</string>
 						<string key="removePressed:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -2777,12 +2907,22 @@
 							<string key="name">mappingPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="moveDownPressed:">
+							<string key="name">moveDownPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="moveUpPressed:">
+							<string key="name">moveUpPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="removePressed:">
 							<string key="name">removePressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="moveDown">NSButton</string>
+						<string key="moveUp">NSButton</string>
 						<string key="outputController">NJOutputController</string>
 						<string key="popover">NSPopover</string>
 						<string key="popoverActivate">NSButton</string>
@@ -2790,6 +2930,14 @@
 						<string key="tableView">NSTableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="moveDown">
+							<string key="name">moveDown</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="moveUp">
+							<string key="name">moveUp</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="outputController">
 							<string key="name">outputController</string>
 							<string key="candidateClassName">NJOutputController</string>

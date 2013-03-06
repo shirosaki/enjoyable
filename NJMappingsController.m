@@ -43,6 +43,7 @@
     [self save];
     [tableView reloadData];
     popoverActivate.title = _currentMapping.name;
+    [self updateInterfaceForCurrentMapping];
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
         object:_mappings];
@@ -71,6 +72,16 @@
     }
 }
 
+- (void)updateInterfaceForCurrentMapping {
+    NSUInteger selected = [_mappings indexOfObject:_currentMapping];
+    [removeButton setEnabled:selected != 0];
+    [moveDown setEnabled:selected && selected != _mappings.count - 1];
+    [moveUp setEnabled:selected > 1];
+    popoverActivate.title = _currentMapping.name;
+    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected] byExtendingSelection:NO];
+    [NSUserDefaults.standardUserDefaults setInteger:selected forKey:@"selected"];
+}
+
 - (void)activateMapping:(NJMapping *)mapping {
     if (!mapping)
         mapping = manualMapping;
@@ -79,12 +90,8 @@
     NSLog(@"Switching to mapping %@.", mapping.name);
     manualMapping = mapping;
     _currentMapping = mapping;
-    [removeButton setEnabled:_mappings[0] != mapping];
+    [self updateInterfaceForCurrentMapping];
     [outputController loadCurrent];
-    popoverActivate.title = _currentMapping.name;
-    NSUInteger selected = [_mappings indexOfObject:mapping];
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected] byExtendingSelection:NO];
-    [NSUserDefaults.standardUserDefaults setInteger:selected forKey:@"selected"];
     [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
                                                       object:_currentMapping];
 }
@@ -168,8 +175,8 @@
         _mappings = newMappings;
         if (selected >= newMappings.count)
             selected = 0;
-        [self mappingsChanged];
         [self activateMapping:_mappings[selected]];
+        [self mappingsChanged];
     }
 }
 
@@ -316,5 +323,22 @@
 - (void)popoverWillClose:(NSNotification *)notification {
     popoverActivate.state = NSOffState;
 }
+
+- (IBAction)moveUpPressed:(id)sender {
+    NSUInteger idx = [_mappings indexOfObject:_currentMapping];
+    if (idx > 1 && idx != NSNotFound) {
+        [_mappings exchangeObjectAtIndex:idx withObjectAtIndex:idx - 1];
+        [self mappingsChanged];
+    }
+}
+
+- (IBAction)moveDownPressed:(id)sender {
+    NSUInteger idx = [_mappings indexOfObject:_currentMapping];
+    if (idx < _mappings.count - 1) {
+        [_mappings exchangeObjectAtIndex:idx withObjectAtIndex:idx + 1];
+        [self mappingsChanged];
+    }
+}
+
 
 @end
