@@ -89,7 +89,7 @@ static BOOL active_fourway[20] = {
         size++;
     }
     BOOL *activechildren = (size == 8) ? active_eightway : active_fourway;
-    for (int i = 0; i < 4; i++) {
+    for (unsigned i = 0; i < 4; i++) {
         BOOL active = activechildren[parsed * 4 + i];
         [self.children[i] setActive:active];
         [self.children[i] setMagnitude:active];
