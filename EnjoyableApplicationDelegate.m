@@ -16,8 +16,12 @@
 @implementation EnjoyableApplicationDelegate
 
 - (void)didSwitchApplication:(NSNotification *)note {
-    NSRunningApplication *currentApp = note.userInfo[NSWorkspaceApplicationKey];
-    [self.mappingsController activateMappingForProcess:currentApp.localizedName];
+    NSRunningApplication *activeApp = note.userInfo[NSWorkspaceApplicationKey];
+    NSString *name = activeApp.localizedName;
+    if (!name)
+        name = activeApp.bundleIdentifier;
+    if (name && ![name isEqualToString:NSRunningApplication.currentApplication.localizedName])
+        [self.mappingsController activateMappingForProcess:name];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {

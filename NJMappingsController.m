@@ -56,15 +56,19 @@
                                             count:len];
 }
 
-
 - (void)activateMappingForProcess:(NSString *)processName {
-    NJMapping *oldMapping = manualMapping;
-    NJMapping *newMapping = self[processName];
-    if (!newMapping)
-        newMapping = oldMapping;
-    if (newMapping != _currentMapping)
-        [self activateMapping:newMapping];
-    manualMapping = oldMapping;
+    if ([manualMapping.name.lowercaseString isEqualToString:@"@application"]) {
+        manualMapping.name = processName;
+        [self mappingsChanged];
+    } else {
+        NJMapping *oldMapping = manualMapping;
+        NJMapping *newMapping = self[processName];
+        if (!newMapping)
+            newMapping = oldMapping;
+        if (newMapping != _currentMapping)
+            [self activateMapping:newMapping];
+        manualMapping = oldMapping;
+    }
 }
 
 - (void)activateMapping:(NJMapping *)mapping {
