@@ -68,16 +68,7 @@
     CGEventSetType(move, kCGEventMouseMoved);
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaX, (int)dx);
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaY, (int)dy);
-    
-    if (jc.frontWindowOnly) {
-        ProcessSerialNumber psn;
-        GetFrontProcess(&psn);
-        CGEventPostToPSN(&psn, move);
-    }
-    else {
-        CGEventPost(kCGHIDEventTap, move);
-    }
-    
+    CGEventPost(kCGHIDEventTap, move);
     CFRelease(move);
     return YES;
 }

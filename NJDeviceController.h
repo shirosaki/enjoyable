@@ -21,7 +21,6 @@
 
 @property (nonatomic, readonly) NJInput *selectedInput;
 @property (nonatomic, assign) NSPoint mouseLoc;
-@property (nonatomic, assign) BOOL frontWindowOnly;
 @property (nonatomic, assign) BOOL translatingEvents;
 
 - (void)setup;

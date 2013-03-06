@@ -19,7 +19,6 @@
 #import "NJOutputMouseButton.h"
 #import "NJOutputMouseMove.h"
 #import "NJOutputMouseScroll.h"
-#import "NJOutputSwitchMouseMode.h"
 
 @implementation NJOutputController
 
@@ -185,10 +184,6 @@
                 : 0.f;
             return ms;
         }
-        case 6: {
-            NJOutputSwitchMouseMode *tms = [[NJOutputSwitchMouseMode alloc] init];
-            return tms;
-        }
         default:
             return nil;
     }
@@ -252,9 +247,6 @@
         float speed = [(NJOutputMouseScroll *)output speed];
         scrollDirSelect.selectedSegment = (direction > 0) + !speed * 2;
         scrollSpeedSlider.floatValue = speed;
-    }
-    else if ([output isKindOfClass:NJOutputSwitchMouseMode.class]) {
-        [radioButtons selectCellAtRow:6 column:0];
     } else {
         [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
     }
