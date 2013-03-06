@@ -207,6 +207,7 @@
     [mouseSpeedSlider setEnabled:enabled];
     [mouseBtnSelect setEnabled:enabled];
     [scrollDirSelect setEnabled:enabled];
+    [scrollSpeedSlider setEnabled:enabled];
 }
 
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {

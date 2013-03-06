@@ -10,7 +10,9 @@
 @class NJOutputController;
 @class NJMappingsController;
 
-@interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate> {
+@interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
+                                                    NSSplitViewDelegate>
+{
     IBOutlet NSMenu *dockMenuBase;
     IBOutlet NSWindow *window;
 }

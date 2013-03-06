@@ -107,4 +107,27 @@
     [self.mappingsController activateMapping:chosen];
 }
 
+#define OUTPUT_PANE_MIN_WIDTH 390
+
+- (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
+    return proposedMax - OUTPUT_PANE_MIN_WIDTH;
+}
+
+-(void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize {
+    NSView *inputView = splitView.subviews[0];
+    NSView *outputView = splitView.subviews[1];
+    if (outputView.frame.size.width < OUTPUT_PANE_MIN_WIDTH) {
+        NSSize frameSize = splitView.frame.size;
+        CGFloat inputWidth = frameSize.width - OUTPUT_PANE_MIN_WIDTH - splitView.dividerThickness;
+        inputView.frame = NSMakeRect(inputWidth, frameSize.height,
+                                    inputView.frame.size.width,
+                                    inputView.frame.size.height);
+        outputView.frame = NSMakeRect(inputWidth + splitView.dividerThickness,
+                                     0,
+                                     OUTPUT_PANE_MIN_WIDTH,
+                                     frameSize.height);
+    } else
+        [splitView adjustSubviews];
+}
+
 @end

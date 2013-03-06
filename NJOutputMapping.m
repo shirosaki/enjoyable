@@ -37,7 +37,7 @@
 }
 
 - (void)trigger {
-    EnjoyableApplicationDelegate *ctrl = NSApplication.sharedApplication.delegate;
+    EnjoyableApplicationDelegate *ctrl = (EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate;
     [ctrl.mappingsController activateMapping:_mapping];
 }
 
