@@ -8,19 +8,28 @@
 
 #import "NSString+FixFilename.h"
 
+@implementation NSCharacterSet (FixFilename)
+
++ (NSCharacterSet *)invalidPathComponentCharacterSet {
+    return [NSCharacterSet characterSetWithCharactersInString:@"\"\\/:*?<>|"];
+}
+
+@end
+
 @implementation NSString (FixFilename)
 
 - (NSString *)stringByFixingPathComponent {
-    static NSCharacterSet *invalid;
-    if (!invalid)
-        invalid = [NSCharacterSet characterSetWithCharactersInString:@"/:"];
+    NSCharacterSet *invalid = NSCharacterSet.invalidPathComponentCharacterSet;
+    NSCharacterSet *whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet;
     NSArray *parts = [self componentsSeparatedByCharactersInSet:invalid];
-    NSString *newName = [parts componentsJoinedByString:@""];
-    if (!newName.length)
+    NSString *name = [parts componentsJoinedByString:@"_"];
+    name = [name stringByTrimmingCharactersInSet:whitespace];
+    if (!name.length)
         return @"_";
-    if ([newName characterAtIndex:0] == '.')
-        newName = [@"_" stringByAppendingString:newName];
-    return newName;
+    unichar first = [name characterAtIndex:0];
+    if (first == '.' || first == '-')
+        name = [@"_" stringByAppendingString:name];
+    return name;
 }
 
 @end

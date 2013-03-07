@@ -299,7 +299,7 @@
     NSSavePanel *panel = [NSSavePanel savePanel];
     panel.allowedFileTypes = @[ @"enjoyable" ];
     NJMapping *mapping = _currentMapping;
-    panel.nameFieldStringValue = mapping.name;
+    panel.nameFieldStringValue = [mapping.name stringByFixingPathComponent];
     NSWindow *window = NSApplication.sharedApplication.keyWindow;
     [panel beginSheetModalForWindow:window
                   completionHandler:^(NSInteger result) {
@@ -422,6 +422,10 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
     if (rowIndexes.count == 1 && rowIndexes.firstIndex != 0) {
         [pboard declareTypes:@[PB_ROW, NSFilesPromisePboardType] owner:nil];
         [pboard setString:@(rowIndexes.firstIndex).stringValue forType:PB_ROW];
+        [pboard setPropertyList:@[@"enjoyable"] forType:NSFilesPromisePboardType];
+        return YES;
+    } else if (rowIndexes.count == 1 && rowIndexes.firstIndex == 0) {
+        [pboard declareTypes:@[NSFilesPromisePboardType] owner:nil];
         [pboard setPropertyList:@[@"enjoyable"] forType:NSFilesPromisePboardType];
         return YES;
     } else {
