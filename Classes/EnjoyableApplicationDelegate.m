@@ -108,6 +108,11 @@
 }
 
 #define OUTPUT_PANE_MIN_WIDTH 390
+#define INPUT_PANE_MIN_WIDTH 160
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex {
+    return INPUT_PANE_MIN_WIDTH;
+}
 
 - (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
     return proposedMax - OUTPUT_PANE_MIN_WIDTH;

@@ -113,6 +113,7 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     dev.index = findAvailableIndex(_devices, dev);
     [_devices addObject:dev];
     [outlineView reloadData];
+    [connectDevicePrompt setHidden:!!_devices.count];
 }
 
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
@@ -138,6 +139,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     if (match) {
         [_devices removeObject:match];
         [outlineView reloadData];
+        [connectDevicePrompt setHidden:!!_devices.count];
     }
     
 }

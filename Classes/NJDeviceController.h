@@ -17,6 +17,7 @@
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NSButton *translatingEventsButton;
     IBOutlet NSMenuItem *translatingEventsMenu;
+    IBOutlet NSView *connectDevicePrompt;
 }
 
 @property (nonatomic, readonly) NJInput *selectedInput;
