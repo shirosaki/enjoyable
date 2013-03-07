@@ -7,12 +7,9 @@
 //
 
 @class NJDeviceController;
-@class NJOutputController;
 @class NJMappingsController;
 
-@interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
-                                                    NSSplitViewDelegate>
-{
+@interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate> {
     IBOutlet NSMenu *dockMenuBase;
     IBOutlet NSWindow *window;
 }
