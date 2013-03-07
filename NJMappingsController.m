@@ -116,8 +116,9 @@
     if (tableView.selectedRow == 0)
         return;
     
-    [_mappings removeObjectAtIndex:tableView.selectedRow];
-    [self activateMapping:_mappings[0]];
+    NSInteger selectedRow = tableView.selectedRow;
+    [_mappings removeObjectAtIndex:selectedRow];
+    [self activateMapping:_mappings[MIN(selectedRow, _mappings.count - 1)]];
     [self mappingsChanged];
 }
 
