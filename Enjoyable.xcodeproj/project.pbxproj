@@ -37,6 +37,7 @@
 		EEAA9CE116E808E600256B64 /* NSMutableArray+MoveObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */; };
 		EEAA9CE416E816C800256B64 /* NSFileManager+UniqueNames.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE316E816C800256B64 /* NSFileManager+UniqueNames.m */; };
 		EEAA9CE716E81C8400256B64 /* NSString+FixFilename.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE616E81C8400256B64 /* NSString+FixFilename.m */; };
+		EEDFE52816E8957200CD27E0 /* com.yukkurigames.Enjoyable.mapping.icns in Resources */ = {isa = PBXBuildFile; fileRef = EEDFE52716E8957200CD27E0 /* com.yukkurigames.Enjoyable.mapping.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		EEAA9CE316E816C800256B64 /* NSFileManager+UniqueNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+UniqueNames.m"; sourceTree = "<group>"; };
 		EEAA9CE516E81C8400256B64 /* NSString+FixFilename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FixFilename.h"; sourceTree = "<group>"; };
 		EEAA9CE616E81C8400256B64 /* NSString+FixFilename.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FixFilename.m"; sourceTree = "<group>"; };
+		EEDFE52716E8957200CD27E0 /* com.yukkurigames.Enjoyable.mapping.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = com.yukkurigames.Enjoyable.mapping.icns; sourceTree = "<group>"; };
 		EEF86B7316E2241000674B87 /* NJInputPathElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJInputPathElement.h; sourceTree = "<group>"; };
 		EEF86B7416E298CD00674B87 /* NJEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJEvents.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +211,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EEDFE52716E8957200CD27E0 /* com.yukkurigames.Enjoyable.mapping.icns */,
 				EE03150C16E63481002B2DCE /* Help */,
 				D5617A080FAEAF8300928B3A /* icon.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -304,6 +307,7 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				D5F80A9D0FB0A2FF0006A4DE /* icon.icns in Resources */,
 				EE03150D16E63481002B2DCE /* Help in Resources */,
+				EEDFE52816E8957200CD27E0 /* com.yukkurigames.Enjoyable.mapping.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

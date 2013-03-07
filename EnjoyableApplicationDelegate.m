@@ -145,4 +145,11 @@
     return menu;
 }
 
+- (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
+    NSURL *url = [NSURL fileURLWithPath:filename];
+    [self.mappingsController addMappingWithContentsOfURL:url];
+    return YES;
+}
+
+
 @end

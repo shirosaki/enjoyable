@@ -32,8 +32,8 @@
 }
 
 - (void)awakeFromNib {
-    [tableView registerForDraggedTypes:@[PB_ROW]];
-    [tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO]; 
+    [tableView registerForDraggedTypes:@[PB_ROW, NSURLPboardType]];
+    [tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name {
@@ -219,6 +219,67 @@
     return mapping;
 }
 
+- (void)addMappingWithContentsOfURL:(NSURL *)url {
+    NSWindow *window = popoverActivate.window;
+    NSError *error;
+    NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
+                                                    mappings:_mappings
+                                                       error:&error];
+    
+    if (mapping && !error) {
+        BOOL conflict = NO;
+        NJMapping *mergeInto = self[mapping.name];
+        for (id key in mapping.entries) {
+            if (mergeInto.entries[key]
+                && ![mergeInto.entries[key] isEqual:mapping.entries[key]]) {
+                conflict = YES;
+                break;
+            }
+        }
+        
+        if (conflict) {
+            NSAlert *conflictAlert = [[NSAlert alloc] init];
+            conflictAlert.messageText = @"Replace existing mappings?";
+            conflictAlert.informativeText =
+            [NSString stringWithFormat:
+             @"This file contains inputs you've already mapped in \"%@\". Do you "
+             @"want to merge them and replace your existing mappings, or import this "
+             @"as a separate mapping?", mapping.name];
+            [conflictAlert addButtonWithTitle:@"Merge"];
+            [conflictAlert addButtonWithTitle:@"Cancel"];
+            [conflictAlert addButtonWithTitle:@"New Mapping"];
+            NSInteger res = [conflictAlert runModal];
+            if (res == NSAlertSecondButtonReturn)
+                return;
+            else if (res == NSAlertThirdButtonReturn)
+                mergeInto = nil;
+        }
+        
+        if (mergeInto) {
+            [mergeInto.entries addEntriesFromDictionary:mapping.entries];
+            mapping = mergeInto;
+        } else {
+            [_mappings addObject:mapping];
+        }
+        
+        [self activateMapping:mapping];
+        [self mappingsChanged];
+        
+        if (conflict && !mergeInto) {
+            [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
+            [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
+        }
+    }
+    
+    if (error) {
+        [window presentError:error
+              modalForWindow:window
+                    delegate:nil
+          didPresentSelector:nil
+                 contextInfo:nil];
+    }
+}
+
 - (void)importPressed:(id)sender {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     panel.allowedFileTypes = @[ @"enjoyable", @"json", @"txt" ];
@@ -227,65 +288,10 @@
                   completionHandler:^(NSInteger result) {
                       if (result != NSFileHandlingPanelOKButton)
                           return;
-
                       [panel close];
-                      NSError *error;
-                      NJMapping *mapping = [self mappingWithURL:panel.URL error:&error];
-                      
-                      if (!error) {
-                          BOOL conflict = NO;
-                          NJMapping *mergeInto = self[mapping.name];
-                          for (id key in mapping.entries) {
-                              if (mergeInto.entries[key]
-                                  && ![mergeInto.entries[key] isEqual:mapping.entries[key]]) {
-                                  conflict = YES;
-                                  break;
-                              }
-                          }
-                          
-                          if (conflict) {
-                              NSAlert *conflictAlert = [[NSAlert alloc] init];
-                              conflictAlert.messageText = @"Replace existing mappings?";
-                              conflictAlert.informativeText =
-                                  [NSString stringWithFormat:
-                                   @"This file contains inputs you've already mapped in \"%@\". Do you "
-                                   @"want to merge them and replace your existing mappings, or import this "
-                                   @"as a separate mapping?", mapping.name];
-                              [conflictAlert addButtonWithTitle:@"Merge"];
-                              [conflictAlert addButtonWithTitle:@"Cancel"];
-                              [conflictAlert addButtonWithTitle:@"New Mapping"];
-                              NSInteger res = [conflictAlert runModal];
-                              if (res == NSAlertSecondButtonReturn)
-                                  return;
-                              else if (res == NSAlertThirdButtonReturn)
-                                  mergeInto = nil;
-                          }
-                          
-                          if (mergeInto) {
-                              [mergeInto.entries addEntriesFromDictionary:mapping.entries];
-                              mapping = mergeInto;
-                          } else {
-                              [_mappings addObject:mapping];
-                          }
-                          
-                          [self activateMapping:mapping];
-                          [self mappingsChanged];
-                          
-                          if (conflict && !mergeInto) {
-                              [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
-                              [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
-                          }
-                      }
-                      
-                      if (error) {
-                          [window presentError:error
-                                modalForWindow:window
-                                      delegate:nil
-                            didPresentSelector:nil
-                                   contextInfo:nil];
-                      }
+                      [self addMappingWithContentsOfURL:panel.URL];
                   }];
-     
+    
 }
 
 - (void)exportPressed:(id)sender {
@@ -341,7 +347,7 @@
     }
 }
 
-- (BOOL)tableView:(NSTableView *)tableView
+- (BOOL)tableView:(NSTableView *)tableView_
        acceptDrop:(id <NSDraggingInfo>)info
               row:(NSInteger)row
     dropOperation:(NSTableViewDropOperation)dropOperation {
@@ -352,6 +358,20 @@
         [_mappings moveObjectAtIndex:srcRow toIndex:row];
         [self mappingsChanged];
         return YES;
+    } else if ([pboard.types containsObject:NSURLPboardType]) {
+        NSURL *url = [NSURL URLFromPasteboard:pboard];
+        NSError *error;
+        NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
+                                                        mappings:_mappings
+                                                           error:&error];
+        if (error) {
+            [tableView_ presentError:error];
+            return NO;
+        } else {
+            [_mappings insertObject:mapping atIndex:row];
+            [self mappingsChanged];
+            return YES;
+        }
     } else {
         return NO;
     }
@@ -364,7 +384,15 @@
     NSPasteboard *pboard = [info draggingPasteboard];
     if ([pboard.types containsObject:PB_ROW]) {
         [tableView_ setDropRow:MAX(1, row) dropOperation:NSTableViewDropAbove];
-        return NSDragOperationGeneric;
+        return NSDragOperationMove;
+    } else if ([pboard.types containsObject:NSURLPboardType]) {
+        NSURL *url = [NSURL URLFromPasteboard:pboard];
+        if ([url.pathExtension isEqualToString:@"enjoyable"]) {
+            [tableView_ setDropRow:MAX(1, row) dropOperation:NSTableViewDropAbove];
+            return NSDragOperationCopy;
+        } else {
+            return NSDragOperationNone;
+        }
     } else {
         return NSDragOperationNone;
     }

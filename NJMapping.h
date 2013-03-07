@@ -20,4 +20,6 @@
 - (NSDictionary *)serialize;
 - (BOOL)writeToURL:(NSURL *)url error:(NSError **)error;
 
++ (id)mappingWithContentsOfURL:(NSURL *)url mappings:(NSArray *)mappings error:(NSError **)error;
+
 @end
