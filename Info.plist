@@ -2,53 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeIconFile</key>
-			<string>com.yukkurigames.Enjoyable.mapping.icns</string>
-			<key>UTTypeDescription</key>
-			<string>Enjoyable Mapping</string>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.yukkurigames.Enjoyable.mapping</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>enjoyable</string>
-				</array>
-				<key>public.mime-type</key>
-				<string>application/json</string>
-			</dict>
-		</dict>
-	</array>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>com.yukkurigames.Enjoyable.mapping.icns</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>enjoyable</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>com.yukkurigames.Enjoyable.mapping.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>com.yukkurigames.Enjoyable.mapping</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.yukkurigames.Enjoyable.mapping</string>
 			</array>
-			<key>CFBundleTypeName</key>
-			<string>com.yukkurigames.Enjoyable.mapping</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
 		</dict>
 	</array>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleHelpBookFolder</key>
@@ -56,7 +32,7 @@
 	<key>CFBundleHelpBookName</key>
 	<string>com.yukkurigames.Enjoyable.help</string>
 	<key>CFBundleIconFile</key>
-	<string>icon.icns</string>
+	<string>Icon</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.yukkurigames.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -81,5 +57,29 @@
 	<string>YES</string>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Enjoyable Mapping</string>
+			<key>UTTypeIconFile</key>
+			<string>com.yukkurigames.Enjoyable.mapping.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.yukkurigames.Enjoyable.mapping</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>enjoyable</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/json</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
