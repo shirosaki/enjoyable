@@ -18,5 +18,6 @@
 - (NJOutput *)objectForKeyedSubscript:(NJInput *)input;
 - (void)setObject:(NJOutput *)output forKeyedSubscript:(NJInput *)input;
 - (NSDictionary *)serialize;
+- (BOOL)writeToURL:(NSURL *)url error:(NSError **)error;
 
 @end

@@ -42,4 +42,15 @@
     return @{ @"name": _name, @"entries": entries };
 }
 
+- (BOOL)writeToURL:(NSURL *)url error:(NSError **)error {
+    [NSProcessInfo.processInfo disableSuddenTermination];
+    NSDictionary *serialization = [self serialize];
+    NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
+                                                   options:NSJSONWritingPrettyPrinted
+                                                     error:error];
+    BOOL success = json && [json writeToURL:url options:NSDataWritingAtomic error:error];
+    [NSProcessInfo.processInfo enableSuddenTermination];
+    return success;
+}
+
 @end

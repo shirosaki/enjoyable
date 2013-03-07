@@ -35,6 +35,8 @@
 		EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */; };
 		EE96929416E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */; };
 		EEAA9CE116E808E600256B64 /* NSMutableArray+MoveObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */; };
+		EEAA9CE416E816C800256B64 /* NSFileManager+UniqueNames.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE316E816C800256B64 /* NSFileManager+UniqueNames.m */; };
+		EEAA9CE716E81C8400256B64 /* NSString+FixFilename.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAA9CE616E81C8400256B64 /* NSString+FixFilename.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +94,10 @@
 		EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+RepresentedObjectAccessors.m"; sourceTree = "<group>"; };
 		EEAA9CDF16E808E600256B64 /* NSMutableArray+MoveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MoveObject.h"; sourceTree = "<group>"; };
 		EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MoveObject.m"; sourceTree = "<group>"; };
+		EEAA9CE216E816C800256B64 /* NSFileManager+UniqueNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+UniqueNames.h"; sourceTree = "<group>"; };
+		EEAA9CE316E816C800256B64 /* NSFileManager+UniqueNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+UniqueNames.m"; sourceTree = "<group>"; };
+		EEAA9CE516E81C8400256B64 /* NSString+FixFilename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FixFilename.h"; sourceTree = "<group>"; };
+		EEAA9CE616E81C8400256B64 /* NSString+FixFilename.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FixFilename.m"; sourceTree = "<group>"; };
 		EEF86B7316E2241000674B87 /* NJInputPathElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJInputPathElement.h; sourceTree = "<group>"; };
 		EEF86B7416E298CD00674B87 /* NJEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NJEvents.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -224,6 +230,8 @@
 		EE1D5F8B16E403D600749C36 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				EEAA9CE216E816C800256B64 /* NSFileManager+UniqueNames.h */,
+				EEAA9CE316E816C800256B64 /* NSFileManager+UniqueNames.m */,
 				EE1D7C9416E0ECCF00B000EB /* NSError+Description.h */,
 				EE1D7C9516E0ECCF00B000EB /* NSError+Description.m */,
 				EE1D7C9016E01E7000B000EB /* NSView+FirstResponder.h */,
@@ -232,6 +240,8 @@
 				EE96929316E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m */,
 				EEAA9CDF16E808E600256B64 /* NSMutableArray+MoveObject.h */,
 				EEAA9CE016E808E600256B64 /* NSMutableArray+MoveObject.m */,
+				EEAA9CE516E81C8400256B64 /* NSString+FixFilename.h */,
+				EEAA9CE616E81C8400256B64 /* NSString+FixFilename.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -343,6 +353,8 @@
 				EE1D7C9616E0ECCF00B000EB /* NSError+Description.m in Sources */,
 				EE96929416E54B480054A3C8 /* NSMenu+RepresentedObjectAccessors.m in Sources */,
 				EEAA9CE116E808E600256B64 /* NSMutableArray+MoveObject.m in Sources */,
+				EEAA9CE416E816C800256B64 /* NSFileManager+UniqueNames.m in Sources */,
+				EEAA9CE716E81C8400256B64 /* NSString+FixFilename.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

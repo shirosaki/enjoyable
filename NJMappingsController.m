@@ -18,6 +18,7 @@
 @implementation NJMappingsController {
     NSMutableArray *_mappings;
     NJMapping *manualMapping;
+    NSString *draggingName;
 }
 
 - (id)init {
@@ -32,6 +33,7 @@
 
 - (void)awakeFromNib {
     [tableView registerForDraggedTypes:@[PB_ROW]];
+    [tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO]; 
 }
 
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name {
@@ -297,16 +299,8 @@
                       if (result != NSFileHandlingPanelOKButton)
                           return;
                       [panel close];
-                      [NSProcessInfo.processInfo disableSuddenTermination];
                       NSError *error;
-                      NSDictionary *serialization = [mapping serialize];
-                      NSData *json = [NSJSONSerialization dataWithJSONObject:serialization
-                                                                     options:NSJSONWritingPrettyPrinted
-                                                                       error:&error];
-                      if (!error)
-                          [json writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
-                      
-                      [NSProcessInfo.processInfo enableSuddenTermination];
+                      [mapping writeToURL:panel.URL error:&error];
                       if (error) {
                           [window presentError:error
                                 modalForWindow:window
@@ -318,7 +312,9 @@
 }
 
 - (IBAction)mappingPressed:(id)sender {
-    [popover showRelativeToRect:popoverActivate.bounds ofView:popoverActivate preferredEdge:NSMinXEdge];
+    [popover showRelativeToRect:popoverActivate.bounds
+                         ofView:popoverActivate
+                  preferredEdge:NSMinXEdge];
 }
 
 - (void)popoverWillShow:(NSNotification *)notification {
@@ -374,17 +370,34 @@
     }
 }
 
-- (BOOL)tableView:(NSTableView *)tableView
+- (NSArray *)tableView:(NSTableView *)tableView_
+namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
+forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
+    NJMapping *toSave = self[indexSet.firstIndex];
+    NSString *filename = [[toSave.name stringByFixingPathComponent]
+                          stringByAppendingPathExtension:@"enjoyable"];
+    NSURL *dst = [dropDestination URLByAppendingPathComponent:filename];
+    dst = [NSFileManager.defaultManager generateUniqueURLWithBase:dst];     
+    NSError *error;
+    if (![toSave writeToURL:dst error:&error]) {
+        [tableView_ presentError:error];
+        return @[];
+    } else {
+        return @[dst.lastPathComponent];
+    }
+}
+
+- (BOOL)tableView:(NSTableView *)tableView_
 writeRowsWithIndexes:(NSIndexSet *)rowIndexes
      toPasteboard:(NSPasteboard *)pboard {
     if (rowIndexes.count == 1 && rowIndexes.firstIndex != 0) {
-        [pboard declareTypes:@[PB_ROW] owner:nil];
+        [pboard declareTypes:@[PB_ROW, NSFilesPromisePboardType] owner:nil];
         [pboard setString:@(rowIndexes.firstIndex).stringValue forType:PB_ROW];
+        [pboard setPropertyList:@[@"enjoyable"] forType:NSFilesPromisePboardType];
         return YES;
     } else {
         return NO;
     }
-    
 }
 
 @end

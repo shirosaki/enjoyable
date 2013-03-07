@@ -12,3 +12,5 @@
 #import "NSMenu+RepresentedObjectAccessors.h"
 #import "NSView+FirstResponder.h"
 #import "NSMutableArray+MoveObject.h"
+#import "NSFileManager+UniqueNames.h"
+#import "NSString+FixFilename.h"
