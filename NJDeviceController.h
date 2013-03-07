@@ -12,9 +12,9 @@
 @class NJOutputController;
 
 @interface NJDeviceController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
-	IBOutlet NSOutlineView *outlineView;
-	IBOutlet NJOutputController *outputController;
-	IBOutlet NJMappingsController *mappingsController;
+    IBOutlet NSOutlineView *outlineView;
+    IBOutlet NJOutputController *outputController;
+    IBOutlet NJMappingsController *mappingsController;
     IBOutlet NSButton *translatingEventsButton;
     IBOutlet NSMenuItem *translatingEventsMenu;
 }

@@ -122,7 +122,7 @@
     [self mappingsChanged];
 }
 
--(void)tableViewSelectionDidChange:(NSNotification *)notify {
+- (void)tableViewSelectionDidChange:(NSNotification *)notify {
     [self activateMapping:self[tableView.selectedRow]];
 }
 

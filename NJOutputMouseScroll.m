@@ -22,10 +22,10 @@
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
+    NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
     output.direction = [serialization[@"direction"] intValue];
     output.speed = [serialization[@"direction"] floatValue];
-	return output;
+    return output;
 }
 
 - (BOOL)isContinuous {

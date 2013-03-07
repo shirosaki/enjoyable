@@ -113,7 +113,7 @@
     return proposedMax - OUTPUT_PANE_MIN_WIDTH;
 }
 
--(void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize {
+- (void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize {
     NSView *inputView = splitView.subviews[0];
     NSView *outputView = splitView.subviews[1];
     if (outputView.frame.size.width < OUTPUT_PANE_MIN_WIDTH) {

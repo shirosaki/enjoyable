@@ -11,10 +11,6 @@
 
 @implementation NJOutputMouseMove
 
--(BOOL) isContinuous {
-    return YES;
-}
-
 + (NSString *)serializationCode {
     return @"mouse move";
 }
@@ -28,12 +24,16 @@
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	NJOutputMouseMove *output = [[NJOutputMouseMove alloc] init];
+    NJOutputMouseMove *output = [[NJOutputMouseMove alloc] init];
     output.axis = [serialization[@"axis"] intValue];
     output.speed = [serialization[@"speed"] floatValue];
     if (!output.speed)
         output.speed = 4;
-	return output;
+    return output;
+}
+
+- (BOOL)isContinuous {
+    return YES;
 }
 
 - (BOOL)update:(NJDeviceController *)jc {

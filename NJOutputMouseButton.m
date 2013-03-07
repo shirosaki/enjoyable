@@ -19,12 +19,12 @@
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
                   withMappings:(NSArray *)mappings {
-	NJOutputMouseButton *output = [[NJOutputMouseButton alloc] init];
+    NJOutputMouseButton *output = [[NJOutputMouseButton alloc] init];
     output.button = [serialization[@"button"] intValue];
-	return output;
+    return output;
 }
 
--(void) trigger {
+- (void)trigger {
     CGFloat height = NSScreen.mainScreen.frame.size.height;
     NSPoint mouseLoc = NSEvent.mouseLocation;
     CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseDown : kCGEventRightMouseDown;
@@ -36,7 +36,7 @@
     CFRelease(click);
 }
 
--(void) untrigger {
+- (void)untrigger {
     CGFloat height = NSScreen.mainScreen.frame.size.height;
     NSPoint mouseLoc = NSEvent.mouseLocation;
     CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
