@@ -65,19 +65,27 @@
                                             count:len];
 }
 
-- (void)activateMappingForProcess:(NSString *)processName {
-    if ([manualMapping.name.lowercaseString isEqualToString:@"@application"]) {
-        manualMapping.name = processName;
-        [self mappingsChanged];
-    } else {
-        NJMapping *oldMapping = manualMapping;
-        NJMapping *newMapping = self[processName];
-        if (!newMapping)
-            newMapping = oldMapping;
-        if (newMapping != _currentMapping)
-            [self activateMapping:newMapping];
-        manualMapping = oldMapping;
+- (void)activateMappingForProcess:(NSRunningApplication *)app {
+    NJMapping *oldMapping = manualMapping;
+    NSArray *names = app.possibleMappingNames;
+    BOOL found = NO;
+    for (NSString *name in names) {
+        NJMapping *mapping = self[name];
+        if (mapping) {
+            [self activateMapping:self[name]];
+            found = YES;
+            break;
+        }
     }
+
+    if (!found) {
+        [self activateMapping:oldMapping];
+        if ([oldMapping.name.lowercaseString isEqualToString:@"@application"]) {
+            oldMapping.name = app.bestMappingName;
+            [self mappingsChanged];
+        }
+    }
+    manualMapping = oldMapping;
 }
 
 - (void)updateInterfaceForCurrentMapping {

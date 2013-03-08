@@ -31,7 +31,7 @@
 - (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx;
 - (void)addMappingWithContentsOfURL:(NSURL *)url;
 - (void)activateMapping:(NJMapping *)mapping;
-- (void)activateMappingForProcess:(NSString *)processName;
+- (void)activateMappingForProcess:(NSRunningApplication *)app;
 - (void)save;
 - (void)load;
 

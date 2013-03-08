@@ -10,6 +10,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D594BEFF0FAE7397007A85F2 /* IOKit.framework */; };
 		EE6A122E16E8F46300EDBD32 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = EE6A122D16E8F46300EDBD32 /* Icon.icns */; };
+		EEE73B1616EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */; };
 		EEF17D1916E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns in Resources */ = {isa = PBXBuildFile; fileRef = EEF17D1716E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns */; };
 		EEF17D1F16E8E23A00D7DC4D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEF17D1B16E8E23A00D7DC4D /* InfoPlist.strings */; };
 		EEF17D2016E8E23A00D7DC4D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEF17D1D16E8E23A00D7DC4D /* MainMenu.xib */; };
@@ -48,6 +49,8 @@
 		8D1107320486CEB800E47090 /* Enjoyable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enjoyable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D594BEFF0FAE7397007A85F2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		EE6A122D16E8F46300EDBD32 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
+		EEE73B1416EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunningApplication+NJPossibleNames.h"; path = "Categories/NSRunningApplication+NJPossibleNames.h"; sourceTree = "<group>"; };
+		EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunningApplication+NJPossibleNames.m"; path = "Categories/NSRunningApplication+NJPossibleNames.m"; sourceTree = "<group>"; };
 		EEF17D1716E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = com.yukkurigames.Enjoyable.mapping.icns; path = Resources/com.yukkurigames.Enjoyable.mapping.icns; sourceTree = "<group>"; };
 		EEF17D1C16E8E23A00D7DC4D /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EEF17D1E16E8E23A00D7DC4D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				EEF17D3016E8E2E100D7DC4D /* NSString+FixFilename.m */,
 				EEF17D3116E8E2E100D7DC4D /* NSView+FirstResponder.h */,
 				EEF17D3216E8E2E100D7DC4D /* NSView+FirstResponder.m */,
+				EEE73B1416EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.h */,
+				EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				EEF17D6A16E8E2EF00D7DC4D /* NJOutputMouseButton.m in Sources */,
 				EEF17D6B16E8E2EF00D7DC4D /* NJOutputMouseMove.m in Sources */,
 				EEF17D6C16E8E2EF00D7DC4D /* NJOutputMouseScroll.m in Sources */,
+				EEE73B1616EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,11 +17,8 @@
 
 - (void)didSwitchApplication:(NSNotification *)note {
     NSRunningApplication *activeApp = note.userInfo[NSWorkspaceApplicationKey];
-    NSString *name = activeApp.localizedName;
-    if (!name)
-        name = activeApp.bundleIdentifier;
-    if (name && ![name isEqualToString:NSRunningApplication.currentApplication.localizedName])
-        [self.mappingsController activateMappingForProcess:name];
+    if (activeApp)
+        [self.mappingsController activateMappingForProcess:activeApp];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
