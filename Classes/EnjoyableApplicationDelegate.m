@@ -126,7 +126,7 @@
 }
 
 - (void)addMappingsToMenu:(NSMenu *)menu withKeys:(BOOL)withKeys atIndex:(NSInteger)index {
-    static const NSUInteger MAXIMUM_ITEMS = 5;
+    static const NSUInteger MAXIMUM_ITEMS = 15;
     int added = 0;
     for (NJMapping *mapping in self.mappingsController) {
         NSString *keyEquiv = (++added < 10 && withKeys) ? @(added).stringValue : @"";
@@ -137,9 +137,14 @@
         item.state = mapping == self.mappingsController.currentMapping;
         [menu insertItem:item atIndex:index++];
         if (added == MAXIMUM_ITEMS && self.mappingsController.mappings.count > MAXIMUM_ITEMS + 1) {
-            NSMenuItem *end = [[NSMenuItem alloc] initWithTitle:@"…"
+            NSString *msg = [NSString stringWithFormat:@"(and %lu more…)",
+                             self.mappingsController.mappings.count - MAXIMUM_ITEMS];
+            NSMenuItem *end = [[NSMenuItem alloc] initWithTitle:msg
                                                          action:@selector(restoreWindowAndShowMappings:)
                                                   keyEquivalent:@""];
+            // There must be a represented object here so the item gets
+            // removed correctly when the menus are regenerated.
+            end.representedObject = self.mappingsController.mappings;
             end.target = self;
             [menu insertItem:end atIndex:index++];
             break;
