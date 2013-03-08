@@ -1,8 +1,8 @@
 Enjoyable
 =========
 
-Enjoyable is a simple program for Mac OS X which allows you to use
-joystick inputs like a mouse or keyboard. If you've ever played a
+Enjoyable is an application for Mac OS X which allows you to use
+controller inputs like a mouse or keyboard. If you've ever played a
 video game which only supports mouse and keyboard input but you want
 to use a joystick or gamepad, then Enjoyable is the program for you.
 
@@ -16,7 +16,7 @@ Enjoyable supports
  * Modern OS X features like resume and automatic termination
 
 Enjoyable is free software written by Joe Wreschnig and is based on
-the Enjoy codebase written by [Yifeng Huang](htty://nongraphical.com)
+the Enjoy codebase written by [Yifeng Huang](http://nongraphical.com)
 and [Sam McCall](http://abstractable.net/enjoy/).
 
 ## How to Use
@@ -33,8 +33,8 @@ manual available in Help Viewer via `⌘?`.
 
 ## License
 
-Copyright 2013 Joe Wreschnig
-          2012 Yifeng Huang
+Copyright 2013 Joe Wreschnig  
+          2012 Yifeng Huang  
           2009 Sam McCall, University of Otago
 
 Permission is hereby granted, free of charge, to any person obtaining
