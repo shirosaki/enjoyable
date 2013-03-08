@@ -1,0 +1,53 @@
+{
+  "name" : "Red Rogue",
+  "entries" : {
+    "1356:616:1~Button 11" : {
+      "type" : "key press",
+      "key" : 3
+    },
+    "1356:616:1~Button 6" : {
+      "type" : "key press",
+      "key" : 124
+    },
+    "1356:616:1~Button 7" : {
+      "type" : "key press",
+      "key" : 125
+    },
+    "1356:616:1~Button 15" : {
+      "type" : "key press",
+      "key" : 7
+    },
+    "1356:616:1~Button 12" : {
+      "type" : "key press",
+      "key" : 3
+    },
+    "1356:616:1~Button 8" : {
+      "type" : "key press",
+      "key" : 123
+    },
+    "1356:616:1~Button 16" : {
+      "type" : "key press",
+      "key" : 6
+    },
+    "1356:616:1~Button 13" : {
+      "type" : "key press",
+      "key" : 49
+    },
+    "1356:616:1~Button 4" : {
+      "type" : "key press",
+      "key" : 49
+    },
+    "1356:616:1~Button 10" : {
+      "type" : "key press",
+      "key" : 8
+    },
+    "1356:616:1~Button 5" : {
+      "type" : "key press",
+      "key" : 126
+    },
+    "1356:616:1~Button 14" : {
+      "type" : "key press",
+      "key" : 9
+    }
+  }
+}

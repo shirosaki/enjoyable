@@ -1,0 +1,49 @@
+{
+  "name" : "Forget-Me-Not",
+  "entries" : {
+    "1356:616:1~Axis 2~Low" : {
+      "type" : "key press",
+      "key" : 126
+    },
+    "1356:616:1~Button 8" : {
+      "type" : "key press",
+      "key" : 123
+    },
+    "1356:616:1~Button 7" : {
+      "type" : "key press",
+      "key" : 125
+    },
+    "1356:616:1~Button 6" : {
+      "type" : "key press",
+      "key" : 124
+    },
+    "1356:616:1~Button 5" : {
+      "type" : "key press",
+      "key" : 126
+    },
+    "1356:616:1~Button 4" : {
+      "type" : "key press",
+      "key" : 36
+    },
+    "1356:616:1~Button 16" : {
+      "type" : "key press",
+      "key" : 36
+    },
+    "1356:616:1~Button 15" : {
+      "type" : "key press",
+      "key" : 36
+    },
+    "1356:616:1~Axis 1~Low" : {
+      "type" : "key press",
+      "key" : 123
+    },
+    "1356:616:1~Axis 2~High" : {
+      "type" : "key press",
+      "key" : 125
+    },
+    "1356:616:1~Axis 1~High" : {
+      "type" : "key press",
+      "key" : 124
+    }
+  }
+}
