@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D594BEFF0FAE7397007A85F2 /* IOKit.framework */; };
+		EE3D897A16EA7EFC00596D1F /* Status Menu Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897916EA7EFC00596D1F /* Status Menu Icon@2x.png */; };
+		EE3D897C16EA806E00596D1F /* Status Menu Icon Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */; };
+		EE3D897F16EA817E00596D1F /* Status Menu Icon Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */; };
+		EE3D898016EA817E00596D1F /* Status Menu Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897E16EA817E00596D1F /* Status Menu Icon.png */; };
 		EE6A122E16E8F46300EDBD32 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = EE6A122D16E8F46300EDBD32 /* Icon.icns */; };
 		EEE73B1616EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */; };
 		EEF17D1916E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns in Resources */ = {isa = PBXBuildFile; fileRef = EEF17D1716E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns */; };
@@ -48,6 +52,10 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Enjoyable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enjoyable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D594BEFF0FAE7397007A85F2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		EE3D897916EA7EFC00596D1F /* Status Menu Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon@2x.png"; path = "Resources/Status Menu Icon@2x.png"; sourceTree = "<group>"; };
+		EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled@2x.png"; path = "Resources/Status Menu Icon Disabled@2x.png"; sourceTree = "<group>"; };
+		EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled.png"; path = "Resources/Status Menu Icon Disabled.png"; sourceTree = "<group>"; };
+		EE3D897E16EA817E00596D1F /* Status Menu Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon.png"; path = "Resources/Status Menu Icon.png"; sourceTree = "<group>"; };
 		EE6A122D16E8F46300EDBD32 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		EEE73B1416EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunningApplication+NJPossibleNames.h"; path = "Categories/NSRunningApplication+NJPossibleNames.h"; sourceTree = "<group>"; };
 		EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunningApplication+NJPossibleNames.m"; path = "Categories/NSRunningApplication+NJPossibleNames.m"; sourceTree = "<group>"; };
@@ -215,6 +223,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */,
+				EE3D897E16EA817E00596D1F /* Status Menu Icon.png */,
+				EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */,
+				EE3D897916EA7EFC00596D1F /* Status Menu Icon@2x.png */,
 				EE6A122D16E8F46300EDBD32 /* Icon.icns */,
 				EEF17D2116E8E24400D7DC4D /* Help */,
 				EEF17D1B16E8E23A00D7DC4D /* InfoPlist.strings */,
@@ -313,6 +325,10 @@
 				EEF17D2016E8E23A00D7DC4D /* MainMenu.xib in Resources */,
 				EEF17D2216E8E24400D7DC4D /* Help in Resources */,
 				EE6A122E16E8F46300EDBD32 /* Icon.icns in Resources */,
+				EE3D897A16EA7EFC00596D1F /* Status Menu Icon@2x.png in Resources */,
+				EE3D897C16EA806E00596D1F /* Status Menu Icon Disabled@2x.png in Resources */,
+				EE3D897F16EA817E00596D1F /* Status Menu Icon Disabled.png in Resources */,
+				EE3D898016EA817E00596D1F /* Status Menu Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
