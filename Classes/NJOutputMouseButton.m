@@ -10,6 +10,7 @@
 @implementation NJOutputMouseButton {
     NSDate *upTime;
     int clickCount;
+    NSPoint clickPosition;
 }
 
 + (NSTimeInterval)doubleClickInterval {
@@ -51,8 +52,8 @@
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
                                                _button);
 
-    NSLog(@"%@\n%@", upTime, [NSDate date]);
-    if (clickCount >= 3 || [upTime compare:[NSDate date]] == NSOrderedAscending)
+    if (clickCount >= 3 || [upTime compare:[NSDate date]] == NSOrderedAscending
+        || !CGPointEqualToPoint(NSEvent.mouseLocation, clickPosition))
         clickCount = 1;
     else
         ++clickCount;
@@ -63,17 +64,17 @@
 }
 
 - (void)untrigger {
+    upTime = [NJOutputMouseButton dateWithClickInterval];
+    clickPosition = NSEvent.mouseLocation;
     CGFloat height = NSScreen.mainScreen.frame.size.height;
-    NSPoint mouseLoc = NSEvent.mouseLocation;
     CGEventType eventType = (_button == kCGMouseButtonLeft) ? kCGEventLeftMouseUp : kCGEventRightMouseUp;
     CGEventRef click = CGEventCreateMouseEvent(NULL,
                                                eventType,
-                                               CGPointMake(mouseLoc.x, height - mouseLoc.y),
+                                               CGPointMake(clickPosition.x, height - clickPosition.y),
                                                _button);
     CGEventSetIntegerValueField(click, kCGMouseEventClickState, clickCount);
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
-    upTime = [NJOutputMouseButton dateWithClickInterval];
 }
 
 @end
