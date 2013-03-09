@@ -11,5 +11,6 @@
 
 @property (nonatomic, assign) int direction;
 @property (nonatomic, assign) float speed;
+@property (nonatomic, assign) BOOL smooth;
 
 @end

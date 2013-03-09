@@ -25,6 +25,7 @@
     IBOutlet NSPopUpButton *mappingPopup;
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NJDeviceController *inputController;
+    IBOutlet NSButton *smoothCheck;
 }
 
 @property (assign) BOOL enabled;
@@ -36,6 +37,7 @@
 - (IBAction)sdirChanged:(id)sender;
 - (IBAction)mouseSpeedChanged:(id)sender;
 - (IBAction)scrollSpeedChanged:(id)sender;
+- (IBAction)scrollTypeChanged:(id)sender;
 
 - (void)focusKey;
 

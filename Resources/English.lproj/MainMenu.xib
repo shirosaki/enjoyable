@@ -718,10 +718,42 @@ aW5nLg</string>
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
+								<object class="NSButton" id="20704797">
+									<reference key="NSNextResponder" ref="471332453"/>
+									<int key="NSvFlags">268</int>
+									<string key="NSFrame">{{343, 31}, {70, 18}}</string>
+									<reference key="NSSuperview" ref="471332453"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSButtonCell" key="NSCell" id="868379451">
+										<int key="NSCellFlags">67108864</int>
+										<int key="NSCellFlags2">268435456</int>
+										<string key="NSContents">Smooth</string>
+										<reference key="NSSupport" ref="45863614"/>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<reference key="NSControlView" ref="20704797"/>
+										<int key="NSButtonFlags">1211912448</int>
+										<int key="NSButtonFlags2">2</int>
+										<object class="NSCustomResource" key="NSNormalImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">NSSwitch</string>
+										</object>
+										<object class="NSButtonImageSource" key="NSAlternateImage">
+											<string key="NSImageName">NSSwitch</string>
+										</object>
+										<string key="NSAlternateContents"/>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">200</int>
+										<int key="NSPeriodicInterval">25</int>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
 								<object class="NSSegmentedControl" id="921829691">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{189, 33}, {224, 20}}</string>
+									<string key="NSFrame">{{189, 33}, {150, 20}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="792189805"/>
@@ -735,26 +767,27 @@ aW5nLg</string>
 										<reference key="NSControlView" ref="921829691"/>
 										<array class="NSMutableArray" key="NSSegmentImages">
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">86</double>
+												<double key="NSSegmentItemWidth">36</double>
+												<string key="NSSegmentItemLabel">←</string>
+												<int key="NSSegmentItemTag">-2</int>
+												<int key="NSSegmentItemImageScaling">0</int>
+											</object>
+											<object class="NSSegmentItem">
+												<double key="NSSegmentItemWidth">35</double>
+												<string key="NSSegmentItemLabel">→</string>
+												<int key="NSSegmentItemTag">2</int>
+												<int key="NSSegmentItemImageScaling">0</int>
+											</object>
+											<object class="NSSegmentItem">
+												<double key="NSSegmentItemWidth">35</double>
 												<string key="NSSegmentItemLabel">↑</string>
-												<string key="NSSegmentItemTooltip">Scroll up continuously</string>
+												<int key="NSSegmentItemTag">-1</int>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">85</double>
+												<double key="NSSegmentItemWidth">35</double>
 												<string key="NSSegmentItemLabel">↓</string>
-												<string key="NSSegmentItemTooltip">Scroll down continuously</string>
 												<int key="NSSegmentItemTag">1</int>
-												<int key="NSSegmentItemImageScaling">0</int>
-											</object>
-											<object class="NSSegmentItem">
-												<string key="NSSegmentItemLabel">⤒</string>
-												<string key="NSSegmentItemTooltip">Scroll up one step</string>
-												<int key="NSSegmentItemImageScaling">0</int>
-											</object>
-											<object class="NSSegmentItem">
-												<string key="NSSegmentItemLabel">⤓</string>
-												<string key="NSSegmentItemTooltip">Scroll down one step</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 										</array>
@@ -765,10 +798,10 @@ aW5nLg</string>
 								<object class="NSSlider" id="792189805">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{191, 24}, {176, 16}}</string>
+									<string key="NSFrame">{{191, 24}, {146, 16}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
+									<reference key="NSNextKeyView" ref="20704797"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSliderCell" key="NSCell" id="423057230">
@@ -777,11 +810,11 @@ aW5nLg</string>
 										<string key="NSContents"/>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="792189805"/>
-										<double key="NSMaxValue">30</double>
-										<double key="NSMinValue">0.0</double>
+										<double key="NSMaxValue">29</double>
+										<double key="NSMinValue">1</double>
 										<double key="NSValue">15</double>
 										<double key="NSAltIncValue">0.0</double>
-										<int key="NSNumberOfTickMarks">11</int>
+										<int key="NSNumberOfTickMarks">15</int>
 										<int key="NSTickMarkPosition">1</int>
 										<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
 										<bool key="NSVertical">NO</bool>
@@ -858,10 +891,10 @@ aW5nLg</string>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="385416822"/>
 										<double key="NSMaxValue">20</double>
-										<double key="NSMinValue">0.0</double>
+										<double key="NSMinValue">1</double>
 										<double key="NSValue">10</double>
 										<double key="NSAltIncValue">0.0</double>
-										<int key="NSNumberOfTickMarks">11</int>
+										<int key="NSNumberOfTickMarks">20</int>
 										<int key="NSTickMarkPosition">1</int>
 										<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
 										<bool key="NSVertical">NO</bool>
@@ -1935,6 +1968,22 @@ aW5nLg</string>
 					<int key="connectionID">709</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">scrollTypeChanged:</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="20704797"/>
+					</object>
+					<int key="connectionID">948</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">smoothCheck</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="20704797"/>
+					</object>
+					<int key="connectionID">949</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">keyDelegate</string>
 						<reference key="source" ref="57697638"/>
@@ -2485,6 +2534,7 @@ aW5nLg</string>
 							<reference ref="875916470"/>
 							<reference ref="385416822"/>
 							<reference ref="792189805"/>
+							<reference ref="20704797"/>
 						</array>
 						<reference key="parent" ref="177223957"/>
 					</object>
@@ -2765,6 +2815,19 @@ aW5nLg</string>
 						<reference key="object" ref="466839429"/>
 						<reference key="parent" ref="110575045"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">946</int>
+						<reference key="object" ref="20704797"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="868379451"/>
+						</array>
+						<reference key="parent" ref="471332453"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">947</int>
+						<reference key="object" ref="868379451"/>
+						<reference key="parent" ref="20704797"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2851,10 +2914,10 @@ aW5nLg</string>
 				<integer value="2" key="745.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="745.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="749.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="0" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="2" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="754.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="0" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="3" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="755.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="778.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2949,12 +3012,14 @@ aW5nLg</string>
 				<string key="936.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="938.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="940.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="946.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="947.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">945</int>
+			<int key="maxID">949</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3178,6 +3243,7 @@ aW5nLg</string>
 						<string key="mouseSpeedChanged:">id</string>
 						<string key="radioChanged:">id</string>
 						<string key="scrollSpeedChanged:">id</string>
+						<string key="scrollTypeChanged:">id</string>
 						<string key="sdirChanged:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -3201,6 +3267,10 @@ aW5nLg</string>
 							<string key="name">scrollSpeedChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="scrollTypeChanged:">
+							<string key="name">scrollTypeChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="sdirChanged:">
 							<string key="name">sdirChanged:</string>
 							<string key="candidateClassName">id</string>
@@ -3217,6 +3287,7 @@ aW5nLg</string>
 						<string key="radioButtons">NSMatrix</string>
 						<string key="scrollDirSelect">NSSegmentedControl</string>
 						<string key="scrollSpeedSlider">NSSlider</string>
+						<string key="smoothCheck">NSButton</string>
 						<string key="title">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -3260,6 +3331,10 @@ aW5nLg</string>
 							<string key="name">scrollSpeedSlider</string>
 							<string key="candidateClassName">NSSlider</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="smoothCheck">
+							<string key="name">smoothCheck</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="title">
 							<string key="name">title</string>
 							<string key="candidateClassName">NSTextField</string>
@@ -3284,6 +3359,7 @@ aW5nLg</string>
 			<string key="NSRadioButton">{16, 15}</string>
 			<string key="NSRemoveTemplate">{8, 8}</string>
 			<string key="NSRightFacingTriangleTemplate">{9, 9}</string>
+			<string key="NSSwitch">{15, 15}</string>
 		</dictionary>
 	</data>
 </archive>

@@ -71,16 +71,13 @@
     if (row != 5) {
         scrollDirSelect.selectedSegment = -1;
         scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
+        smoothCheck.state = NSOffState;
         [scrollDirSelect resignIfFirstResponder];
+        [scrollSpeedSlider resignIfFirstResponder];
+        [smoothCheck resignIfFirstResponder];
     } else {
         if (scrollDirSelect.selectedSegment == -1)
             scrollDirSelect.selectedSegment = 0;
-        if (scrollDirSelect.selectedSegment < 2
-            && !scrollSpeedSlider.floatValue)
-            scrollSpeedSlider.floatValue = 15;
-        else if (scrollDirSelect.selectedSegment >= 2
-                 && scrollSpeedSlider.floatValue)
-            scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
     }
         
 }
@@ -129,8 +126,6 @@
 
 - (void)sdirChanged:(NSView *)sender {
     [radioButtons selectCellAtRow:5 column:0];
-    if (scrollDirSelect.selectedSegment >= 2)
-        scrollSpeedSlider.floatValue = 0;
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
@@ -138,10 +133,19 @@
 - (void)scrollSpeedChanged:(NSSlider *)sender {
     [radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
-    if (!sender.floatValue && scrollDirSelect.selectedSegment < 2)
-        scrollDirSelect.selectedSegment += 2;
-    else if (sender.floatValue && scrollDirSelect.selectedSegment >= 2)
-        scrollDirSelect.selectedSegment -= 2;
+    [self commit];
+}
+
+- (IBAction)scrollTypeChanged:(NSButton *)sender {
+    [radioButtons selectCellAtRow:5 column:0];
+    [sender.window makeFirstResponder:sender];
+    if (sender.state == NSOnState) {
+        scrollSpeedSlider.floatValue = (scrollSpeedSlider.maxValue - scrollSpeedSlider.minValue) / 2;
+        [scrollSpeedSlider setEnabled:YES];
+    } else {
+        scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
+        [scrollSpeedSlider setEnabled:NO];
+    }
     [self commit];
 }
 
@@ -180,10 +184,9 @@
         }
         case 5: {
             NJOutputMouseScroll *ms = [[NJOutputMouseScroll alloc] init];
-            ms.direction = (scrollDirSelect.selectedSegment & 1) ? 1 : -1;
-            ms.speed = scrollDirSelect.selectedSegment < 2
-                ? scrollSpeedSlider.floatValue
-                : 0.f;
+            ms.direction = [scrollDirSelect.cell tagForSegment:scrollDirSelect.selectedSegment];
+            ms.speed = scrollSpeedSlider.floatValue;
+            ms.smooth = smoothCheck.state == NSOnState;
             return ms;
         }
         default:
@@ -209,7 +212,8 @@
     [mouseSpeedSlider setEnabled:enabled];
     [mouseBtnSelect setEnabled:enabled];
     [scrollDirSelect setEnabled:enabled];
-    [scrollSpeedSlider setEnabled:enabled];
+    [smoothCheck setEnabled:enabled];
+    [scrollSpeedSlider setEnabled:enabled && smoothCheck.isEnabled];
 }
 
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {
@@ -248,8 +252,11 @@
         [radioButtons selectCellAtRow:5 column:0];
         int direction = [(NJOutputMouseScroll *)output direction];
         float speed = [(NJOutputMouseScroll *)output speed];
-        scrollDirSelect.selectedSegment = (direction > 0) + !speed * 2;
+        BOOL smooth = [(NJOutputMouseScroll *)output smooth];
+        [scrollDirSelect selectSegmentWithTag:direction];
         scrollSpeedSlider.floatValue = speed;
+        smoothCheck.state = smooth ? NSOnState : NSOffState;
+        [scrollSpeedSlider setEnabled:smooth];
     } else {
         [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
     }
