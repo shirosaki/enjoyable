@@ -175,7 +175,7 @@
         }
         case 4: {
             NJOutputMouseButton *mb = [[NJOutputMouseButton alloc] init];
-            mb.humanIndexedButton = mouseBtnSelect.selectedSegment;
+            mb.button = [mouseBtnSelect.cell tagForSegment:mouseBtnSelect.selectedSegment];
             return mb;
         }
         case 5: {
@@ -242,7 +242,7 @@
     }
     else if ([output isKindOfClass:NJOutputMouseButton.class]) {
         [radioButtons selectCellAtRow:4 column:0];
-        mouseBtnSelect.selectedSegment = [(NJOutputMouseButton *)output humanIndexedButton];
+        [mouseBtnSelect selectSegmentWithTag:[(NJOutputMouseButton *)output button]];
     }
     else if ([output isKindOfClass:NJOutputMouseScroll.class]) {
         [radioButtons selectCellAtRow:5 column:0];

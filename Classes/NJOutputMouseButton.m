@@ -81,22 +81,4 @@
     CFRelease(click);
 }
 
-- (int)humanIndexedButton {
-    switch (_button) {
-        case kCGMouseButtonLeft: return 0;
-        case kCGMouseButtonCenter: return 1;
-        case kCGMouseButtonRight: return 2;
-        default: return 0;
-    }
-}
-
-- (void)setHumanIndexedButton:(int)humanIndexedButton {
-    switch (humanIndexedButton) {
-        case 0: _button = kCGMouseButtonLeft; break;
-        case 1: _button = kCGMouseButtonCenter; break;
-        case 2: _button = kCGMouseButtonRight; break;
-        default: _button = kCGMouseButtonLeft;
-    }
-}
-
 @end

@@ -321,7 +321,7 @@
 			<object class="NSWindowTemplate" id="808667431">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{355, 59}, {620, 323}}</string>
+				<string key="NSWindowRect">{{355, 59}, {664, 323}}</string>
 				<int key="NSWTFlags">1685585920</int>
 				<string key="NSWindowTitle">Enjoyable</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -470,7 +470,7 @@
 					<array key="NSToolbarIBSelectableItems" id="0"/>
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
-				<string key="NSWindowContentMinSize">{620, 323}</string>
+				<string key="NSWindowContentMinSize">{664, 323}</string>
 				<object class="NSView" key="NSWindowView" id="177223957">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -679,7 +679,7 @@ aW5nLg</string>
 								<object class="NSSegmentedControl" id="875916470">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{189, 117}, {180, 20}}</string>
+									<string key="NSFrame">{{189, 117}, {224, 20}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="385416822"/>
@@ -693,23 +693,23 @@ aW5nLg</string>
 										<reference key="NSControlView" ref="875916470"/>
 										<array class="NSMutableArray" key="NSSegmentImages">
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">44</double>
+												<double key="NSSegmentItemWidth">55</double>
 												<string key="NSSegmentItemLabel">←</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">44</double>
+												<double key="NSSegmentItemWidth">55</double>
 												<string key="NSSegmentItemLabel">→</string>
 												<int key="NSSegmentItemTag">1</int>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">42</double>
+												<double key="NSSegmentItemWidth">53</double>
 												<string key="NSSegmentItemLabel">↑</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">41</double>
+												<double key="NSSegmentItemWidth">52</double>
 												<string key="NSSegmentItemLabel">↓</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
@@ -721,7 +721,7 @@ aW5nLg</string>
 								<object class="NSSegmentedControl" id="921829691">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{189, 33}, {180, 20}}</string>
+									<string key="NSFrame">{{189, 33}, {224, 20}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="792189805"/>
@@ -735,13 +735,13 @@ aW5nLg</string>
 										<reference key="NSControlView" ref="921829691"/>
 										<array class="NSMutableArray" key="NSSegmentImages">
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">64</double>
+												<double key="NSSegmentItemWidth">86</double>
 												<string key="NSSegmentItemLabel">↑</string>
 												<string key="NSSegmentItemTooltip">Scroll up continuously</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">63</double>
+												<double key="NSSegmentItemWidth">85</double>
 												<string key="NSSegmentItemLabel">↓</string>
 												<string key="NSSegmentItemTooltip">Scroll down continuously</string>
 												<int key="NSSegmentItemTag">1</int>
@@ -765,7 +765,7 @@ aW5nLg</string>
 								<object class="NSSlider" id="792189805">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{191, 24}, {130, 16}}</string>
+									<string key="NSFrame">{{191, 24}, {176, 16}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView"/>
@@ -791,7 +791,7 @@ aW5nLg</string>
 								<object class="NSSegmentedControl" id="125828224">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{189, 70}, {180, 24}}</string>
+									<string key="NSFrame">{{189, 70}, {224, 24}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="921829691"/>
@@ -814,13 +814,27 @@ aW5nLg</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
+												<double key="NSSegmentItemWidth">60</double>
 												<string key="NSSegmentItemLabel">Center</string>
-												<int key="NSSegmentItemTag">1</int>
+												<int key="NSSegmentItemTag">2</int>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
 												<double key="NSSegmentItemWidth">55</double>
 												<string key="NSSegmentItemLabel">Right</string>
+												<int key="NSSegmentItemTag">1</int>
+												<int key="NSSegmentItemImageScaling">0</int>
+											</object>
+											<object class="NSSegmentItem">
+												<double key="NSSegmentItemWidth">22</double>
+												<string key="NSSegmentItemLabel">4</string>
+												<int key="NSSegmentItemTag">3</int>
+												<int key="NSSegmentItemImageScaling">0</int>
+											</object>
+											<object class="NSSegmentItem">
+												<double key="NSSegmentItemWidth">22</double>
+												<string key="NSSegmentItemLabel">5</string>
+												<int key="NSSegmentItemTag">4</int>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 										</array>
@@ -831,7 +845,7 @@ aW5nLg</string>
 								<object class="NSSlider" id="385416822">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{191, 108}, {176, 16}}</string>
+									<string key="NSFrame">{{191, 108}, {220, 16}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="125828224"/>
@@ -857,7 +871,7 @@ aW5nLg</string>
 								<object class="NSCustomView" id="57697638">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{191, 196}, {176, 23}}</string>
+									<string key="NSFrame">{{191, 196}, {220, 23}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="194275224"/>
@@ -867,13 +881,13 @@ aW5nLg</string>
 								<object class="NSPopUpButton" id="194275224">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{188, 153}, {182, 26}}</string>
+									<string key="NSFrame">{{188, 153}, {226, 26}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="875916470"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="74311158">
-										<int key="NSCellFlags">-1539309504</int>
+										<int key="NSCellFlags">-2076180416</int>
 										<int key="NSCellFlags2">2048</int>
 										<reference key="NSSupport" ref="45863614"/>
 										<reference key="NSControlView" ref="194275224"/>
@@ -1082,7 +1096,7 @@ aW5nLg</string>
 									<bool key="NSTransparent">NO</bool>
 								</object>
 							</array>
-							<string key="NSFrame">{{233, 0}, {387, 323}}</string>
+							<string key="NSFrame">{{233, 0}, {431, 323}}</string>
 							<reference key="NSSuperview" ref="177223957"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1016088174"/>
@@ -1090,19 +1104,19 @@ aW5nLg</string>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</array>
-					<string key="NSFrameSize">{620, 323}</string>
+					<string key="NSFrameSize">{664, 323}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="734312853"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
-				<string key="NSMinSize">{620, 378}</string>
+				<string key="NSMinSize">{664, 378}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">Enjoyable</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSCustomView" id="671181514">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="443618264">
@@ -1118,8 +1132,7 @@ aW5nLg</string>
 										<int key="NSvFlags">256</int>
 										<string key="NSFrameSize">{198, 198}</string>
 										<reference key="NSSuperview" ref="947403733"/>
-										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="968378655"/>
+										<reference key="NSNextKeyView" ref="553414014"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1176,7 +1189,6 @@ aW5nLg</string>
 								</array>
 								<string key="NSFrame">{{1, 1}, {198, 198}}</string>
 								<reference key="NSSuperview" ref="443618264"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="762432499"/>
 								<reference key="NSDocView" ref="762432499"/>
 								<reference key="NSBGColor" ref="834857663"/>
@@ -1187,7 +1199,6 @@ aW5nLg</string>
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{306, 1}, {15, 403}}</string>
 								<reference key="NSSuperview" ref="443618264"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="861276216"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="443618264"/>
@@ -1199,7 +1210,6 @@ aW5nLg</string>
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{-100, -100}, {366, 16}}</string>
 								<reference key="NSSuperview" ref="443618264"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="947403733"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
@@ -1210,8 +1220,7 @@ aW5nLg</string>
 						</array>
 						<string key="NSFrame">{{0, 20}, {200, 200}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="553414014"/>
+						<reference key="NSNextKeyView" ref="947403733"/>
 						<int key="NSsFlags">150034</int>
 						<reference key="NSVScroller" ref="968378655"/>
 						<reference key="NSHScroller" ref="553414014"/>
@@ -1226,7 +1235,6 @@ aW5nLg</string>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{66, -1}, {68, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1023366520"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
@@ -1255,7 +1263,6 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="456935010"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="867532725">
@@ -1282,8 +1289,6 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{166, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="828611353">
 							<int key="NSCellFlags">67108864</int>
@@ -1305,7 +1310,6 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{133, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1043784903"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="57592747">
@@ -1328,7 +1332,6 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{33, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="149148392"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1008023024">
@@ -1352,8 +1355,6 @@ aW5nLg</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{200, 220}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="443618264"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -2953,7 +2954,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">941</int>
+			<int key="maxID">945</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
