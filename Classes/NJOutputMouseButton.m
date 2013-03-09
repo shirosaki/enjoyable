@@ -7,7 +7,25 @@
 
 #import "NJOutputMouseButton.h"
 
-@implementation NJOutputMouseButton
+@implementation NJOutputMouseButton {
+    NSDate *upTime;
+    int clickCount;
+}
+
++ (NSTimeInterval)doubleClickInterval {
+    static NSTimeInterval s_doubleClickThreshold;
+    if (!s_doubleClickThreshold) {
+        s_doubleClickThreshold = [[NSUserDefaults.standardUserDefaults
+                                 objectForKey:@"com.apple.mouse.doubleClickThreshold"] floatValue];
+        if (s_doubleClickThreshold <= 0)
+            s_doubleClickThreshold = 1.0;
+    }
+    return s_doubleClickThreshold;
+}
+
++ (NSDate *)dateWithClickInterval {
+    return [[NSDate alloc] initWithTimeIntervalSinceNow:self.doubleClickInterval];
+}
 
 + (NSString *)serializationCode {
     return @"mouse button";
@@ -32,6 +50,14 @@
                                                eventType,
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
                                                _button);
+
+    NSLog(@"%@\n%@", upTime, [NSDate date]);
+    if (clickCount >= 3 || [upTime compare:[NSDate date]] == NSOrderedAscending)
+        clickCount = 1;
+    else
+        ++clickCount;
+    CGEventSetIntegerValueField(click, kCGMouseEventClickState, clickCount);
+    
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
 }
@@ -44,8 +70,10 @@
                                                eventType,
                                                CGPointMake(mouseLoc.x, height - mouseLoc.y),
                                                _button);
+    CGEventSetIntegerValueField(click, kCGMouseEventClickState, clickCount);
     CGEventPost(kCGHIDEventTap, click);
     CFRelease(click);
+    upTime = [NJOutputMouseButton dateWithClickInterval];
 }
 
 @end
