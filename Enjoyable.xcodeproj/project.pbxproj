@@ -348,7 +348,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nplist=\"${PROJECT_DIR}/${INFOPLIST_FILE}\"\ndir=\"$(dirname \"$plist\")\"\n\n# Only increment the build number if source files have changed\nif [ -n \"$(find \"$dir\" \\! -path \"*xcuserdata*\" \\! -path \"*.git*\" \\! -name .DS_Store -newer \"$plist\")\" ]; then\n    buildnum=$(/usr/libexec/Plistbuddy -c \"Print CFBundleVersion\" \"$plist\")\n    if [ -z \"$buildnum\" ]; then\n        echo \"No build number in $plist\"\n        exit 2\n    fi\n    buildnum=$(expr $buildnum + 1)\n    /usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"$plist\"\n    echo \"Incremented build number to $buildnum\"\nelse\n    echo \"Not incrementing build number as source files have not changed\"\nfi\n";
+			shellScript = "#!/bin/sh\n\nplist=\"${PROJECT_DIR}/${INFOPLIST_FILE}\"\ndir=\"$(dirname \"$plist\")\"\n\n# Only increment the build number if source files have changed\nif [ -n \"$(find \"$dir\" \\! -path \"*xcuserdata*\" \\! -path \"*.git*\" \\! -name .DS_Store \\! -path \"*Website*\" -newer \"$plist\")\" ]; then\n    buildnum=$(/usr/libexec/Plistbuddy -c \"Print CFBundleVersion\" \"$plist\")\n    if [ -z \"$buildnum\" ]; then\n        echo \"No build number in $plist\"\n        exit 2\n    fi\n    buildnum=$(expr $buildnum + 1)\n    /usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"$plist\"\n    echo \"Incremented build number to $buildnum\"\nelse\n    echo \"Not incrementing build number as source files have not changed\"\nfi\n";
 		};
 		EED7E81616E7B547004A0BA4 /* Generate Help Index */ = {
 			isa = PBXShellScriptBuildPhase;
