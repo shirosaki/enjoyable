@@ -193,7 +193,9 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {
-    if (self.acceptsFirstResponder)
+    if (self.window.firstResponder == self)
+        [self.window makeFirstResponder:nil];
+    else if (self.acceptsFirstResponder)
         [self.window makeFirstResponder:self];
 }
 
