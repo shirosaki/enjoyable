@@ -53,7 +53,6 @@
                                                          selector:@selector(updateContinuousInputs:)
                                                          userInfo:nil
                                                           repeats:YES];
-        NSLog(@"Scheduled continuous output timer.");
     }
 }
 
@@ -154,7 +153,6 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     if (!runningOutputs.count) {
         [continuousTimer invalidate];
         continuousTimer = nil;
-        NSLog(@"Unscheduled continuous output timer.");
     }
 }
 
