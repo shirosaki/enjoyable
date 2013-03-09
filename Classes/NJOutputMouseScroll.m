@@ -24,7 +24,7 @@
                   withMappings:(NSArray *)mappings {
     NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
     output.direction = [serialization[@"direction"] intValue];
-    output.speed = [serialization[@"direction"] floatValue];
+    output.speed = [serialization[@"speed"] floatValue];
     return output;
 }
 

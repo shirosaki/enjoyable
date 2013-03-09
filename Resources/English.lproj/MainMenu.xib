@@ -676,58 +676,6 @@ aW5nLg</string>
 							<reference key="NSNextResponder" ref="177223957"/>
 							<int key="NSvFlags">285</int>
 							<array class="NSMutableArray" key="NSSubviews">
-								<object class="NSSlider" id="792189805">
-									<reference key="NSNextResponder" ref="471332453"/>
-									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{191, 24}, {130, 12}}</string>
-									<reference key="NSSuperview" ref="471332453"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
-									<string key="NSReuseIdentifierKey">_NS:9</string>
-									<bool key="NSEnabled">YES</bool>
-									<object class="NSSliderCell" key="NSCell" id="423057230">
-										<int key="NSCellFlags">-2080374784</int>
-										<int key="NSCellFlags2">262144</int>
-										<string key="NSContents"/>
-										<string key="NSCellIdentifier">_NS:9</string>
-										<reference key="NSControlView" ref="792189805"/>
-										<double key="NSMaxValue">30</double>
-										<double key="NSMinValue">0.0</double>
-										<double key="NSValue">15</double>
-										<double key="NSAltIncValue">0.0</double>
-										<int key="NSNumberOfTickMarks">0</int>
-										<int key="NSTickMarkPosition">1</int>
-										<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
-										<bool key="NSVertical">NO</bool>
-									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-								</object>
-								<object class="NSSlider" id="385416822">
-									<reference key="NSNextResponder" ref="471332453"/>
-									<int key="NSvFlags">265</int>
-									<string key="NSFrame">{{191, 108}, {176, 12}}</string>
-									<reference key="NSSuperview" ref="471332453"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="125828224"/>
-									<string key="NSReuseIdentifierKey">_NS:9</string>
-									<bool key="NSEnabled">YES</bool>
-									<object class="NSSliderCell" key="NSCell" id="5417367">
-										<int key="NSCellFlags">-2080374784</int>
-										<int key="NSCellFlags2">262144</int>
-										<string key="NSContents"/>
-										<string key="NSCellIdentifier">_NS:9</string>
-										<reference key="NSControlView" ref="385416822"/>
-										<double key="NSMaxValue">20</double>
-										<double key="NSMinValue">0.0</double>
-										<double key="NSValue">4</double>
-										<double key="NSAltIncValue">0.0</double>
-										<int key="NSNumberOfTickMarks">0</int>
-										<int key="NSTickMarkPosition">1</int>
-										<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
-										<bool key="NSVertical">NO</bool>
-									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-								</object>
 								<object class="NSSegmentedControl" id="875916470">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
@@ -747,7 +695,6 @@ aW5nLg</string>
 											<object class="NSSegmentItem">
 												<double key="NSSegmentItemWidth">44</double>
 												<string key="NSSegmentItemLabel">←</string>
-												<bool key="NSSegmentItemSelected">YES</bool>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
@@ -791,7 +738,6 @@ aW5nLg</string>
 												<double key="NSSegmentItemWidth">64</double>
 												<string key="NSSegmentItemLabel">↑</string>
 												<string key="NSSegmentItemTooltip">Scroll up continuously</string>
-												<bool key="NSSegmentItemSelected">YES</bool>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
@@ -816,6 +762,32 @@ aW5nLg</string>
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
+								<object class="NSSlider" id="792189805">
+									<reference key="NSNextResponder" ref="471332453"/>
+									<int key="NSvFlags">265</int>
+									<string key="NSFrame">{{191, 24}, {130, 16}}</string>
+									<reference key="NSSuperview" ref="471332453"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSSliderCell" key="NSCell" id="423057230">
+										<int key="NSCellFlags">-2080374784</int>
+										<int key="NSCellFlags2">262144</int>
+										<string key="NSContents"/>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<reference key="NSControlView" ref="792189805"/>
+										<double key="NSMaxValue">30</double>
+										<double key="NSMinValue">0.0</double>
+										<double key="NSValue">15</double>
+										<double key="NSAltIncValue">0.0</double>
+										<int key="NSNumberOfTickMarks">11</int>
+										<int key="NSTickMarkPosition">1</int>
+										<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
+										<bool key="NSVertical">NO</bool>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
 								<object class="NSSegmentedControl" id="125828224">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
@@ -837,19 +809,48 @@ aW5nLg</string>
 										<reference key="NSControlView" ref="125828224"/>
 										<array class="NSMutableArray" key="NSSegmentImages">
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">87</double>
+												<double key="NSSegmentItemWidth">55</double>
 												<string key="NSSegmentItemLabel">Left</string>
-												<bool key="NSSegmentItemSelected">YES</bool>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 											<object class="NSSegmentItem">
-												<double key="NSSegmentItemWidth">86</double>
-												<string key="NSSegmentItemLabel">Right</string>
+												<string key="NSSegmentItemLabel">Center</string>
 												<int key="NSSegmentItemTag">1</int>
+												<int key="NSSegmentItemImageScaling">0</int>
+											</object>
+											<object class="NSSegmentItem">
+												<double key="NSSegmentItemWidth">55</double>
+												<string key="NSSegmentItemLabel">Right</string>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 										</array>
 										<int key="NSSegmentStyle">1</int>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
+								<object class="NSSlider" id="385416822">
+									<reference key="NSNextResponder" ref="471332453"/>
+									<int key="NSvFlags">265</int>
+									<string key="NSFrame">{{191, 108}, {176, 16}}</string>
+									<reference key="NSSuperview" ref="471332453"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="125828224"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSSliderCell" key="NSCell" id="5417367">
+										<int key="NSCellFlags">67108864</int>
+										<int key="NSCellFlags2">262144</int>
+										<string key="NSContents"/>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<reference key="NSControlView" ref="385416822"/>
+										<double key="NSMaxValue">20</double>
+										<double key="NSMinValue">0.0</double>
+										<double key="NSValue">10</double>
+										<double key="NSAltIncValue">0.0</double>
+										<int key="NSNumberOfTickMarks">11</int>
+										<int key="NSTickMarkPosition">1</int>
+										<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
+										<bool key="NSVertical">NO</bool>
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
@@ -2846,13 +2847,13 @@ aW5nLg</string>
 				<string key="734.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="735.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="744.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="1" key="745.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="2" key="745.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="745.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="749.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="1" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="0" key="750.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="754.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="1" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<integer value="0" key="755.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="755.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="778.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

@@ -59,7 +59,7 @@
         if (mouseDirSelect.selectedSegment == -1)
             mouseDirSelect.selectedSegment = 0;
         if (!mouseSpeedSlider.floatValue)
-            mouseSpeedSlider.floatValue = 4;
+            mouseSpeedSlider.floatValue = 10;
     }
     
     if (row != 4) {
@@ -77,7 +77,7 @@
             scrollDirSelect.selectedSegment = 0;
         if (scrollDirSelect.selectedSegment < 2
             && !scrollSpeedSlider.floatValue)
-            scrollSpeedSlider.floatValue = 15.f;
+            scrollSpeedSlider.floatValue = 15;
         else if (scrollDirSelect.selectedSegment >= 2
                  && scrollSpeedSlider.floatValue)
             scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
@@ -129,6 +129,8 @@
 
 - (void)sdirChanged:(NSView *)sender {
     [radioButtons selectCellAtRow:5 column:0];
+    if (scrollDirSelect.selectedSegment >= 2)
+        scrollSpeedSlider.floatValue = 0;
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
@@ -173,7 +175,7 @@
         }
         case 4: {
             NJOutputMouseButton *mb = [[NJOutputMouseButton alloc] init];
-            mb.button = mouseBtnSelect.selectedSegment == 0 ? kCGMouseButtonLeft : kCGMouseButtonRight;
+            mb.humanIndexedButton = mouseBtnSelect.selectedSegment;
             return mb;
         }
         case 5: {
@@ -240,7 +242,7 @@
     }
     else if ([output isKindOfClass:NJOutputMouseButton.class]) {
         [radioButtons selectCellAtRow:4 column:0];
-        mouseBtnSelect.selectedSegment = [(NJOutputMouseButton *)output button] == kCGMouseButtonLeft ? 0 : 1;
+        mouseBtnSelect.selectedSegment = [(NJOutputMouseButton *)output humanIndexedButton];
     }
     else if ([output isKindOfClass:NJOutputMouseScroll.class]) {
         [radioButtons selectCellAtRow:5 column:0];

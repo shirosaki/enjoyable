@@ -28,7 +28,7 @@
     output.axis = [serialization[@"axis"] intValue];
     output.speed = [serialization[@"speed"] floatValue];
     if (!output.speed)
-        output.speed = 4;
+        output.speed = 10;
     return output;
 }
 
@@ -36,13 +36,15 @@
     return YES;
 }
 
+#define CLAMP(a, l, h) MIN(h, MAX(a, l))
+
 - (BOOL)update:(NJDeviceController *)jc {
     if (self.magnitude < 0.05)
         return NO; // dead zone
     
-    CGFloat height = NSScreen.mainScreen.frame.size.height;
+    CGSize size = NSScreen.mainScreen.frame.size;
     
-    float dx = 0.f, dy = 0.f;
+    CGFloat dx = 0, dy = 0;
     switch (_axis) {
         case 0:
             dx = -self.magnitude * _speed;
@@ -58,17 +60,33 @@
             break;
     }
     NSPoint mouseLoc = jc.mouseLoc;
-    mouseLoc.x += dx;
-    mouseLoc.y -= dy;
+    mouseLoc.x = CLAMP(mouseLoc.x + dx, 0, size.width - 1);
+    mouseLoc.y = CLAMP(mouseLoc.y - dy, 0, size.height - 1);
     jc.mouseLoc = mouseLoc;
     
     CGEventRef move = CGEventCreateMouseEvent(NULL, kCGEventMouseMoved,
-                                              CGPointMake(mouseLoc.x, height - mouseLoc.y),
+                                              CGPointMake(mouseLoc.x, size.height - mouseLoc.y),
                                               0);
-    CGEventSetType(move, kCGEventMouseMoved);
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaX, (int)dx);
     CGEventSetIntegerValueField(move, kCGMouseEventDeltaY, (int)dy);
     CGEventPost(kCGHIDEventTap, move);
+
+    if (CGEventSourceButtonState(kCGEventSourceStateHIDSystemState, kCGMouseButtonLeft)) {
+        CGEventSetType(move, kCGEventLeftMouseDragged);
+        CGEventSetIntegerValueField(move, kCGMouseEventButtonNumber, kCGMouseButtonLeft);
+        CGEventPost(kCGHIDEventTap, move);
+    }
+    if (CGEventSourceButtonState(kCGEventSourceStateHIDSystemState, kCGMouseButtonRight)) {
+        CGEventSetType(move, kCGEventRightMouseDragged);
+        CGEventSetIntegerValueField(move, kCGMouseEventButtonNumber, kCGMouseButtonRight);
+        CGEventPost(kCGHIDEventTap, move);
+    }
+    if (CGEventSourceButtonState(kCGEventSourceStateHIDSystemState, kCGMouseButtonCenter)) {
+        CGEventSetType(move, kCGEventOtherMouseDragged);
+        CGEventSetIntegerValueField(move, kCGMouseEventButtonNumber, kCGMouseButtonCenter);
+        CGEventPost(kCGHIDEventTap, move);
+    }
+
     CFRelease(move);
     return YES;
 }
