@@ -12,14 +12,21 @@
 @interface NJMapping : NSObject
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, readonly) NSMutableDictionary *entries;
+@property (nonatomic, readonly) NSUInteger count;
+
++ (id)mappingWithContentsOfURL:(NSURL *)url
+                      mappings:(NSArray *)mappings
+                         error:(NSError **)error;
 
 - (id)initWithName:(NSString *)name;
+- (id)initWithSerialization:(NSDictionary *)serialization
+                   mappings:(NSArray *)mappings;
+
 - (NJOutput *)objectForKeyedSubscript:(NJInput *)input;
 - (void)setObject:(NJOutput *)output forKeyedSubscript:(NJInput *)input;
 - (NSDictionary *)serialize;
 - (BOOL)writeToURL:(NSURL *)url error:(NSError **)error;
-
-+ (id)mappingWithContentsOfURL:(NSURL *)url mappings:(NSArray *)mappings error:(NSError **)error;
+- (BOOL)hasConflictWith:(NJMapping *)other;
+- (void)mergeEntriesFrom:(NJMapping *)other;
 
 @end

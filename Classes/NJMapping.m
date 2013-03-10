@@ -10,12 +10,35 @@
 #import "NJInput.h"
 #import "NJOutput.h"
 
-@implementation NJMapping
+@implementation NJMapping {
+    NSMutableDictionary *_entries;
+}
+
+// Extra checks during initialization because the data is often loaded
+// from untrusted serializations.
 
 - (id)initWithName:(NSString *)name {
     if ((self = [super init])) {
-        self.name = name ? name : @"Untitled";
+        self.name = [name isKindOfClass:NSString.class] ? name : @"Untitled";
         _entries = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (id)initWithSerialization:(NSDictionary *)serialization
+                   mappings:(NSArray *)mappings {
+    if ((self = [self initWithName:serialization[@"name"]])) {
+        NSDictionary *entries = serialization[@"entries"];
+        if ([entries isKindOfClass:NSDictionary.class]) {
+            for (id key in entries) {
+                if ([key isKindOfClass:NSString.class]) {
+                    NJOutput *output = [NJOutput outputDeserialize:entries[key]
+                                                      withMappings:mappings];
+                    if (output)
+                        _entries[key] = output;
+                }
+            }
+        }
     }
     return self;
 }
@@ -54,6 +77,21 @@
     return success;
 }
 
+- (NSUInteger)count {
+    return _entries.count;
+}
+
+- (BOOL)hasConflictWith:(NJMapping *)other {
+    if (other.count < self.count)
+        return [other hasConflictWith:self];
+    for (NSString *uid in _entries) {
+        NJOutput *output = other->_entries[uid];
+        if (output && ![output isEqual:_entries[uid]])
+            return YES;
+    }
+    return NO;
+}
+
 + (id)mappingWithContentsOfURL:(NSURL *)url mappings:(NSArray *)mappings error:(NSError **)error {
     NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
     [stream open];
@@ -74,18 +112,13 @@
         return nil;
     }
     
-    NSDictionary *entries = serialization[@"entries"];
-    NJMapping *mapping = [[NJMapping alloc] initWithName:serialization[@"name"]];
-    for (id key in entries) {
-        NSDictionary *value = entries[key];
-        if ([key isKindOfClass:NSString.class]) {
-            NJOutput *output = [NJOutput outputDeserialize:value
-                                              withMappings:mappings];
-            if (output)
-                mapping.entries[key] = output;
-        }
-    }
-    return mapping;
+    return [[NJMapping alloc] initWithSerialization:serialization
+                                           mappings:mappings];
+}
+
+- (void)mergeEntriesFrom:(NJMapping *)other {
+    if (other)
+        [_entries addEntriesFromDictionary:other->_entries];
 }
 
 @end

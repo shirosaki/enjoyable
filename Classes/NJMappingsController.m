@@ -167,21 +167,19 @@
 - (void)loadAllFrom:(NSArray *)storedMappings andActivate:(NSUInteger)selected {
     NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
-    // have to do two passes in case mapping1 refers to mapping2 via a NJOutputMapping
+    // Requires two passes to deal with inter-mapping references. First make
+    // an empty mapping for each serialized mapping. Then, deserialize the
+    // data pointing to the empty mappings. Then merge that data back into
+    // its equivalent empty one, which is the one we finally use.
     for (NSDictionary *storedMapping in storedMappings) {
         NJMapping *mapping = [[NJMapping alloc] initWithName:storedMapping[@"name"]];
         [newMappings addObject:mapping];
     }
 
     for (unsigned i = 0; i < storedMappings.count; ++i) {
-        NSDictionary *entries = storedMappings[i][@"entries"];
-        NJMapping *mapping = newMappings[i];
-        for (id key in entries) {
-            NJOutput *output = [NJOutput outputDeserialize:entries[key]
-                                              withMappings:newMappings];
-            if (output)
-                mapping.entries[key] = output;
-        }
+        NJMapping *realMapping = [[NJMapping alloc] initWithSerialization:storedMappings[i]
+                                                                 mappings:newMappings];
+        [newMappings[i] mergeEntriesFrom:realMapping];
     }
     
     if (newMappings.count) {
@@ -201,15 +199,8 @@
                                                        error:&error];
     
     if (mapping && !error) {
-        BOOL conflict = NO;
         NJMapping *mergeInto = self[mapping.name];
-        for (id key in mapping.entries) {
-            if (mergeInto.entries[key]
-                && ![mergeInto.entries[key] isEqual:mapping.entries[key]]) {
-                conflict = YES;
-                break;
-            }
-        }
+        BOOL conflict = [mergeInto hasConflictWith:mapping];
         
         if (conflict) {
             NSAlert *conflictAlert = [[NSAlert alloc] init];
@@ -230,7 +221,7 @@
         }
         
         if (mergeInto) {
-            [mergeInto.entries addEntriesFromDictionary:mapping.entries];
+            [mergeInto mergeEntriesFrom:mapping];
             mapping = mergeInto;
         } else {
             [_mappings addObject:mapping];
