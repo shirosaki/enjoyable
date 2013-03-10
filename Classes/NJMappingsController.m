@@ -10,22 +10,20 @@
 #import "NJMapping.h"
 #import "NJMappingsController.h"
 #import "NJOutput.h"
-#import "NJOutputController.h"
 #import "NJEvents.h"
 
 #define PB_ROW @"com.yukkurigames.Enjoyable.MappingRow"
 
 @implementation NJMappingsController {
     NSMutableArray *_mappings;
-    NJMapping *manualMapping;
-    NSString *draggingName;
+    NJMapping *_manualMapping;
 }
 
 - (id)init {
     if ((self = [super init])) {
         _mappings = [[NSMutableArray alloc] init];
         _currentMapping = [[NJMapping alloc] initWithName:@"(default)"];
-        manualMapping = _currentMapping;
+        _manualMapping = _currentMapping;
         [_mappings addObject:_currentMapping];
     }
     return self;
@@ -50,7 +48,6 @@
 - (void)mappingsChanged {
     [self save];
     [tableView reloadData];
-    popoverActivate.title = _currentMapping.name;
     [self updateInterfaceForCurrentMapping];
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
@@ -66,13 +63,13 @@
 }
 
 - (void)activateMappingForProcess:(NSRunningApplication *)app {
-    NJMapping *oldMapping = manualMapping;
+    NJMapping *oldMapping = _manualMapping;
     NSArray *names = app.possibleMappingNames;
     BOOL found = NO;
     for (NSString *name in names) {
         NJMapping *mapping = self[name];
         if (mapping) {
-            [self activateMapping:self[name]];
+            [self activateMapping:mapping];
             found = YES;
             break;
         }
@@ -85,14 +82,14 @@
             [self mappingsChanged];
         }
     }
-    manualMapping = oldMapping;
+    _manualMapping = oldMapping;
 }
 
 - (void)updateInterfaceForCurrentMapping {
     NSUInteger selected = [_mappings indexOfObject:_currentMapping];
-    [removeButton setEnabled:selected != 0];
-    [moveDown setEnabled:selected && selected != _mappings.count - 1];
-    [moveUp setEnabled:selected > 1];
+    removeButton.enabled = selected != 0;
+    moveUp.enabled = selected > 1;
+    moveDown.enabled = selected && selected != _mappings.count - 1;
     popoverActivate.title = _currentMapping.name;
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected] byExtendingSelection:NO];
     [NSUserDefaults.standardUserDefaults setInteger:selected forKey:@"selected"];
@@ -100,14 +97,13 @@
 
 - (void)activateMapping:(NJMapping *)mapping {
     if (!mapping)
-        mapping = manualMapping;
+        mapping = _manualMapping;
     if (mapping == _currentMapping)
         return;
     NSLog(@"Switching to mapping %@.", mapping.name);
-    manualMapping = mapping;
+    _manualMapping = mapping;
     _currentMapping = mapping;
     [self updateInterfaceForCurrentMapping];
-    [outputController loadCurrent];
     [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
                                                       object:_currentMapping];
 }
@@ -195,37 +191,6 @@
         [self activateMapping:_mappings[selected]];
         [self mappingsChanged];
     }
-}
-
-- (NJMapping *)mappingWithURL:(NSURL *)url error:(NSError **)error {
-    NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
-    [stream open];
-    NSDictionary *serialization = !*error
-        ? [NSJSONSerialization JSONObjectWithStream:stream options:0 error:error]
-        : nil;
-    [stream close];
-    
-    if (!([serialization isKindOfClass:NSDictionary.class]
-          && [serialization[@"name"] isKindOfClass:NSString.class]
-          && [serialization[@"entries"] isKindOfClass:NSDictionary.class])) {
-        *error = [NSError errorWithDomain:@"Enjoyable"
-                                     code:0
-                              description:@"This isn't a valid mapping file."];
-        return nil;
-    }
-
-    NSDictionary *entries = serialization[@"entries"];
-    NJMapping *mapping = [[NJMapping alloc] initWithName:serialization[@"name"]];
-    for (id key in entries) {
-        NSDictionary *value = entries[key];
-        if ([key isKindOfClass:NSString.class]) {
-            NJOutput *output = [NJOutput outputDeserialize:value
-                                              withMappings:_mappings];
-            if (output)
-                mapping.entries[key] = output;
-        }
-    }
-    return mapping;
 }
 
 - (void)addMappingWithContentsOfURL:(NSURL *)url {
@@ -341,19 +306,13 @@
 }
 
 - (IBAction)moveUpPressed:(id)sender {
-    NSUInteger idx = [_mappings indexOfObject:_currentMapping];
-    if (idx > 1 && idx != NSNotFound) {
-        [_mappings exchangeObjectAtIndex:idx withObjectAtIndex:idx - 1];
+    if ([_mappings moveFirstwards:_currentMapping upTo:1])
         [self mappingsChanged];
-    }
 }
 
 - (IBAction)moveDownPressed:(id)sender {
-    NSUInteger idx = [_mappings indexOfObject:_currentMapping];
-    if (idx < _mappings.count - 1) {
-        [_mappings exchangeObjectAtIndex:idx withObjectAtIndex:idx + 1];
+    if ([_mappings moveLastwards:_currentMapping])
         [self mappingsChanged];
-    }
 }
 
 - (BOOL)tableView:(NSTableView *)tableView_

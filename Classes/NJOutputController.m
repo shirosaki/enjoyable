@@ -29,6 +29,11 @@
             selector:@selector(mappingListDidChange:)
             name:NJEventMappingListChanged
             object:nil];
+        [NSNotificationCenter.defaultCenter
+             addObserver:self
+             selector:@selector(mappingDidChange:)
+             name:NJEventMappingChanged
+             object:nil];
     }
     return self;
 }
@@ -287,6 +292,10 @@
         [mappingPopup.menu addItem:item];
     }
     [mappingPopup selectItemWithRepresentedObject:current];
+}
+
+- (void)mappingDidChange:(NSNotification *)note {
+    [self loadCurrent];
 }
 
 @end

@@ -16,4 +16,34 @@
     [self insertObject:obj atIndex:dst > src ? dst - 1 : dst];
 }
 
+- (BOOL)moveFirstwards:(id)object upTo:(NSUInteger)minIndex {
+    NSUInteger idx = [self indexOfObject:object];
+    if (idx > minIndex && idx != NSNotFound) {
+        [self exchangeObjectAtIndex:idx withObjectAtIndex:idx - 1];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)moveLastwards:(id)object upTo:(NSUInteger)maxIndex {
+    maxIndex = MIN(self.count - 1, maxIndex);
+    NSUInteger idx = [self indexOfObject:object];
+    if (idx < maxIndex && idx != NSNotFound) {
+        [self exchangeObjectAtIndex:idx withObjectAtIndex:idx + 1];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)moveFirstwards:(id)object {
+    return [self moveFirstwards:object upTo:0];
+}
+
+- (BOOL)moveLastwards:(id)object {
+    return [self moveLastwards:object upTo:NSNotFound];
+}
+
+
 @end

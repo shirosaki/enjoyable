@@ -17,7 +17,6 @@
 {
     IBOutlet NSButton *removeButton;
     IBOutlet NSTableView *tableView;
-    IBOutlet NJOutputController *outputController;
     IBOutlet NSButton *popoverActivate;
     IBOutlet NSPopover *popover;
     IBOutlet NSButton *moveUp;
