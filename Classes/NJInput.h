@@ -12,7 +12,7 @@
 
 @property (nonatomic, assign) IOHIDElementCookie cookie;
 @property (nonatomic, copy) NSArray *children;
-@property (nonatomic, weak) id base;
+@property (nonatomic, weak) id <NJInputPathElement> base;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) BOOL active;
 @property (nonatomic, assign) float magnitude;

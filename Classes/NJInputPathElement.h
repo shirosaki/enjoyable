@@ -5,5 +5,6 @@
 - (NSArray *)children;
 - (id <NJInputPathElement>) base;
 - (NSString *)name;
+- (NSString *)uid;
 
 @end

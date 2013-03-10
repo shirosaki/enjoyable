@@ -25,8 +25,6 @@
 @property (nonatomic, assign) BOOL translatingEvents;
 
 - (void)setup;
-- (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device;
-
 - (IBAction)translatingEventsChanged:(id)sender;
 
 @end

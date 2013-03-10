@@ -18,11 +18,11 @@
 }
 
 - (id)findSubInputForValue:(IOHIDValueRef)value {
-    return NULL;
+    return nil;
 }
 
 - (NSString *)uid {
-    return [NSString stringWithFormat:@"%@~%@", [_base uid], _name];
+    return [NSString stringWithFormat:@"%@~%@", _base.uid, _name];
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {

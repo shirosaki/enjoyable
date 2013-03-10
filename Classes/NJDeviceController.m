@@ -16,24 +16,24 @@
 #import "NJEvents.h"
 
 @implementation NJDeviceController {
-    IOHIDManagerRef hidManager;
-    NSTimer *continuousTimer;
-    NSMutableArray *runningOutputs;
+    IOHIDManagerRef _hidManager;
+    NSTimer *_continuousOutputsTick;
+    NSMutableArray *_continousOutputs;
     NSMutableArray *_devices;
 }
 
 - (id)init {
     if ((self = [super init])) {
         _devices = [[NSMutableArray alloc] initWithCapacity:16];
-        runningOutputs = [[NSMutableArray alloc] initWithCapacity:32];
+        _continousOutputs = [[NSMutableArray alloc] initWithCapacity:32];
     }
     return self;
 }
 
 - (void)dealloc {
-    [continuousTimer invalidate];
-    IOHIDManagerClose(hidManager, kIOHIDOptionsTypeNone);
-    CFRelease(hidManager);
+    [_continuousOutputsTick invalidate];
+    IOHIDManagerClose(_hidManager, kIOHIDOptionsTypeNone);
+    CFRelease(_hidManager);
 }
 
 - (void)expandRecursive:(id <NJInputPathElement>)pathElement {
@@ -44,13 +44,11 @@
 }
 
 - (void)addRunningOutput:(NJOutput *)output {
-    if (![runningOutputs containsObject:output]) {
-        [runningOutputs addObject:output];
-    }
-    if (!continuousTimer) {
-        continuousTimer = [NSTimer scheduledTimerWithTimeInterval:1.f/60.f
+    [_continousOutputs addObject:output];
+    if (!_continuousOutputsTick) {
+        _continuousOutputsTick = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0
                                                            target:self
-                                                         selector:@selector(updateContinuousInputs:)
+                                                         selector:@selector(updateContinuousOutputs:)
                                                          userInfo:nil
                                                           repeats:YES];
     }
@@ -77,7 +75,8 @@
         return;
     
     [self expandRecursive:handler];
-    [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[outlineView rowForItem:handler]] byExtendingSelection: NO];
+    [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[outlineView rowForItem:handler]]
+             byExtendingSelection: NO];
     [outputController focusKey];
 }
 
@@ -107,12 +106,12 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
 }
 
 - (void)addDeviceForDevice:(IOHIDDeviceRef)device {
-    IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void*)self);
+    IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void *)self);
     NJDevice *dev = [[NJDevice alloc] initWithDevice:device];
     dev.index = findAvailableIndex(_devices, dev);
     [_devices addObject:dev];
     [outlineView reloadData];
-    [connectDevicePrompt setHidden:!!_devices.count];
+    connectDevicePrompt.hidden = !!_devices.count;
 }
 
 static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
@@ -138,28 +137,29 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     if (match) {
         [_devices removeObject:match];
         [outlineView reloadData];
-        [connectDevicePrompt setHidden:!!_devices.count];
+        connectDevicePrompt.hidden = !!_devices.count;
     }
-    
+    if (_devices.count == 1)
+        [outlineView expandItem:_devices[0]];
 }
 
-- (void)updateContinuousInputs:(NSTimer *)timer {
+- (void)updateContinuousOutputs:(NSTimer *)timer {
     self.mouseLoc = [NSEvent mouseLocation];
-    for (NJOutput *output in [runningOutputs copy]) {
+    for (NJOutput *output in [_continousOutputs copy]) {
         if (![output update:self]) {
-            [runningOutputs removeObject:output];
+            [_continousOutputs removeObject:output];
         }
     }
-    if (!runningOutputs.count) {
-        [continuousTimer invalidate];
-        continuousTimer = nil;
+    if (!_continousOutputs.count) {
+        [_continuousOutputsTick invalidate];
+        _continuousOutputsTick = nil;
     }
 }
 
 #define NSSTR(e) ((NSString *)CFSTR(e))
 
 - (void)setup {
-    hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
+    _hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
     NSArray *criteria = @[ @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
                               NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_Joystick) },
                            @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
@@ -167,10 +167,10 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
                            @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
                               NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_MultiAxisController) }
                            ];
-    IOHIDManagerSetDeviceMatchingMultiple(hidManager, (__bridge CFArrayRef)criteria);
+    IOHIDManagerSetDeviceMatchingMultiple(_hidManager, (__bridge CFArrayRef)criteria);
     
-    IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    IOReturn ret = IOHIDManagerOpen(hidManager, kIOHIDOptionsTypeNone);
+    IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    IOReturn ret = IOHIDManagerOpen(_hidManager, kIOHIDOptionsTypeNone);
     if (ret != kIOReturnSuccess) {
         [[NSAlert alertWithMessageText:@"Input devices are unavailable"
                          defaultButton:nil
@@ -185,8 +185,8 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
                       contextInfo:nil];
     }
     
-    IOHIDManagerRegisterDeviceMatchingCallback(hidManager, add_callback, (__bridge void *)self);
-    IOHIDManagerRegisterDeviceRemovalCallback(hidManager, remove_callback, (__bridge void *)self);
+    IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, add_callback, (__bridge void *)self);
+    IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, remove_callback, (__bridge void *)self);
 }
 
 - (NJInput *)selectedInput {
@@ -217,8 +217,17 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {
-    
     [outputController loadCurrent];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView
+        isGroupItem:(id <NJInputPathElement>)item {
+    return [item isKindOfClass:NJDevice.class];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView_
+   shouldSelectItem:(id <NJInputPathElement>)item {
+    return ![self outlineView:outlineView_ isGroupItem:item];
 }
 
 - (void)setTranslatingEvents:(BOOL)translatingEvents {
