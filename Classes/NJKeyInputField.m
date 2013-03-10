@@ -173,25 +173,21 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
     self.stringValue = [NJKeyInputField stringForKeyCode:keyCode];
 }
 
-- (void)keyDown:(NSEvent *)theEvent {
-    if (!theEvent.isARepeat) {
-        if ((theEvent.modifierFlags & NSAlternateKeyMask)
-            && theEvent.keyCode == 0x33) {
-            // Allow Alt+Backspace to clear the field.
+- (void)keyDown:(NSEvent *)event {
+    static const NSUInteger IGNORE = NSAlternateKeyMask | NSCommandKeyMask;
+    if (!event.isARepeat) {
+        if ((event.modifierFlags & IGNORE) && event.keyCode == 0x33) {
+            // Allow Alt/Command+Backspace to clear the field.
             self.keyCode = NJKeyInputFieldEmpty;
             [self.keyDelegate keyInputFieldDidClear:self];
-        } else if ((theEvent.modifierFlags & NSAlternateKeyMask)
-                && theEvent.keyCode == 0x35) {
-                // Allow Alt+Escape to cancel.
-            ;
-        } else {
-            self.keyCode = theEvent.keyCode;
-            [self.keyDelegate keyInputField:self didChangeKey:_keyCode];
+        } else if (!(event.modifierFlags & IGNORE)) {
+            self.keyCode = event.keyCode;
+            [self.keyDelegate keyInputField:self didChangeKey:self.keyCode];
         }
         [self resignIfFirstResponder];
     }
 }
-
+    
 - (void)mouseDown:(NSEvent *)theEvent {
     if (self.window.firstResponder == self)
         [self.window makeFirstResponder:nil];
