@@ -24,7 +24,6 @@
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL translatingEvents;
 
-- (void)setup;
 - (IBAction)translatingEventsChanged:(id)sender;
 
 @end

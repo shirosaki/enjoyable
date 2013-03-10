@@ -16,7 +16,6 @@
     IBOutlet NSWindow *window;
 }
 
-@property (nonatomic, strong) IBOutlet NJDeviceController *inputController;
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 
 - (IBAction)restoreToForeground:(id)sender;

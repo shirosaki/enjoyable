@@ -26,6 +26,11 @@
     if ((self = [super init])) {
         _devices = [[NSMutableArray alloc] initWithCapacity:16];
         _continousOutputs = [[NSMutableArray alloc] initWithCapacity:32];
+        [NSNotificationCenter.defaultCenter
+            addObserver:self
+            selector:@selector(setup)
+            name:NSApplicationDidFinishLaunchingNotification
+            object:nil];
     }
     return self;
 }

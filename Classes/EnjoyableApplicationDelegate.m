@@ -55,7 +55,6 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    [self.inputController setup];
     [window makeKeyAndOrderFront:nil];
 }
 
