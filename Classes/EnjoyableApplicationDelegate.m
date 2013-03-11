@@ -9,8 +9,6 @@
 
 #import "NJMapping.h"
 #import "NJMappingsController.h"
-#import "NJDeviceController.h"
-#import "NJOutputController.h"
 #import "NJEvents.h"
 
 @implementation EnjoyableApplicationDelegate {
