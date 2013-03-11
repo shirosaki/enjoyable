@@ -1,0 +1,37 @@
+{
+  "name" : "KRUNCH",
+  "entries" : {
+    "1356:616:1~Button 8" : {
+      "type" : "key press",
+      "key" : 0
+    },
+    "1356:616:1~Button 7" : {
+      "type" : "key press",
+      "key" : 1
+    },
+    "1356:616:1~Button 6" : {
+      "type" : "key press",
+      "key" : 2
+    },
+    "1356:616:1~Button 5" : {
+      "type" : "key press",
+      "key" : 13
+    },
+    "1356:616:1~Button 16" : {
+      "type" : "key press",
+      "key" : 6
+    },
+    "1356:616:1~Button 4" : {
+      "type" : "key press",
+      "key" : 53
+    },
+    "1356:616:1~Button 15" : {
+      "type" : "key press",
+      "key" : 6
+    },
+    "1356:616:1~Button 14" : {
+      "type" : "key press",
+      "key" : 53
+    }
+  }
+}
