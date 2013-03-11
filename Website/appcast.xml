@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+     xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Changes in Enjoyable</title>
+    <link>http://yukkurigames.com/enjoyable/appcast.xml</link>
+    <description>Most recent changes with links to updates.</description>
+    <language>en</language>
+    <item>
+      <title>Version 1.1</title>
+      <description><![CDATA[
+      <p>
+      Mouse simulation now includes drag-and-drop, middle and extended
+      button presses, and horizontal scrolling.
+      </p>
+      <p>
+      The system menu bar now contains a status item when Enjoyable is
+      running. You can enable and disable it and change mappings from this
+      item. It flashes briefly when the mapping changes automatically.
+      </p>
+      <p>
+      Automatic switching for applications with ambiguous names
+      (e.g. "Flash Player") was improved. You can also name a mapping after
+      the application's filename.
+      </p>
+      ]]>
+      </description>
+      <pubDate>Wed, 09 Jan 2006 19:20:11 +0000</pubDate>
+      <enclosure url="http://yukkurigames.com/enjoyable/Enjoyable-1.1.zip"
+                 sparkle:version="11111"
+                 sparkle:shortVersionString="1.1"
+                 length="1"
+                 type="application/octet-stream" />
+    </item>
+  </channel>
+</rss>
