@@ -51,7 +51,8 @@
     [self updateInterfaceForCurrentMapping];
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
-        object:_mappings];
+                      object:self
+                    userInfo:@{ @"mappings": _mappings }];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
@@ -104,8 +105,10 @@
     _manualMapping = mapping;
     _currentMapping = mapping;
     [self updateInterfaceForCurrentMapping];
-    [NSNotificationCenter.defaultCenter postNotificationName:NJEventMappingChanged
-                                                      object:_currentMapping];
+    [NSNotificationCenter.defaultCenter
+         postNotificationName:NJEventMappingChanged
+         object:self
+         userInfo:@{ @"mapping": _currentMapping }];
 }
 
 - (IBAction)addPressed:(id)sender {

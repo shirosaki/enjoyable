@@ -124,10 +124,13 @@
     [self.mappingsController mappingPressed:sender];
 }
 
-- (void)addMappingsToMenu:(NSMenu *)menu withKeys:(BOOL)withKeys atIndex:(NSInteger)index {
+- (void)addMappings:(NSArray *)mappings
+             toMenu:(NSMenu *)menu
+           withKeys:(BOOL)withKeys
+            atIndex:(NSInteger)index {
     static const NSUInteger MAXIMUM_ITEMS = 15;
     int added = 0;
-    for (NJMapping *mapping in self.mappingsController) {
+    for (NJMapping *mapping in mappings) {
         NSString *keyEquiv = (++added < 10 && withKeys) ? @(added).stringValue : @"";
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
                                                       action:@selector(chooseMapping:)
@@ -143,7 +146,7 @@
                                                   keyEquivalent:@""];
             // There must be a represented object here so the item gets
             // removed correctly when the menus are regenerated.
-            end.representedObject = self.mappingsController.mappings;
+            end.representedObject = mappings;
             end.target = self;
             [menu insertItem:end atIndex:index++];
             break;
@@ -152,16 +155,20 @@
 }
 
 - (void)mappingListDidChange:(NSNotification *)note {
+    NSArray *mappings = note.userInfo[@"mappings"];
     while (mappingsMenu.lastItem.representedObject)
         [mappingsMenu removeLastItem];
-    [self addMappingsToMenu:mappingsMenu withKeys:YES atIndex:mappingsMenu.numberOfItems];
+    [self addMappings:mappings
+               toMenu:mappingsMenu
+             withKeys:YES
+              atIndex:mappingsMenu.numberOfItems];
     while ([statusItemMenu itemAtIndex:2].representedObject)
         [statusItemMenu removeItemAtIndex:2];
-    [self addMappingsToMenu:statusItemMenu withKeys:NO atIndex:2];
+    [self addMappings:mappings toMenu:statusItemMenu withKeys:NO atIndex:2];
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
-    NJMapping *current = note.object;
+    NJMapping *current = note.userInfo[@"mapping"];
     for (NSMenuItem *item in mappingsMenu.itemArray)
         if (item.representedObject)
             item.state = item.representedObject == current;
@@ -184,7 +191,10 @@
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender {
     while (dockMenu.lastItem.representedObject)
         [dockMenu removeLastItem];
-    [self addMappingsToMenu:dockMenu withKeys:NO atIndex:dockMenu.numberOfItems];
+    [self addMappings:self.mappingsController.mappings
+               toMenu:dockMenu
+             withKeys:NO
+              atIndex:dockMenu.numberOfItems];
     return dockMenu;
 }
 
