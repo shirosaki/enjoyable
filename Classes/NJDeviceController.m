@@ -27,18 +27,38 @@
         _devices = [[NSMutableArray alloc] initWithCapacity:16];
         _continousOutputs = [[NSMutableArray alloc] initWithCapacity:32];
         [NSNotificationCenter.defaultCenter
+             addObserver:self
+             selector:@selector(applicationDidFinishLaunching:)
+             name:NSApplicationDidFinishLaunchingNotification
+             object:nil];
+        
+        // The HID manager uses 5-10ms per second doing basically
+        // nothing if a noisy device is plugged in (the % of that
+        // spent in input_callback is negligible, so it's not
+        // something we can make faster). I don't really think that's
+        // acceptable, CPU/power wise. So if translation is disabled
+        // and the window is closed, just switch off the HID manager
+        // entirely. This probably also has some marginal benefits for
+        // compatibility with other applications that want exclusive
+        // grabs.
+        [NSNotificationCenter.defaultCenter
             addObserver:self
-            selector:@selector(setup)
-            name:NSApplicationDidFinishLaunchingNotification
+            selector:@selector(closeHidIfDisabled:)
+            name:NSApplicationDidResignActiveNotification
+            object:nil];
+        [NSNotificationCenter.defaultCenter
+            addObserver:self
+            selector:@selector(openHid)
+            name:NSApplicationDidBecomeActiveNotification
             object:nil];
     }
     return self;
 }
 
 - (void)dealloc {
+    [NSNotificationCenter.defaultCenter removeObserver:self];
     [_continuousOutputsTick invalidate];
-    IOHIDManagerClose(_hidManager, kIOHIDOptionsTypeNone);
-    CFRelease(_hidManager);
+    [self closeHid];
 }
 
 - (void)expandRecursive:(id <NJInputPathElement>)pathElement {
@@ -166,8 +186,12 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
 
 #define NSSTR(e) ((NSString *)CFSTR(e))
 
-- (void)setup {
+- (void)openHid {
+    if (_hidManager)
+        return;
+    NSLog(@"Opening HID manager.");
     _hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
+    IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     NSArray *criteria = @[ @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
                               NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_Joystick) },
                            @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
@@ -176,8 +200,6 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
                               NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_MultiAxisController) }
                            ];
     IOHIDManagerSetDeviceMatchingMultiple(_hidManager, (__bridge CFArrayRef)criteria);
-    
-    IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     IOReturn ret = IOHIDManagerOpen(_hidManager, kIOHIDOptionsTypeNone);
     if (ret != kIOReturnSuccess) {
         [[NSAlert alertWithMessageText:@"Input devices are unavailable"
@@ -187,14 +209,28 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
              informativeTextWithFormat:@"Error 0x%08x occured trying to access your devices. "
                                        @"Input may not be correctly detected or mapped.",
                                        ret]
-         beginSheetModalForWindow:outlineView.window
-                    modalDelegate:nil
-                   didEndSelector:nil
-                      contextInfo:nil];
+            beginSheetModalForWindow:outlineView.window
+            modalDelegate:nil
+            didEndSelector:nil
+            contextInfo:nil];
+        [self closeHid];
+    } else {
+        IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, add_callback, (__bridge void *)self);
+        IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, remove_callback, (__bridge void *)self);
     }
-    
-    IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, add_callback, (__bridge void *)self);
-    IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, remove_callback, (__bridge void *)self);
+}
+
+- (void)closeHid {
+    if (_hidManager) {
+        NSLog(@"Closing HID manager.");
+        IOHIDManagerUnscheduleFromRunLoop(_hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+        IOHIDManagerClose(_hidManager, kIOHIDOptionsTypeNone);
+        CFRelease(_hidManager);
+        _hidManager = NULL;
+    }
+    [_devices removeAllObjects];
+    [outlineView reloadData];
+    connectDevicePrompt.hidden = !!_devices.count;
 }
 
 - (NJInput *)selectedInput {
@@ -248,7 +284,24 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
             : NJEventTranslationDeactivated;
         [NSNotificationCenter.defaultCenter postNotificationName:name
                                                           object:self];
+
+        if (!translatingEvents && !NSApplication.sharedApplication.isActive)
+            [self closeHid];
+        else if (translatingEvents || NSApplication.sharedApplication.isActive)
+            [self openHid];
     }
+}
+
+- (void)closeHidIfDisabled:(NSNotification *)application {
+    if (!self.translatingEvents)
+        [self closeHid];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)application {
+    // NSApplicationWillBecomeActiveNotification occurs just slightly
+    // too late - there's one tick where the UI is showing "No
+    // devices" even with a device plugged in.
+    [self openHid];
 }
 
 - (IBAction)translatingEventsChanged:(NSButton *)sender {
