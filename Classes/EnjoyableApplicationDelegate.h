@@ -6,13 +6,14 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class NJDeviceController;
 @class NJMappingsController;
 
-@interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate> {
+#import "NJMappingMenuController.h"
+
+@interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
+                                                    NJMappingMenuDelegate> {
     IBOutlet NSMenu *dockMenu;
     IBOutlet NSMenu *statusItemMenu;
-    IBOutlet NSMenu *mappingsMenu;
     IBOutlet NSWindow *window;
 }
 

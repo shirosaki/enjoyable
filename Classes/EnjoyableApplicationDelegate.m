@@ -31,11 +31,6 @@
         object:nil];
     [NSNotificationCenter.defaultCenter
         addObserver:self
-        selector:@selector(mappingListDidChange:)
-        name:NJEventMappingListChanged
-        object:nil];
-    [NSNotificationCenter.defaultCenter
-        addObserver:self
         selector:@selector(eventTranslationActivated:)
         name:NJEventTranslationActivated
         object:nil];
@@ -99,8 +94,6 @@
 }
 
 - (void)eventTranslationActivated:(NSNotification *)note {
-    [dockMenu itemAtIndex:0].state = NSOnState;
-    [statusItemMenu itemAtIndex:0].state = NSOnState;
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon"];
     [NSWorkspace.sharedWorkspace.notificationCenter
         addObserver:self
@@ -110,8 +103,6 @@
 }
 
 - (void)eventTranslationDeactivated:(NSNotification *)note {
-    [dockMenu itemAtIndex:0].state = NSOffState;
-    [statusItemMenu itemAtIndex:0].state = NSOffState;
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
     [NSWorkspace.sharedWorkspace.notificationCenter
         removeObserver:self
@@ -119,63 +110,7 @@
         object:nil];
 }
 
-- (void)restoreWindowAndShowMappings:(id)sender {
-    [self restoreToForeground:sender];
-    [self.mappingsController mappingPressed:sender];
-}
-
-- (void)addMappings:(NSArray *)mappings
-             toMenu:(NSMenu *)menu
-           withKeys:(BOOL)withKeys
-            atIndex:(NSInteger)index {
-    static const NSUInteger MAXIMUM_ITEMS = 15;
-    int added = 0;
-    for (NJMapping *mapping in mappings) {
-        NSString *keyEquiv = (++added < 10 && withKeys) ? @(added).stringValue : @"";
-        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
-                                                      action:@selector(chooseMapping:)
-                                               keyEquivalent:keyEquiv];
-        item.representedObject = mapping;
-        item.state = mapping == self.mappingsController.currentMapping;
-        [menu insertItem:item atIndex:index++];
-        if (added == MAXIMUM_ITEMS && self.mappingsController.mappings.count > MAXIMUM_ITEMS + 1) {
-            NSString *msg = [NSString stringWithFormat:@"(and %lu more…)",
-                             self.mappingsController.mappings.count - MAXIMUM_ITEMS];
-            NSMenuItem *end = [[NSMenuItem alloc] initWithTitle:msg
-                                                         action:@selector(restoreWindowAndShowMappings:)
-                                                  keyEquivalent:@""];
-            // There must be a represented object here so the item gets
-            // removed correctly when the menus are regenerated.
-            end.representedObject = mappings;
-            end.target = self;
-            [menu insertItem:end atIndex:index++];
-            break;
-        }
-    }    
-}
-
-- (void)mappingListDidChange:(NSNotification *)note {
-    NSArray *mappings = note.userInfo[@"mappings"];
-    while (mappingsMenu.lastItem.representedObject)
-        [mappingsMenu removeLastItem];
-    [self addMappings:mappings
-               toMenu:mappingsMenu
-             withKeys:YES
-              atIndex:mappingsMenu.numberOfItems];
-    while ([statusItemMenu itemAtIndex:2].representedObject)
-        [statusItemMenu removeItemAtIndex:2];
-    [self addMappings:mappings toMenu:statusItemMenu withKeys:NO atIndex:2];
-}
-
 - (void)mappingDidChange:(NSNotification *)note {
-    NJMapping *current = note.userInfo[@"mapping"];
-    for (NSMenuItem *item in mappingsMenu.itemArray)
-        if (item.representedObject)
-            item.state = item.representedObject == current;
-    for (NSMenuItem *item in statusItemMenu.itemArray)
-        if (item.representedObject)
-            item.state = item.representedObject == current;
-    
     if (!window.isVisible)
         for (int i = 0; i < 4; ++i)
             [self performSelector:@selector(flashStatusItem)
@@ -183,18 +118,7 @@
                        afterDelay:0.2 * i];
 }
 
-- (void)chooseMapping:(NSMenuItem *)sender {
-    NJMapping *chosen = sender.representedObject;
-    [self.mappingsController activateMapping:chosen];
-}
-
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender {
-    while (dockMenu.lastItem.representedObject)
-        [dockMenu removeLastItem];
-    [self addMappings:self.mappingsController.mappings
-               toMenu:dockMenu
-             withKeys:NO
-              atIndex:dockMenu.numberOfItems];
     return dockMenu;
 }
 
@@ -203,6 +127,15 @@
     NSURL *url = [NSURL fileURLWithPath:filename];
     [self.mappingsController addMappingWithContentsOfURL:url];
     return YES;
+}
+
+- (void)mappingWasChosen:(NJMapping *)mapping {
+    [self.mappingsController activateMapping:mapping];
+}
+
+- (void)mappingListShouldOpen {
+    [self restoreToForeground:self];
+    [self.mappingsController mappingPressed:self];
 }
 
 

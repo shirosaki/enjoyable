@@ -52,7 +52,8 @@
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
                       object:self
-                    userInfo:@{ @"mappings": _mappings }];
+                    userInfo:@{ @"mappings": _mappings,
+                                @"mapping": _currentMapping }];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
