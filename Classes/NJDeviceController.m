@@ -240,7 +240,6 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         _translatingEvents = translatingEvents;
         NSInteger state = translatingEvents ? NSOnState : NSOffState;
         translatingEventsButton.state = state;
-        translatingEventsMenu.title = translatingEvents ? @"Disable" : @"Enable";
         NSString *name = translatingEvents
             ? NJEventTranslationActivated
             : NJEventTranslationDeactivated;
@@ -252,6 +251,5 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (IBAction)translatingEventsChanged:(NSButton *)sender {
     self.translatingEvents = sender.state == NSOnState;
 }
-
 
 @end

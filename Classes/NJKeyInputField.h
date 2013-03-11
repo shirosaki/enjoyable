@@ -20,7 +20,7 @@ extern CGKeyCode NJKeyInputFieldEmpty;
 + (NSString *)stringForKeyCode:(CGKeyCode)keyCode;
     // Give the string name for a virtual key code.
 
-@property (nonatomic, weak) IBOutlet id <NJKeyInputFieldDelegate> keyDelegate;
+@property (nonatomic, weak) IBOutlet id <NJKeyInputFieldDelegate, NSTextFieldDelegate> delegate;
 
 @property (nonatomic, assign) CGKeyCode keyCode;
     // The currently displayed key code, or NJKeyInputFieldEmpty if no
@@ -37,6 +37,7 @@ extern CGKeyCode NJKeyInputFieldEmpty;
 
 @protocol NJKeyInputFieldDelegate <NSObject>
 
+@optional
 - (void)keyInputField:(NJKeyInputField *)keyInput
          didChangeKey:(CGKeyCode)keyCode;
 - (void)keyInputFieldDidClear:(NJKeyInputField *)keyInput;

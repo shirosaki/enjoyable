@@ -16,7 +16,6 @@
     IBOutlet NJOutputController *outputController;
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NSButton *translatingEventsButton;
-    IBOutlet NSMenuItem *translatingEventsMenu;
     IBOutlet NSView *connectDevicePrompt;
 }
 
@@ -24,6 +23,6 @@
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL translatingEvents;
 
-- (IBAction)translatingEventsChanged:(id)sender;
+- (IBAction)translatingEventsChanged:(NSButton *)sender;
 
 @end

@@ -22,7 +22,8 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 
 - (void)clear {
     self.keyCode = NJKeyInputFieldEmpty;
-    [self.keyDelegate keyInputFieldDidClear:self];
+    if ([self.delegate respondsToSelector:@selector(keyInputFieldDidClear:)])
+        [self.delegate keyInputFieldDidClear:self];
     [self resignIfFirstResponder];
 }
 
@@ -179,10 +180,12 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
         if ((event.modifierFlags & IGNORE) && event.keyCode == 0x33) {
             // Allow Alt/Command+Backspace to clear the field.
             self.keyCode = NJKeyInputFieldEmpty;
-            [self.keyDelegate keyInputFieldDidClear:self];
+            if ([self.delegate respondsToSelector:@selector(keyInputFieldDidClear:)])
+                [self.delegate keyInputFieldDidClear:self];
         } else if (!(event.modifierFlags & IGNORE)) {
             self.keyCode = event.keyCode;
-            [self.keyDelegate keyInputField:self didChangeKey:self.keyCode];
+            if ([self.delegate respondsToSelector:@selector(keyInputField:didChangeKey:)])
+                [self.delegate keyInputField:self didChangeKey:self.keyCode];
         }
         [self resignIfFirstResponder];
     }
@@ -204,8 +207,17 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
     // modifiers are still down.
     if (!(theEvent.modifierFlags & NSDeviceIndependentModifierFlagsMask)) {
         self.keyCode = theEvent.keyCode;
-        [self.keyDelegate keyInputField:self didChangeKey:_keyCode];
+        if ([self.delegate respondsToSelector:@selector(keyInputField:didChangeKey:)])
+            [self.delegate keyInputField:self didChangeKey:_keyCode];
     }
+}
+
+- (void)setDelegate:(id<NJKeyInputFieldDelegate, NSTextFieldDelegate>)delegate {
+    [super setDelegate:delegate];
+}
+
+- (id <NJKeyInputFieldDelegate, NSTextFieldDelegate>)delegate {
+    return (id)[super delegate];
 }
 
 @end
