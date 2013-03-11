@@ -49,7 +49,10 @@
 }
 
 - (void)addRunningOutput:(NJOutput *)output {
-    [_continousOutputs addObject:output];
+    // Axis events will trigger every small movement, don't keep
+    // re-adding them or they trigger multiple times each time.
+    if (![_continousOutputs containsObject:output])
+        [_continousOutputs addObject:output];
     if (!_continuousOutputsTick) {
         _continuousOutputsTick = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0
                                                            target:self
