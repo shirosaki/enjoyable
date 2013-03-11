@@ -195,6 +195,31 @@
     }
 }
 
+- (void)mappingConflictDidResolve:(NSAlert *)alert
+                       returnCode:(NSInteger)returnCode
+                      contextInfo:(void *)contextInfo {
+    NSDictionary *userInfo = CFBridgingRelease(contextInfo);
+    NJMapping *oldMapping = userInfo[@"old mapping"];
+    NJMapping *newMapping = userInfo[@"new mapping"];
+    switch (returnCode) {
+        case NSAlertFirstButtonReturn: // Merge
+            [oldMapping mergeEntriesFrom:newMapping];
+            [self activateMapping:oldMapping];
+            [self mappingsChanged];
+            break;
+        case NSAlertThirdButtonReturn: // New Mapping
+            [_mappings addObject:newMapping];
+            [self activateMapping:newMapping];
+            [self mappingsChanged];
+            [self mappingPressed:alert];
+            [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
+            [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
+            break;
+        default: // Cancel, other.
+            break;
+    }
+}
+
 - (void)addMappingWithContentsOfURL:(NSURL *)url {
     NSWindow *window = popoverActivate.window;
     NSError *error;
@@ -204,42 +229,29 @@
     
     if (mapping && !error) {
         NJMapping *mergeInto = self[mapping.name];
-        BOOL conflict = [mergeInto hasConflictWith:mapping];
-        
-        if (conflict) {
+        if ([mergeInto hasConflictWith:mapping]) {
             NSAlert *conflictAlert = [[NSAlert alloc] init];
             conflictAlert.messageText = @"Replace existing mappings?";
             conflictAlert.informativeText =
             [NSString stringWithFormat:
-             @"This file contains inputs you've already mapped in \"%@\". Do you "
-             @"want to merge them and replace your existing mappings, or import this "
-             @"as a separate mapping?", mapping.name];
+                @"This file contains inputs you've already mapped in \"%@\". Do you "
+                @"want to merge them and replace your existing mappings, or import this "
+                @"as a separate mapping?", mapping.name];
             [conflictAlert addButtonWithTitle:@"Merge"];
             [conflictAlert addButtonWithTitle:@"Cancel"];
             [conflictAlert addButtonWithTitle:@"New Mapping"];
-            NSInteger res = [conflictAlert runModal];
-            if (res == NSAlertSecondButtonReturn)
-                return;
-            else if (res == NSAlertThirdButtonReturn)
-                mergeInto = nil;
-        }
-        
-        if (mergeInto) {
-            [mergeInto mergeEntriesFrom:mapping];
-            mapping = mergeInto;
+            [conflictAlert beginSheetModalForWindow:popoverActivate.window
+                                      modalDelegate:self
+                                     didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
+                                        contextInfo:(void *)CFBridgingRetain(@{ @"old mapping": mergeInto,
+                                                                                @"new mapping": mapping })];
         } else {
             [_mappings addObject:mapping];
-        }
-        
-        [self activateMapping:mapping];
-        [self mappingsChanged];
-        
-        if (conflict && !mergeInto) {
-            [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
-            [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
+            [self activateMapping:mapping];
+            [self mappingsChanged];
         }
     }
-    
+
     if (error) {
         [window presentError:error
               modalForWindow:window
