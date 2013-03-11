@@ -280,7 +280,7 @@
 }
 
 - (void)mappingListDidChange:(NSNotification *)note {
-    NSArray *mappings = note.userInfo[@"mappings"];
+    NSArray *mappings = note.userInfo[NJMappingListKey];
     NJMapping *current = mappingPopup.selectedItem.representedObject;
     [mappingPopup.menu removeAllItems];
     for (NJMapping *mapping in mappings) {

@@ -108,8 +108,8 @@
     [self updateInterfaceForCurrentMapping];
     [NSNotificationCenter.defaultCenter
          postNotificationName:NJEventMappingChanged
-         object:self
-         userInfo:@{ @"mapping": _currentMapping }];
+                       object:self
+                     userInfo:@{ NJMappingKey : _currentMapping }];
 }
 
 - (IBAction)addPressed:(id)sender {
