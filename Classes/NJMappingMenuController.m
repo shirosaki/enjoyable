@@ -52,8 +52,8 @@
 }
 
 - (void)mappingsListDidChange:(NSNotification *)note {
-    NSArray *mappings = note.userInfo[@"mappings"];
-    NJMapping *currentMapping = note.userInfo[@"mapping"];
+    NSArray *mappings = note.userInfo[NJMappingListKey];
+    NJMapping *currentMapping = note.userInfo[NJMappingKey];
     NSMenuItem *toRemove;
     while (self.menu.numberOfItems > self.firstMappingIndex
            && (toRemove = [self.menu itemAtIndex:self.firstMappingIndex])
@@ -92,7 +92,7 @@
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
-    NJMapping *mapping = note.userInfo[@"mapping"];
+    NJMapping *mapping = note.userInfo[NJMappingKey];
     for (NSMenuItem *item in self.menu.itemArray)
         if ([item.representedObject isKindOfClass:NJMapping.class])
             item.state = mapping == item.representedObject;
