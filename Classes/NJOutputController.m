@@ -145,11 +145,12 @@
     [radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
     if (sender.state == NSOnState) {
-        scrollSpeedSlider.floatValue = (scrollSpeedSlider.maxValue - scrollSpeedSlider.minValue) / 2;
-        [scrollSpeedSlider setEnabled:YES];
+        scrollSpeedSlider.floatValue =
+            scrollSpeedSlider.minValue + (scrollSpeedSlider.maxValue - scrollSpeedSlider.minValue) / 2;
+        scrollSpeedSlider.enabled = YES;
     } else {
         scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
-        [scrollSpeedSlider setEnabled:NO];
+        scrollSpeedSlider.enabled = NO;
     }
     [self commit];
 }
@@ -206,19 +207,19 @@
 }
 
 - (BOOL)enabled {
-    return [radioButtons isEnabled];
+    return radioButtons.isEnabled;
 }
 
 - (void)setEnabled:(BOOL)enabled {
-    [radioButtons setEnabled:enabled];
-    [keyInput setEnabled:enabled];
-    [mappingPopup setEnabled:enabled];
-    [mouseDirSelect setEnabled:enabled];
-    [mouseSpeedSlider setEnabled:enabled];
-    [mouseBtnSelect setEnabled:enabled];
-    [scrollDirSelect setEnabled:enabled];
-    [smoothCheck setEnabled:enabled];
-    [scrollSpeedSlider setEnabled:enabled && smoothCheck.isEnabled];
+    radioButtons.enabled = enabled;
+    keyInput.enabled = enabled;
+    mappingPopup.enabled = enabled;
+    mouseDirSelect.enabled = enabled;
+    mouseSpeedSlider.enabled = enabled;
+    mouseBtnSelect.enabled = enabled;
+    scrollDirSelect.enabled = enabled;
+    smoothCheck.enabled = enabled;
+    scrollSpeedSlider.enabled = enabled && smoothCheck.state;
 }
 
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {
@@ -229,7 +230,7 @@
         self.enabled = YES;
         NSString *inpFullName = input.name;
         for (id <NJInputPathElement> cur = input.base; cur; cur = cur.base) {
-            inpFullName = [[NSString alloc] initWithFormat:@"%@ > %@", cur.name, inpFullName];
+            inpFullName = [[NSString alloc] initWithFormat:@"%@ ▸ %@", cur.name, inpFullName];
         }
         title.stringValue = inpFullName;
     }
@@ -261,7 +262,7 @@
         [scrollDirSelect selectSegmentWithTag:direction];
         scrollSpeedSlider.floatValue = speed;
         smoothCheck.state = smooth ? NSOnState : NSOffState;
-        [scrollSpeedSlider setEnabled:smooth];
+        scrollSpeedSlider.enabled = smooth;
     } else {
         [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
     }

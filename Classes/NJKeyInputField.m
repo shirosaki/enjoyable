@@ -14,8 +14,8 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 - (id)initWithFrame:(NSRect)frameRect {
     if ((self = [super initWithFrame:frameRect])) {
         self.alignment = NSCenterTextAlignment;
-        [self setEditable:NO];
-        [self setSelectable:NO];
+        self.editable = NO;
+        self.selectable = NO;
     }
     return self;
 }
