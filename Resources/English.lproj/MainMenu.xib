@@ -1077,7 +1077,7 @@ aW5nLg</string>
 								<object class="NSTextField" id="1016088174">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{9, 286}, {369, 17}}</string>
+									<string key="NSFrame">{{9, 286}, {412, 17}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="497528019"/>
@@ -1101,7 +1101,7 @@ aW5nLg</string>
 								<object class="NSBox" id="497528019">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">10</int>
-									<string key="NSFrame">{{12, 276}, {363, 5}}</string>
+									<string key="NSFrame">{{12, 276}, {406, 5}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="120408205"/>
@@ -3205,13 +3205,13 @@ aW5nLg</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">translatingEventsChanged:</string>
-						<string key="NS.object.0">id</string>
+						<string key="NS.object.0">NSButton</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
 						<string key="NS.key.0">translatingEventsChanged:</string>
 						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">translatingEventsChanged:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
