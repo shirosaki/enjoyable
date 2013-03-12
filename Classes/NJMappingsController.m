@@ -116,6 +116,7 @@
 }
 
 - (IBAction)addPressed:(id)sender {
+    [self mappingPressed:sender];
     NJMapping *newMapping = [[NJMapping alloc] init];
     [_mappings addObject:newMapping];
     [self activateMapping:newMapping];
