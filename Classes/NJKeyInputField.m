@@ -7,7 +7,15 @@
 
 #import "NJKeyInputField.h"
 
-const CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
+#include <Carbon/Carbon.h>
+    // Only used for kVK_... codes.
+
+enum {
+    kVK_RightCommand = kVK_Command - 1,
+    kVK_MAX = 0xFFFF,
+};
+
+const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 
 @implementation NJKeyInputField
 
@@ -33,124 +41,141 @@ const CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 
 + (NSString *)stringForKeyCode:(CGKeyCode)keyCode {
     switch (keyCode) {
-        case 0x7a: return @"F1";
-        case 0x78: return @"F2";
-        case 0x63: return @"F3";
-        case 0x76: return @"F4";
-        case 0x60: return @"F5";
-        case 0x61: return @"F6";
-        case 0x62: return @"F7";
-        case 0x64: return @"F8";
-        case 0x65: return @"F9";
-        case 0x6d: return @"F10";
-        case 0x67: return @"F11";
-        case 0x6f: return @"F12";
-        case 0x69: return @"F13";
-        case 0x6b: return @"F14";
-        case 0x71: return @"F15";
-        case 0x6a: return @"F16";
-        case 0x40: return @"F17";
-        case 0x4f: return @"F18";
-        case 0x50: return @"F19";
+        case kVK_F1: return @"F1";
+        case kVK_F2: return @"F2";
+        case kVK_F3: return @"F3";
+        case kVK_F4: return @"F4";
+        case kVK_F5: return @"F5";
+        case kVK_F6: return @"F6";
+        case kVK_F7: return @"F7";
+        case kVK_F8: return @"F8";
+        case kVK_F9: return @"F9";
+        case kVK_F10: return @"F10";
+        case kVK_F11: return @"F11";
+        case kVK_F12: return @"F12";
+        case kVK_F13: return @"F13";
+        case kVK_F14: return @"F14";
+        case kVK_F15: return @"F15";
+        case kVK_F16: return @"F16";
+        case kVK_F17: return @"F17";
+        case kVK_F18: return @"F18";
+        case kVK_F19: return @"F19";
+        case kVK_F20: return @"F20";
             
-        case 0x35: return @"⎋";
-        case 0x32: return @"`";
+        case kVK_Escape: return @"⎋";
+        case kVK_ANSI_Grave: return @"`";
             
-        case 0x12: return @"1";
-        case 0x13: return @"2";
-        case 0x14: return @"3";
-        case 0x15: return @"4";
-        case 0x17: return @"5";
-        case 0x16: return @"6";
-        case 0x1a: return @"7";
-        case 0x1c: return @"8";
-        case 0x19: return @"9";
-        case 0x1d: return @"0";
-        case 0x1b: return @"-";
-        case 0x18: return @"=";
+        case kVK_ANSI_1: return @"1";
+        case kVK_ANSI_2: return @"2";
+        case kVK_ANSI_3: return @"3";
+        case kVK_ANSI_4: return @"4";
+        case kVK_ANSI_5: return @"5";
+        case kVK_ANSI_6: return @"6";
+        case kVK_ANSI_7: return @"7";
+        case kVK_ANSI_8: return @"8";
+        case kVK_ANSI_9: return @"9";
+        case kVK_ANSI_0: return @"0";
+        case kVK_ANSI_Minus: return @"-";
+        case kVK_ANSI_Equal: return @"=";
             
-        case 0x3f: return @"Fn";
-        case 0x36: return NSLocalizedString(@"Right ⌘", @"keyboard key");
-        case 0x37: return NSLocalizedString(@"Left ⌘", @"keyboard key");
-        case 0x38: return NSLocalizedString(@"Left ⇧", @"keyboard key");
-        case 0x39: return @"⇪";
-        case 0x3a: return NSLocalizedString(@"Left ⌥", @"keyboard key");
-        case 0x3b: return NSLocalizedString(@"Left ⌃", @"keyboard key");
-        case 0x3c: return NSLocalizedString(@"Right ⇧", @"keyboard key");
-        case 0x3d: return NSLocalizedString(@"Right ⌃", @"keyboard key");
-        case 0x3e: return NSLocalizedString(@"Right ⌥", @"keyboard key");
+        case kVK_Function: return @"Fn";
+        case kVK_CapsLock: return @"⇪";
+        case kVK_Command: return NSLocalizedString(@"Left ⌘", @"keyboard key");
+        case kVK_RightCommand: return NSLocalizedString(@"Right ⌘", @"keyboard key");
+        case kVK_Option: return NSLocalizedString(@"Left ⌥", @"keyboard key");
+        case kVK_RightOption: return NSLocalizedString(@"Right ⌥", @"keyboard key");
+        case kVK_Control: return NSLocalizedString(@"Left ⌃", @"keyboard key");
+        case kVK_RightControl: return NSLocalizedString(@"Right ⌃", @"keyboard key");
+        case kVK_Shift: return NSLocalizedString(@"Left ⇧", @"keyboard key");
+        case kVK_RightShift: return NSLocalizedString(@"Right ⇧", @"keyboard key");
             
-        case 0x73: return @"↖";
-        case 0x74: return @"⇞";
-        case 0x77: return @"↘";
-        case 0x79: return @"⇟";
+        case kVK_Home: return @"↖";
+        case kVK_PageUp: return @"⇞";
+        case kVK_End: return @"↘";
+        case kVK_PageDown: return @"⇟";
 
-        case 0x75: return @"⌦";
-        case 0x33: return @"⌫";
+        case kVK_ForwardDelete: return @"⌦";
+        case kVK_Delete: return @"⌫";
             
-        case 0x30: return @"⇥";
-        case 0x24: return @"↩";
-        case 0x31: return @"␣";
+        case kVK_Tab: return @"⇥";
+        case kVK_Return: return @"↩";
+        case kVK_Space: return @"␣";
             
-        case 0x0c: return @"Q";
-        case 0x0d: return @"W";
-        case 0x0e: return @"E";
-        case 0x0f: return @"R";
-        case 0x11: return @"T";
-        case 0x10: return @"Y";
-        case 0x20: return @"U";
-        case 0x22: return @"I";
-        case 0x1f: return @"O";
-        case 0x23: return @"P";
-        case 0x21: return @"[";
-        case 0x1e: return @"]";
-        case 0x2a: return @"\\";
-        case 0x00: return @"A";
-        case 0x01: return @"S";
-        case 0x02: return @"D";
-        case 0x03: return @"F";
-        case 0x05: return @"G";
-        case 0x04: return @"H";
-        case 0x26: return @"J";
-        case 0x28: return @"K";
-        case 0x25: return @"L";
-        case 0x29: return @";";
-        case 0x27: return @"'";
-        case 0x06: return @"Z";
-        case 0x07: return @"X";
-        case 0x08: return @"C";
-        case 0x09: return @"V";
-        case 0x0b: return @"B";
-        case 0x2d: return @"N";
-        case 0x2e: return @"M";
-        case 0x2b: return @",";
-        case 0x2f: return @".";
-        case 0x2c: return @"/";
+        case kVK_ANSI_A: return @"A";
+        case kVK_ANSI_B: return @"B";
+        case kVK_ANSI_C: return @"C";
+        case kVK_ANSI_D: return @"D";
+        case kVK_ANSI_E: return @"E";
+        case kVK_ANSI_F: return @"F";
+        case kVK_ANSI_G: return @"G";
+        case kVK_ANSI_H: return @"H";
+        case kVK_ANSI_I: return @"I";
+        case kVK_ANSI_J: return @"J";
+        case kVK_ANSI_K: return @"K";
+        case kVK_ANSI_L: return @"L";
+        case kVK_ANSI_M: return @"M";
+        case kVK_ANSI_N: return @"N";
+        case kVK_ANSI_O: return @"O";
+        case kVK_ANSI_P: return @"P";
+        case kVK_ANSI_Q: return @"Q";
+        case kVK_ANSI_R: return @"R";
+        case kVK_ANSI_S: return @"S";
+        case kVK_ANSI_T: return @"T";
+        case kVK_ANSI_U: return @"U";
+        case kVK_ANSI_V: return @"V";
+        case kVK_ANSI_W: return @"W";
+        case kVK_ANSI_X: return @"X";
+        case kVK_ANSI_Y: return @"Y";
+        case kVK_ANSI_Z: return @"Z";
+        case kVK_ANSI_LeftBracket: return @"[";
+        case kVK_ANSI_RightBracket: return @"]";
+        case kVK_ANSI_Backslash: return @"\\";
+        case kVK_ANSI_Semicolon: return @";";
+        case kVK_ANSI_Quote: return @"'";
+        case kVK_ANSI_Comma: return @",";
+        case kVK_ANSI_Period: return @".";
+        case kVK_ANSI_Slash: return @"/";
             
-        case 0x47: return @"⌧";
-        case 0x51: return NSLocalizedString(@"Key Pad =", @"numeric pad key");
-        case 0x4b: return NSLocalizedString(@"Key Pad /", @"numeric pad key");
-        case 0x43: return NSLocalizedString(@"Key Pad *", @"numeric pad key");
-        case 0x59: return NSLocalizedString(@"Key Pad 7", @"numeric pad key");
-        case 0x5b: return NSLocalizedString(@"Key Pad 8", @"numeric pad key");
-        case 0x5c: return NSLocalizedString(@"Key Pad 9", @"numeric pad key");
-        case 0x4e: return NSLocalizedString(@"Key Pad -", @"numeric pad key");
-        case 0x56: return NSLocalizedString(@"Key Pad 4", @"numeric pad key");
-        case 0x57: return NSLocalizedString(@"Key Pad 5", @"numeric pad key");
-        case 0x58: return NSLocalizedString(@"Key Pad 6", @"numeric pad key");
-        case 0x45: return NSLocalizedString(@"Key Pad +", @"numeric pad key");
-        case 0x53: return NSLocalizedString(@"Key Pad 1", @"numeric pad key");
-        case 0x54: return NSLocalizedString(@"Key Pad 2", @"numeric pad key");
-        case 0x55: return NSLocalizedString(@"Key Pad 3", @"numeric pad key");
-        case 0x52: return NSLocalizedString(@"Key Pad 0", @"numeric pad key");
-        case 0x41: return NSLocalizedString(@"Key Pad .", @"numeric pad key");
-        case 0x4c: return @"⌤";
+        case kVK_ANSI_Keypad0: return NSLocalizedString(@"Key Pad 0", @"numeric pad key");
+        case kVK_ANSI_Keypad1: return NSLocalizedString(@"Key Pad 1", @"numeric pad key");
+        case kVK_ANSI_Keypad2: return NSLocalizedString(@"Key Pad 2", @"numeric pad key");
+        case kVK_ANSI_Keypad3: return NSLocalizedString(@"Key Pad 3", @"numeric pad key");
+        case kVK_ANSI_Keypad4: return NSLocalizedString(@"Key Pad 4", @"numeric pad key");
+        case kVK_ANSI_Keypad5: return NSLocalizedString(@"Key Pad 5", @"numeric pad key");
+        case kVK_ANSI_Keypad6: return NSLocalizedString(@"Key Pad 6", @"numeric pad key");
+        case kVK_ANSI_Keypad7: return NSLocalizedString(@"Key Pad 7", @"numeric pad key");
+        case kVK_ANSI_Keypad8: return NSLocalizedString(@"Key Pad 8", @"numeric pad key");
+        case kVK_ANSI_Keypad9: return NSLocalizedString(@"Key Pad 9", @"numeric pad key");
+        case kVK_ANSI_KeypadClear: return @"⌧";
+        case kVK_ANSI_KeypadEnter: return @"⌤";
+
+        case kVK_ANSI_KeypadEquals:
+            return NSLocalizedString(@"Key Pad =", @"numeric pad key");
+        case kVK_ANSI_KeypadDivide:
+            return NSLocalizedString(@"Key Pad /", @"numeric pad key");
+        case kVK_ANSI_KeypadMultiply:
+            return NSLocalizedString(@"Key Pad *", @"numeric pad key");
+        case kVK_ANSI_KeypadMinus:
+            return NSLocalizedString(@"Key Pad -", @"numeric pad key");
+        case kVK_ANSI_KeypadPlus:
+            return NSLocalizedString(@"Key Pad +", @"numeric pad key");
+        case kVK_ANSI_KeypadDecimal:
+            return NSLocalizedString(@"Key Pad .", @"numeric pad key");
             
-        case 0x7e: return @"↑";
-        case 0x7d: return @"↓";
-        case 0x7b: return @"←";
-        case 0x7c: return @"→";
-        case 0xffff: // NJKeyInputFieldEmpty
+        case kVK_LeftArrow: return @"←";
+        case kVK_RightArrow: return @"→";
+        case kVK_UpArrow: return @"↑";
+        case kVK_DownArrow: return @"↓";
+            
+        case kVK_JIS_Yen: return @"¥";
+        case kVK_JIS_Underscore: return @"_";
+        case kVK_JIS_KeypadComma:
+            return NSLocalizedString(@"Key Pad ,", @"numeric pad key");
+        case kVK_JIS_Eisu: return @"英数";
+        case kVK_JIS_Kana: return @"かな";
+
+
+        case kVK_MAX: // NJKeyInputFieldEmpty
             return @"";
         default:
             return [[NSString alloc] initWithFormat:
@@ -181,8 +206,8 @@ const CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 - (void)keyDown:(NSEvent *)event {
     static const NSUInteger IGNORE = NSAlternateKeyMask | NSCommandKeyMask;
     if (!event.isARepeat) {
-        if ((event.modifierFlags & IGNORE) && event.keyCode == 0x33) {
-            // Allow Alt/Command+Backspace to clear the field.
+        if ((event.modifierFlags & IGNORE) && event.keyCode == kVK_Delete) {
+            // Allow Alt/Command+Delete to clear the field.
             self.keyCode = NJKeyInputFieldEmpty;
             if ([self.delegate respondsToSelector:@selector(keyInputFieldDidClear:)])
                 [self.delegate keyInputFieldDidClear:self];
