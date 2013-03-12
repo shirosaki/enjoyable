@@ -11,7 +11,7 @@ extern const CGKeyCode NJKeyInputFieldEmpty;
 
 @protocol NJKeyInputFieldDelegate;
 
-@interface NJKeyInputField : NSTextField
+@interface NJKeyInputField : NSControl
     // An NJKeyInputField is a NSTextField-like widget that receives
     // exactly one key press, and displays the name of that key, then
     // resigns its first responder status. It can also inform a
@@ -20,7 +20,7 @@ extern const CGKeyCode NJKeyInputFieldEmpty;
 + (NSString *)stringForKeyCode:(CGKeyCode)keyCode;
     // Give the string name for a virtual key code.
 
-@property (nonatomic, weak) IBOutlet id <NJKeyInputFieldDelegate, NSTextFieldDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id <NJKeyInputFieldDelegate> delegate;
 
 @property (nonatomic, assign) CGKeyCode keyCode;
     // The currently displayed key code, or NJKeyInputFieldEmpty if no
@@ -37,7 +37,6 @@ extern const CGKeyCode NJKeyInputFieldEmpty;
 
 @protocol NJKeyInputFieldDelegate <NSObject>
 
-@optional
 - (void)keyInputField:(NJKeyInputField *)keyInput
          didChangeKey:(CGKeyCode)keyCode;
 - (void)keyInputFieldDidClear:(NJKeyInputField *)keyInput;

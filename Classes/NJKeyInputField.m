@@ -17,20 +17,23 @@ enum {
 
 const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 
-@implementation NJKeyInputField
+@implementation NJKeyInputField {
+    NSTextField *field;
+}
 
 - (id)initWithFrame:(NSRect)frameRect {
     if ((self = [super initWithFrame:frameRect])) {
-        self.alignment = NSCenterTextAlignment;
-        self.editable = NO;
-        self.selectable = NO;
+        field = [[NSTextField alloc] initWithFrame:self.bounds];
+        field.alignment = NSCenterTextAlignment;
+        field.editable = NO;
+        field.selectable = NO;
+        [self addSubview:field];
     }
     return self;
 }
 
 - (void)clear {
     self.keyCode = NJKeyInputFieldEmpty;
-    if ([self.delegate respondsToSelector:@selector(keyInputFieldDidClear:)])
         [self.delegate keyInputFieldDidClear:self];
     [self resignIfFirstResponder];
 }
@@ -189,18 +192,18 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 }
 
 - (BOOL)becomeFirstResponder {
-    self.backgroundColor = NSColor.selectedTextBackgroundColor;
+    field.backgroundColor = NSColor.selectedTextBackgroundColor;
     return [super becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-    self.backgroundColor = NSColor.textBackgroundColor;
+    field.backgroundColor = NSColor.textBackgroundColor;
     return [super resignFirstResponder];
 }
 
 - (void)setKeyCode:(CGKeyCode)keyCode {
     _keyCode = keyCode;
-    self.stringValue = [NJKeyInputField stringForKeyCode:keyCode];
+    field.stringValue = [NJKeyInputField stringForKeyCode:keyCode];
 }
 
 - (void)keyDown:(NSEvent *)event {
@@ -209,12 +212,10 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
         if ((event.modifierFlags & IGNORE) && event.keyCode == kVK_Delete) {
             // Allow Alt/Command+Delete to clear the field.
             self.keyCode = NJKeyInputFieldEmpty;
-            if ([self.delegate respondsToSelector:@selector(keyInputFieldDidClear:)])
-                [self.delegate keyInputFieldDidClear:self];
+            [self.delegate keyInputFieldDidClear:self];
         } else if (!(event.modifierFlags & IGNORE)) {
             self.keyCode = event.keyCode;
-            if ([self.delegate respondsToSelector:@selector(keyInputField:didChangeKey:)])
-                [self.delegate keyInputField:self didChangeKey:self.keyCode];
+            [self.delegate keyInputField:self didChangeKey:self.keyCode];
         }
         [self resignIfFirstResponder];
     }
@@ -236,17 +237,8 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
     // modifiers are still down.
     if (!(theEvent.modifierFlags & NSDeviceIndependentModifierFlagsMask)) {
         self.keyCode = theEvent.keyCode;
-        if ([self.delegate respondsToSelector:@selector(keyInputField:didChangeKey:)])
-            [self.delegate keyInputField:self didChangeKey:_keyCode];
+        [self.delegate keyInputField:self didChangeKey:_keyCode];
     }
-}
-
-- (void)setDelegate:(id<NJKeyInputFieldDelegate, NSTextFieldDelegate>)delegate {
-    [super setDelegate:delegate];
-}
-
-- (id <NJKeyInputFieldDelegate, NSTextFieldDelegate>)delegate {
-    return (id)[super delegate];
 }
 
 @end
