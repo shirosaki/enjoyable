@@ -11,7 +11,7 @@ extern const CGKeyCode NJKeyInputFieldEmpty;
 
 @protocol NJKeyInputFieldDelegate;
 
-@interface NJKeyInputField : NSControl
+@interface NJKeyInputField : NSControl <NSTextFieldDelegate>
     // An NJKeyInputField is a NSTextField-like widget that receives
     // exactly one key press, and displays the name of that key, then
     // resigns its first responder status. It can also inform a

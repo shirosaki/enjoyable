@@ -19,6 +19,7 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 
 @implementation NJKeyInputField {
     NSTextField *field;
+    NSImageView *warning;
 }
 
 - (id)initWithFrame:(NSRect)frameRect {
@@ -27,7 +28,21 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
         field.alignment = NSCenterTextAlignment;
         field.editable = NO;
         field.selectable = NO;
+        field.delegate = self;
         [self addSubview:field];
+        
+        warning = [[NSImageView alloc] init];
+        warning.image = [NSImage imageNamed:@"NSInvalidDataFreestanding"];
+        CGSize imgSize = warning.image.size;
+        CGRect bounds = self.bounds;
+        warning.frame = CGRectMake(bounds.size.width - (imgSize.width + 4),
+                                   (bounds.size.height - imgSize.height) / 2,
+                                   imgSize.width, imgSize.height);
+        
+        warning.toolTip = NSLocalizedString(@"invalid key code",
+                                            @"shown when the user types an invalid key code");
+        warning.hidden = YES;
+        [self addSubview:warning];
     }
     return self;
 }
@@ -220,12 +235,51 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
         [self resignIfFirstResponder];
     }
 }
+
+static BOOL isValidKeyCode(long code) {
+    return code < 0xFFFF && code >= 0;
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj {
+    char *error = NULL;
+    long code = strtol(field.stringValue.UTF8String, &error, 16);
+    warning.hidden = (isValidKeyCode(code) && !*error) || !field.stringValue.length;
+}
+
+- (void)controlTextDidEndEditing:(NSNotification *)obj {
+    [field.cell setPlaceholderString:@""];
+    field.editable = NO;
+    field.selectable = NO;
+    warning.hidden = YES;
+    char *error = NULL;
+    const char *s = field.stringValue.UTF8String;
+    long code = strtol(s, &error, 16);
     
+    if (!*error && isValidKeyCode(code) && field.stringValue.length) {
+        self.keyCode = code;
+        [self.delegate keyInputField:self didChangeKey:self.keyCode];
+    } else {
+        self.keyCode = self.keyCode;
+    }
+}
+
 - (void)mouseDown:(NSEvent *)theEvent {
-    if (self.window.firstResponder == self)
-        [self.window makeFirstResponder:nil];
-    else if (self.acceptsFirstResponder)
-        [self.window makeFirstResponder:self];
+    if (self.isEnabled) {
+        if (theEvent.modifierFlags & NSCommandKeyMask) {
+            field.editable = YES;
+            field.selectable = YES;
+            field.stringValue = @"";
+            [field.cell setPlaceholderString:
+             NSLocalizedString(@"enter key code",
+                               @"shown when user must enter a key code to map to")];
+            [self.window makeFirstResponder:field];
+        } else {
+            if (self.window.firstResponder == self)
+                [self.window makeFirstResponder:nil];
+            else if (self.acceptsFirstResponder)
+                [self.window makeFirstResponder:self];
+        }
+    }
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent {
@@ -235,7 +289,8 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
     // user type these virtual keys. However, there is no actual event
     // for modifier key up - so detect it by checking to see if any
     // modifiers are still down.
-    if (!(theEvent.modifierFlags & NSDeviceIndependentModifierFlagsMask)) {
+    if (!field.isEditable
+        && !(theEvent.modifierFlags & NSDeviceIndependentModifierFlagsMask)) {
         self.keyCode = theEvent.keyCode;
         [self.delegate keyInputField:self didChangeKey:_keyCode];
     }
