@@ -7,7 +7,7 @@
 
 #import "NJKeyInputField.h"
 
-CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
+const CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 
 @implementation NJKeyInputField
 
@@ -33,7 +33,6 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
 
 + (NSString *)stringForKeyCode:(CGKeyCode)keyCode {
     switch (keyCode) {
-        case 0xffff: return @"";
         case 0x7a: return @"F1";
         case 0x78: return @"F2";
         case 0x63: return @"F3";
@@ -54,7 +53,7 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
         case 0x4f: return @"F18";
         case 0x50: return @"F19";
             
-        case 0x35: return @"Esc";
+        case 0x35: return @"⎋";
         case 0x32: return @"`";
             
         case 0x12: return @"1";
@@ -71,26 +70,27 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
         case 0x18: return @"=";
             
         case 0x3f: return @"Fn";
-        case 0x36: return @"Right Command";
-        case 0x37: return @"Left Command";
-        case 0x38: return @"Left Shift";
-        case 0x39: return @"Caps Lock";
-        case 0x3a: return @"Left Option";
-        case 0x3b: return @"Left Control";
-        case 0x3c: return @"Right Shift";
-        case 0x3d: return @"Right Option";
-        case 0x3e: return @"Right Control";
+        case 0x36: return NSLocalizedString(@"Right ⌘", @"keyboard key");
+        case 0x37: return NSLocalizedString(@"Left ⌘", @"keyboard key");
+        case 0x38: return NSLocalizedString(@"Left ⇧", @"keyboard key");
+        case 0x39: return @"⇪";
+        case 0x3a: return NSLocalizedString(@"Left ⌥", @"keyboard key");
+        case 0x3b: return NSLocalizedString(@"Left ⌃", @"keyboard key");
+        case 0x3c: return NSLocalizedString(@"Right ⇧", @"keyboard key");
+        case 0x3d: return NSLocalizedString(@"Right ⌃", @"keyboard key");
+        case 0x3e: return NSLocalizedString(@"Right ⌥", @"keyboard key");
             
-        case 0x73: return @"Home";
-        case 0x74: return @"Page Up";
-        case 0x75: return @"Delete";
-        case 0x77: return @"End";
-        case 0x79: return @"Page Down";
+        case 0x73: return @"↖";
+        case 0x74: return @"⇞";
+        case 0x77: return @"↘";
+        case 0x79: return @"⇟";
+
+        case 0x75: return @"⌦";
+        case 0x33: return @"⌫";
             
-        case 0x30: return @"Tab";
-        case 0x33: return @"Backspace";
-        case 0x24: return @"Return";
-        case 0x31: return @"Space";
+        case 0x30: return @"⇥";
+        case 0x24: return @"↩";
+        case 0x31: return @"␣";
             
         case 0x0c: return @"Q";
         case 0x0d: return @"W";
@@ -127,31 +127,35 @@ CGKeyCode NJKeyInputFieldEmpty = 0xFFFF;
         case 0x2f: return @".";
         case 0x2c: return @"/";
             
-        case 0x47: return @"Clear";
-        case 0x51: return @"Keypad =";
-        case 0x4b: return @"Keypad /";
-        case 0x43: return @"Keypad *";
-        case 0x59: return @"Keypad 7";
-        case 0x5b: return @"Keypad 8";
-        case 0x5c: return @"Keypad 9";
-        case 0x4e: return @"Keypad -";
-        case 0x56: return @"Keypad 4";
-        case 0x57: return @"Keypad 5";
-        case 0x58: return @"Keypad 6";
-        case 0x45: return @"Keypad +";
-        case 0x53: return @"Keypad 1";
-        case 0x54: return @"Keypad 2";
-        case 0x55: return @"Keypad 3";
-        case 0x52: return @"Keypad 0";
-        case 0x41: return @"Keypad .";
-        case 0x4c: return @"Enter";
+        case 0x47: return @"⌧";
+        case 0x51: return NSLocalizedString(@"Key Pad =", @"numeric pad key");
+        case 0x4b: return NSLocalizedString(@"Key Pad /", @"numeric pad key");
+        case 0x43: return NSLocalizedString(@"Key Pad *", @"numeric pad key");
+        case 0x59: return NSLocalizedString(@"Key Pad 7", @"numeric pad key");
+        case 0x5b: return NSLocalizedString(@"Key Pad 8", @"numeric pad key");
+        case 0x5c: return NSLocalizedString(@"Key Pad 9", @"numeric pad key");
+        case 0x4e: return NSLocalizedString(@"Key Pad -", @"numeric pad key");
+        case 0x56: return NSLocalizedString(@"Key Pad 4", @"numeric pad key");
+        case 0x57: return NSLocalizedString(@"Key Pad 5", @"numeric pad key");
+        case 0x58: return NSLocalizedString(@"Key Pad 6", @"numeric pad key");
+        case 0x45: return NSLocalizedString(@"Key Pad +", @"numeric pad key");
+        case 0x53: return NSLocalizedString(@"Key Pad 1", @"numeric pad key");
+        case 0x54: return NSLocalizedString(@"Key Pad 2", @"numeric pad key");
+        case 0x55: return NSLocalizedString(@"Key Pad 3", @"numeric pad key");
+        case 0x52: return NSLocalizedString(@"Key Pad 0", @"numeric pad key");
+        case 0x41: return NSLocalizedString(@"Key Pad .", @"numeric pad key");
+        case 0x4c: return @"⌤";
             
-        case 0x7e: return @"Up";
-        case 0x7d: return @"Down";
-        case 0x7b: return @"Left";
-        case 0x7c: return @"Right";
+        case 0x7e: return @"↑";
+        case 0x7d: return @"↓";
+        case 0x7b: return @"←";
+        case 0x7c: return @"→";
+        case 0xffff: // NJKeyInputFieldEmpty
+            return @"";
         default:
-            return [[NSString alloc] initWithFormat:@"Key 0x%x", keyCode];
+            return [[NSString alloc] initWithFormat:
+                    NSLocalizedString(@"key 0x%x", @"unknown key code"),
+                    keyCode];
     }
 }
 

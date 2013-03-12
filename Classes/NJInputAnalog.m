@@ -21,9 +21,9 @@ static float normalize(long p, long min, long max) {
 
 - (id)initWithIndex:(int)index rawMin:(long)rawMin_ rawMax:(long)rawMax_ {
     if ((self = [super init])) {
-        self.name = [[NSString alloc] initWithFormat: @"Axis %d", index];
-        self.children = @[[[NJInput alloc] initWithName:@"Low" base:self],
-                          [[NJInput alloc] initWithName:@"High" base:self]];
+        self.name = [[NSString alloc] initWithFormat:NSLocalizedString(@"axis %d", @"axis name"), index];
+        self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"axis low", @"axis low trigger") base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"axis high", @"axis high trigger") base:self]];
         rawMax = rawMax_;
         rawMin = rawMin_;
     }

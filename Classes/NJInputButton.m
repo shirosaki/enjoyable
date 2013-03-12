@@ -14,10 +14,10 @@
 - (id)initWithName:(NSString *)name idx:(int)idx max:(long)max {
     if ((self = [super init])) {
         _max = max;
+        self.name = [NSString stringWithFormat:NSLocalizedString(@"button %d", @"button name"), idx];
+        
         if (name.length)
-            self.name = [NSString stringWithFormat:@"Button %d - %@", idx, name];
-        else
-            self.name = [NSString stringWithFormat:@"Button %d", idx];
+            self.name = [self.name stringByAppendingFormat:@"- %@", name];
     }
     return self;
 }

@@ -76,7 +76,8 @@
         [self.menu insertItem:item atIndex:index++];
         if (added == MAXIMUM_MAPPINGS_IN_MENU
             && mappings.count > MAXIMUM_MAPPINGS_IN_MENU + 1) {
-            NSString *msg = [NSString stringWithFormat:@"(and %lu more…)",
+            NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"mapping overflow %lu",
+                                                                         @"menu item when mappings list overflows"),
                              mappings.count - MAXIMUM_MAPPINGS_IN_MENU];
             NSMenuItem *end = [[NSMenuItem alloc] initWithTitle:msg
                                                          action:@selector(_mappingListWasChosen:)
@@ -99,13 +100,13 @@
 }
 
 - (void)eventTranslationActivated:(NSNotification *)note {
-    self.eventTranslationToggle.title = @"Disable";
+    self.eventTranslationToggle.title = NSLocalizedString(@"Disable",
+                                                          @"menu item text to disable event translation");
 }
 
 - (void)eventTranslationDeactivated:(NSNotification *)note {
-    self.eventTranslationToggle.title = @"Enable";    
+    self.eventTranslationToggle.title = NSLocalizedString(@"Enable",
+                                                          @"menu item text to enable event translation");
 }
-
-
 
 @end

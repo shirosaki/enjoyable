@@ -7,7 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern CGKeyCode NJKeyInputFieldEmpty;
+extern const CGKeyCode NJKeyInputFieldEmpty;
 
 @protocol NJKeyInputFieldDelegate;
 

@@ -31,11 +31,11 @@ static BOOL active_fourway[20] = {
 
 - (id)initWithIndex:(int)index {
     if ((self = [super init])) {
-        self.children = @[[[NJInput alloc] initWithName:@"Up" base:self],
-                          [[NJInput alloc] initWithName:@"Down" base:self],
-                          [[NJInput alloc] initWithName:@"Left" base:self],
-                          [[NJInput alloc] initWithName:@"Right" base:self]];
-        self.name = [NSString stringWithFormat:@"Hat Switch %d", index];
+        self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"hat up", @"hat switch up state") base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat down", @"hat switch down state") base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat left", @"hat switch left state") base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat right", @"hat switch right state") base:self]];
+        self.name = [NSString stringWithFormat:NSLocalizedString(@"hat switch %d", @"hat switch name"), index];
     }
     return self;
 }

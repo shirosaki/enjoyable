@@ -202,13 +202,13 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     IOHIDManagerSetDeviceMatchingMultiple(_hidManager, (__bridge CFArrayRef)criteria);
     IOReturn ret = IOHIDManagerOpen(_hidManager, kIOHIDOptionsTypeNone);
     if (ret != kIOReturnSuccess) {
-        [[NSAlert alertWithMessageText:@"Input devices are unavailable"
+        [[NSAlert alertWithMessageText:NSLocalizedString(@"input devices unavailable",
+                                                         @"error title when devices can't be read")
                          defaultButton:nil
                        alternateButton:nil
                            otherButton:nil
-             informativeTextWithFormat:@"Error 0x%08x occured trying to access your devices. "
-                                       @"Input may not be correctly detected or mapped.",
-                                       ret]
+             informativeTextWithFormat:NSLocalizedString(@"input error 0x%08x occurred",
+                                                         @"message containing IOReturn failure code when devices can't be read"), ret]
             beginSheetModalForWindow:outlineView.window
             modalDelegate:nil
             didEndSelector:nil

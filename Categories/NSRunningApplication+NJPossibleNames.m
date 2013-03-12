@@ -45,8 +45,13 @@
         return self.localizedName;
     else if (self.bundleIdentifier)
         return self.bundleIdentifier;
-    else
-        return @"@Application";
+    else {
+        return NSLocalizedString(@"@Application",
+                                 @"Magic string to trigger automatic "
+                                 @"mapping renames. It should look like "
+                                 @"an identifier rather than normal "
+                                 @"word, with the @ on the front.");
+    }
 }
 
 @end

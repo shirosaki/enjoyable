@@ -22,7 +22,8 @@
 - (id)init {
     if ((self = [super init])) {
         _mappings = [[NSMutableArray alloc] init];
-        _currentMapping = [[NJMapping alloc] initWithName:@"(default)"];
+        _currentMapping = [[NJMapping alloc] initWithName:
+                           NSLocalizedString(@"(default)", @"default name for first the mapping")];
         _manualMapping = _currentMapping;
         [_mappings addObject:_currentMapping];
     }
@@ -79,7 +80,9 @@
 
     if (!found) {
         [self activateMapping:oldMapping];
-        if ([oldMapping.name.lowercaseString isEqualToString:@"@application"]) {
+        if ([oldMapping.name.lowercaseString isEqualToString:@"@application"]
+            || [oldMapping.name.lowercaseString isEqualToString:
+                NSLocalizedString(@"@Application", nil).lowercaseString]) {
             oldMapping.name = app.bestMappingName;
             [self mappingsChanged];
         }
@@ -113,7 +116,7 @@
 }
 
 - (IBAction)addPressed:(id)sender {
-    NJMapping *newMapping = [[NJMapping alloc] initWithName:@"Untitled"];
+    NJMapping *newMapping = [[NJMapping alloc] init];
     [_mappings addObject:newMapping];
     [self activateMapping:newMapping];
     [self mappingsChanged];
@@ -231,15 +234,13 @@
         NJMapping *mergeInto = self[mapping.name];
         if ([mergeInto hasConflictWith:mapping]) {
             NSAlert *conflictAlert = [[NSAlert alloc] init];
-            conflictAlert.messageText = @"Replace existing mappings?";
+            conflictAlert.messageText = NSLocalizedString(@"import conflict prompt", @"Title of import conflict alert");
             conflictAlert.informativeText =
-            [NSString stringWithFormat:
-                @"This file contains inputs you've already mapped in \"%@\". Do you "
-                @"want to merge them and replace your existing mappings, or import this "
-                @"as a separate mapping?", mapping.name];
-            [conflictAlert addButtonWithTitle:@"Merge"];
-            [conflictAlert addButtonWithTitle:@"Cancel"];
-            [conflictAlert addButtonWithTitle:@"New Mapping"];
+            [NSString stringWithFormat:NSLocalizedString(@"import conflict in %@", @"Explanation of import conflict"),
+                                       mapping.name];
+            [conflictAlert addButtonWithTitle:NSLocalizedString(@"import and merge", @"button to merge imported mappings")];
+            [conflictAlert addButtonWithTitle:NSLocalizedString(@"cancel import", @"button to cancel import")];
+            [conflictAlert addButtonWithTitle:NSLocalizedString(@"import new mapping", @"button to import as new mapping")];
             [conflictAlert beginSheetModalForWindow:popoverActivate.window
                                       modalDelegate:self
                                      didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)

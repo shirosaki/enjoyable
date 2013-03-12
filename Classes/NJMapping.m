@@ -17,10 +17,18 @@
 // Extra checks during initialization because the data is often loaded
 // from untrusted serializations.
 
-- (id)initWithName:(NSString *)name {
+- (id)init {
     if ((self = [super init])) {
-        self.name = [name isKindOfClass:NSString.class] ? name : @"Untitled";
+        self.name = NSLocalizedString(@"Untitled", @"name for new mappings");
         _entries = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name {
+    if ((self = [self init])) {
+        if ([name isKindOfClass:NSString.class])
+            self.name = name;
     }
     return self;
 }
@@ -108,7 +116,8 @@
           && [serialization[@"entries"] isKindOfClass:NSDictionary.class])) {
         *error = [NSError errorWithDomain:@"Enjoyable"
                                      code:0
-                              description:@"This isn't a valid mapping file."];
+                              description:NSLocalizedString(@"invalid mapping file",
+                                                            @"error when imported file was JSON but not a mapping")];
         return nil;
     }
     
