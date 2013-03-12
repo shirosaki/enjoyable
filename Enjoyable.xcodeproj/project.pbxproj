@@ -249,13 +249,13 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EE1F3CE816EF4182008C6426 /* Localizable.strings */,
 				EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */,
 				EE3D897E16EA817E00596D1F /* Status Menu Icon.png */,
 				EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */,
 				EE3D897916EA7EFC00596D1F /* Status Menu Icon@2x.png */,
 				EE6A122D16E8F46300EDBD32 /* Icon.icns */,
 				EEF17D2116E8E24400D7DC4D /* Help */,
+				EE1F3CE816EF4182008C6426 /* Localizable.strings */,
 				EEF17D1B16E8E23A00D7DC4D /* InfoPlist.strings */,
 				EEF17D1D16E8E23A00D7DC4D /* MainMenu.xib */,
 				EEF17D1716E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns */,

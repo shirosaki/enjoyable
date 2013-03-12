@@ -12,6 +12,9 @@
 
 enum {
     kVK_RightCommand = kVK_Command - 1,
+    kVK_Insert = 0x72,
+    kVK_Power = 0x7f,
+    kVK_ApplicationMenu = 0x6e,
     kVK_MAX = 0xFFFF,
 };
 
@@ -191,8 +194,17 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
             return NSLocalizedString(@"Key Pad ,", @"numeric pad key");
         case kVK_JIS_Eisu: return @"英数";
         case kVK_JIS_Kana: return @"かな";
+            
+        case kVK_Power: return @"⌽";
+        case kVK_VolumeUp: return @"🔊";
+        case kVK_VolumeDown: return @"🔉";
+            
+        case kVK_Insert:
+            return NSLocalizedString(@"Insert", "keyboard key");
+        case kVK_ApplicationMenu:
+            return NSLocalizedString(@"Menu", "keyboard key");
 
-
+            
         case kVK_MAX: // NJKeyInputFieldEmpty
             return @"";
         default:
