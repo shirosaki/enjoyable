@@ -29,4 +29,26 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:NJInput.class]
+        && [[object uid] isEqualToString:self.uid];
+}
+
+- (NSUInteger)hash {
+    return self.uid.hash;
+}
+
+- (id <NJInputPathElement>)elementForUID:(NSString *)uid {
+    if ([uid isEqualToString:self.uid])
+        return self;
+    else {
+        for (id <NJInputPathElement> elem in self.children) {
+            id <NJInputPathElement> ret = [elem elementForUID:uid];
+            if (ret)
+                return ret;
+        }
+    }
+    return nil;
+}
+
 @end

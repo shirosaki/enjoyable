@@ -20,12 +20,22 @@
     NSTimer *_continuousOutputsTick;
     NSMutableArray *_continousOutputs;
     NSMutableArray *_devices;
+    NSMutableArray *_expanded;
 }
+
+#define EXPANDED_MEMORY_MAX_SIZE 100
 
 - (id)init {
     if ((self = [super init])) {
         _devices = [[NSMutableArray alloc] initWithCapacity:16];
         _continousOutputs = [[NSMutableArray alloc] initWithCapacity:32];
+        
+        NSArray *expanded = [NSUserDefaults.standardUserDefaults objectForKey:@"expanded rows"];
+        if (![expanded isKindOfClass:NSArray.class])
+            expanded = @[];
+        _expanded = [[NSMutableArray alloc] initWithCapacity:MAX(16, _expanded.count)];
+        [_expanded addObjectsFromArray:expanded];
+
         [NSNotificationCenter.defaultCenter
              addObserver:self
              selector:@selector(applicationDidFinishLaunching:)
@@ -65,6 +75,14 @@
     if (pathElement) {
         [self expandRecursive:pathElement.base];
         [outlineView expandItem:pathElement];
+    }
+}
+
+- (void)expandRecursiveByUID:(NSString *)uid {
+    for (NJDevice *dev in _devices) {
+        id item = [dev elementForUID:uid];
+        if (item)
+            [self expandRecursive:item];
     }
 }
 
@@ -139,6 +157,7 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     dev.index = findAvailableIndex(_devices, dev);
     [_devices addObject:dev];
     [outlineView reloadData];
+    [self reexpandAll];
     connectDevicePrompt.hidden = !!_devices.count;
 }
 
@@ -274,6 +293,24 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     return ![self outlineView:outlineView_ isGroupItem:item];
 }
 
+- (void)outlineViewItemDidExpand:(NSNotification *)notification {
+    id <NJInputPathElement> item = notification.userInfo[@"NSObject"];
+    NSString *uid = item.uid;
+    if (![_expanded containsObject:uid])
+        [_expanded addObject:uid];
+    while (_expanded.count > EXPANDED_MEMORY_MAX_SIZE)
+        [_expanded removeObjectAtIndex:0];
+    [NSUserDefaults.standardUserDefaults setObject:_expanded
+                                            forKey:@"expanded rows"];
+}
+
+- (void)outlineViewItemDidCollapse:(NSNotification *)notification {
+    id <NJInputPathElement> item = notification.userInfo[@"NSObject"];
+    [_expanded removeObject:item.uid];
+    [NSUserDefaults.standardUserDefaults setObject:_expanded
+                                            forKey:@"expanded rows"];
+}
+
 - (void)setTranslatingEvents:(BOOL)translatingEvents {
     if (translatingEvents != _translatingEvents) {
         _translatingEvents = translatingEvents;
@@ -290,6 +327,11 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         else if (translatingEvents || NSApplication.sharedApplication.isActive)
             [self openHid];
     }
+}
+
+- (void)reexpandAll {
+    for (NSString *uid in [_expanded copy])
+        [self expandRecursiveByUID:uid];
 }
 
 - (void)closeHidIfDisabled:(NSNotification *)application {

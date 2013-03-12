@@ -106,4 +106,28 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
     return [self findInputByCookie:cookie];
 }
 
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:NJDevice.class]
+        && [[object uid] isEqualToString:self.uid];
+}
+
+- (NSUInteger)hash {
+    return self.uid.hash;
+}
+
+- (id <NJInputPathElement>)elementForUID:(NSString *)uid {
+    if ([uid isEqualToString:self.uid])
+        return self;
+    else if (![uid hasPrefix:self.uid])
+        return nil;
+    else {
+        for (id <NJInputPathElement> elem in self.children) {
+            id <NJInputPathElement> ret = [elem elementForUID:uid];
+            if (ret)
+                return ret;
+        }
+    }
+    return nil;
+}
+
 @end
