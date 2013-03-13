@@ -48,7 +48,14 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    [window makeKeyAndOrderFront:nil];
+    if (NSRunningApplication.currentApplication.wasLaunchedAsLoginItemOrResume
+        && [NSUserDefaults.standardUserDefaults boolForKey:@"hidden in status item"]) {
+        [self transformIntoElement:self];
+        NSApplication *app = notification.object;
+        [app deactivate];
+    } else {
+        [window makeKeyAndOrderFront:nil];
+    }
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
@@ -65,15 +72,18 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(transformIntoElement:)
                                                object:self];
+    [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"hidden in status item"];
 }
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification {
-    [self restoreToForeground:notification];
+    if (window.isVisible)
+        [self restoreToForeground:notification];
 }
 
 - (void)transformIntoElement:(id)sender {
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToUIElementApplication);
+    [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"hidden in status item"];
 }
 
 - (void)flashStatusItem {

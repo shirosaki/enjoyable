@@ -567,7 +567,7 @@ aW5nLg</string>
 													<string key="NSFrameSize">{232, 321}</string>
 													<reference key="NSSuperview" ref="698362889"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="1036252745"/>
+													<reference key="NSNextKeyView" ref="892486973"/>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -697,7 +697,7 @@ aW5nLg</string>
 									<string key="NSFrameSize">{234, 323}</string>
 									<reference key="NSSuperview" ref="734312853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="892486973"/>
+									<reference key="NSNextKeyView" ref="698362889"/>
 									<int key="NSsFlags">150034</int>
 									<reference key="NSVScroller" ref="1036252745"/>
 									<reference key="NSHScroller" ref="892486973"/>
@@ -3026,7 +3026,7 @@ aW5nLg</string>
 				<boolean value="YES" key="450.IBNSWindowAutoPositionCentersVertical"/>
 				<string key="450.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="450.IBWindowTemplateEditedContentRect">{{114, 276}, {770, 487}}</string>
-				<boolean value="YES" key="450.NSWindowTemplate.visibleAtLaunch"/>
+				<boolean value="NO" key="450.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="451.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="453.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="456.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
