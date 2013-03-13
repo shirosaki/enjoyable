@@ -1,0 +1,45 @@
+{
+  "name" : "6180 the moon",
+  "entries" : {
+    "1356:616:1~Button 8" : {
+      "type" : "key press",
+      "key" : 123
+    },
+    "1356:616:1~Button 7" : {
+      "type" : "key press",
+      "key" : 125
+    },
+    "1356:616:1~Button 6" : {
+      "type" : "key press",
+      "key" : 124
+    },
+    "1356:616:1~Button 5" : {
+      "type" : "key press",
+      "key" : 126
+    },
+    "1356:616:1~Button 16" : {
+      "type" : "key press",
+      "key" : 49
+    },
+    "1356:616:1~Button 4" : {
+      "type" : "key press",
+      "key" : 53
+    },
+    "1356:616:1~Button 15" : {
+      "type" : "key press",
+      "key" : 126
+    },
+    "1356:616:1~Button 1" : {
+      "type" : "key press",
+      "key" : 15
+    },
+    "1356:616:1~Button 12" : {
+      "type" : "key press",
+      "key" : 49
+    },
+    "1356:616:1~Button 14" : {
+      "type" : "key press",
+      "key" : 49
+    }
+  }
+}
