@@ -17,6 +17,7 @@
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NSButton *translatingEventsButton;
     IBOutlet NSView *connectDevicePrompt;
+    IBOutlet NSView *hidSleepingPrompt;
 }
 
 @property (nonatomic, readonly) NJInput *selectedInput;

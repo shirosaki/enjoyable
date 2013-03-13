@@ -78,12 +78,17 @@
     }
 }
 
-- (void)expandRecursiveByUID:(NSString *)uid {
+- (id)elementForUID:(NSString *)uid {
     for (NJDevice *dev in _devices) {
         id item = [dev elementForUID:uid];
         if (item)
-            [self expandRecursive:item];
+            return item;
     }
+    return nil;
+}
+
+- (void)expandRecursiveByUID:(NSString *)uid {
+    [self expandRecursive:[self elementForUID:uid]];
 }
 
 - (void)addRunningOutput:(NJOutput *)output {
@@ -158,6 +163,7 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     [_devices addObject:dev];
     [outlineView reloadData];
     [self reexpandAll];
+    hidSleepingPrompt.hidden = YES;
     connectDevicePrompt.hidden = !!_devices.count;
 }
 
@@ -185,6 +191,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
         [_devices removeObject:match];
         [outlineView reloadData];
         connectDevicePrompt.hidden = !!_devices.count;
+        hidSleepingPrompt.hidden = YES;
     }
     if (_devices.count == 1)
         [outlineView expandItem:_devices[0]];
@@ -236,6 +243,8 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     } else {
         IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, add_callback, (__bridge void *)self);
         IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, remove_callback, (__bridge void *)self);
+        hidSleepingPrompt.hidden = YES;
+        connectDevicePrompt.hidden = !!_devices.count;
     }
 }
 
@@ -249,7 +258,8 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     }
     [_devices removeAllObjects];
     [outlineView reloadData];
-    connectDevicePrompt.hidden = !!_devices.count;
+    hidSleepingPrompt.hidden = NO;
+    connectDevicePrompt.hidden = YES;
 }
 
 - (NJInput *)selectedInput {
@@ -280,6 +290,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {
+    id <NJInputPathElement> item = [outlineView itemAtRow:outlineView.selectedRow];
+    if (item)
+        [NSUserDefaults.standardUserDefaults setObject:item.uid
+                                                forKey:@"selected input"];
     [outputController loadCurrent];
 }
 
@@ -332,6 +346,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void)reexpandAll {
     for (NSString *uid in [_expanded copy])
         [self expandRecursiveByUID:uid];
+    if (outlineView.selectedRow == -1) {
+        NSString *selectedUid = [NSUserDefaults.standardUserDefaults objectForKey:@"selected input"];
+        id item = [self elementForUID:selectedUid];
+        NSInteger row = [outlineView rowForItem:item];
+        if (row >= 0)
+            [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    }
 }
 
 - (void)closeHidIfDisabled:(NSNotification *)application {

@@ -496,13 +496,43 @@
 							<reference key="NSNextResponder" ref="177223957"/>
 							<int key="NSvFlags">275</int>
 							<array class="NSMutableArray" key="NSSubviews">
+								<object class="NSButton" id="918286878">
+									<reference key="NSNextResponder" ref="734312853"/>
+									<int key="NSvFlags">-2147483374</int>
+									<string key="NSFrame">{{20, 20}, {194, 283}}</string>
+									<reference key="NSSuperview" ref="734312853"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="471332453"/>
+									<string key="NSReuseIdentifierKey">_NS:22</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSButtonCell" key="NSCell" id="543930440">
+										<int key="NSCellFlags">603979776</int>
+										<int key="NSCellFlags2">134217728</int>
+										<string type="base64-UTF8" key="NSContents">SW5wdXQgaXMgY3VycmVudGx5IGRpc2FibGVkLgoKU3dpdGNoIGJhY2sgdG8gcmUtZW5hYmxlIGlucHV0
+Lg</string>
+										<object class="NSFont" key="NSSupport" id="644067327">
+											<string key="NSName">LucidaGrande-Bold</string>
+											<double key="NSSize">14</double>
+											<int key="NSfFlags">16</int>
+										</object>
+										<string key="NSCellIdentifier">_NS:22</string>
+										<reference key="NSControlView" ref="918286878"/>
+										<int key="NSButtonFlags">-2041823232</int>
+										<int key="NSButtonFlags2">134</int>
+										<string key="NSAlternateContents"/>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">400</int>
+										<int key="NSPeriodicInterval">75</int>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
 								<object class="NSButton" id="12898323">
 									<reference key="NSNextResponder" ref="734312853"/>
 									<int key="NSvFlags">274</int>
 									<string key="NSFrame">{{20, 20}, {194, 283}}</string>
 									<reference key="NSSuperview" ref="734312853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="471332453"/>
+									<reference key="NSNextKeyView" ref="918286878"/>
 									<string key="NSReuseIdentifierKey">_NS:22</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="468117320">
@@ -510,11 +540,7 @@
 										<int key="NSCellFlags2">134217728</int>
 										<string type="base64-UTF8" key="NSContents">Tm8gaW5wdXQgZGV2aWNlcyB3ZXJlIGZvdW5kLgoKQ29ubmVjdCBhIGRldmljZSB0byBiZWdpbiBtYXBw
 aW5nLg</string>
-										<object class="NSFont" key="NSSupport">
-											<string key="NSName">LucidaGrande-Bold</string>
-											<double key="NSSize">14</double>
-											<int key="NSfFlags">16</int>
-										</object>
+										<reference key="NSSupport" ref="644067327"/>
 										<string key="NSCellIdentifier">_NS:22</string>
 										<reference key="NSControlView" ref="12898323"/>
 										<int key="NSButtonFlags">-2041823232</int>
@@ -741,7 +767,6 @@ aW5nLg</string>
 									<string key="NSFrame">{{343, 31}, {70, 18}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="868379451">
@@ -1667,6 +1692,14 @@ aW5nLg</string>
 						<reference key="destination" ref="12898323"/>
 					</object>
 					<int key="connectionID">915</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">hidSleepingPrompt</string>
+						<reference key="source" ref="1007832501"/>
+						<reference key="destination" ref="918286878"/>
+					</object>
+					<int key="connectionID">976</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2599,6 +2632,7 @@ aW5nLg</string>
 						<array class="NSMutableArray" key="children">
 							<reference ref="364857164"/>
 							<reference ref="12898323"/>
+							<reference ref="918286878"/>
 						</array>
 						<reference key="parent" ref="177223957"/>
 					</object>
@@ -2956,6 +2990,19 @@ aW5nLg</string>
 						<reference key="object" ref="331930027"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">974</int>
+						<reference key="object" ref="918286878"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="543930440"/>
+						</array>
+						<reference key="parent" ref="734312853"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">975</int>
+						<reference key="object" ref="543930440"/>
+						<reference key="parent" ref="918286878"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3205,12 +3252,14 @@ aW5nLg</string>
 				<string key="967.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="968.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="970.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="974.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="975.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">971</int>
+			<int key="maxID">976</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3273,6 +3322,7 @@ aW5nLg</string>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="connectDevicePrompt">NSView</string>
+						<string key="hidSleepingPrompt">NSView</string>
 						<string key="mappingsController">NJMappingsController</string>
 						<string key="outlineView">NSOutlineView</string>
 						<string key="outputController">NJOutputController</string>
@@ -3281,6 +3331,10 @@ aW5nLg</string>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="connectDevicePrompt">
 							<string key="name">connectDevicePrompt</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="hidSleepingPrompt">
+							<string key="name">hidSleepingPrompt</string>
 							<string key="candidateClassName">NSView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mappingsController">
