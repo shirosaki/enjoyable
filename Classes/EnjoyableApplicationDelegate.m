@@ -48,14 +48,7 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    if (NSRunningApplication.currentApplication.wasLaunchedAsLoginItemOrResume
-        && [NSUserDefaults.standardUserDefaults boolForKey:@"hidden in status item"]) {
-        [self transformIntoElement:self];
-        NSApplication *app = notification.object;
-        [app deactivate];
-    } else {
-        [window makeKeyAndOrderFront:nil];
-    }
+    [window makeKeyAndOrderFront:nil];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
