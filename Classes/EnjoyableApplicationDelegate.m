@@ -67,6 +67,10 @@
                                                object:self];
 }
 
+- (void)applicationWillBecomeActive:(NSNotification *)notification {
+    [self restoreToForeground:notification];
+}
+
 - (void)transformIntoElement:(id)sender {
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToUIElementApplication);

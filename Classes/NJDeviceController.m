@@ -210,11 +210,23 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
 }
 
 - (void)hidManager:(NJHIDManager *)manager didError:(NSError *)error {
-    [outlineView.window presentError:error
-                      modalForWindow:outlineView.window
-                            delegate:nil
-                  didPresentSelector:nil
-                         contextInfo:nil];
+    // Since the error shows the window, it can trigger another attempt
+    // to re-open the HID manager, which will also probably fail and error,
+    // so don't bother repeating ourselves.
+    if (!outlineView.window.attachedSheet) {
+        [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
+        [outlineView.window makeKeyAndOrderFront:nil];
+        [outlineView.window presentError:error
+                          modalForWindow:outlineView.window
+                                delegate:nil
+                      didPresentSelector:nil
+                             contextInfo:nil];
+    }
+    self.translatingEvents = NO;
+    if (manager.running)
+        [self hidManagerDidStart:manager];
+    else
+        [self hidManagerDidStop:manager];
 }
 
 - (void)hidManagerDidStart:(NJHIDManager *)manager {
@@ -313,7 +325,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
         if (!translatingEvents && !NSApplication.sharedApplication.isActive)
             [self stopHid];
-        else if (translatingEvents || NSApplication.sharedApplication.isActive)
+        else
             [self startHid];
     }
 }

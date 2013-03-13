@@ -55,6 +55,7 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
         IOHIDManagerClose(manager, kIOHIDOptionsTypeNone);
         CFRelease(manager);
         [self.delegate hidManager:self didError:error];
+        NSLog(@"Error starting HID manager: %@.", error);
     } else {
         _manager = manager;
         IOHIDManagerScheduleWithRunLoop(_manager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
