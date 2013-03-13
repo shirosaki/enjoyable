@@ -11,7 +11,8 @@
 #import "NJMappingMenuController.h"
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
-                                                    NJMappingMenuDelegate> {
+                                                    NJMappingMenuDelegate,
+                                                    NSWindowDelegate> {
     IBOutlet NSMenu *dockMenu;
     IBOutlet NSMenu *statusItemMenu;
     IBOutlet NSWindow *window;

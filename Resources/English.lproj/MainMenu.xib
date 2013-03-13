@@ -1632,6 +1632,14 @@ aW5nLg</string>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
+						<reference key="source" ref="808667431"/>
+						<reference key="destination" ref="207406104"/>
+					</object>
+					<int key="connectionID">977</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
 						<reference key="source" ref="762432499"/>
 						<reference key="destination" ref="468285243"/>
 					</object>
@@ -3259,7 +3267,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">976</int>
+			<int key="maxID">977</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

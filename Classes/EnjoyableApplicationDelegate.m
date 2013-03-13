@@ -5,6 +5,8 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
+#import <Sparkle/Sparkle.h>
+
 #import "EnjoyableApplicationDelegate.h"
 
 #import "NJMapping.h"
@@ -48,7 +50,11 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    [window makeKeyAndOrderFront:nil];
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"hidden in status item"]
+        && NSRunningApplication.currentApplication.wasLaunchedAsLoginItemOrResume)
+        [self transformIntoElement:nil];
+    else
+        [window makeKeyAndOrderFront:nil];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
@@ -141,6 +147,47 @@
 - (void)mappingListShouldOpen {
     [self restoreToForeground:self];
     [self.mappingsController mappingPressed:self];
+}
+
+- (void)loginItemPromptDidEnd:(NSWindow *)sheet
+                   returnCode:(int)returnCode
+                  contextInfo:(void *)contextInfo {
+    if (returnCode == NSAlertDefaultReturn) {
+        [NSRunningApplication.currentApplication addToLoginItems];
+        // If we're going to automatically start, don't bug the user
+        // about automatic updates next boot - they probably want it,
+        // and if they don't they probably want a prompt for it less.
+        SUUpdater.sharedUpdater.automaticallyChecksForUpdates = YES;
+    }
+}
+
+- (void)loginItemPromptDidDismiss:(NSWindow *)sheet
+                       returnCode:(int)returnCode
+                      contextInfo:(void *)contextInfo {
+    [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"explained login items"];
+    [window performClose:sheet];
+}
+
+- (BOOL)windowShouldClose:(NSWindow *)sender {
+    if (sender != window
+        || NSRunningApplication.currentApplication.isLoginItem
+        || [NSUserDefaults.standardUserDefaults boolForKey:@"explained login items"])
+        return YES;
+    NSBeginAlertSheet(
+        NSLocalizedString(@"login items prompt", @"alert prompt for adding to login items"),
+        NSLocalizedString(@"login items add button", @"button to add to login items"),
+        NSLocalizedString(@"login items don't add button", @"button to not add to login items"),
+        nil, window, self,
+        @selector(loginItemPromptDidEnd:returnCode:contextInfo:),
+        @selector(loginItemPromptDidDismiss:returnCode:contextInfo:),
+        NULL,
+        NSLocalizedString(@"login items explanation", @"a brief explanation of login items")
+        );
+    for (int i = 0; i < 10; ++i)
+        [self performSelector:@selector(flashStatusItem)
+                   withObject:self
+                   afterDelay:0.5 * i];
+    return NO;
 }
 
 
