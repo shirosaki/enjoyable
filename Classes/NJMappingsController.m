@@ -247,6 +247,10 @@
                                      didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
                                         contextInfo:(void *)CFBridgingRetain(@{ @"old mapping": mergeInto,
                                                                                 @"new mapping": mapping })];
+        } else if (mergeInto) {
+            [mergeInto mergeEntriesFrom:mapping];
+            [self activateMapping:mergeInto];
+            [self mappingsChanged];
         } else {
             [_mappings addObject:mapping];
             [self activateMapping:mapping];
