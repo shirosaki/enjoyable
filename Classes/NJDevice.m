@@ -61,16 +61,16 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
 }
 
 @implementation NJDevice {
-    int vendorId;
-    int productId;
+    int _vendorId;
+    int _productId;
 }
 
 - (id)initWithDevice:(IOHIDDeviceRef)dev {
     if ((self = [super initWithName:nil did:nil base:nil])) {
         self.device = dev;
         self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
-        vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
-        productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
+        _vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
+        _productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
         self.children = InputsForElement(dev, self);
     }
     return self;
@@ -80,12 +80,8 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
     return [NSString stringWithFormat:@"%@ #%d", _productName, _index];
 }
 
-- (id)base {
-    return nil;
-}
-
 - (NSString *)uid {
-    return [NSString stringWithFormat: @"%d:%d:%d", vendorId, productId, _index];
+    return [NSString stringWithFormat: @"%d:%d:%d", _vendorId, _productId, _index];
 }
 
 - (NJInput *)findInputByCookie:(IOHIDElementCookie)cookie {
