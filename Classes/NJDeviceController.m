@@ -16,7 +16,7 @@
 #import "NJEvents.h"
 
 @implementation NJDeviceController {
-    IOHIDManagerRef _hidManager;
+    NJHIDManager *_hidManager;
     NSTimer *_continuousOutputsTick;
     NSMutableArray *_continousOutputs;
     NSMutableArray *_devices;
@@ -24,6 +24,7 @@
 }
 
 #define EXPANDED_MEMORY_MAX_SIZE 100
+#define NSSTR(e) ((NSString *)CFSTR(e))
 
 - (id)init {
     if ((self = [super init])) {
@@ -35,10 +36,20 @@
             expanded = @[];
         _expanded = [[NSMutableArray alloc] initWithCapacity:MAX(16, _expanded.count)];
         [_expanded addObjectsFromArray:expanded];
+        
+        _hidManager = [[NJHIDManager alloc] initWithCriteria:@[
+                       @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
+                       NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_Joystick) },
+                       @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
+                       NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_GamePad) },
+                       @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
+                       NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_MultiAxisController) }
+                       ]
+                                                    delegate:self];
 
         [NSNotificationCenter.defaultCenter
              addObserver:self
-             selector:@selector(applicationDidFinishLaunching:)
+             selector:@selector(startHid)
              name:NSApplicationDidFinishLaunchingNotification
              object:nil];
         
@@ -53,12 +64,12 @@
         // grabs.
         [NSNotificationCenter.defaultCenter
             addObserver:self
-            selector:@selector(closeHidIfDisabled:)
+            selector:@selector(stopHidIfDisabled:)
             name:NSApplicationDidResignActiveNotification
             object:nil];
         [NSNotificationCenter.defaultCenter
             addObserver:self
-            selector:@selector(openHid)
+            selector:@selector(startHid)
             name:NSApplicationDidBecomeActiveNotification
             object:nil];
     }
@@ -68,7 +79,6 @@
 - (void)dealloc {
     [NSNotificationCenter.defaultCenter removeObserver:self];
     [_continuousOutputsTick invalidate];
-    [self closeHid];
 }
 
 - (void)expandRecursive:(id <NJInputPathElement>)pathElement {
@@ -131,14 +141,13 @@
     [outputController focusKey];
 }
 
-static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
-    NJDeviceController *controller = (__bridge NJDeviceController *)ctx;
-    IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
-    
-    if (controller.translatingEvents) {
-        [controller runOutputForDevice:device value:value];
-    } else if ([NSApplication sharedApplication].mainWindow.isVisible) {
-        [controller showOutputForDevice:device value:value];
+- (void)hidManager:(NJHIDManager *)manager
+      valueChanged:(IOHIDValueRef)value
+        fromDevice:(IOHIDDeviceRef)device {
+    if (self.translatingEvents) {
+        [self runOutputForDevice:device value:value];
+    } else {
+        [self showOutputForDevice:device value:value];
     }
 }
 
@@ -146,7 +155,8 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     for (int index = 1; ; index++) {
         BOOL available = YES;
         for (NJDevice *used in list) {
-            if ([used.productName isEqualToString:dev.productName] && used.index == index) {
+            if ([used.productName isEqualToString:dev.productName]
+                && used.index == index) {
                 available = NO;
                 break;
             }
@@ -156,20 +166,14 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
     }
 }
 
-- (void)addDeviceForDevice:(IOHIDDeviceRef)device {
-    IOHIDDeviceRegisterInputValueCallback(device, input_callback, (__bridge void *)self);
-    NJDevice *dev = [[NJDevice alloc] initWithDevice:device];
-    dev.index = findAvailableIndex(_devices, dev);
-    [_devices addObject:dev];
+- (void)hidManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
+    NJDevice *match = [[NJDevice alloc] initWithDevice:device];
+    match.index = findAvailableIndex(_devices, match);
+    [_devices addObject:match];
     [outlineView reloadData];
     [self reexpandAll];
     hidSleepingPrompt.hidden = YES;
     connectDevicePrompt.hidden = !!_devices.count;
-}
-
-static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-    NJDeviceController *controller = (__bridge NJDeviceController *)ctx;
-    [controller addDeviceForDevice:device];
 }
 
 - (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device {
@@ -179,12 +183,7 @@ static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDevi
     return nil;
 }
 
-static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
-    NJDeviceController *controller = (__bridge NJDeviceController *)ctx;
-    [controller removeDeviceForDevice:device];
-}
-
-- (void)removeDeviceForDevice:(IOHIDDeviceRef)device {
+- (void)hidManager:(NJHIDManager *)manager deviceRemoved:(IOHIDDeviceRef)device {
     NJDevice *match = [self findDeviceByRef:device];
     IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
     if (match) {
@@ -210,56 +209,32 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     }
 }
 
-#define NSSTR(e) ((NSString *)CFSTR(e))
-
-- (void)openHid {
-    if (_hidManager)
-        return;
-    NSLog(@"Opening HID manager.");
-    _hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-    IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    NSArray *criteria = @[ @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
-                              NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_Joystick) },
-                           @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
-                              NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_GamePad) },
-                           @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
-                              NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_MultiAxisController) }
-                           ];
-    IOHIDManagerSetDeviceMatchingMultiple(_hidManager, (__bridge CFArrayRef)criteria);
-    IOReturn ret = IOHIDManagerOpen(_hidManager, kIOHIDOptionsTypeNone);
-    if (ret != kIOReturnSuccess) {
-        [[NSAlert alertWithMessageText:NSLocalizedString(@"input devices unavailable",
-                                                         @"error title when devices can't be read")
-                         defaultButton:nil
-                       alternateButton:nil
-                           otherButton:nil
-             informativeTextWithFormat:NSLocalizedString(@"input error 0x%08x occurred",
-                                                         @"message containing IOReturn failure code when devices can't be read"), ret]
-            beginSheetModalForWindow:outlineView.window
-            modalDelegate:nil
-            didEndSelector:nil
-            contextInfo:nil];
-        [self closeHid];
-    } else {
-        IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, add_callback, (__bridge void *)self);
-        IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, remove_callback, (__bridge void *)self);
-        hidSleepingPrompt.hidden = YES;
-        connectDevicePrompt.hidden = !!_devices.count;
-    }
+- (void)hidManager:(NJHIDManager *)manager didError:(NSError *)error {
+    [outlineView.window presentError:error
+                      modalForWindow:outlineView.window
+                            delegate:nil
+                  didPresentSelector:nil
+                         contextInfo:nil];
 }
 
-- (void)closeHid {
-    if (_hidManager) {
-        NSLog(@"Closing HID manager.");
-        IOHIDManagerUnscheduleFromRunLoop(_hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-        IOHIDManagerClose(_hidManager, kIOHIDOptionsTypeNone);
-        CFRelease(_hidManager);
-        _hidManager = NULL;
-    }
+- (void)hidManagerDidStart:(NJHIDManager *)manager {
+    hidSleepingPrompt.hidden = YES;
+    connectDevicePrompt.hidden = !!_devices.count;
+}
+
+- (void)hidManagerDidStop:(NJHIDManager *)manager {
     [_devices removeAllObjects];
     [outlineView reloadData];
     hidSleepingPrompt.hidden = NO;
     connectDevicePrompt.hidden = YES;
+}
+
+- (void)startHid {
+    [_hidManager start];
+}
+
+- (void)stopHid {
+    [_hidManager stop];
 }
 
 - (NJInput *)selectedInput {
@@ -337,9 +312,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
                                                           object:self];
 
         if (!translatingEvents && !NSApplication.sharedApplication.isActive)
-            [self closeHid];
+            [self stopHid];
         else if (translatingEvents || NSApplication.sharedApplication.isActive)
-            [self openHid];
+            [self startHid];
     }
 }
 
@@ -355,16 +330,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     }
 }
 
-- (void)closeHidIfDisabled:(NSNotification *)application {
+- (void)stopHidIfDisabled:(NSNotification *)application {
     if (!self.translatingEvents)
-        [self closeHid];
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)application {
-    // NSApplicationWillBecomeActiveNotification occurs just slightly
-    // too late - there's one tick where the UI is showing "No
-    // devices" even with a device plugged in.
-    [self openHid];
+        [self stopHid];
 }
 
 - (IBAction)translatingEventsChanged:(NSButton *)sender {

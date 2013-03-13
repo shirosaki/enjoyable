@@ -6,12 +6,16 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
+#import "NJHIDManager.h"
+
 @class NJDevice;
 @class NJInput;
 @class NJMappingsController;
 @class NJOutputController;
 
-@interface NJDeviceController : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate> {
+@interface NJDeviceController : NSObject <NSOutlineViewDataSource,
+                                          NSOutlineViewDelegate,
+                                          NJHIDManagerDelegate> {
     IBOutlet NSOutlineView *outlineView;
     IBOutlet NJOutputController *outputController;
     IBOutlet NJMappingsController *mappingsController;

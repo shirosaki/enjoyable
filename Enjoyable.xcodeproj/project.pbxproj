@@ -18,6 +18,7 @@
 		EED4CE6E16ED692400C65AA8 /* NJMappingMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */; };
 		EED4CE7716EE195100C65AA8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EED4CE7616EE195100C65AA8 /* Sparkle.framework */; };
 		EED4CE7816EE195B00C65AA8 /* Sparkle.framework in Copy Sparkle Framework */ = {isa = PBXBuildFile; fileRef = EED4CE7616EE195100C65AA8 /* Sparkle.framework */; };
+		EEE703DC16F089FE002FDD69 /* NJHIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE703DB16F089FE002FDD69 /* NJHIDManager.m */; };
 		EEE73B1616EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */; };
 		EEF17D1916E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns in Resources */ = {isa = PBXBuildFile; fileRef = EEF17D1716E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns */; };
 		EEF17D1F16E8E23A00D7DC4D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEF17D1B16E8E23A00D7DC4D /* InfoPlist.strings */; };
@@ -79,6 +80,8 @@
 		EED4CE6C16ED692400C65AA8 /* NJMappingMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJMappingMenuController.h; path = Classes/NJMappingMenuController.h; sourceTree = "<group>"; };
 		EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJMappingMenuController.m; path = Classes/NJMappingMenuController.m; sourceTree = "<group>"; };
 		EED4CE7616EE195100C65AA8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		EEE703DA16F089FE002FDD69 /* NJHIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJHIDManager.h; path = Classes/NJHIDManager.h; sourceTree = "<group>"; };
+		EEE703DB16F089FE002FDD69 /* NJHIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJHIDManager.m; path = Classes/NJHIDManager.m; sourceTree = "<group>"; };
 		EEE73B1416EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunningApplication+NJPossibleNames.h"; path = "Categories/NSRunningApplication+NJPossibleNames.h"; sourceTree = "<group>"; };
 		EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunningApplication+NJPossibleNames.m"; path = "Categories/NSRunningApplication+NJPossibleNames.m"; sourceTree = "<group>"; };
 		EEF17D1716E8E21A00D7DC4D /* com.yukkurigames.Enjoyable.mapping.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = com.yukkurigames.Enjoyable.mapping.icns; path = Resources/com.yukkurigames.Enjoyable.mapping.icns; sourceTree = "<group>"; };
@@ -191,6 +194,8 @@
 				EEF17D5B16E8E2EF00D7DC4D /* NJOutputMouseScroll.m */,
 				EED4CE6C16ED692400C65AA8 /* NJMappingMenuController.h */,
 				EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */,
+				EEE703DA16F089FE002FDD69 /* NJHIDManager.h */,
+				EEE703DB16F089FE002FDD69 /* NJHIDManager.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 				EEF17D6C16E8E2EF00D7DC4D /* NJOutputMouseScroll.m in Sources */,
 				EEE73B1616EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m in Sources */,
 				EED4CE6E16ED692400C65AA8 /* NJMappingMenuController.m in Sources */,
+				EEE703DC16F089FE002FDD69 /* NJHIDManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
