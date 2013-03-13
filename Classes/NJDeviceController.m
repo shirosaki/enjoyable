@@ -81,7 +81,7 @@
     [_continuousOutputsTick invalidate];
 }
 
-- (void)expandRecursive:(id <NJInputPathElement>)pathElement {
+- (void)expandRecursive:(NJInputPathElement *)pathElement {
     if (pathElement) {
         [self expandRecursive:pathElement.base];
         [outlineView expandItem:pathElement];
@@ -250,34 +250,34 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
 }
 
 - (NJInput *)selectedInput {
-    id <NJInputPathElement> item = [outlineView itemAtRow:outlineView.selectedRow];
-    return (!item.children && item.base) ? item : nil;
+    NJInputPathElement *item = [outlineView itemAtRow:outlineView.selectedRow];
+    return (NJInput *)((!item.children && item.base) ? item : nil);
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView
-  numberOfChildrenOfItem:(id <NJInputPathElement>)item {
+  numberOfChildrenOfItem:(NJInputPathElement *)item {
     return item ? item.children.count : _devices.count;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
-   isItemExpandable:(id <NJInputPathElement>)item {
+   isItemExpandable:(NJInputPathElement *)item {
     return item ? [[item children] count] > 0: YES;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
             child:(NSInteger)index
-           ofItem:(id <NJInputPathElement>)item {
+           ofItem:(NJInputPathElement *)item {
     return item ? item.children[index] : _devices[index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
 objectValueForTableColumn:(NSTableColumn *)tableColumn
-           byItem:(id <NJInputPathElement>)item  {
+           byItem:(NJInputPathElement *)item  {
     return item ? item.name : @"root";
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {
-    id <NJInputPathElement> item = [outlineView itemAtRow:outlineView.selectedRow];
+    NJInputPathElement *item = [outlineView itemAtRow:outlineView.selectedRow];
     if (item)
         [NSUserDefaults.standardUserDefaults setObject:item.uid
                                                 forKey:@"selected input"];
@@ -285,17 +285,17 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
-        isGroupItem:(id <NJInputPathElement>)item {
+        isGroupItem:(NJInputPathElement *)item {
     return [item isKindOfClass:NJDevice.class];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView_
-   shouldSelectItem:(id <NJInputPathElement>)item {
+   shouldSelectItem:(NJInputPathElement *)item {
     return ![self outlineView:outlineView_ isGroupItem:item];
 }
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification {
-    id <NJInputPathElement> item = notification.userInfo[@"NSObject"];
+    NJInputPathElement *item = notification.userInfo[@"NSObject"];
     NSString *uid = item.uid;
     if (![_expanded containsObject:uid])
         [_expanded addObject:uid];
@@ -306,7 +306,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification {
-    id <NJInputPathElement> item = notification.userInfo[@"NSObject"];
+    NJInputPathElement *item = notification.userInfo[@"NSObject"];
     [_expanded removeObject:item.uid];
     [NSUserDefaults.standardUserDefaults setObject:_expanded
                                             forKey:@"expanded rows"];

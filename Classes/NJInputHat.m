@@ -30,12 +30,21 @@ static BOOL active_fourway[20] = {
 @implementation NJInputHat
 
 - (id)initWithIndex:(int)index {
-    if ((self = [super init])) {
-        self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"hat up", @"hat switch up state") base:self],
-                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat down", @"hat switch down state") base:self],
-                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat left", @"hat switch left state") base:self],
-                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat right", @"hat switch right state") base:self]];
-        self.name = [NSString stringWithFormat:NSLocalizedString(@"hat switch %d", @"hat switch name"), index];
+    NSString *name = [NSString stringWithFormat:NSLocalizedString(@"hat switch %d", @"hat switch name"), index];
+    NSString *did = [NSString stringWithFormat:@"Hat Switch %d", index];
+    if ((self = [super initWithName:name did:did base:nil])) {
+        self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"hat up", @"hat switch up state")
+                                                    did:@"Up"
+                                                   base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat down", @"hat switch down state")
+                                                    did:@"Down"
+                                                   base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat left", @"hat switch left state")
+                                                    did:@"Left"
+                                                   base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"hat right", @"hat switch right state")
+                                                    did:@"Right"
+                                                   base:self]];
     }
     return self;
 }

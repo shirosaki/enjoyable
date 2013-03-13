@@ -10,16 +10,14 @@
 
 @class NJInput;
 
-@interface NJDevice : NSObject <NJInputPathElement>
+@interface NJDevice : NJInputPathElement
+
+- (id)initWithDevice:(IOHIDDeviceRef)device;
 
 @property (nonatomic, assign) int index;
 @property (nonatomic, copy) NSString *productName;
 @property (nonatomic, assign) IOHIDDeviceRef device;
-@property (nonatomic, copy) NSArray *children;
-@property (nonatomic, readonly) NSString *name;
-@property (readonly) NSString *uid;
 
-- (id)initWithDevice:(IOHIDDeviceRef)device;
 - (NJInput *)handlerForEvent:(IOHIDValueRef)value;
 - (NJInput *)inputForEvent:(IOHIDValueRef)value;
 

@@ -12,12 +12,12 @@
 }
 
 - (id)initWithName:(NSString *)name idx:(int)idx max:(long)max {
-    if ((self = [super init])) {
+    NSString *fullname = [NSString stringWithFormat:NSLocalizedString(@"button %d", @"button name"), idx];
+    if (name.length)
+        fullname = [fullname stringByAppendingFormat:@"- %@", name];
+    NSString *did = [[NSString alloc] initWithFormat:@"Button %d", idx];
+    if ((self = [super initWithName:fullname did:did base:nil])) {
         _max = max;
-        self.name = [NSString stringWithFormat:NSLocalizedString(@"button %d", @"button name"), idx];
-        
-        if (name.length)
-            self.name = [self.name stringByAppendingFormat:@"- %@", name];
     }
     return self;
 }

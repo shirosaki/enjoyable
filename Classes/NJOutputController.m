@@ -229,7 +229,7 @@
     } else {
         self.enabled = YES;
         NSString *inpFullName = input.name;
-        for (id <NJInputPathElement> cur = input.base; cur; cur = cur.base) {
+        for (NJInputPathElement *cur = input.base; cur; cur = cur.base) {
             inpFullName = [[NSString alloc] initWithFormat:@"%@ ▸ %@", cur.name, inpFullName];
         }
         title.stringValue = inpFullName;

@@ -9,10 +9,12 @@
 
 @implementation NJInput
 
-- (id)initWithName:(NSString *)newName base:(id <NJInputPathElement>)newBase {
-    if ((self = [super init])) {
-        self.name = newName;
-        self.base = newBase;
+- (id)initWithName:(NSString *)name
+               did:(NSString *)did
+            cookie:(IOHIDElementCookie)cookie
+              base:(NJInputPathElement *)base {
+    if ((self = [super initWithName:name did:did base:base])) {
+        self.cookie = cookie;
     }
     return self;
 }
@@ -21,34 +23,8 @@
     return nil;
 }
 
-- (NSString *)uid {
-    return [NSString stringWithFormat:@"%@~%@", _base.uid, _name];
-}
-
 - (void)notifyEvent:(IOHIDValueRef)value {
     [self doesNotRecognizeSelector:_cmd];
-}
-
-- (BOOL)isEqual:(id)object {
-    return [object isKindOfClass:NJInput.class]
-        && [[object uid] isEqualToString:self.uid];
-}
-
-- (NSUInteger)hash {
-    return self.uid.hash;
-}
-
-- (id <NJInputPathElement>)elementForUID:(NSString *)uid {
-    if ([uid isEqualToString:self.uid])
-        return self;
-    else {
-        for (id <NJInputPathElement> elem in self.children) {
-            id <NJInputPathElement> ret = [elem elementForUID:uid];
-            if (ret)
-                return ret;
-        }
-    }
-    return nil;
 }
 
 @end

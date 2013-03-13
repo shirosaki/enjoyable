@@ -1,14 +1,21 @@
-#import <Foundation/Foundation.h>
+//
+//  NJInputPathElement.h
+//  Enjoyable
+//
+//  Created by Joe Wreschnig on 3/13/13.
+//
+//
+@interface NJInputPathElement : NSObject
 
-@protocol NJInputPathElement <NSObject>
+- (id)initWithName:(NSString *)name
+               did:(NSString *)did
+              base:(NJInputPathElement *)base;
 
-// TODO: It's time this became a real base class rather than a protocol.
+@property (nonatomic, weak) NJInputPathElement *base;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, readonly) NSString *uid;
+@property (nonatomic, strong) NSArray *children;
 
-- (NSArray *)children;
-- (id <NJInputPathElement>) base;
-- (NSString *)name;
-- (NSString *)uid;
-
-- (id <NJInputPathElement>)elementForUID:(NSString *)uid;
+- (NJInputPathElement *)elementForUID:(NSString *)uid;
 
 @end

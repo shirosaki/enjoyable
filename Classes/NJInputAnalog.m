@@ -14,16 +14,20 @@ static float normalize(long p, long min, long max) {
 }
 
 @implementation NJInputAnalog {
-    float magnitude;
     long rawMin;
     long rawMax;
 }
 
 - (id)initWithIndex:(int)index rawMin:(long)rawMin_ rawMax:(long)rawMax_ {
-    if ((self = [super init])) {
-        self.name = [[NSString alloc] initWithFormat:NSLocalizedString(@"axis %d", @"axis name"), index];
-        self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"axis low", @"axis low trigger") base:self],
-                          [[NJInput alloc] initWithName:NSLocalizedString(@"axis high", @"axis high trigger") base:self]];
+    NSString *name = [[NSString alloc] initWithFormat:NSLocalizedString(@"axis %d", @"axis name"), index];
+    NSString *did = [[NSString alloc] initWithFormat:@"Axis %d", index];
+    if ((self = [super initWithName:name did:did base:nil])) {
+        self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"axis low", @"axis low trigger")
+                                                    did:@"Low"
+                                                   base:self],
+                          [[NJInput alloc] initWithName:NSLocalizedString(@"axis high", @"axis high trigger")
+                                                    did:@"High"
+                                                   base:self]];
         rawMax = rawMax_;
         rawMin = rawMin_;
     }
@@ -41,15 +45,11 @@ static float normalize(long p, long min, long max) {
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {
-    magnitude = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
+    float magnitude = self.magnitude = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
     [self.children[0] setMagnitude:fabsf(MIN(magnitude, 0))];
     [self.children[1] setMagnitude:fabsf(MAX(magnitude, 0))];
     [self.children[0] setActive:magnitude < -DEAD_ZONE];
     [self.children[1] setActive:magnitude > DEAD_ZONE];
-}
-
-- (float)magnitude {
-    return magnitude;
 }
 
 @end

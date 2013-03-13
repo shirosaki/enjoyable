@@ -8,17 +8,16 @@
 
 #import "NJInputPathElement.h"
 
-@interface NJInput : NSObject <NJInputPathElement>
+@interface NJInput : NJInputPathElement
+
+- (id)initWithName:(NSString *)name
+               did:(NSString *)did
+            cookie:(IOHIDElementCookie)cookie
+              base:(NJInputPathElement *)base;
 
 @property (nonatomic, assign) IOHIDElementCookie cookie;
-@property (nonatomic, copy) NSArray *children;
-@property (nonatomic, weak) id <NJInputPathElement> base;
-@property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) BOOL active;
 @property (nonatomic, assign) float magnitude;
-@property (readonly) NSString *uid;
-
-- (id)initWithName:(NSString *)newName base:(id <NJInputPathElement>)newBase;
 
 - (void)notifyEvent:(IOHIDValueRef)value;
 - (id)findSubInputForValue:(IOHIDValueRef)value;
