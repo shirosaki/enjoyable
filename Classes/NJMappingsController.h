@@ -24,7 +24,6 @@
 }
 
 @property (nonatomic, readonly) NJMapping *currentMapping;
-@property (nonatomic, readonly) NSArray *mappings;
 
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name;
 - (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx;
