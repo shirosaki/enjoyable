@@ -10,6 +10,6 @@
 
 @interface NJOutputKeyPress : NJOutput
 
-@property (nonatomic, assign) CGKeyCode vk;
+@property (nonatomic, assign) CGKeyCode keyCode;
 
 @end

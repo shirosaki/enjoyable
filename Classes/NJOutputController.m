@@ -166,7 +166,7 @@
         case 1:
             if (keyInput.hasKeyCode) {
                 NJOutputKeyPress *k = [[NJOutputKeyPress alloc] init];
-                k.vk = keyInput.keyCode;
+                k.keyCode = keyInput.keyCode;
                 return k;
             } else {
                 return nil;
@@ -237,7 +237,7 @@
 
     if ([output isKindOfClass:NJOutputKeyPress.class]) {
         [radioButtons selectCellAtRow:1 column:0];
-        keyInput.keyCode = [(NJOutputKeyPress*)output vk];
+        keyInput.keyCode = [(NJOutputKeyPress*)output keyCode];
     } else if ([output isKindOfClass:NJOutputMapping.class]) {
         [radioButtons selectCellAtRow:2 column:0];
         NSMenuItem *item = [mappingPopup itemWithRepresentedObject:[(NJOutputMapping *)output mapping]];
