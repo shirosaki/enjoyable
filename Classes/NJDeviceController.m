@@ -138,13 +138,15 @@
     [self expandRecursive:handler];
     [outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[outlineView rowForItem:handler]]
              byExtendingSelection: NO];
-    [outputController focusKey];
+    if (!self.simulatingEvents)
+        [outputController focusKey];
 }
 
 - (void)hidManager:(NJHIDManager *)manager
       valueChanged:(IOHIDValueRef)value
         fromDevice:(IOHIDDeviceRef)device {
-    if (self.simulatingEvents) {
+    if (self.simulatingEvents
+        && !NSApplication.sharedApplication.isActive) {
         [self runOutputForDevice:device value:value];
     } else {
         [self showOutputForDevice:device value:value];
