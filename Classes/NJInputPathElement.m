@@ -9,16 +9,16 @@
 #include "NJInputPathElement.h"
 
 @implementation NJInputPathElement {
-    NSString *_did;
+    NSString *_eid;
 }
 
 - (id)initWithName:(NSString *)name
-               did:(NSString *)did
-              base:(NJInputPathElement *)base {
+               eid:(NSString *)eid
+            parent:(NJInputPathElement *)parent {
     if ((self = [super init])) {
         self.name = name;
-        self.base = base;
-        _did = did;
+        self.parent = parent;
+        _eid = eid;
     }
     return self;
 }
@@ -33,7 +33,7 @@
 }
 
 - (NSString *)uid {
-    return [NSString stringWithFormat:@"%@~%@", _base.uid, _did];
+    return [NSString stringWithFormat:@"%@~%@", _parent.uid, _eid];
 }
 
 - (NJInputPathElement *)elementForUID:(NSString *)uid {

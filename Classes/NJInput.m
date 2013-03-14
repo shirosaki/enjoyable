@@ -10,11 +10,15 @@
 @implementation NJInput
 
 - (id)initWithName:(NSString *)name
-               did:(NSString *)did
-            cookie:(IOHIDElementCookie)cookie
-              base:(NJInputPathElement *)base {
-    if ((self = [super initWithName:name did:did base:base])) {
-        self.cookie = cookie;
+               eid:(NSString *)eid
+           element:(IOHIDElementRef)element
+            parent:(NJInputPathElement *)parent
+{
+    NSString *elementName = (__bridge NSString *)(IOHIDElementGetName(element));
+    if (elementName.length)
+        name = [name stringByAppendingFormat:@"- %@", elementName];
+    if ((self = [super initWithName:name eid:eid parent:parent])) {
+        self.cookie = IOHIDElementGetCookie(element);
     }
     return self;
 }

@@ -83,7 +83,7 @@
 
 - (void)expandRecursive:(NJInputPathElement *)pathElement {
     if (pathElement) {
-        [self expandRecursive:pathElement.base];
+        [self expandRecursive:pathElement.parent];
         [outlineView expandItem:pathElement];
     }
 }
@@ -251,7 +251,7 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
 
 - (NJInput *)selectedInput {
     NJInputPathElement *item = [outlineView itemAtRow:outlineView.selectedRow];
-    return (NJInput *)((!item.children && item.base) ? item : nil);
+    return (NJInput *)((!item.children && item.parent) ? item : nil);
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView

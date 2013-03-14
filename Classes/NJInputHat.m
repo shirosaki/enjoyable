@@ -27,31 +27,38 @@ static BOOL active_fourway[20] = {
     NO,  NO,  YES, NO , // W
 };
 
-@implementation NJInputHat
+@implementation NJInputHat {
+    CFIndex _max;
+}
 
-- (id)initWithIndex:(int)index {
-    NSString *name = [NSString stringWithFormat:NSLocalizedString(@"hat switch %d", @"hat switch name"), index];
-    NSString *did = [NSString stringWithFormat:@"Hat Switch %d", index];
-    if ((self = [super initWithName:name did:did base:nil])) {
+- (id)initWithElement:(IOHIDElementRef)element
+                index:(int)index
+               parent:(NJInputPathElement *)parent
+{
+    if ((self = [super initWithName:NJINPUT_NAME(NSLocalizedString(@"hat switch %d", @"hat switch name"), index)
+                                eid:NJINPUT_DID("Hat Switch", index)
+                            element:element
+                               parent:parent])) {
         self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"hat up", @"hat switch up state")
-                                                    did:@"Up"
-                                                   base:self],
+                                                    eid:@"Up"
+                                                   parent:self],
                           [[NJInput alloc] initWithName:NSLocalizedString(@"hat down", @"hat switch down state")
-                                                    did:@"Down"
-                                                   base:self],
+                                                    eid:@"Down"
+                                                   parent:self],
                           [[NJInput alloc] initWithName:NSLocalizedString(@"hat left", @"hat switch left state")
-                                                    did:@"Left"
-                                                   base:self],
+                                                    eid:@"Left"
+                                                   parent:self],
                           [[NJInput alloc] initWithName:NSLocalizedString(@"hat right", @"hat switch right state")
-                                                    did:@"Right"
-                                                   base:self]];
+                                                    eid:@"Right"
+                                                   parent:self]];
+        _max = IOHIDElementGetLogicalMax(element);
     }
     return self;
 }
 
 - (id)findSubInputForValue:(IOHIDValueRef)value {
     long parsed = IOHIDValueGetIntegerValue(value);
-    switch (IOHIDElementGetLogicalMax(IOHIDValueGetElement(value))) {
+    switch (_max) {
         case 7: // 8-way switch, 0-7.
             switch (parsed) {
                 case 0: return self.children[0];
@@ -91,7 +98,7 @@ static BOOL active_fourway[20] = {
 
 - (void)notifyEvent:(IOHIDValueRef)value {
     long parsed = IOHIDValueGetIntegerValue(value);
-    long size = IOHIDElementGetLogicalMax(IOHIDValueGetElement(value));
+    long size = _max;
     // Skip first row in table if 0 is not neutral.
     if (size & 1) {
         parsed++;

@@ -12,6 +12,8 @@
 
 @interface NJInputAnalog : NJInput
 
-- (id)initWithIndex:(int)index rawMin:(long)rawMin rawMax:(long)rawMax;
+- (id)initWithElement:(IOHIDElementRef)element
+                index:(int)index
+               parent:(NJInputPathElement *)parent;
 
 @end

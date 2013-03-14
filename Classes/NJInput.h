@@ -10,10 +10,13 @@
 
 @interface NJInput : NJInputPathElement
 
+#define NJINPUT_DID(name, index) [[NSString alloc] initWithFormat:@"%s %d", name, index]
+#define NJINPUT_NAME(name, index) [[NSString alloc] initWithFormat:name, index]
+
 - (id)initWithName:(NSString *)name
-               did:(NSString *)did
-            cookie:(IOHIDElementCookie)cookie
-              base:(NJInputPathElement *)base;
+               eid:(NSString *)eid
+           element:(IOHIDElementRef)element
+            parent:(NJInputPathElement *)parent;
 
 @property (nonatomic, assign) IOHIDElementCookie cookie;
 @property (nonatomic, assign) BOOL active;

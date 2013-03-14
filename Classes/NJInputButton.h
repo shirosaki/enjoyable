@@ -10,6 +10,8 @@
 
 @interface NJInputButton : NJInput
 
-- (id)initWithName:(NSString *)name idx:(int)idx max:(long)max;
+- (id)initWithElement:(IOHIDElementRef)element
+                index:(int)index
+               parent:(NJInputPathElement *)parent;
 
 @end

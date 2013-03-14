@@ -12,7 +12,7 @@
 #import "NJInputHat.h"
 #import "NJInputButton.h"
 
-static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
+static NSArray *InputsForElement(IOHIDDeviceRef device, id parent) {
     CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
     NSMutableArray *children = [NSMutableArray arrayWithCapacity:CFArrayGetCount(elements)];
     
@@ -20,14 +20,13 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
     int axes = 0;
     int hats = 0;
     
-    for (int i = 0; i < CFArrayGetCount(elements); i++) {
+    for (CFIndex i = 0; i < CFArrayGetCount(elements); i++) {
         IOHIDElementRef element = (IOHIDElementRef)CFArrayGetValueAtIndex(elements, i);
-        int type = IOHIDElementGetType(element);
-        unsigned usage = IOHIDElementGetUsage(element);
-        unsigned usagePage = IOHIDElementGetUsagePage(element);
-        long max = IOHIDElementGetPhysicalMax(element);
-        long min = IOHIDElementGetPhysicalMin(element);
-        CFStringRef elName = IOHIDElementGetName(element);
+        IOHIDElementType type = IOHIDElementGetType(element);
+        uint32_t usage = IOHIDElementGetUsage(element);
+        uint32_t usagePage = IOHIDElementGetUsagePage(element);
+        CFIndex max = IOHIDElementGetPhysicalMax(element);
+        CFIndex min = IOHIDElementGetPhysicalMin(element);
         
         NJInput *input = nil;
         
@@ -36,23 +35,24 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
               || type == kIOHIDElementTypeInput_Button))
              continue;
         
-        if (max - min == 1 || usagePage == kHIDPage_Button || type == kIOHIDElementTypeInput_Button) {
-            input = [[NJInputButton alloc] initWithName:(__bridge NSString *)elName
-                                                    idx:++buttons
-                                                    max:max];
+        if (max - min == 1
+            || usagePage == kHIDPage_Button
+            || type == kIOHIDElementTypeInput_Button) {
+            input = [[NJInputButton alloc] initWithElement:element
+                                                     index:++buttons
+                                                    parent:parent];
         } else if (usage == kHIDUsage_GD_Hatswitch) {
-            input = [[NJInputHat alloc] initWithIndex:++hats];
+            input = [[NJInputHat alloc] initWithElement:element
+                                                  index:++hats
+                                                 parent:parent];
         } else if (usage >= kHIDUsage_GD_X && usage <= kHIDUsage_GD_Rz) {
-            input = [[NJInputAnalog alloc] initWithIndex:++axes
-                                                  rawMin:min
-                                                  rawMax:max];
+            input = [[NJInputAnalog alloc] initWithElement:element
+                                                     index:++axes
+                                                    parent:parent];
         } else {
             continue;
         }
         
-        // TODO(jfw): Should be moved into better constructors.
-        input.base = base;
-        input.cookie = IOHIDElementGetCookie(element);
         [children addObject:input];
     }
 
@@ -66,7 +66,7 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id base) {
 }
 
 - (id)initWithDevice:(IOHIDDeviceRef)dev {
-    if ((self = [super initWithName:nil did:nil base:nil])) {
+    if ((self = [super initWithName:nil eid:nil parent:nil])) {
         self.device = dev;
         self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
         _vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];

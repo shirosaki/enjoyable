@@ -8,16 +8,18 @@
 #import "NJInputButton.h"
 
 @implementation NJInputButton {
-    long _max;
+    CFIndex _max;
 }
 
-- (id)initWithName:(NSString *)name idx:(int)idx max:(long)max {
-    NSString *fullname = [NSString stringWithFormat:NSLocalizedString(@"button %d", @"button name"), idx];
-    if (name.length)
-        fullname = [fullname stringByAppendingFormat:@"- %@", name];
-    NSString *did = [[NSString alloc] initWithFormat:@"Button %d", idx];
-    if ((self = [super initWithName:fullname did:did base:nil])) {
-        _max = max;
+- (id)initWithElement:(IOHIDElementRef)element
+                index:(int)index
+               parent:(NJInputPathElement *)parent
+{
+    if ((self = [super initWithName:NJINPUT_NAME(NSLocalizedString(@"button %d", @"button name"), index)
+                                eid:NJINPUT_DID("Button", index)
+                            element:element
+                             parent:parent])) {
+        _max = IOHIDElementGetLogicalMax(element);
     }
     return self;
 }

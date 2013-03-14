@@ -10,6 +10,8 @@
 
 @interface NJInputHat : NJInput
 
-- (id)initWithIndex:(int)index;
+- (id)initWithElement:(IOHIDElementRef)element
+                index:(int)index
+               parent:(NJInputPathElement *)parent;
 
 @end

@@ -9,33 +9,37 @@
 
 #import "NJInputAnalog.h"
 
-static float normalize(long p, long min, long max) {
+static float normalize(CFIndex p, CFIndex min, CFIndex max) {
     return 2 * (p - min) / (float)(max - min) - 1;
 }
 
 @implementation NJInputAnalog {
-    long rawMin;
-    long rawMax;
+    CFIndex _rawMin;
+    CFIndex _rawMax;
 }
 
-- (id)initWithIndex:(int)index rawMin:(long)rawMin_ rawMax:(long)rawMax_ {
-    NSString *name = [[NSString alloc] initWithFormat:NSLocalizedString(@"axis %d", @"axis name"), index];
-    NSString *did = [[NSString alloc] initWithFormat:@"Axis %d", index];
-    if ((self = [super initWithName:name did:did base:nil])) {
+- (id)initWithElement:(IOHIDElementRef)element
+                index:(int)index
+               parent:(NJInputPathElement *)parent
+{
+    if ((self = [super initWithName:NJINPUT_NAME(NSLocalizedString(@"axis %d", @"axis name"), index)
+                                eid:NJINPUT_DID("Axis", index)
+                            element:element
+                             parent:nil])) {
         self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"axis low", @"axis low trigger")
-                                                    did:@"Low"
-                                                   base:self],
+                                                    eid:@"Low"
+                                                   parent:self],
                           [[NJInput alloc] initWithName:NSLocalizedString(@"axis high", @"axis high trigger")
-                                                    did:@"High"
-                                                   base:self]];
-        rawMax = rawMax_;
-        rawMin = rawMin_;
+                                                    eid:@"High"
+                                                   parent:self]];
+        _rawMax = IOHIDElementGetPhysicalMax(element);
+        _rawMin = IOHIDElementGetPhysicalMin(element);
     }
     return self;
 }
 
 - (id)findSubInputForValue:(IOHIDValueRef)value {
-    float mag = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
+    float mag = normalize(IOHIDValueGetIntegerValue(value), _rawMin, _rawMax);
     if (mag < -DEAD_ZONE)
         return self.children[0];
     else if (mag > DEAD_ZONE)
@@ -45,7 +49,7 @@ static float normalize(long p, long min, long max) {
 }
 
 - (void)notifyEvent:(IOHIDValueRef)value {
-    float magnitude = self.magnitude = normalize(IOHIDValueGetIntegerValue(value), rawMin, rawMax);
+    float magnitude = self.magnitude = normalize(IOHIDValueGetIntegerValue(value), _rawMin, _rawMax);
     [self.children[0] setMagnitude:fabsf(MIN(magnitude, 0))];
     [self.children[1] setMagnitude:fabsf(MAX(magnitude, 0))];
     [self.children[0] setActive:magnitude < -DEAD_ZONE];
