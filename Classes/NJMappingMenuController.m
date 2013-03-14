@@ -27,12 +27,12 @@
                        name:NJEventMappingChanged
                      object:nil];
         [center addObserver:self
-                   selector:@selector(eventTranslationActivated:)
-                       name:NJEventTranslationActivated
+                   selector:@selector(eventSimulationStarted:)
+                       name:NJEventSimulationStarted
                      object:nil];
         [center addObserver:self
-                   selector:@selector(eventTranslationDeactivated:)
-                       name:NJEventTranslationDeactivated
+                   selector:@selector(eventSimulationStopped:)
+                       name:NJEventSimulationStopped
                      object:nil];
     }
     return self;
@@ -99,14 +99,14 @@
             item.state = mapping == item.representedObject;
 }
 
-- (void)eventTranslationActivated:(NSNotification *)note {
-    self.eventTranslationToggle.title = NSLocalizedString(@"Disable",
-                                                          @"menu item text to disable event translation");
+- (void)eventSimulationStarted:(NSNotification *)note {
+    self.eventSimulationToggle.title = NSLocalizedString(@"Disable",
+                                                          @"menu item text to disable event simulation");
 }
 
-- (void)eventTranslationDeactivated:(NSNotification *)note {
-    self.eventTranslationToggle.title = NSLocalizedString(@"Enable",
-                                                          @"menu item text to enable event translation");
+- (void)eventSimulationStopped:(NSNotification *)note {
+    self.eventSimulationToggle.title = NSLocalizedString(@"Enable",
+                                                          @"menu item text to enable event simulation");
 }
 
 @end

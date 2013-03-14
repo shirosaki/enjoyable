@@ -25,7 +25,7 @@ static float normalize(CFIndex p, CFIndex min, CFIndex max) {
     if ((self = [super initWithName:NJINPUT_NAME(NSLocalizedString(@"axis %d", @"axis name"), index)
                                 eid:NJINPUT_DID("Axis", index)
                             element:element
-                             parent:nil])) {
+                             parent:parent])) {
         self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"axis low", @"axis low trigger")
                                                     eid:@"Low"
                                                    parent:self],

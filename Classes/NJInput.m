@@ -14,11 +14,11 @@
            element:(IOHIDElementRef)element
             parent:(NJInputPathElement *)parent
 {
-    NSString *elementName = (__bridge NSString *)(IOHIDElementGetName(element));
+    NSString *elementName = (__bridge NSString *)IOHIDElementGetName(element);
     if (elementName.length)
         name = [name stringByAppendingFormat:@"- %@", elementName];
     if ((self = [super initWithName:name eid:eid parent:parent])) {
-        self.cookie = IOHIDElementGetCookie(element);
+        _cookie = IOHIDElementGetCookie(element);
     }
     return self;
 }

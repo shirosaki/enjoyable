@@ -144,7 +144,7 @@
 - (void)hidManager:(NJHIDManager *)manager
       valueChanged:(IOHIDValueRef)value
         fromDevice:(IOHIDDeviceRef)device {
-    if (self.translatingEvents) {
+    if (self.simulatingEvents) {
         [self runOutputForDevice:device value:value];
     } else {
         [self showOutputForDevice:device value:value];
@@ -222,7 +222,7 @@ static int findAvailableIndex(NSArray *list, NJDevice *dev) {
                       didPresentSelector:nil
                              contextInfo:nil];
     }
-    self.translatingEvents = NO;
+    self.simulatingEvents = NO;
     if (manager.running)
         [self hidManagerDidStart:manager];
     else
@@ -312,18 +312,18 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
                                             forKey:@"expanded rows"];
 }
 
-- (void)setTranslatingEvents:(BOOL)translatingEvents {
-    if (translatingEvents != _translatingEvents) {
-        _translatingEvents = translatingEvents;
-        NSInteger state = translatingEvents ? NSOnState : NSOffState;
+- (void)setSimulatingEvents:(BOOL)simulatingEvents {
+    if (simulatingEvents != _simulatingEvents) {
+        _simulatingEvents = simulatingEvents;
+        NSInteger state = simulatingEvents ? NSOnState : NSOffState;
         translatingEventsButton.state = state;
-        NSString *name = translatingEvents
-            ? NJEventTranslationActivated
-            : NJEventTranslationDeactivated;
+        NSString *name = simulatingEvents
+            ? NJEventSimulationStarted
+            : NJEventSimulationStopped;
         [NSNotificationCenter.defaultCenter postNotificationName:name
                                                           object:self];
 
-        if (!translatingEvents && !NSApplication.sharedApplication.isActive)
+        if (!simulatingEvents && !NSApplication.sharedApplication.isActive)
             [self stopHid];
         else
             [self startHid];
@@ -343,12 +343,12 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (void)stopHidIfDisabled:(NSNotification *)application {
-    if (!self.translatingEvents)
+    if (!self.simulatingEvents)
         [self stopHid];
 }
 
-- (IBAction)translatingEventsChanged:(NSButton *)sender {
-    self.translatingEvents = sender.state == NSOnState;
+- (IBAction)simulatingEventsChanged:(NSButton *)sender {
+    self.simulatingEvents = sender.state == NSOnState;
 }
 
 @end

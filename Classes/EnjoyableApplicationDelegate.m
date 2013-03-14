@@ -31,13 +31,13 @@
         object:nil];
     [NSNotificationCenter.defaultCenter
         addObserver:self
-        selector:@selector(eventTranslationActivated:)
-        name:NJEventTranslationActivated
+        selector:@selector(eventSimulationStarted:)
+        name:NJEventSimulationStarted
         object:nil];
     [NSNotificationCenter.defaultCenter
         addObserver:self
-        selector:@selector(eventTranslationDeactivated:)
-        name:NJEventTranslationDeactivated
+        selector:@selector(eventSimulationStopped:)
+        name:NJEventSimulationStopped
         object:nil];
 
     [self.mappingsController load];
@@ -104,7 +104,7 @@
     return NO;
 }
 
-- (void)eventTranslationActivated:(NSNotification *)note {
+- (void)eventSimulationStarted:(NSNotification *)note {
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon"];
     [NSWorkspace.sharedWorkspace.notificationCenter
         addObserver:self
@@ -113,7 +113,7 @@
         object:nil];
 }
 
-- (void)eventTranslationDeactivated:(NSNotification *)note {
+- (void)eventSimulationStopped:(NSNotification *)note {
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
     [NSWorkspace.sharedWorkspace.notificationCenter
         removeObserver:self

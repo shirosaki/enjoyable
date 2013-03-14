@@ -8,8 +8,8 @@
 
 #define NJEventMappingChanged @"com.yukkurigames.Enjoyable.MappingChanged"
 #define NJEventMappingListChanged @"com.yukkurigames.Enjoyable.MappingListChanged"
-#define NJEventTranslationActivated @"com.yukkurigames.Enjoyable.EventTranslationActivated"
-#define NJEventTranslationDeactivated @"com.yukkurigames.Enjoyable.EventTranslationDeactivated"
+#define NJEventSimulationStarted @"com.yukkurigames.Enjoyable.EventSimulationStarted"
+#define NJEventSimulationStopped @"com.yukkurigames.Enjoyable.EventSimulationStopped"
 
 #define NJMappingKey @"com.yukkurigames.Enjoyable.Mapping"
 #define NJMappingListKey @"com.yukkurigames.Enjoyable.MappingList"

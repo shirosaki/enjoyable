@@ -81,7 +81,7 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id parent) {
 }
 
 - (NSString *)uid {
-    return [NSString stringWithFormat: @"%d:%d:%d", _vendorId, _productId, _index];
+    return [NSString stringWithFormat:@"%d:%d:%d", _vendorId, _productId, _index];
 }
 
 - (NJInput *)findInputByCookie:(IOHIDElementCookie)cookie {

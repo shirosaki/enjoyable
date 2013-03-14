@@ -26,8 +26,8 @@
 
 @property (nonatomic, readonly) NJInput *selectedInput;
 @property (nonatomic, assign) NSPoint mouseLoc;
-@property (nonatomic, assign) BOOL translatingEvents;
+@property (nonatomic, assign) BOOL simulatingEvents;
 
-- (IBAction)translatingEventsChanged:(NSButton *)sender;
+- (IBAction)simulatingEventsChanged:(NSButton *)sender;
 
 @end

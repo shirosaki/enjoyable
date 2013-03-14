@@ -42,8 +42,8 @@
 @property (nonatomic, assign) BOOL hasKeyEquivalents;
     // Whether or not to add key equivalents to the menu items.
 
-@property (nonatomic, strong) IBOutlet NSMenuItem *eventTranslationToggle;
-    // A menu item representing the current event translation state.
+@property (nonatomic, strong) IBOutlet NSMenuItem *eventSimulationToggle;
+    // A menu item representing the current event simulation state.
     // This outlet is optional.
 
 

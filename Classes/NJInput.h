@@ -18,7 +18,7 @@
            element:(IOHIDElementRef)element
             parent:(NJInputPathElement *)parent;
 
-@property (nonatomic, assign) IOHIDElementCookie cookie;
+@property (nonatomic, readonly) IOHIDElementCookie cookie;
 @property (nonatomic, assign) BOOL active;
 @property (nonatomic, assign) float magnitude;
 
