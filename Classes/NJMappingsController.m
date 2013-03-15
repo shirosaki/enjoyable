@@ -231,7 +231,7 @@
                                                     mappings:_mappings
                                                        error:&error];
     
-    if (mapping && !error) {
+    if (mapping) {
         NJMapping *mergeInto = self[mapping.name];
         if ([mergeInto hasConflictWith:mapping]) {
             NSAlert *conflictAlert = [[NSAlert alloc] init];
@@ -256,9 +256,7 @@
             [self activateMapping:mapping];
             [self mappingsChanged];
         }
-    }
-
-    if (error) {
+    } else {
         [window presentError:error
               modalForWindow:window
                     delegate:nil
