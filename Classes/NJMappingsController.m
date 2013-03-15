@@ -46,8 +46,7 @@
     return idx < _mappings.count ? _mappings[idx] : nil;
 }
 
-- (void)mappingsChanged {
-    [self save];
+- (void)mappingsSet {
     [tableView reloadData];
     [self updateInterfaceForCurrentMapping];
     [NSNotificationCenter.defaultCenter
@@ -55,6 +54,11 @@
                       object:self
                     userInfo:@{ NJMappingListKey: _mappings,
                                 NJMappingKey: _currentMapping }];
+}
+
+- (void)mappingsChanged {
+    [self save];
+    [self mappingsSet];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
@@ -168,11 +172,7 @@
 
 - (void)load {
     NSUInteger selected = [NSUserDefaults.standardUserDefaults integerForKey:@"selected"];
-    NSArray *mappings = [NSUserDefaults.standardUserDefaults arrayForKey:@"mappings"];
-    [self loadAllFrom:mappings andActivate:selected];
-}
-
-- (void)loadAllFrom:(NSArray *)storedMappings andActivate:(NSUInteger)selected {
+    NSArray *storedMappings = [NSUserDefaults.standardUserDefaults arrayForKey:@"mappings"];
     NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
     // Requires two passes to deal with inter-mapping references. First make
@@ -195,7 +195,7 @@
         if (selected >= newMappings.count)
             selected = 0;
         [self activateMapping:_mappings[selected]];
-        [self mappingsChanged];
+        [self mappingsSet];
     }
 }
 
