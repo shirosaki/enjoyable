@@ -24,7 +24,7 @@
 @interface NJMappingMenuController : NSObject
     // Mapping menu controllers manage the contents of a menu that
     // shows a list of all available mappings, as well as the current
-    // event translation state. The menu may have other items in it as
+    // event simulation state. The menu may have other items in it as
     // well, but none at an adjacent index that also have NJMappings
     // as represented objects.
 

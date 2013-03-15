@@ -57,7 +57,7 @@
         // nothing if a noisy device is plugged in (the % of that
         // spent in input_callback is negligible, so it's not
         // something we can make faster). I don't really think that's
-        // acceptable, CPU/power wise. So if translation is disabled
+        // acceptable, CPU/power wise. So if simulation is disabled
         // and the window is closed, just switch off the HID manager
         // entirely. This probably also has some marginal benefits for
         // compatibility with other applications that want exclusive
@@ -318,7 +318,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     if (simulatingEvents != _simulatingEvents) {
         _simulatingEvents = simulatingEvents;
         NSInteger state = simulatingEvents ? NSOnState : NSOffState;
-        translatingEventsButton.state = state;
+        simulatingEventsButton.state = state;
         NSString *name = simulatingEvents
             ? NJEventSimulationStarted
             : NJEventSimulationStopped;

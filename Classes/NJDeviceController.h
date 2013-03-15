@@ -19,7 +19,7 @@
     IBOutlet NSOutlineView *outlineView;
     IBOutlet NJOutputController *outputController;
     IBOutlet NJMappingsController *mappingsController;
-    IBOutlet NSButton *translatingEventsButton;
+    IBOutlet NSButton *simulatingEventsButton;
     IBOutlet NSView *connectDevicePrompt;
     IBOutlet NSView *hidSleepingPrompt;
 }

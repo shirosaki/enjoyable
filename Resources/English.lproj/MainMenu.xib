@@ -1649,14 +1649,6 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">translatingEventsButton</string>
-						<reference key="source" ref="1007832501"/>
-						<reference key="destination" ref="385218002"/>
-					</object>
-					<int key="connectionID">879</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">outlineView</string>
 						<reference key="source" ref="1007832501"/>
 						<reference key="destination" ref="365506042"/>
@@ -1686,6 +1678,14 @@ aW5nLg</string>
 						<reference key="destination" ref="385218002"/>
 					</object>
 					<int key="connectionID">978</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">simulatingEventsButton</string>
+						<reference key="source" ref="1007832501"/>
+						<reference key="destination" ref="385218002"/>
+					</object>
+					<int key="connectionID">982</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3245,7 +3245,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">981</int>
+			<int key="maxID">982</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
