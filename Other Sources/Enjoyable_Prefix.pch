@@ -16,3 +16,4 @@
 #import "NSString+FixFilename.h"
 #import "NSRunningApplication+NJPossibleNames.h"
 #import "NSRunningApplication+LoginItem.h"
+#import "NSOutlineView+ItemAccessors.h"

@@ -76,6 +76,12 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id parent) {
     return self;
 }
 
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:NJDevice.class]
+        && [[(NJDevice *)object productName] isEqualToString:self.productName]
+        && [(NJDevice *)object index] == self.index;
+}
+
 - (NSString *)name {
     return [NSString stringWithFormat:@"%@ #%d", _productName, _index];
 }

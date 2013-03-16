@@ -14,6 +14,8 @@
 		EE3D897C16EA806E00596D1F /* Status Menu Icon Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */; };
 		EE3D897F16EA817E00596D1F /* Status Menu Icon Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */; };
 		EE3D898016EA817E00596D1F /* Status Menu Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897E16EA817E00596D1F /* Status Menu Icon.png */; };
+		EE52145C16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */; };
+		EE52145F16F404D500E3C574 /* NJDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE52145E16F404D500E3C574 /* NJDeviceViewController.m */; };
 		EE6A122E16E8F46300EDBD32 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = EE6A122D16E8F46300EDBD32 /* Icon.icns */; };
 		EE8455DD16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8455DC16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m */; };
 		EED4CE6E16ED692400C65AA8 /* NJMappingMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */; };
@@ -78,6 +80,10 @@
 		EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled@2x.png"; path = "Resources/Status Menu Icon Disabled@2x.png"; sourceTree = "<group>"; };
 		EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled.png"; path = "Resources/Status Menu Icon Disabled.png"; sourceTree = "<group>"; };
 		EE3D897E16EA817E00596D1F /* Status Menu Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon.png"; path = "Resources/Status Menu Icon.png"; sourceTree = "<group>"; };
+		EE52145A16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSOutlineView+ItemAccessors.h"; path = "Categories/NSOutlineView+ItemAccessors.h"; sourceTree = "<group>"; };
+		EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSOutlineView+ItemAccessors.m"; path = "Categories/NSOutlineView+ItemAccessors.m"; sourceTree = "<group>"; };
+		EE52145D16F404D500E3C574 /* NJDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJDeviceViewController.h; path = Classes/NJDeviceViewController.h; sourceTree = "<group>"; };
+		EE52145E16F404D500E3C574 /* NJDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJDeviceViewController.m; path = Classes/NJDeviceViewController.m; sourceTree = "<group>"; };
 		EE6A122D16E8F46300EDBD32 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		EE8455DB16F0E46B00F32A01 /* NSRunningApplication+LoginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunningApplication+LoginItem.h"; path = "Categories/NSRunningApplication+LoginItem.h"; sourceTree = "<group>"; };
 		EE8455DC16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunningApplication+LoginItem.m"; path = "Categories/NSRunningApplication+LoginItem.m"; sourceTree = "<group>"; };
@@ -202,6 +208,8 @@
 				EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */,
 				EEE703DA16F089FE002FDD69 /* NJHIDManager.h */,
 				EEE703DB16F089FE002FDD69 /* NJHIDManager.m */,
+				EE52145D16F404D500E3C574 /* NJDeviceViewController.h */,
+				EE52145E16F404D500E3C574 /* NJDeviceViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -302,6 +310,8 @@
 				EEF17D3216E8E2E100D7DC4D /* NSView+FirstResponder.m */,
 				EEE73B1416EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.h */,
 				EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */,
+				EE52145A16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.h */,
+				EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -442,6 +452,8 @@
 				EEE703DC16F089FE002FDD69 /* NJHIDManager.m in Sources */,
 				EEE703DE16F0B3F6002FDD69 /* NJInputPathElement.m in Sources */,
 				EE8455DD16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m in Sources */,
+				EE52145C16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m in Sources */,
+				EE52145F16F404D500E3C574 /* NJDeviceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

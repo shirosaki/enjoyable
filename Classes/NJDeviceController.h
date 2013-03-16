@@ -7,21 +7,20 @@
 //
 
 #import "NJHIDManager.h"
+#import "NJDeviceViewController.h"
 
 @class NJDevice;
 @class NJInput;
 @class NJMappingsController;
 @class NJOutputController;
+@class NJDeviceViewController;
 
-@interface NJDeviceController : NSObject <NSOutlineViewDataSource,
-                                          NSOutlineViewDelegate,
+@interface NJDeviceController : NSObject <NJDeviceViewControllerDelegate,
                                           NJHIDManagerDelegate> {
-    IBOutlet NSOutlineView *outlineView;
     IBOutlet NJOutputController *outputController;
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NSButton *simulatingEventsButton;
-    IBOutlet NSView *connectDevicePrompt;
-    IBOutlet NSView *hidSleepingPrompt;
+    IBOutlet NJDeviceViewController *devicesViewController;
 }
 
 @property (nonatomic, readonly) NJInput *selectedInput;
