@@ -147,6 +147,7 @@
     NSDictionary *userInfo = CFBridgingRelease(contextInfo);
     NJMapping *oldMapping = userInfo[@"old mapping"];
     NJMapping *newMapping = userInfo[@"new mapping"];
+    [alert.window orderOut:nil];
     switch (returnCode) {
         case NSAlertFirstButtonReturn: // Merge
             [oldMapping mergeEntriesFrom:newMapping];
@@ -157,7 +158,7 @@
         case NSAlertThirdButtonReturn: // New Mapping
             [self.mvc.mappingList beginUpdates];
             [_mappings addObject:newMapping];
-            [self.mvc addedMappingAtIndex:_mappings.count - 1 startEditing:NO];
+            [self.mvc addedMappingAtIndex:_mappings.count - 1 startEditing:YES];
             [self.mvc.mappingList endUpdates];
             [self activateMapping:newMapping];
             [self mappingsChanged];
@@ -195,7 +196,7 @@
             [self mappingsChanged];
         } else {
             if (idx == -1)
-                idx = _mappings.count - 1;
+                idx = _mappings.count;
             [self.mvc.mappingList beginUpdates];
             [_mappings insertObject:mapping atIndex:idx];
             [self.mvc addedMappingAtIndex:idx startEditing:NO];
