@@ -68,15 +68,6 @@
     [_continuousOutputsTick invalidate];
 }
 
-- (id)elementForUID:(NSString *)uid {
-    for (NJDevice *dev in _devices) {
-        id item = [dev elementForUID:uid];
-        if (item)
-            return item;
-    }
-    return nil;
-}
-
 - (void)addRunningOutput:(NJOutput *)output {
     // Axis events will trigger every small movement, don't keep
     // re-adding them or they trigger multiple times each time.
@@ -238,21 +229,40 @@
     self.simulatingEvents = sender.state == NSOnState;
 }
 
-- (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)devices {
+- (NSInteger)numberOfDevicesInDeviceList:(NJDeviceViewController *)dvc {
+    return _devices.count;
+}
+
+- (NJDevice *)deviceViewController:(NJDeviceViewController *)dvc
+                    deviceForIndex:(NSUInteger)idx {
+    return _devices[idx];
+}
+
+- (id)deviceViewController:(NJDeviceViewController *)dvc
+             elementForUID:(NSString *)uid {
+    for (NJDevice *dev in _devices) {
+        id item = [dev elementForUID:uid];
+        if (item)
+            return item;
+    }
+    return nil;
+}
+
+- (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)dvc {
     [outputController loadCurrent];
 }
 
-- (void)deviceViewController:(NJDeviceViewController *)devices
+- (void)deviceViewController:(NJDeviceViewController *)dvc
              didSelectBranch:(NJInputPathElement *)handler {
     [outputController loadCurrent];
 }
 
-- (void)deviceViewController:(NJDeviceViewController *)devices
+- (void)deviceViewController:(NJDeviceViewController *)dvc
             didSelectHandler:(NJInputPathElement *)handler {
     [outputController loadCurrent];
 }
 
-- (void)deviceViewController:(NJDeviceViewController *)devices
+- (void)deviceViewController:(NJDeviceViewController *)dvc
              didSelectDevice:(NJInputPathElement *)device {
     [outputController loadCurrent];
 }

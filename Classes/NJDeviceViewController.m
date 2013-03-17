@@ -11,7 +11,6 @@
 #import "NJInputPathElement.h"
 
 @implementation NJDeviceViewController {
-    NSMutableArray *_devices;
     NSMutableArray *_expanded;
 }
 
@@ -22,7 +21,6 @@
             expanded = @[];
         _expanded = [[NSMutableArray alloc] initWithCapacity:MAX(16, _expanded.count)];
         [_expanded addObjectsFromArray:expanded];
-        _devices = [[NSMutableArray alloc] initWithCapacity:16];
     }
     return self;
 }
@@ -34,17 +32,8 @@
     }
 }
 
-- (id)elementForUID:(NSString *)uid {
-    for (NJInputPathElement *dev in _devices) {
-        id item = [dev elementForUID:uid];
-        if (item)
-            return item;
-    }
-    return nil;
-}
-
 - (void)expandRecursiveByUID:(NSString *)uid {
-    [self expandRecursive:[self elementForUID:uid]];
+    [self expandRecursive:[self.delegate deviceViewController:self elementForUID:uid]];
 }
 
 - (void)reexpandAll {
@@ -52,23 +41,12 @@
         [self expandRecursiveByUID:uid];
     if (self.inputsTree.selectedRow == -1) {
         NSString *selectedUid = [NSUserDefaults.standardUserDefaults objectForKey:@"selected input"];
-        id item = [self elementForUID:selectedUid];
+        id item = [self.delegate deviceViewController:self elementForUID:selectedUid];
         [self.inputsTree selectItem:item];
     }
 }
 
-- (void)setDevices:(NSArray *)devices {
-    _devices = [devices mutableCopy];
-    id item = self.inputsTree.selectedItem;
-    [self.inputsTree selectItem:nil];
-    [self.inputsTree reloadData];
-    [self reexpandAll];
-    [self.inputsTree selectItem:item];
-    self.noDevicesNotice.hidden = self.devices.count || !self.hidStoppedNotice.isHidden;
-}
-
 - (void)addedDevice:(NJDevice *)device atIndex:(NSUInteger)idx {
-    [_devices insertObject:device atIndex:idx];
     [self.inputsTree beginUpdates];
     [self.inputsTree insertItemsAtIndexes:[[NSIndexSet alloc] initWithIndex:idx]
                                   inParent:nil
@@ -79,23 +57,24 @@
 }
 
 - (void)removedDevice:(NJDevice *)device atIndex:(NSUInteger)idx {
-    [_devices removeObjectAtIndex:idx];
+    BOOL anyDevices = !![self.delegate numberOfDevicesInDeviceList:self];
     [self.inputsTree beginUpdates];
     [self.inputsTree removeItemsAtIndexes:[[NSIndexSet alloc] initWithIndex:idx]
                                   inParent:nil
                              withAnimation:NSTableViewAnimationSlideLeft];
     [self.inputsTree endUpdates];
-    self.noDevicesNotice.hidden = self.devices.count || !self.hidStoppedNotice.isHidden;
+    self.noDevicesNotice.hidden = anyDevices || !self.hidStoppedNotice.isHidden;
 }
 
 - (void)hidStarted {
-    self.noDevicesNotice.hidden = !!self.devices.count;
+    self.noDevicesNotice.hidden = !![self.delegate numberOfDevicesInDeviceList:self];
     self.hidStoppedNotice.hidden = YES;
 }
 
 - (void)hidStopped {
+    self.noDevicesNotice.hidden = YES;
     self.hidStoppedNotice.hidden = NO;
-    self.devices = @[];
+    [self.inputsTree reloadData];
 }
 
 - (void)expandAndSelectItem:(NJInputPathElement *)item {
@@ -110,18 +89,25 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView
   numberOfChildrenOfItem:(NJInputPathElement *)item {
-    return item ? item.children.count : _devices.count;
+    if (item)
+        return item.children.count;
+    else
+        return [self.delegate numberOfDevicesInDeviceList:self];
+
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
    isItemExpandable:(NJInputPathElement *)item {
-    return item ? [[item children] count] > 0: YES;
+    return item ? item.children.count > 0: YES;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
             child:(NSInteger)index
            ofItem:(NJInputPathElement *)item {
-    return item ? item.children[index] : _devices[index];
+    if (item)
+        return item.children[index];
+    else
+        return [self.delegate deviceViewController:self deviceForIndex:index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
@@ -152,13 +138,15 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification {
     NSString *uid = [notification.userInfo[@"NSObject"] uid];
-    if (![_expanded containsObject:uid])
+    if (![_expanded containsObject:uid]) {
         [_expanded addObject:uid];
-
+        [NSUserDefaults.standardUserDefaults setObject:_expanded forKey:@"expanded rows"];
+    }
 }
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification {
     [_expanded removeObject:[notification.userInfo[@"NSObject"] uid]];
+    [NSUserDefaults.standardUserDefaults setObject:_expanded forKey:@"expanded rows"];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView

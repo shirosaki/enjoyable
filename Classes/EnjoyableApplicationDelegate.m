@@ -135,9 +135,22 @@
 
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
     [self restoreToForeground:sender];
-    NSURL *url = [NSURL fileURLWithPath:filename];
-    [self.mappingsController addMappingWithContentsOfURL:url];
-    return YES;
+    NSError *error;
+    NSURL *URL = [NSURL fileURLWithPath:filename];
+    NJMapping *mapping = [NJMapping mappingWithContentsOfURL:URL
+                                                    mappings:self.mappingsController
+                                                       error:&error];
+    if (mapping) {
+        [self.mappingsController addOrMergeMapping:mapping];
+        return YES;
+    } else {
+        [window presentError:error
+              modalForWindow:window
+                    delegate:nil
+          didPresentSelector:nil
+                 contextInfo:nil];
+        return NO;
+    }
 }
 
 - (void)mappingWasChosen:(NJMapping *)mapping {
@@ -146,7 +159,7 @@
 
 - (void)mappingListShouldOpen {
     [self restoreToForeground:self];
-    [self.mappingsController mappingPressed:self];
+    [self.mappingsController.mvc mappingTriggerClicked:self];
 }
 
 - (void)loginItemPromptDidEnd:(NSWindow *)sheet
@@ -189,6 +202,53 @@
                    afterDelay:0.5 * i];
     return NO;
 }
+
+- (void)importMappingClicked:(id)sender {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.allowedFileTypes = @[ @"enjoyable", @"json", @"txt" ];
+    [panel beginSheetModalForWindow:window
+                  completionHandler:^(NSInteger result) {
+                      if (result != NSFileHandlingPanelOKButton)
+                          return;
+                      [panel close];
+                      NSError *error;
+                      NJMapping *mapping = [NJMapping mappingWithContentsOfURL:panel.URL
+                                                                      mappings:self.mappingsController
+                                                                         error:&error];
+                      if (mapping) {
+                          [self.mappingsController addOrMergeMapping:mapping];
+                      } else {
+                          [window presentError:error
+                                modalForWindow:window
+                                      delegate:nil
+                            didPresentSelector:nil
+                                   contextInfo:nil];
+                      }
+                  }];
+    
+}
+
+- (void)exportMappingClicked:(id)sender {
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    panel.allowedFileTypes = @[ @"enjoyable" ];
+    NJMapping *mapping = self.mappingsController.currentMapping;
+    panel.nameFieldStringValue = [mapping.name stringByFixingPathComponent];
+    [panel beginSheetModalForWindow:window
+                  completionHandler:^(NSInteger result) {
+                      if (result != NSFileHandlingPanelOKButton)
+                          return;
+                      [panel close];
+                      NSError *error;
+                      if (![mapping writeToURL:panel.URL error:&error]) {
+                          [window presentError:error
+                                modalForWindow:window
+                                      delegate:nil
+                            didPresentSelector:nil
+                                   contextInfo:nil];
+                      }
+                  }];
+}
+
 
 
 @end

@@ -13,7 +13,7 @@
 - (void)moveObjectAtIndex:(NSUInteger)src toIndex:(NSUInteger)dst {
     id obj = self[src];
     [self removeObjectAtIndex:src];
-    [self insertObject:obj atIndex:dst > src ? dst - 1 : dst];
+    [self insertObject:obj atIndex:dst];
 }
 
 - (BOOL)moveFirstwards:(id)object upTo:(NSUInteger)minIndex {

@@ -30,11 +30,6 @@
     return self;
 }
 
-- (void)awakeFromNib {
-    [tableView registerForDraggedTypes:@[PB_ROW, NSURLPboardType]];
-    [tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
-}
-
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name {
     for (NJMapping *mapping in _mappings)
         if ([name isEqualToString:mapping.name])
@@ -47,13 +42,12 @@
 }
 
 - (void)mappingsSet {
-    [tableView reloadData];
-    [self updateInterfaceForCurrentMapping];
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
                       object:self
                     userInfo:@{ NJMappingListKey: _mappings,
                                 NJMappingKey: _currentMapping }];
+    [self.mvc changedActiveMappingToIndex:[_mappings indexOfObjectIdenticalTo:_currentMapping]];
 }
 
 - (void)mappingsChanged {
@@ -94,16 +88,6 @@
     _manualMapping = oldMapping;
 }
 
-- (void)updateInterfaceForCurrentMapping {
-    NSUInteger selected = [_mappings indexOfObject:_currentMapping];
-    removeButton.enabled = selected != 0;
-    moveUp.enabled = selected > 1;
-    moveDown.enabled = selected && selected != _mappings.count - 1;
-    popoverActivate.title = _currentMapping.name;
-    [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selected] byExtendingSelection:NO];
-    [NSUserDefaults.standardUserDefaults setInteger:selected forKey:@"selected"];
-}
-
 - (void)activateMapping:(NJMapping *)mapping {
     if (!mapping)
         mapping = _manualMapping;
@@ -112,54 +96,11 @@
     NSLog(@"Switching to mapping %@.", mapping.name);
     _manualMapping = mapping;
     _currentMapping = mapping;
-    [self updateInterfaceForCurrentMapping];
+    [self.mvc changedActiveMappingToIndex:[_mappings indexOfObjectIdenticalTo:_currentMapping]];
     [NSNotificationCenter.defaultCenter
          postNotificationName:NJEventMappingChanged
                        object:self
                      userInfo:@{ NJMappingKey : _currentMapping }];
-}
-
-- (IBAction)addPressed:(id)sender {
-    [self mappingPressed:sender];
-    NJMapping *newMapping = [[NJMapping alloc] init];
-    [_mappings addObject:newMapping];
-    [self activateMapping:newMapping];
-    [self mappingsChanged];
-    [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
-}
-
-- (IBAction)removePressed:(id)sender {
-    if (tableView.selectedRow == 0)
-        return;
-    
-    NSInteger selectedRow = tableView.selectedRow;
-    [_mappings removeObjectAtIndex:selectedRow];
-    [self activateMapping:_mappings[MIN(selectedRow, _mappings.count - 1)]];
-    [self mappingsChanged];
-}
-
-- (void)tableViewSelectionDidChange:(NSNotification *)notify {
-    [self activateMapping:self[tableView.selectedRow]];
-}
-
-- (id)tableView:(NSTableView *)view objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)index {
-    return self[index].name;
-}
-
-- (void)tableView:(NSTableView *)view
-   setObjectValue:(NSString *)obj
-   forTableColumn:(NSTableColumn *)col
-              row:(NSInteger)index {
-    self[index].name = obj;
-    [self mappingsChanged];
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return _mappings.count;
-}
-
-- (BOOL)tableView:(NSTableView *)view shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)index {
-    return YES;
 }
 
 - (void)save {
@@ -194,6 +135,7 @@
         _mappings = newMappings;
         if (selected >= newMappings.count)
             selected = 0;
+        [self.mvc reloadData];
         [self activateMapping:_mappings[selected]];
         [self mappingsSet];
     }
@@ -208,29 +150,29 @@
     switch (returnCode) {
         case NSAlertFirstButtonReturn: // Merge
             [oldMapping mergeEntriesFrom:newMapping];
+            _currentMapping = nil;
             [self activateMapping:oldMapping];
             [self mappingsChanged];
             break;
         case NSAlertThirdButtonReturn: // New Mapping
+            [self.mvc.mappingList beginUpdates];
             [_mappings addObject:newMapping];
+            [self.mvc addedMappingAtIndex:_mappings.count - 1 startEditing:NO];
+            [self.mvc.mappingList endUpdates];
             [self activateMapping:newMapping];
             [self mappingsChanged];
-            [self mappingPressed:alert];
-            [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:_mappings.count - 1] byExtendingSelection:NO];
-            [tableView editColumn:0 row:_mappings.count - 1 withEvent:nil select:YES];
             break;
         default: // Cancel, other.
             break;
     }
 }
 
-- (void)addMappingWithContentsOfURL:(NSURL *)url {
-    NSWindow *window = popoverActivate.window;
-    NSError *error;
-    NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
-                                                    mappings:_mappings
-                                                       error:&error];
-    
+- (void)addOrMergeMapping:(NJMapping *)mapping {
+    [self addOrMergeMapping:mapping atIndex:-1];
+}
+
+- (void)addOrMergeMapping:(NJMapping *)mapping atIndex:(NSInteger)idx {
+    NSWindow *window = NSApplication.sharedApplication.keyWindow;
     if (mapping) {
         NJMapping *mergeInto = self[mapping.name];
         if ([mergeInto hasConflictWith:mapping]) {
@@ -242,7 +184,7 @@
             [conflictAlert addButtonWithTitle:NSLocalizedString(@"import and merge", @"button to merge imported mappings")];
             [conflictAlert addButtonWithTitle:NSLocalizedString(@"cancel import", @"button to cancel import")];
             [conflictAlert addButtonWithTitle:NSLocalizedString(@"import new mapping", @"button to import as new mapping")];
-            [conflictAlert beginSheetModalForWindow:popoverActivate.window
+            [conflictAlert beginSheetModalForWindow:window
                                       modalDelegate:self
                                      didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
                                         contextInfo:(void *)CFBridgingRetain(@{ @"old mapping": mergeInto,
@@ -252,163 +194,86 @@
             [self activateMapping:mergeInto];
             [self mappingsChanged];
         } else {
-            [_mappings addObject:mapping];
+            if (idx == -1)
+                idx = _mappings.count - 1;
+            [self.mvc.mappingList beginUpdates];
+            [_mappings insertObject:mapping atIndex:idx];
+            [self.mvc addedMappingAtIndex:idx startEditing:NO];
+            [self.mvc.mappingList endUpdates];
             [self activateMapping:mapping];
             [self mappingsChanged];
         }
-    } else {
-        [window presentError:error
-              modalForWindow:window
-                    delegate:nil
-          didPresentSelector:nil
-                 contextInfo:nil];
     }
 }
 
-- (void)importPressed:(id)sender {
-    NSOpenPanel *panel = [NSOpenPanel openPanel];
-    panel.allowedFileTypes = @[ @"enjoyable", @"json", @"txt" ];
-    NSWindow *window = NSApplication.sharedApplication.keyWindow;
-    [panel beginSheetModalForWindow:window
-                  completionHandler:^(NSInteger result) {
-                      if (result != NSFileHandlingPanelOKButton)
-                          return;
-                      [panel close];
-                      [self addMappingWithContentsOfURL:panel.URL];
-                  }];
-    
+- (NSInteger)numberOfMappings:(NJMappingsViewController *)dvc {
+    return _mappings.count;
 }
 
-- (void)exportPressed:(id)sender {
-    NSSavePanel *panel = [NSSavePanel savePanel];
-    panel.allowedFileTypes = @[ @"enjoyable" ];
-    NJMapping *mapping = _currentMapping;
-    panel.nameFieldStringValue = [mapping.name stringByFixingPathComponent];
-    NSWindow *window = NSApplication.sharedApplication.keyWindow;
-    [panel beginSheetModalForWindow:window
-                  completionHandler:^(NSInteger result) {
-                      if (result != NSFileHandlingPanelOKButton)
-                          return;
-                      [panel close];
-                      NSError *error;
-                      [mapping writeToURL:panel.URL error:&error];
-                      if (error) {
-                          [window presentError:error
-                                modalForWindow:window
-                                      delegate:nil
-                            didPresentSelector:nil
-                                   contextInfo:nil];
-                      }
-                  }];
+- (NJMapping *)mappingsViewController:(NJMappingsViewController *)dvc
+                      mappingForIndex:(NSUInteger)idx {
+    return _mappings[idx];
 }
 
-- (IBAction)mappingPressed:(id)sender {
-    [popover showRelativeToRect:popoverActivate.bounds
-                         ofView:popoverActivate
-                  preferredEdge:NSMinXEdge];
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+          editedMappingAtIndex:(NSInteger)index {
+    [self mappingsChanged];
 }
 
-- (void)popoverWillShow:(NSNotification *)notification {
-    popoverActivate.state = NSOnState;
+- (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
+       canMoveMappingFromIndex:(NSInteger)fromIdx
+                       toIndex:(NSInteger)toIdx {
+    return fromIdx != toIdx && fromIdx != 0 && toIdx != 0 && toIdx < (NSInteger)_mappings.count;
 }
 
-- (void)popoverWillClose:(NSNotification *)notification {
-    popoverActivate.state = NSOffState;
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+          moveMappingFromIndex:(NSInteger)fromIdx
+                       toIndex:(NSInteger)toIdx {
+    [_mappings moveObjectAtIndex:fromIdx toIndex:toIdx];
+    [self mappingsChanged];
 }
 
-- (IBAction)moveUpPressed:(id)sender {
-    if ([_mappings moveFirstwards:_currentMapping upTo:1])
-        [self mappingsChanged];
+- (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
+       canRemoveMappingAtIndex:(NSInteger)idx {
+    return idx != 0;
 }
 
-- (IBAction)moveDownPressed:(id)sender {
-    if ([_mappings moveLastwards:_currentMapping])
-        [self mappingsChanged];
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+          removeMappingAtIndex:(NSInteger)idx {
+    NJMapping *old = self[idx];
+    [self.mvc.mappingList beginUpdates];
+    [_mappings removeObjectAtIndex:idx];
+    [self.mvc removedMappingAtIndex:idx];
+    [self.mvc.mappingList endUpdates];
+    if (old == _currentMapping)
+        [self activateMapping:self[MIN(idx, _mappings.count - 1)]];
+    [self mappingsChanged];
 }
 
-- (BOOL)tableView:(NSTableView *)tableView_
-       acceptDrop:(id <NSDraggingInfo>)info
-              row:(NSInteger)row
-    dropOperation:(NSTableViewDropOperation)dropOperation {
-    NSPasteboard *pboard = [info draggingPasteboard];
-    if ([pboard.types containsObject:PB_ROW]) {
-        NSString *value = [pboard stringForType:PB_ROW];
-        NSUInteger srcRow = [value intValue];
-        [_mappings moveObjectAtIndex:srcRow toIndex:row];
-        [self mappingsChanged];
-        return YES;
-    } else if ([pboard.types containsObject:NSURLPboardType]) {
-        NSURL *url = [NSURL URLFromPasteboard:pboard];
-        NSError *error;
-        NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
-                                                        mappings:_mappings
-                                                           error:&error];
-        if (error) {
-            [tableView_ presentError:error];
-            return NO;
-        } else {
-            [_mappings insertObject:mapping atIndex:row];
-            [self mappingsChanged];
-            return YES;
-        }
-    } else {
-        return NO;
-    }
+- (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
+          importMappingFromURL:(NSURL *)url
+                       atIndex:(NSInteger)index
+                         error:(NSError **)error {
+    NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
+                                                    mappings:_mappings
+                                                       error:error];
+    [self addOrMergeMapping:mapping atIndex:index];
+    return !!mapping;
 }
 
-- (NSDragOperation)tableView:(NSTableView *)tableView_
-                validateDrop:(id <NSDraggingInfo>)info
-                 proposedRow:(NSInteger)row
-       proposedDropOperation:(NSTableViewDropOperation)dropOperation {
-    NSPasteboard *pboard = [info draggingPasteboard];
-    if ([pboard.types containsObject:PB_ROW]) {
-        [tableView_ setDropRow:MAX(1, row) dropOperation:NSTableViewDropAbove];
-        return NSDragOperationMove;
-    } else if ([pboard.types containsObject:NSURLPboardType]) {
-        NSURL *url = [NSURL URLFromPasteboard:pboard];
-        if ([url.pathExtension isEqualToString:@"enjoyable"]) {
-            [tableView_ setDropRow:MAX(1, row) dropOperation:NSTableViewDropAbove];
-            return NSDragOperationCopy;
-        } else {
-            return NSDragOperationNone;
-        }
-    } else {
-        return NSDragOperationNone;
-    }
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+                    addMapping:(NJMapping *)mapping {
+    [self.mvc.mappingList beginUpdates];
+    [_mappings addObject:mapping];
+    [self.mvc addedMappingAtIndex:_mappings.count - 1 startEditing:YES];
+    [self.mvc.mappingList endUpdates];
+    [self activateMapping:mapping];
+    [self mappingsChanged];
 }
 
-- (NSArray *)tableView:(NSTableView *)tableView_
-namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
-forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
-    NJMapping *toSave = self[indexSet.firstIndex];
-    NSString *filename = [[toSave.name stringByFixingPathComponent]
-                          stringByAppendingPathExtension:@"enjoyable"];
-    NSURL *dst = [dropDestination URLByAppendingPathComponent:filename];
-    dst = [NSFileManager.defaultManager generateUniqueURLWithBase:dst];     
-    NSError *error;
-    if (![toSave writeToURL:dst error:&error]) {
-        [tableView_ presentError:error];
-        return @[];
-    } else {
-        return @[dst.lastPathComponent];
-    }
-}
-
-- (BOOL)tableView:(NSTableView *)tableView_
-writeRowsWithIndexes:(NSIndexSet *)rowIndexes
-     toPasteboard:(NSPasteboard *)pboard {
-    if (rowIndexes.count == 1 && rowIndexes.firstIndex != 0) {
-        [pboard declareTypes:@[PB_ROW, NSFilesPromisePboardType] owner:nil];
-        [pboard setString:@(rowIndexes.firstIndex).stringValue forType:PB_ROW];
-        [pboard setPropertyList:@[@"enjoyable"] forType:NSFilesPromisePboardType];
-        return YES;
-    } else if (rowIndexes.count == 1 && rowIndexes.firstIndex == 0) {
-        [pboard declareTypes:@[NSFilesPromisePboardType] owner:nil];
-        [pboard setPropertyList:@[@"enjoyable"] forType:NSFilesPromisePboardType];
-        return YES;
-    } else {
-        return NO;
-    }
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+                  choseMappingAtIndex:(NSInteger)idx {
+    [self activateMapping:self[idx]];
 }
 
 @end

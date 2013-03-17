@@ -20,9 +20,6 @@
 
 @property (nonatomic, weak) IBOutlet id <NJDeviceViewControllerDelegate> delegate;
 
-@property (nonatomic, copy) NSArray *devices;
-    // Assigning directly will trigger a full reload.
-
 - (void)addedDevice:(NJDevice *)device atIndex:(NSUInteger)idx;
 - (void)removedDevice:(NJDevice *)device atIndex:(NSUInteger)idx;
     // But using these will animate nicely.
@@ -38,12 +35,19 @@
 
 @protocol NJDeviceViewControllerDelegate <NSObject>
 
-- (void)deviceViewController:(NJDeviceViewController *)devices
+- (NSInteger)numberOfDevicesInDeviceList:(NJDeviceViewController *)dvc;
+- (NJDevice *)deviceViewController:(NJDeviceViewController *)dvc
+                    deviceForIndex:(NSUInteger)idx;
+- (NJInputPathElement *)deviceViewController:(NJDeviceViewController *)dvc
+                               elementForUID:(NSString *)uid;
+
+
+- (void)deviceViewController:(NJDeviceViewController *)dvc
              didSelectDevice:(NJInputPathElement *)device;
-- (void)deviceViewController:(NJDeviceViewController *)devices
+- (void)deviceViewController:(NJDeviceViewController *)dvc
              didSelectBranch:(NJInputPathElement *)handler;
-- (void)deviceViewController:(NJDeviceViewController *)devices
+- (void)deviceViewController:(NJDeviceViewController *)dvc
             didSelectHandler:(NJInputPathElement *)handler;
-- (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)devices;
+- (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)dvc;
 
 @end

@@ -22,7 +22,7 @@
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                  withMappings:(NSArray *)mappings {
+                  withMappings:(id <NSFastEnumeration>)mappings {
     NJOutputKeyPress *output = [[NJOutputKeyPress alloc] init];
     output.keyCode = [serialization[@"key"] intValue];
     return output;

@@ -21,5 +21,7 @@
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 
 - (IBAction)restoreToForeground:(id)sender;
+- (IBAction)importMappingClicked:(id)sender;
+- (IBAction)exportMappingClicked:(id)sender;
 
 @end

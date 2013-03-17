@@ -24,7 +24,7 @@
 }
 
 + (NJOutputMapping *)outputDeserialize:(NSDictionary *)serialization
-                        withMappings:(NSArray *)mappings {
+                        withMappings:(id <NSFastEnumeration>)mappings {
     NSString *name = serialization[@"name"];
     NJOutputMapping *output = [[NJOutputMapping alloc] init];
     for (NJMapping *mapping in mappings) {

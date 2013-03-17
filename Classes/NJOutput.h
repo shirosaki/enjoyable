@@ -20,7 +20,7 @@
 
 - (NSDictionary *)serialize;
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                   withMappings:(NSArray *)mappings;
+                   withMappings:(id <NSFastEnumeration>)mappings;
 + (NSString *)serializationCode;
 
 @end

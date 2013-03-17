@@ -11,10 +11,9 @@
 @interface NSMutableArray (MoveObject)
 
 - (void)moveObjectAtIndex:(NSUInteger)src toIndex:(NSUInteger)dst;
-    // Move the object at index src to (pre-move) index dst. Other
+    // Move the object at index src to (post-move) index dst. Other
     // objects shift up or down as necessary to make room, as in
-    // insertObject:atIndex:. Because the object is also removed from
-    // the source index, its resulting index may be one less than dst.
+    // insertObject:atIndex:.
 
 - (BOOL)moveFirstwards:(id)object upTo:(NSUInteger)minIndex;
 - (BOOL)moveLastwards:(id)object upTo:(NSUInteger)maxIndex;

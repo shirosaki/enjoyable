@@ -17,6 +17,7 @@
 		EE52145C16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */; };
 		EE52145F16F404D500E3C574 /* NJDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE52145E16F404D500E3C574 /* NJDeviceViewController.m */; };
 		EE6A122E16E8F46300EDBD32 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = EE6A122D16E8F46300EDBD32 /* Icon.icns */; };
+		EE83ACEC16F545EA00083E94 /* NJMappingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE83ACEB16F545EA00083E94 /* NJMappingsViewController.m */; };
 		EE8455DD16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8455DC16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m */; };
 		EED4CE6E16ED692400C65AA8 /* NJMappingMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */; };
 		EED4CE7716EE195100C65AA8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EED4CE7616EE195100C65AA8 /* Sparkle.framework */; };
@@ -85,6 +86,8 @@
 		EE52145D16F404D500E3C574 /* NJDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJDeviceViewController.h; path = Classes/NJDeviceViewController.h; sourceTree = "<group>"; };
 		EE52145E16F404D500E3C574 /* NJDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJDeviceViewController.m; path = Classes/NJDeviceViewController.m; sourceTree = "<group>"; };
 		EE6A122D16E8F46300EDBD32 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
+		EE83ACEA16F545EA00083E94 /* NJMappingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJMappingsViewController.h; path = Classes/NJMappingsViewController.h; sourceTree = "<group>"; };
+		EE83ACEB16F545EA00083E94 /* NJMappingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJMappingsViewController.m; path = Classes/NJMappingsViewController.m; sourceTree = "<group>"; };
 		EE8455DB16F0E46B00F32A01 /* NSRunningApplication+LoginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunningApplication+LoginItem.h"; path = "Categories/NSRunningApplication+LoginItem.h"; sourceTree = "<group>"; };
 		EE8455DC16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunningApplication+LoginItem.m"; path = "Categories/NSRunningApplication+LoginItem.m"; sourceTree = "<group>"; };
 		EED4CE6C16ED692400C65AA8 /* NJMappingMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJMappingMenuController.h; path = Classes/NJMappingMenuController.h; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				EEE703DB16F089FE002FDD69 /* NJHIDManager.m */,
 				EE52145D16F404D500E3C574 /* NJDeviceViewController.h */,
 				EE52145E16F404D500E3C574 /* NJDeviceViewController.m */,
+				EE83ACEA16F545EA00083E94 /* NJMappingsViewController.h */,
+				EE83ACEB16F545EA00083E94 /* NJMappingsViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				EE8455DD16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m in Sources */,
 				EE52145C16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m in Sources */,
 				EE52145F16F404D500E3C574 /* NJDeviceViewController.m in Sources */,
+				EE83ACEC16F545EA00083E94 /* NJMappingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

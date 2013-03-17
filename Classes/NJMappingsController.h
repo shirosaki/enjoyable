@@ -9,36 +9,20 @@
 @class NJMapping;
 @class NJOutputController;
 
-@interface NJMappingsController : NSObject <NSTableViewDataSource,
-                                            NSTableViewDelegate,
-                                            NSOpenSavePanelDelegate,
-                                            NSPopoverDelegate,
-                                            NSFastEnumeration>
-{
-    IBOutlet NSButton *removeButton;
-    IBOutlet NSTableView *tableView;
-    IBOutlet NSButton *popoverActivate;
-    IBOutlet NSPopover *popover;
-    IBOutlet NSButton *moveUp;
-    IBOutlet NSButton *moveDown;
-}
+#import "NJMappingsViewController.h"
+
+@interface NJMappingsController : NSObject <NSFastEnumeration,
+                                            NJMappingsViewControllerDelegate>
 
 @property (nonatomic, readonly) NJMapping *currentMapping;
+@property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name;
 - (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx;
-- (void)addMappingWithContentsOfURL:(NSURL *)url;
 - (void)activateMapping:(NJMapping *)mapping;
 - (void)activateMappingForProcess:(NSRunningApplication *)app;
+- (void)addOrMergeMapping:(NJMapping *)mapping;
 - (void)save;
 - (void)load;
-
-- (IBAction)mappingPressed:(id)sender;
-- (IBAction)addPressed:(id)sender;
-- (IBAction)removePressed:(id)sender;
-- (IBAction)moveUpPressed:(id)sender;
-- (IBAction)moveDownPressed:(id)sender;
-- (IBAction)importPressed:(id)sender;
-- (IBAction)exportPressed:(id)sender;
 
 @end

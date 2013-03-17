@@ -9,11 +9,9 @@
 #import "NJHIDManager.h"
 #import "NJDeviceViewController.h"
 
-@class NJDevice;
 @class NJInput;
 @class NJMappingsController;
 @class NJOutputController;
-@class NJDeviceViewController;
 
 @interface NJDeviceController : NSObject <NJDeviceViewControllerDelegate,
                                           NJHIDManagerDelegate> {

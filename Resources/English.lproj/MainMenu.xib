@@ -37,7 +37,6 @@
 			<string>NSToolbarFlexibleSpaceItem</string>
 			<string>NSToolbarItem</string>
 			<string>NSView</string>
-			<string>NSViewController</string>
 			<string>NSWindowTemplate</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -567,7 +566,7 @@ aW5nLg</string>
 													<string key="NSFrameSize">{232, 321}</string>
 													<reference key="NSSuperview" ref="698362889"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="1036252745"/>
+													<reference key="NSNextKeyView" ref="892486973"/>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -697,7 +696,7 @@ aW5nLg</string>
 									<string key="NSFrameSize">{234, 323}</string>
 									<reference key="NSSuperview" ref="734312853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="892486973"/>
+									<reference key="NSNextKeyView" ref="698362889"/>
 									<int key="NSsFlags">150034</int>
 									<reference key="NSVScroller" ref="1036252745"/>
 									<reference key="NSHScroller" ref="892486973"/>
@@ -767,7 +766,6 @@ aW5nLg</string>
 									<string key="NSFrame">{{343, 31}, {70, 18}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="868379451">
@@ -1192,7 +1190,7 @@ aW5nLg</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSCustomView" id="671181514">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="443618264">
@@ -1208,6 +1206,7 @@ aW5nLg</string>
 										<int key="NSvFlags">256</int>
 										<string key="NSFrameSize">{198, 198}</string>
 										<reference key="NSSuperview" ref="947403733"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="553414014"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -1265,6 +1264,7 @@ aW5nLg</string>
 								</array>
 								<string key="NSFrame">{{1, 1}, {198, 198}}</string>
 								<reference key="NSSuperview" ref="443618264"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="762432499"/>
 								<reference key="NSDocView" ref="762432499"/>
 								<reference key="NSBGColor" ref="834857663"/>
@@ -1275,6 +1275,7 @@ aW5nLg</string>
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{306, 1}, {15, 403}}</string>
 								<reference key="NSSuperview" ref="443618264"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="861276216"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="443618264"/>
@@ -1286,6 +1287,7 @@ aW5nLg</string>
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{-100, -100}, {366, 16}}</string>
 								<reference key="NSSuperview" ref="443618264"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="947403733"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
@@ -1296,6 +1298,7 @@ aW5nLg</string>
 						</array>
 						<string key="NSFrame">{{0, 20}, {200, 200}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="947403733"/>
 						<int key="NSsFlags">150034</int>
 						<reference key="NSVScroller" ref="968378655"/>
@@ -1311,6 +1314,7 @@ aW5nLg</string>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{66, -1}, {68, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1023366520"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
@@ -1339,6 +1343,7 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="456935010"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="867532725">
@@ -1365,6 +1370,7 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{166, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="828611353">
 							<int key="NSCellFlags">67108864</int>
@@ -1386,6 +1392,7 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{133, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1043784903"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="57592747">
@@ -1408,6 +1415,7 @@ aW5nLg</string>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{33, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="149148392"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1008023024">
@@ -1431,6 +1439,8 @@ aW5nLg</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{200, 220}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="443618264"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -1446,7 +1456,6 @@ aW5nLg</string>
 			<object class="NSCustomObject" id="801536542">
 				<string key="NSClassName">NJOutputController</string>
 			</object>
-			<object class="NSViewController" id="328152383"/>
 			<object class="NSPopover" id="586993839">
 				<nil key="NSNextResponder"/>
 				<int key="NSAppearance">0</int>
@@ -1541,6 +1550,9 @@ aW5nLg</string>
 			</object>
 			<object class="NSCustomObject" id="647344717">
 				<string key="NSClassName">NJDeviceViewController</string>
+			</object>
+			<object class="NSCustomObject" id="70919963">
+				<string key="NSClassName">NJMappingsViewController</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1643,19 +1655,19 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
+						<string key="label">dataSource</string>
 						<reference key="source" ref="762432499"/>
-						<reference key="destination" ref="468285243"/>
+						<reference key="destination" ref="70919963"/>
 					</object>
-					<int key="connectionID">517</int>
+					<int key="connectionID">1001</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">dataSource</string>
+						<string key="label">delegate</string>
 						<reference key="source" ref="762432499"/>
-						<reference key="destination" ref="468285243"/>
+						<reference key="destination" ref="70919963"/>
 					</object>
-					<int key="connectionID">518</int>
+					<int key="connectionID">1002</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1763,115 +1775,35 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">removePressed:</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="456935010"/>
-					</object>
-					<int key="connectionID">516</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">removeButton</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="456935010"/>
-					</object>
-					<int key="connectionID">519</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tableView</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="762432499"/>
-					</object>
-					<int key="connectionID">520</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">exportPressed:</string>
-						<reference key="source" ref="468285243"/>
+						<string key="label">exportMappingClicked:</string>
+						<reference key="source" ref="207406104"/>
 						<reference key="destination" ref="888617891"/>
 					</object>
-					<int key="connectionID">815</int>
+					<int key="connectionID">1015</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">importPressed:</string>
-						<reference key="source" ref="468285243"/>
+						<string key="label">importMappingClicked:</string>
+						<reference key="source" ref="207406104"/>
 						<reference key="destination" ref="187155117"/>
 					</object>
-					<int key="connectionID">816</int>
+					<int key="connectionID">1016</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">mappingPressed:</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="227597319"/>
-					</object>
-					<int key="connectionID">855</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">popover</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="586993839"/>
-					</object>
-					<int key="connectionID">856</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">popoverActivate</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="227597319"/>
-					</object>
-					<int key="connectionID">857</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addPressed:</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="861276216"/>
-					</object>
-					<int key="connectionID">515</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">moveUpPressed:</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="1023366520"/>
-					</object>
-					<int key="connectionID">899</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">moveDownPressed:</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="1043784903"/>
-					</object>
-					<int key="connectionID">900</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">moveUp</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="1023366520"/>
-					</object>
-					<int key="connectionID">901</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">moveDown</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="1043784903"/>
-					</object>
-					<int key="connectionID">902</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addPressed:</string>
-						<reference key="source" ref="468285243"/>
+						<string key="label">performClick:</string>
+						<reference key="source" ref="861276216"/>
 						<reference key="destination" ref="331930027"/>
 					</object>
-					<int key="connectionID">971</int>
+					<int key="connectionID">1012</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mvc</string>
+						<reference key="source" ref="468285243"/>
+						<reference key="destination" ref="70919963"/>
+					</object>
+					<int key="connectionID">995</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2059,27 +1991,19 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">view</string>
-						<reference key="source" ref="328152383"/>
-						<reference key="destination" ref="671181514"/>
-					</object>
-					<int key="connectionID">854</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">contentViewController</string>
 						<reference key="source" ref="586993839"/>
-						<reference key="destination" ref="328152383"/>
+						<reference key="destination" ref="70919963"/>
 					</object>
-					<int key="connectionID">852</int>
+					<int key="connectionID">996</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="586993839"/>
-						<reference key="destination" ref="468285243"/>
+						<reference key="destination" ref="70919963"/>
 					</object>
-					<int key="connectionID">853</int>
+					<int key="connectionID">1004</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2216,6 +2140,110 @@ aW5nLg</string>
 						<reference key="destination" ref="365506042"/>
 					</object>
 					<int key="connectionID">989</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="468285243"/>
+					</object>
+					<int key="connectionID">994</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="671181514"/>
+					</object>
+					<int key="connectionID">997</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">mappingTriggerClicked:</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="496378711"/>
+					</object>
+					<int key="connectionID">998</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mappingListTrigger</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="227597319"/>
+					</object>
+					<int key="connectionID">999</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mappingListPopover</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="586993839"/>
+					</object>
+					<int key="connectionID">1000</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mappingList</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="762432499"/>
+					</object>
+					<int key="connectionID">1003</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">removeClicked:</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="456935010"/>
+					</object>
+					<int key="connectionID">1005</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">removeMapping</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="456935010"/>
+					</object>
+					<int key="connectionID">1006</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addClicked:</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="861276216"/>
+					</object>
+					<int key="connectionID">1007</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveDownClicked:</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="1043784903"/>
+					</object>
+					<int key="connectionID">1008</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveUpClicked:</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="1023366520"/>
+					</object>
+					<int key="connectionID">1009</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">moveDown</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="1043784903"/>
+					</object>
+					<int key="connectionID">1010</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">moveUp</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="1023366520"/>
+					</object>
+					<int key="connectionID">1011</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2554,12 +2582,6 @@ aW5nLg</string>
 						<int key="objectID">849</int>
 						<reference key="object" ref="658903347"/>
 						<reference key="parent" ref="1043384830"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">850</int>
-						<reference key="object" ref="328152383"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Popover View Controller</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">851</int>
@@ -3052,6 +3074,11 @@ aW5nLg</string>
 						<reference key="object" ref="647344717"/>
 						<reference key="parent" ref="0"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">993</int>
+						<reference key="object" ref="70919963"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3163,7 +3190,6 @@ aW5nLg</string>
 				<string key="837.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="837.toolbarItem.selectable"/>
 				<string key="849.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="850.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="851.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="862.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="863.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3304,29 +3330,38 @@ aW5nLg</string>
 				<string key="974.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="975.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="983.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="993.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">992</int>
+			<int key="maxID">1016</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">EnjoyableApplicationDelegate</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">restoreToForeground:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">restoreToForeground:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="exportMappingClicked:">id</string>
+						<string key="importMappingClicked:">id</string>
+						<string key="restoreToForeground:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="exportMappingClicked:">
+							<string key="name">exportMappingClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="importMappingClicked:">
+							<string key="name">importMappingClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="restoreToForeground:">
 							<string key="name">restoreToForeground:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="dockMenu">NSMenu</string>
 						<string key="mappingsController">NJMappingsController</string>
@@ -3480,54 +3515,80 @@ aW5nLg</string>
 				<object class="IBPartialClassDescription">
 					<string key="className">NJMappingsController</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">mvc</string>
+						<string key="NS.object.0">NJMappingsViewController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">mvc</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">mvc</string>
+							<string key="candidateClassName">NJMappingsViewController</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NJMappingsController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NJMappingsViewController</string>
+					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addPressed:">id</string>
-						<string key="exportPressed:">id</string>
-						<string key="importPressed:">id</string>
-						<string key="mappingPressed:">id</string>
-						<string key="moveDownPressed:">id</string>
-						<string key="moveUpPressed:">id</string>
-						<string key="removePressed:">id</string>
+						<string key="addClicked:">id</string>
+						<string key="mappingTriggerClicked:">id</string>
+						<string key="moveDownClicked:">id</string>
+						<string key="moveUpClicked:">id</string>
+						<string key="removeClicked:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addPressed:">
-							<string key="name">addPressed:</string>
+						<object class="IBActionInfo" key="addClicked:">
+							<string key="name">addClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="exportPressed:">
-							<string key="name">exportPressed:</string>
+						<object class="IBActionInfo" key="mappingTriggerClicked:">
+							<string key="name">mappingTriggerClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="importPressed:">
-							<string key="name">importPressed:</string>
+						<object class="IBActionInfo" key="moveDownClicked:">
+							<string key="name">moveDownClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="mappingPressed:">
-							<string key="name">mappingPressed:</string>
+						<object class="IBActionInfo" key="moveUpClicked:">
+							<string key="name">moveUpClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="moveDownPressed:">
-							<string key="name">moveDownPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="moveUpPressed:">
-							<string key="name">moveUpPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="removePressed:">
-							<string key="name">removePressed:</string>
+						<object class="IBActionInfo" key="removeClicked:">
+							<string key="name">removeClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="delegate">id</string>
+						<string key="mappingList">NSTableView</string>
+						<string key="mappingListPopover">NSPopover</string>
+						<string key="mappingListTrigger">NSButton</string>
 						<string key="moveDown">NSButton</string>
 						<string key="moveUp">NSButton</string>
-						<string key="popover">NSPopover</string>
-						<string key="popoverActivate">NSButton</string>
-						<string key="removeButton">NSButton</string>
-						<string key="tableView">NSTableView</string>
+						<string key="removeMapping">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="delegate">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mappingList">
+							<string key="name">mappingList</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mappingListPopover">
+							<string key="name">mappingListPopover</string>
+							<string key="candidateClassName">NSPopover</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mappingListTrigger">
+							<string key="name">mappingListTrigger</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="moveDown">
 							<string key="name">moveDown</string>
 							<string key="candidateClassName">NSButton</string>
@@ -3536,26 +3597,14 @@ aW5nLg</string>
 							<string key="name">moveUp</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="popover">
-							<string key="name">popover</string>
-							<string key="candidateClassName">NSPopover</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="popoverActivate">
-							<string key="name">popoverActivate</string>
+						<object class="IBToOneOutletInfo" key="removeMapping">
+							<string key="name">removeMapping</string>
 							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="removeButton">
-							<string key="name">removeButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tableView">
-							<string key="name">tableView</string>
-							<string key="candidateClassName">NSTableView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NJMappingsController.h</string>
+						<string key="minorKey">./Classes/NJMappingsViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

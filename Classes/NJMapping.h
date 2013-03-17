@@ -15,12 +15,12 @@
 @property (nonatomic, readonly) NSUInteger count;
 
 + (id)mappingWithContentsOfURL:(NSURL *)url
-                      mappings:(NSArray *)mappings
+                      mappings:(id <NSFastEnumeration>)mappings
                          error:(NSError **)error;
 
 - (id)initWithName:(NSString *)name;
 - (id)initWithSerialization:(NSDictionary *)serialization
-                   mappings:(NSArray *)mappings;
+                   mappings:(id <NSFastEnumeration>)mappings;
 
 - (NJOutput *)objectForKeyedSubscript:(NJInput *)input;
 - (void)setObject:(NJOutput *)output forKeyedSubscript:(NJInput *)input;

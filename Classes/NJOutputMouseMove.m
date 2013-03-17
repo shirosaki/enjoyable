@@ -23,7 +23,7 @@
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                  withMappings:(NSArray *)mappings {
+                  withMappings:(id <NSFastEnumeration>)mappings {
     NJOutputMouseMove *output = [[NJOutputMouseMove alloc] init];
     output.axis = [serialization[@"axis"] intValue];
     output.speed = [serialization[@"speed"] floatValue];

@@ -34,7 +34,7 @@
 }
 
 - (id)initWithSerialization:(NSDictionary *)serialization
-                   mappings:(NSArray *)mappings {
+                   mappings:(id <NSFastEnumeration>)mappings {
     if ((self = [self initWithName:serialization[@"name"]])) {
         NSDictionary *entries = serialization[@"entries"];
         if ([entries isKindOfClass:NSDictionary.class]) {
@@ -100,7 +100,7 @@
     return NO;
 }
 
-+ (id)mappingWithContentsOfURL:(NSURL *)url mappings:(NSArray *)mappings error:(NSError **)error {
++ (id)mappingWithContentsOfURL:(NSURL *)url mappings:(id <NSFastEnumeration>)mappings error:(NSError **)error {
     NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
     [stream open];
     NSDictionary *serialization = stream && !*error

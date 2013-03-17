@@ -37,7 +37,7 @@
 }
 
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                  withMappings:(NSArray *)mappings {
+                  withMappings:(id <NSFastEnumeration>)mappings {
     // Don't crash loading old/bad mappings (but don't load them either).
     if (![serialization isKindOfClass:NSDictionary.class])
         return nil;
