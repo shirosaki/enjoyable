@@ -12,15 +12,9 @@
     // Helpers for using represented objects in menu items.
 
 - (NSMenuItem *)itemWithRepresentedObject:(id)object;
+- (NSMenuItem *)itemWithIdenticalRepresentedObject:(id)object;
     // Returns the first menu item in the receiver that has a given
     // represented object.
-
-- (void)removeItemWithRepresentedObject:(id)object;
-    // Removes the first menu item representing the given object in the
-    // receiver.
-    //
-    // After it removes the menu item, this method posts an
-    // NSMenuDidRemoveItemNotification.
 
 - (NSMenuItem *)lastItem;
     // Return the last menu item in the receiver, or nil if the menu
@@ -37,10 +31,12 @@
 @interface NSPopUpButton (RepresentedObjectAccessors)
 
 - (NSMenuItem *)itemWithRepresentedObject:(id)object;
+- (NSMenuItem *)itemWithIdenticalRepresentedObject:(id)object;
     // Returns the first item in the receiver's menu that has a given
     // represented object.
 
 - (void)selectItemWithRepresentedObject:(id)object;
+- (void)selectItemWithIdenticalRepresentedObject:(id)object;
     // Selects the first item in the receiver's menu that has a give
     // represented object.
 

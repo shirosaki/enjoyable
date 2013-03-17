@@ -243,7 +243,7 @@
         keyInput.keyCode = [(NJOutputKeyPress*)output keyCode];
     } else if ([output isKindOfClass:NJOutputMapping.class]) {
         [radioButtons selectCellAtRow:2 column:0];
-        NSMenuItem *item = [mappingPopup itemWithRepresentedObject:[(NJOutputMapping *)output mapping]];
+        NSMenuItem *item = [mappingPopup itemWithIdenticalRepresentedObject:[(NJOutputMapping *)output mapping]];
         [mappingPopup selectItem:item];
         unknownMapping.hidden = !!item;
         unknownMapping.title = [(NJOutputMapping *)output mappingName];
@@ -295,7 +295,7 @@
         item.representedObject = mapping;
         [mappingPopup.menu addItem:item];
     }
-    [mappingPopup selectItemWithRepresentedObject:current];
+    [mappingPopup selectItemWithIdenticalRepresentedObject:current];
 }
 
 - (void)mappingDidChange:(NSNotification *)note {

@@ -17,10 +17,11 @@
     return nil;
 }
 
-- (void)removeItemWithRepresentedObject:(id)object {
-    NSInteger idx = [self indexOfItemWithRepresentedObject:object];
-    if (idx != -1)
-        [self removeItemAtIndex:idx];
+- (NSMenuItem *)itemWithIdenticalRepresentedObject:(id)object {
+    for (NSMenuItem *item in self.itemArray)
+        if (item.representedObject == object)
+            return item;
+    return nil;
 }
 
 - (NSMenuItem *)lastItem {
@@ -40,8 +41,17 @@
     return [self.menu itemWithRepresentedObject:object];
 }
 
+- (NSMenuItem *)itemWithIdenticalRepresentedObject:(id)object {
+    return [self.menu itemWithIdenticalRepresentedObject:object];
+}
+
 - (void)selectItemWithRepresentedObject:(id)object {
     [self selectItemAtIndex:[self indexOfItemWithRepresentedObject:object]];
+}
+
+- (void)selectItemWithIdenticalRepresentedObject:(id)object {
+    NSMenuItem *item = [self.menu itemWithIdenticalRepresentedObject:object];
+    [self selectItem:item];
 }
 
 
