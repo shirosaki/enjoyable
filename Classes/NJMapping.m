@@ -33,15 +33,13 @@
     return self;
 }
 
-- (id)initWithSerialization:(NSDictionary *)serialization
-                   mappings:(id <NSFastEnumeration>)mappings {
+- (id)initWithSerialization:(NSDictionary *)serialization {
     if ((self = [self initWithName:serialization[@"name"]])) {
         NSDictionary *entries = serialization[@"entries"];
         if ([entries isKindOfClass:NSDictionary.class]) {
             for (id key in entries) {
                 if ([key isKindOfClass:NSString.class]) {
-                    NJOutput *output = [NJOutput outputDeserialize:entries[key]
-                                                      withMappings:mappings];
+                    NJOutput *output = [NJOutput outputDeserialize:entries[key]];
                     if (output)
                         _entries[key] = output;
                 }
@@ -100,7 +98,7 @@
     return NO;
 }
 
-+ (id)mappingWithContentsOfURL:(NSURL *)url mappings:(id <NSFastEnumeration>)mappings error:(NSError **)error {
++ (id)mappingWithContentsOfURL:(NSURL *)url error:(NSError **)error {
     NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
     [stream open];
     NSDictionary *serialization = stream && !*error
@@ -121,13 +119,18 @@
         return nil;
     }
     
-    return [[NJMapping alloc] initWithSerialization:serialization
-                                           mappings:mappings];
+    return [[NJMapping alloc] initWithSerialization:serialization];
 }
 
 - (void)mergeEntriesFrom:(NJMapping *)other {
     if (other)
         [_entries addEntriesFromDictionary:other->_entries];
 }
+
+- (void)postLoadProcess:(id <NSFastEnumeration>)allMappings {
+    for (NJOutput *o in _entries.allValues)
+        [o postLoadProcess:allMappings];
+}
+
 
 @end

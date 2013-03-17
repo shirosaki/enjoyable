@@ -19,8 +19,9 @@
 - (BOOL)update:(NJDeviceController *)jc;
 
 - (NSDictionary *)serialize;
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                   withMappings:(id <NSFastEnumeration>)mappings;
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization;
 + (NSString *)serializationCode;
+
+- (void)postLoadProcess:(id <NSFastEnumeration>)allMappings;
 
 @end

@@ -566,7 +566,7 @@ aW5nLg</string>
 													<string key="NSFrameSize">{232, 321}</string>
 													<reference key="NSSuperview" ref="698362889"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="892486973"/>
+													<reference key="NSNextKeyView" ref="1036252745"/>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -696,7 +696,7 @@ aW5nLg</string>
 									<string key="NSFrameSize">{234, 323}</string>
 									<reference key="NSSuperview" ref="734312853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="698362889"/>
+									<reference key="NSNextKeyView" ref="892486973"/>
 									<int key="NSsFlags">150034</int>
 									<reference key="NSVScroller" ref="1036252745"/>
 									<reference key="NSHScroller" ref="892486973"/>
@@ -718,6 +718,31 @@ aW5nLg</string>
 							<reference key="NSNextResponder" ref="177223957"/>
 							<int key="NSvFlags">285</int>
 							<array class="NSMutableArray" key="NSSubviews">
+								<object class="NSButton" id="529992855">
+									<reference key="NSNextResponder" ref="471332453"/>
+									<int key="NSvFlags">268</int>
+									<string key="NSFrame">{{197, 157}, {193, 21}}</string>
+									<reference key="NSSuperview" ref="471332453"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="875916470"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSButtonCell" key="NSCell" id="420588612">
+										<int key="NSCellFlags">603979776</int>
+										<int key="NSCellFlags2">33554432</int>
+										<string key="NSContents">Unknown Mapping</string>
+										<reference key="NSSupport" ref="45863614"/>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<reference key="NSControlView" ref="529992855"/>
+										<int key="NSButtonFlags">-2046672896</int>
+										<int key="NSButtonFlags2">129</int>
+										<string key="NSAlternateContents"/>
+										<string key="NSKeyEquivalent"/>
+										<int key="NSPeriodicDelay">200</int>
+										<int key="NSPeriodicInterval">25</int>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
 								<object class="NSSegmentedControl" id="875916470">
 									<reference key="NSNextResponder" ref="471332453"/>
 									<int key="NSvFlags">265</int>
@@ -766,6 +791,7 @@ aW5nLg</string>
 									<string key="NSFrame">{{343, 31}, {70, 18}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="868379451">
@@ -958,7 +984,7 @@ aW5nLg</string>
 									<string key="NSFrame">{{188, 153}, {226, 26}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="875916470"/>
+									<reference key="NSNextKeyView" ref="529992855"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="74311158">
 										<int key="NSCellFlags">-2076180416</int>
@@ -1207,7 +1233,7 @@ aW5nLg</string>
 										<string key="NSFrameSize">{198, 198}</string>
 										<reference key="NSSuperview" ref="947403733"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="553414014"/>
+										<reference key="NSNextKeyView" ref="968378655"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1299,7 +1325,7 @@ aW5nLg</string>
 						<string key="NSFrame">{{0, 20}, {200, 200}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="947403733"/>
+						<reference key="NSNextKeyView" ref="553414014"/>
 						<int key="NSsFlags">150034</int>
 						<reference key="NSVScroller" ref="968378655"/>
 						<reference key="NSHScroller" ref="553414014"/>
@@ -1371,6 +1397,7 @@ aW5nLg</string>
 						<string key="NSFrame">{{166, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="828611353">
 							<int key="NSCellFlags">67108864</int>
@@ -1972,6 +1999,14 @@ aW5nLg</string>
 						<reference key="destination" ref="20704797"/>
 					</object>
 					<int key="connectionID">949</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">unknownMapping</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="529992855"/>
+					</object>
+					<int key="connectionID">1022</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2730,6 +2765,7 @@ aW5nLg</string>
 							<reference ref="385416822"/>
 							<reference ref="792189805"/>
 							<reference ref="20704797"/>
+							<reference ref="529992855"/>
 						</array>
 						<reference key="parent" ref="177223957"/>
 					</object>
@@ -3079,12 +3115,27 @@ aW5nLg</string>
 						<reference key="object" ref="70919963"/>
 						<reference key="parent" ref="0"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1020</int>
+						<reference key="object" ref="529992855"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="420588612"/>
+						</array>
+						<reference key="parent" ref="471332453"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1021</int>
+						<reference key="object" ref="420588612"/>
+						<reference key="parent" ref="529992855"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1020.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1021.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3336,7 +3387,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1016</int>
+			<int key="maxID">1022</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3662,6 +3713,7 @@ aW5nLg</string>
 						<string key="scrollSpeedSlider">NSSlider</string>
 						<string key="smoothCheck">NSButton</string>
 						<string key="title">NSTextField</string>
+						<string key="unknownMapping">NSBUtton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="inputController">
@@ -3711,6 +3763,10 @@ aW5nLg</string>
 						<object class="IBToOneOutletInfo" key="title">
 							<string key="name">title</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="unknownMapping">
+							<string key="name">unknownMapping</string>
+							<string key="candidateClassName">NSBUtton</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

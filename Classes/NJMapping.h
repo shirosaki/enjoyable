@@ -15,12 +15,10 @@
 @property (nonatomic, readonly) NSUInteger count;
 
 + (id)mappingWithContentsOfURL:(NSURL *)url
-                      mappings:(id <NSFastEnumeration>)mappings
                          error:(NSError **)error;
 
 - (id)initWithName:(NSString *)name;
-- (id)initWithSerialization:(NSDictionary *)serialization
-                   mappings:(id <NSFastEnumeration>)mappings;
+- (id)initWithSerialization:(NSDictionary *)serialization;
 
 - (NJOutput *)objectForKeyedSubscript:(NJInput *)input;
 - (void)setObject:(NJOutput *)output forKeyedSubscript:(NJInput *)input;
@@ -28,5 +26,7 @@
 - (BOOL)writeToURL:(NSURL *)url error:(NSError **)error;
 - (BOOL)hasConflictWith:(NJMapping *)other;
 - (void)mergeEntriesFrom:(NJMapping *)other;
+
+- (void)postLoadProcess:(id <NSFastEnumeration>)allMappings;
 
 @end

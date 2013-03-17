@@ -21,8 +21,7 @@
               };
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                  withMappings:(id <NSFastEnumeration>)mappings {
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
     NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
     output.direction = [serialization[@"direction"] intValue];
     output.speed = [serialization[@"speed"] floatValue];

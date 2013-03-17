@@ -18,27 +18,39 @@
 }
 
 - (NSDictionary *)serialize {
-    return _mapping
-        ? @{ @"type": self.class.serializationCode, @"name": _mapping.name }
+    NSString *name = _mapping ? _mapping.name : self.mappingName;
+    return name
+        ? @{ @"type": self.class.serializationCode, @"name": name }
         : nil;
 }
 
-+ (NJOutputMapping *)outputDeserialize:(NSDictionary *)serialization
-                        withMappings:(id <NSFastEnumeration>)mappings {
++ (NJOutputMapping *)outputDeserialize:(NSDictionary *)serialization {
     NSString *name = serialization[@"name"];
     NJOutputMapping *output = [[NJOutputMapping alloc] init];
-    for (NJMapping *mapping in mappings) {
-        if ([mapping.name isEqualToString:name]) {
-            output.mapping = mapping;
-            return output;
-        }
-    }
-    return nil;
+    output.mappingName = name;
+    return name ? output : nil;
 }
 
 - (void)trigger {
     EnjoyableApplicationDelegate *ctrl = (EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate;
-    [ctrl.mappingsController activateMapping:_mapping];
+    if (_mapping) {
+        [ctrl.mappingsController activateMapping:_mapping];
+        self.mappingName = _mapping.name;
+    } else {
+        // TODO: Show an error message? Unobtrusively since something
+        // is probably running.
+    }
+}
+
+- (void)postLoadProcess:(id <NSFastEnumeration>)allMappings {
+    if (!self.mapping) {
+        for (NJMapping *mapping in allMappings) {
+            if ([mapping.name isEqualToString:self.mappingName]) {
+                self.mapping = mapping;
+                break;
+            }
+        }
+    }
 }
 
 @end

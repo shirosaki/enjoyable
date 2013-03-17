@@ -14,6 +14,7 @@
 		EE3D897C16EA806E00596D1F /* Status Menu Icon Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */; };
 		EE3D897F16EA817E00596D1F /* Status Menu Icon Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */; };
 		EE3D898016EA817E00596D1F /* Status Menu Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897E16EA817E00596D1F /* Status Menu Icon.png */; };
+		EE48263016F6680D001B0C64 /* NSProcessInfo+Debugging.m in Sources */ = {isa = PBXBuildFile; fileRef = EE48262F16F6680D001B0C64 /* NSProcessInfo+Debugging.m */; };
 		EE52145C16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */; };
 		EE52145F16F404D500E3C574 /* NJDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE52145E16F404D500E3C574 /* NJDeviceViewController.m */; };
 		EE6A122E16E8F46300EDBD32 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = EE6A122D16E8F46300EDBD32 /* Icon.icns */; };
@@ -81,6 +82,8 @@
 		EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled@2x.png"; path = "Resources/Status Menu Icon Disabled@2x.png"; sourceTree = "<group>"; };
 		EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled.png"; path = "Resources/Status Menu Icon Disabled.png"; sourceTree = "<group>"; };
 		EE3D897E16EA817E00596D1F /* Status Menu Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon.png"; path = "Resources/Status Menu Icon.png"; sourceTree = "<group>"; };
+		EE48262E16F6680D001B0C64 /* NSProcessInfo+Debugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSProcessInfo+Debugging.h"; path = "Categories/NSProcessInfo+Debugging.h"; sourceTree = "<group>"; };
+		EE48262F16F6680D001B0C64 /* NSProcessInfo+Debugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSProcessInfo+Debugging.m"; path = "Categories/NSProcessInfo+Debugging.m"; sourceTree = "<group>"; };
 		EE52145A16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSOutlineView+ItemAccessors.h"; path = "Categories/NSOutlineView+ItemAccessors.h"; sourceTree = "<group>"; };
 		EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSOutlineView+ItemAccessors.m"; path = "Categories/NSOutlineView+ItemAccessors.m"; sourceTree = "<group>"; };
 		EE52145D16F404D500E3C574 /* NJDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJDeviceViewController.h; path = Classes/NJDeviceViewController.h; sourceTree = "<group>"; };
@@ -317,6 +320,8 @@
 				EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */,
 				EE52145A16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.h */,
 				EE52145B16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m */,
+				EE48262E16F6680D001B0C64 /* NSProcessInfo+Debugging.h */,
+				EE48262F16F6680D001B0C64 /* NSProcessInfo+Debugging.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -460,6 +465,7 @@
 				EE52145C16F3E8BD00E3C574 /* NSOutlineView+ItemAccessors.m in Sources */,
 				EE52145F16F404D500E3C574 /* NJDeviceViewController.m in Sources */,
 				EE83ACEC16F545EA00083E94 /* NJMappingsViewController.m in Sources */,
+				EE48263016F6680D001B0C64 /* NSProcessInfo+Debugging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

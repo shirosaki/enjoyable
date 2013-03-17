@@ -42,6 +42,7 @@
 }
 
 - (void)mappingsSet {
+    [self postLoadProcess];
     [NSNotificationCenter.defaultCenter
         postNotificationName:NJEventMappingListChanged
                       object:self
@@ -111,25 +112,21 @@
     [NSUserDefaults.standardUserDefaults setObject:ary forKey:@"mappings"];
 }
 
+- (void)postLoadProcess {
+    for (NJMapping *mapping in self)
+        [mapping postLoadProcess:self];
+}
+
 - (void)load {
     NSUInteger selected = [NSUserDefaults.standardUserDefaults integerForKey:@"selected"];
     NSArray *storedMappings = [NSUserDefaults.standardUserDefaults arrayForKey:@"mappings"];
     NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
-    // Requires two passes to deal with inter-mapping references. First make
-    // an empty mapping for each serialized mapping. Then, deserialize the
-    // data pointing to the empty mappings. Then merge that data back into
-    // its equivalent empty one, which is the one we finally use.
-    for (NSDictionary *storedMapping in storedMappings) {
-        NJMapping *mapping = [[NJMapping alloc] initWithName:storedMapping[@"name"]];
+    for (unsigned i = 0; i < storedMappings.count; ++i) {
+        NJMapping *mapping = [[NJMapping alloc] initWithSerialization:storedMappings[i]];
         [newMappings addObject:mapping];
     }
-
-    for (unsigned i = 0; i < storedMappings.count; ++i) {
-        NJMapping *realMapping = [[NJMapping alloc] initWithSerialization:storedMappings[i]
-                                                                 mappings:newMappings];
-        [newMappings[i] mergeEntriesFrom:realMapping];
-    }
+    
     
     if (newMappings.count) {
         _mappings = newMappings;
@@ -256,7 +253,6 @@
                        atIndex:(NSInteger)index
                          error:(NSError **)error {
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
-                                                    mappings:_mappings
                                                        error:error];
     [self addOrMergeMapping:mapping atIndex:index];
     return !!mapping;

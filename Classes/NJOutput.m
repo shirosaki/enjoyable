@@ -36,8 +36,7 @@
     return [[self serialize] hash];
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                  withMappings:(id <NSFastEnumeration>)mappings {
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
     // Don't crash loading old/bad mappings (but don't load them either).
     if (![serialization isKindOfClass:NSDictionary.class])
         return nil;
@@ -49,7 +48,7 @@
                         NJOutputMouseScroll.class
          ]) {
         if ([type isEqualToString:cls.serializationCode])
-            return [cls outputDeserialize:serialization withMappings:mappings];
+            return [cls outputDeserialize:serialization];
     }
     
     return nil;
@@ -83,5 +82,7 @@
     }
 }
 
+- (void)postLoadProcess:(id <NSFastEnumeration>)allMappings {
+}
 
 @end

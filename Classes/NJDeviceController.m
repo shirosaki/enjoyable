@@ -221,7 +221,7 @@
 }
 
 - (void)stopHidIfDisabled:(NSNotification *)application {
-    if (!self.simulatingEvents)
+    if (!self.simulatingEvents && !NSProcessInfo.processInfo.isBeingDebugged)
         [self stopHid];
 }
 

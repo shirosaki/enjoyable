@@ -36,8 +36,7 @@
     return @{ @"type": self.class.serializationCode, @"button": @(_button) };
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization
-                  withMappings:(id <NSFastEnumeration>)mappings {
++ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
     NJOutputMouseButton *output = [[NJOutputMouseButton alloc] init];
     output.button = [serialization[@"button"] intValue];
     return output;

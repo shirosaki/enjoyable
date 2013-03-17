@@ -26,6 +26,7 @@
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NJDeviceController *inputController;
     IBOutlet NSButton *smoothCheck;
+    IBOutlet NSButton *unknownMapping;
 }
 
 @property (assign) BOOL enabled;

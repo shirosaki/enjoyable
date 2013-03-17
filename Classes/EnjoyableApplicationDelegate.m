@@ -138,7 +138,6 @@
     NSError *error;
     NSURL *URL = [NSURL fileURLWithPath:filename];
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:URL
-                                                    mappings:self.mappingsController
                                                        error:&error];
     if (mapping) {
         [self.mappingsController addOrMergeMapping:mapping];
@@ -213,7 +212,6 @@
                       [panel close];
                       NSError *error;
                       NJMapping *mapping = [NJMapping mappingWithContentsOfURL:panel.URL
-                                                                      mappings:self.mappingsController
                                                                          error:&error];
                       if (mapping) {
                           [self.mappingsController addOrMergeMapping:mapping];

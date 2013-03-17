@@ -13,5 +13,6 @@
 @interface NJOutputMapping : NJOutput
 
 @property (nonatomic, weak) NJMapping *mapping;
+@property (nonatomic, copy) NSString *mappingName;
 
 @end

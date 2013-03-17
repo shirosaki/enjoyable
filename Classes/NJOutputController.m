@@ -53,8 +53,8 @@
     if (row != 2) {
         [mappingPopup selectItemAtIndex:-1];
         [mappingPopup resignIfFirstResponder];
-    } else if (!mappingPopup.selectedItem)
-        [mappingPopup selectItemAtIndex:0];
+        unknownMapping.hidden = YES;
+    }
     
     if (row != 3) {
         mouseDirSelect.selectedSegment = -1;
@@ -108,6 +108,7 @@
 - (void)mappingChosen:(id)sender {
     [radioButtons selectCellAtRow:2 column:0];
     [mappingPopup.window makeFirstResponder:mappingPopup];
+    unknownMapping.hidden = YES;
     [self commit];
 }
 
@@ -220,6 +221,8 @@
     scrollDirSelect.enabled = enabled;
     smoothCheck.enabled = enabled;
     scrollSpeedSlider.enabled = enabled && smoothCheck.state;
+    if (!enabled)
+        unknownMapping.hidden = YES;
 }
 
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {
@@ -242,8 +245,8 @@
         [radioButtons selectCellAtRow:2 column:0];
         NSMenuItem *item = [mappingPopup itemWithRepresentedObject:[(NJOutputMapping *)output mapping]];
         [mappingPopup selectItem:item];
-        if (!item)
-            [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
+        unknownMapping.hidden = !!item;
+        unknownMapping.title = [(NJOutputMapping *)output mappingName];
     }
     else if ([output isKindOfClass:NJOutputMouseMove.class]) {
         [radioButtons selectCellAtRow:3 column:0];
