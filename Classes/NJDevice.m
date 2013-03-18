@@ -72,6 +72,7 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id parent) {
         _vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
         _productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
         self.children = InputsForElement(dev, self);
+        self.index = 1;
     }
     return self;
 }

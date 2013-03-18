@@ -10,7 +10,7 @@
 
 @interface NJInput : NJInputPathElement
 
-#define NJINPUT_DID(name, index) [[NSString alloc] initWithFormat:@"%s %d", name, index]
+#define NJINPUT_EID(name, index) [[NSString alloc] initWithFormat:@"%s %d", name, index]
 #define NJINPUT_NAME(name, index) [[NSString alloc] initWithFormat:name, index]
 
 - (id)initWithName:(NSString *)name

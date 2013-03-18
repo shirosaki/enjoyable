@@ -27,6 +27,9 @@
 - (void)hidStarted;
 - (void)hidStopped;
 
+- (void)beginUpdates;
+- (void)endUpdates;
+
 - (void)expandAndSelectItem:(NJInputPathElement *)item;
 
 - (NJInputPathElement *)selectedHandler;

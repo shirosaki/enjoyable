@@ -117,22 +117,27 @@
     }
 }
 
-- (void)hidManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
-    NJDevice *match = [[NJDevice alloc] initWithDevice:device];
-    match.index = 1;
+- (void)addDevice:(NJDevice *)device {
     BOOL available;
     do {
         available = YES;
         for (NJDevice *used in _devices) {
-            if ([used isEqual:match]) {
-                match.index += 1;
+            if ([used isEqual:device]) {
+                device.index += 1;
                 available = NO;
             }
         }
     } while (!available);
+    
+    [_devices addObject:device];
+}
 
-    [_devices addObject:match];
+- (void)hidManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
+    NJDevice *match = [[NJDevice alloc] initWithDevice:device];
+    [devicesViewController beginUpdates];
+    [self addDevice:match];
     [devicesViewController addedDevice:match atIndex:_devices.count - 1];
+    [devicesViewController endUpdates];
 }
 
 - (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device {
@@ -147,8 +152,10 @@
     IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
     if (match) {
         NSInteger idx = [_devices indexOfObjectIdenticalTo:match];
+        [devicesViewController beginUpdates];
         [_devices removeObjectAtIndex:idx];
         [devicesViewController removedDevice:match atIndex:idx];
+        [devicesViewController endUpdates];
     }
 }
 

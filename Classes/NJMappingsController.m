@@ -11,8 +11,6 @@
 #import "NJOutput.h"
 #import "NJEvents.h"
 
-#define PB_ROW @"com.yukkurigames.Enjoyable.MappingRow"
-
 @implementation NJMappingsController {
     NSMutableArray *_mappings;
     NJMapping *_manualMapping;
@@ -95,7 +93,7 @@
     NSLog(@"Switching to mapping %@.", mapping.name);
     _manualMapping = mapping;
     _currentMapping = mapping;
-    NSUInteger idx = [_mappings indexOfObjectIdenticalTo:_currentMapping];
+    NSUInteger idx = [self indexOfMapping:_currentMapping];
     [NSNotificationCenter.defaultCenter
          postNotificationName:NJEventMappingChanged
                        object:self
@@ -121,11 +119,9 @@
     NSArray *storedMappings = [NSUserDefaults.standardUserDefaults arrayForKey:@"mappings"];
     NSMutableArray* newMappings = [[NSMutableArray alloc] initWithCapacity:storedMappings.count];
 
-    for (unsigned i = 0; i < storedMappings.count; ++i) {
-        NJMapping *mapping = [[NJMapping alloc] initWithSerialization:storedMappings[i]];
-        [newMappings addObject:mapping];
-    }
-    
+    for (NSDictionary *serialization in storedMappings)
+        [newMappings addObject:
+         [[NJMapping alloc] initWithSerialization:serialization]];
     
     if (newMappings.count) {
         _mappings = newMappings;
@@ -154,6 +150,7 @@
 
 - (void)renameMapping:(NJMapping *)mapping to:(NSString *)name {
     mapping.name = name;
+    [self mappingsChanged];
     if (mapping == _currentMapping) {
         // FIXME: Hack to trigger updates in the rest of the UI.
         _currentMapping = nil;
@@ -161,7 +158,6 @@
         [self activateMapping:mapping];
         _manualMapping = manual;        
     }
-    [self mappingsChanged];
 }
 
 - (void)addMapping:(NJMapping *)mapping {

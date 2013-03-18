@@ -16,7 +16,7 @@
                parent:(NJInputPathElement *)parent
 {
     if ((self = [super initWithName:NJINPUT_NAME(NSLocalizedString(@"button %d", @"button name"), index)
-                                eid:NJINPUT_DID("Button", index)
+                                eid:NJINPUT_EID("Button", index)
                             element:element
                              parent:parent])) {
         _max = IOHIDElementGetLogicalMax(element);

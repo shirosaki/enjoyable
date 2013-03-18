@@ -36,6 +36,14 @@
     [self expandRecursive:[self.delegate deviceViewController:self elementForUID:uid]];
 }
 
+- (void)beginUpdates {
+    [self.inputsTree beginUpdates];
+}
+
+- (void)endUpdates {
+    [self.inputsTree endUpdates];
+}
+
 - (void)reexpandAll {
     for (NSString *uid in [_expanded copy])
         [self expandRecursiveByUID:uid];
@@ -47,22 +55,18 @@
 }
 
 - (void)addedDevice:(NJDevice *)device atIndex:(NSUInteger)idx {
-    [self.inputsTree beginUpdates];
     [self.inputsTree insertItemsAtIndexes:[[NSIndexSet alloc] initWithIndex:idx]
                                   inParent:nil
                              withAnimation:NSTableViewAnimationEffectFade];
     [self reexpandAll];
-    [self.inputsTree endUpdates];
     self.noDevicesNotice.hidden = YES;
 }
 
 - (void)removedDevice:(NJDevice *)device atIndex:(NSUInteger)idx {
     BOOL anyDevices = !![self.delegate numberOfDevicesInDeviceList:self];
-    [self.inputsTree beginUpdates];
     [self.inputsTree removeItemsAtIndexes:[[NSIndexSet alloc] initWithIndex:idx]
                                   inParent:nil
                              withAnimation:NSTableViewAnimationEffectFade];
-    [self.inputsTree endUpdates];
     self.noDevicesNotice.hidden = anyDevices || !self.hidStoppedNotice.isHidden;
 }
 

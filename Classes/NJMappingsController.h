@@ -7,7 +7,6 @@
 //
 
 @class NJMapping;
-@class NJOutputController;
 
 @interface NJMappingsController : NSObject <NSFastEnumeration>
 
@@ -25,10 +24,9 @@
 - (void)moveMoveMappingFromIndex:(NSInteger)fromIdx toIndex:(NSInteger)toIdx;
 - (void)renameMapping:(NJMapping *)mapping to:(NSString *)name;
 
-- (void)mappingsChanged;
-
 - (void)activateMapping:(NJMapping *)mapping;
 - (void)activateMappingForProcess:(NSRunningApplication *)app;
+
 - (void)save;
 - (void)load;
 

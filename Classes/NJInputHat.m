@@ -36,7 +36,7 @@ static BOOL active_fourway[20] = {
                parent:(NJInputPathElement *)parent
 {
     if ((self = [super initWithName:NJINPUT_NAME(NSLocalizedString(@"hat switch %d", @"hat switch name"), index)
-                                eid:NJINPUT_DID("Hat Switch", index)
+                                eid:NJINPUT_EID("Hat Switch", index)
                             element:element
                                parent:parent])) {
         self.children = @[[[NJInput alloc] initWithName:NSLocalizedString(@"hat up", @"hat switch up state")

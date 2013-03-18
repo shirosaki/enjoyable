@@ -151,7 +151,11 @@
     } else if (self.mappingsController[mapping.name]) {
         [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
     } else if (mapping) {
+        [self.mvc beginUpdates];
         [self.mappingsController addMapping:mapping];
+        [self.mvc addedMappingAtIndex:self.mappingsController.count - 1 startEditing:NO];
+        [self.mvc endUpdates];
+        [self.mappingsController activateMapping:mapping];
     } else {
         [window presentError:error
               modalForWindow:window
@@ -360,7 +364,10 @@
     } else if (self.mappingsController[mapping.name]) {
         [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
     } else if (mapping) {
+        [self.mvc beginUpdates];
+        [self.mvc addedMappingAtIndex:index startEditing:NO];
         [self.mappingsController insertMapping:mapping atIndex:index];
+        [self.mvc endUpdates];
     }
     return !!mapping;
 }
