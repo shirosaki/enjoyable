@@ -1711,22 +1711,6 @@ aW5nLg</string>
 					<int key="connectionID">826</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">connectDevicePrompt</string>
-						<reference key="source" ref="1007832501"/>
-						<reference key="destination" ref="12898323"/>
-					</object>
-					<int key="connectionID">915</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">hidSleepingPrompt</string>
-						<reference key="source" ref="1007832501"/>
-						<reference key="destination" ref="918286878"/>
-					</object>
-					<int key="connectionID">976</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">simulatingEventsChanged:</string>
 						<reference key="source" ref="1007832501"/>
@@ -1821,14 +1805,6 @@ aW5nLg</string>
 						<reference key="destination" ref="331930027"/>
 					</object>
 					<int key="connectionID">1012</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">mvc</string>
-						<reference key="source" ref="468285243"/>
-						<reference key="destination" ref="70919963"/>
-					</object>
-					<int key="connectionID">995</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
