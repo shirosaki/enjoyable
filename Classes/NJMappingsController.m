@@ -138,6 +138,47 @@
     }
 }
 
+- (NSInteger)indexOfMapping:(NJMapping *)mapping {
+    return [_mappings indexOfObjectIdenticalTo:mapping];
+}
+
+- (void)mergeMapping:(NJMapping *)mapping intoMapping:(NJMapping *)existing {
+    [existing mergeEntriesFrom:mapping];
+    [self mappingsChanged];
+    if (existing == _currentMapping) {
+        // FIXME: Hack to trigger updates when renaming.
+        _currentMapping = nil;
+        NJMapping *manual = _manualMapping;
+        [self activateMapping:existing];
+        _manualMapping = manual;
+    }
+}
+
+- (void)addMapping:(NJMapping *)mapping {
+    [self insertMapping:mapping atIndex:_mappings.count];
+}
+
+- (void)insertMapping:(NJMapping *)mapping atIndex:(NSInteger)idx {
+    [_mappings insertObject:mapping atIndex:idx];
+    [self mappingsChanged];    
+}
+
+- (void)removeMappingAtIndex:(NSInteger)idx {
+    NSInteger currentIdx = [self indexOfMapping:_currentMapping];
+    [_mappings removeObjectAtIndex:idx];
+    [self activateMapping:self[MIN(currentIdx, _mappings.count - 1)]];
+    [self mappingsChanged];
+}
+
+- (void)moveMoveMappingFromIndex:(NSInteger)fromIdx toIndex:(NSInteger)toIdx {
+    [_mappings moveObjectAtIndex:fromIdx toIndex:toIdx];
+    [self mappingsChanged];
+}
+
+- (NSUInteger)count {
+    return _mappings.count;
+}
+
 - (void)mappingConflictDidResolve:(NSAlert *)alert
                        returnCode:(NSInteger)returnCode
                       contextInfo:(void *)contextInfo {
@@ -147,70 +188,46 @@
     [alert.window orderOut:nil];
     switch (returnCode) {
         case NSAlertFirstButtonReturn: // Merge
-            [oldMapping mergeEntriesFrom:newMapping];
-            _currentMapping = nil;
+            [self mergeMapping:newMapping intoMapping:oldMapping];
             [self activateMapping:oldMapping];
-            [self mappingsChanged];
             break;
         case NSAlertThirdButtonReturn: // New Mapping
             [self.mvc.mappingList beginUpdates];
-            [_mappings addObject:newMapping];
+            [self addMapping:newMapping];
             [self.mvc addedMappingAtIndex:_mappings.count - 1 startEditing:YES];
             [self.mvc.mappingList endUpdates];
             [self activateMapping:newMapping];
-            [self mappingsChanged];
             break;
         default: // Cancel, other.
             break;
     }
 }
 
-- (void)addOrMergeMapping:(NJMapping *)mapping {
-    [self addOrMergeMapping:mapping atIndex:-1];
-}
-
-- (void)addOrMergeMapping:(NJMapping *)mapping atIndex:(NSInteger)idx {
+- (void)promptForMapping:(NJMapping *)mapping atIndex:(NSInteger)idx {
     NSWindow *window = NSApplication.sharedApplication.keyWindow;
-    if (mapping) {
-        NJMapping *mergeInto = self[mapping.name];
-        if ([mergeInto hasConflictWith:mapping]) {
-            NSAlert *conflictAlert = [[NSAlert alloc] init];
-            conflictAlert.messageText = NSLocalizedString(@"import conflict prompt", @"Title of import conflict alert");
-            conflictAlert.informativeText =
-            [NSString stringWithFormat:NSLocalizedString(@"import conflict in %@", @"Explanation of import conflict"),
-                                       mapping.name];
-            [conflictAlert addButtonWithTitle:NSLocalizedString(@"import and merge", @"button to merge imported mappings")];
-            [conflictAlert addButtonWithTitle:NSLocalizedString(@"cancel import", @"button to cancel import")];
-            [conflictAlert addButtonWithTitle:NSLocalizedString(@"import new mapping", @"button to import as new mapping")];
-            [conflictAlert beginSheetModalForWindow:window
-                                      modalDelegate:self
-                                     didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
-                                        contextInfo:(void *)CFBridgingRetain(@{ @"old mapping": mergeInto,
-                                                                                @"new mapping": mapping })];
-        } else if (mergeInto) {
-            [mergeInto mergeEntriesFrom:mapping];
-            [self activateMapping:mergeInto];
-            [self mappingsChanged];
-        } else {
-            if (idx == -1)
-                idx = _mappings.count;
-            [self.mvc.mappingList beginUpdates];
-            [_mappings insertObject:mapping atIndex:idx];
-            [self.mvc addedMappingAtIndex:idx startEditing:NO];
-            [self.mvc.mappingList endUpdates];
-            [self activateMapping:mapping];
-            [self mappingsChanged];
-        }
-    }
+    NJMapping *mergeInto = self[mapping.name];
+    NSAlert *conflictAlert = [[NSAlert alloc] init];
+    conflictAlert.messageText = NSLocalizedString(@"import conflict prompt", @"Title of import conflict alert");
+    conflictAlert.informativeText =
+    [NSString stringWithFormat:NSLocalizedString(@"import conflict in %@", @"Explanation of import conflict"),
+                               mapping.name];
+    [conflictAlert addButtonWithTitle:NSLocalizedString(@"import and merge", @"button to merge imported mappings")];
+    [conflictAlert addButtonWithTitle:NSLocalizedString(@"cancel import", @"button to cancel import")];
+    [conflictAlert addButtonWithTitle:NSLocalizedString(@"import new mapping", @"button to import as new mapping")];
+    [conflictAlert beginSheetModalForWindow:window
+                              modalDelegate:self
+                             didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
+                                contextInfo:(void *)CFBridgingRetain(@{ @"old mapping": mergeInto,
+                                                                        @"new mapping": mapping })];
 }
 
-- (NSInteger)numberOfMappings:(NJMappingsViewController *)dvc {
-    return _mappings.count;
+- (NSInteger)numberOfMappings:(NJMappingsViewController *)mvc {
+    return self.count;
 }
 
-- (NJMapping *)mappingsViewController:(NJMappingsViewController *)dvc
+- (NJMapping *)mappingsViewController:(NJMappingsViewController *)mvc
                       mappingForIndex:(NSUInteger)idx {
-    return _mappings[idx];
+    return self[idx];
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
@@ -221,14 +238,16 @@
 - (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
        canMoveMappingFromIndex:(NSInteger)fromIdx
                        toIndex:(NSInteger)toIdx {
-    return fromIdx != toIdx && fromIdx != 0 && toIdx != 0 && toIdx < (NSInteger)_mappings.count;
+    return fromIdx != toIdx && fromIdx != 0 && toIdx != 0;
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
           moveMappingFromIndex:(NSInteger)fromIdx
                        toIndex:(NSInteger)toIdx {
-    [_mappings moveObjectAtIndex:fromIdx toIndex:toIdx];
-    [self mappingsChanged];
+    [mvc.mappingList beginUpdates];
+    [mvc.mappingList moveRowAtIndex:fromIdx toIndex:toIdx];
+    [self moveMoveMappingFromIndex:fromIdx toIndex:toIdx];
+    [mvc.mappingList endUpdates];
 }
 
 - (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
@@ -238,14 +257,10 @@
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
           removeMappingAtIndex:(NSInteger)idx {
-    NJMapping *old = self[idx];
-    [self.mvc.mappingList beginUpdates];
-    [_mappings removeObjectAtIndex:idx];
-    [self.mvc removedMappingAtIndex:idx];
-    [self.mvc.mappingList endUpdates];
-    if (old == _currentMapping)
-        [self activateMapping:self[MIN(idx, _mappings.count - 1)]];
-    [self mappingsChanged];
+    [mvc.mappingList beginUpdates];
+    [mvc removedMappingAtIndex:idx];
+    [self removeMappingAtIndex:idx];
+    [mvc.mappingList endUpdates];
 }
 
 - (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
@@ -254,18 +269,23 @@
                          error:(NSError **)error {
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
                                                        error:error];
-    [self addOrMergeMapping:mapping atIndex:index];
+    if ([self[mapping.name] hasConflictWith:mapping]) {
+        [self promptForMapping:mapping atIndex:index];
+    } else if (self[mapping.name]) {
+        [self[mapping.name] mergeEntriesFrom:mapping];
+    } else if (mapping) {
+        [self insertMapping:mapping atIndex:index];
+    }
     return !!mapping;
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
                     addMapping:(NJMapping *)mapping {
-    [self.mvc.mappingList beginUpdates];
-    [_mappings addObject:mapping];
-    [self.mvc addedMappingAtIndex:_mappings.count - 1 startEditing:YES];
-    [self.mvc.mappingList endUpdates];
+    [mvc.mappingList beginUpdates];
+    [mvc addedMappingAtIndex:_mappings.count startEditing:YES];
+    [self addMapping:mapping];
+    [mvc.mappingList endUpdates];
     [self activateMapping:mapping];
-    [self mappingsChanged];
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc

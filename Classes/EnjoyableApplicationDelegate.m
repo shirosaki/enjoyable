@@ -139,17 +139,20 @@
     NSURL *URL = [NSURL fileURLWithPath:filename];
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:URL
                                                        error:&error];
-    if (mapping) {
-        [self.mappingsController addOrMergeMapping:mapping];
-        return YES;
+    if ([self.mappingsController[mapping.name] hasConflictWith:mapping]) {
+        [self.mappingsController promptForMapping:mapping atIndex:self.mappingsController.count];
+    } else if (self.mappingsController[mapping.name]) {
+        [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
+    } else if (mapping) {
+        [self.mappingsController addMapping:mapping];
     } else {
         [window presentError:error
               modalForWindow:window
                     delegate:nil
           didPresentSelector:nil
                  contextInfo:nil];
-        return NO;
     }
+    return !!mapping;
 }
 
 - (void)mappingWasChosen:(NJMapping *)mapping {
@@ -213,8 +216,12 @@
                       NSError *error;
                       NJMapping *mapping = [NJMapping mappingWithContentsOfURL:panel.URL
                                                                          error:&error];
-                      if (mapping) {
-                          [self.mappingsController addOrMergeMapping:mapping];
+                      if ([self.mappingsController[mapping.name] hasConflictWith:mapping]) {
+                          [self.mappingsController promptForMapping:mapping atIndex:self.mappingsController.count];
+                      } else if (self.mappingsController[mapping.name]) {
+                          [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
+                      } else if (mapping) {
+                          [self.mappingsController addMapping:mapping];
                       } else {
                           [window presentError:error
                                 modalForWindow:window

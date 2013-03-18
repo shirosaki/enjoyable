@@ -50,7 +50,7 @@
     [self.inputsTree beginUpdates];
     [self.inputsTree insertItemsAtIndexes:[[NSIndexSet alloc] initWithIndex:idx]
                                   inParent:nil
-                             withAnimation:NSTableViewAnimationSlideLeft];
+                             withAnimation:NSTableViewAnimationEffectFade];
     [self reexpandAll];
     [self.inputsTree endUpdates];
     self.noDevicesNotice.hidden = YES;
@@ -61,7 +61,7 @@
     [self.inputsTree beginUpdates];
     [self.inputsTree removeItemsAtIndexes:[[NSIndexSet alloc] initWithIndex:idx]
                                   inParent:nil
-                             withAnimation:NSTableViewAnimationSlideLeft];
+                             withAnimation:NSTableViewAnimationEffectFade];
     [self.inputsTree endUpdates];
     self.noDevicesNotice.hidden = anyDevices || !self.hidStoppedNotice.isHidden;
 }

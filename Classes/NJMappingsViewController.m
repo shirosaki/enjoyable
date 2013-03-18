@@ -36,9 +36,6 @@
     [self.delegate mappingsViewController:self
                      moveMappingFromIndex:fromIdx
                                   toIndex:toIdx];
-    [self.mappingList beginUpdates];
-    [self.mappingList moveRowAtIndex:fromIdx toIndex:toIdx];
-    [self.mappingList endUpdates];
     [self.mappingList scrollRowToVisible:toIdx];
     [self.mappingList selectRowIndexes:[[NSIndexSet alloc] initWithIndex:toIdx]
                   byExtendingSelection:NO];
@@ -50,9 +47,6 @@
     [self.delegate mappingsViewController:self
                      moveMappingFromIndex:fromIdx
                                   toIndex:toIdx];
-    [self.mappingList beginUpdates];
-    [self.mappingList moveRowAtIndex:fromIdx toIndex:toIdx];
-    [self.mappingList endUpdates];
     [self.mappingList scrollRowToVisible:toIdx];
     [self.mappingList selectRowIndexes:[[NSIndexSet alloc] initWithIndex:toIdx]
                   byExtendingSelection:NO];
@@ -75,10 +69,8 @@
 
 - (void)addedMappingAtIndex:(NSInteger)index startEditing:(BOOL)startEditing {
     [self.mappingList abortEditing];
-    [self.mappingList beginUpdates];
     [self.mappingList insertRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:index]
                             withAnimation:startEditing ? 0 : NSTableViewAnimationSlideLeft];
-    [self.mappingList endUpdates];
     if (startEditing) {
         [self.mappingListTrigger performClick:self];
         [self.mappingList editColumn:0 row:index withEvent:nil select:YES];
@@ -88,10 +80,8 @@
 
 - (void)removedMappingAtIndex:(NSInteger)index {
     [self.mappingList abortEditing];
-    [self.mappingList beginUpdates];
     [self.mappingList removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:index]
                             withAnimation:NSTableViewAnimationEffectFade];
-    [self.mappingList endUpdates];
 }
 
 - (void)changedActiveMappingToIndex:(NSInteger)index {
@@ -145,9 +135,6 @@
         NSString *value = [pboard stringForType:PB_ROW];
         NSInteger srcRow = [value intValue];
         row -= srcRow < row;
-        [self.mappingList beginUpdates];
-        [self.mappingList moveRowAtIndex:srcRow toIndex:row];
-        [self.mappingList endUpdates];
         [self.delegate mappingsViewController:self
                          moveMappingFromIndex:srcRow
                                       toIndex:row];
