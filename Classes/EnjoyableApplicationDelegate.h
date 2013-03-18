@@ -9,8 +9,10 @@
 @class NJMappingsController;
 
 #import "NJMappingMenuController.h"
+#import "NJMappingsViewController.h"
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
+                                                    NJMappingsViewControllerDelegate,
                                                     NJMappingMenuDelegate,
                                                     NSWindowDelegate> {
     IBOutlet NSMenu *dockMenu;
@@ -19,6 +21,7 @@
 }
 
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
+@property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 
 - (IBAction)restoreToForeground:(id)sender;
 - (IBAction)importMappingClicked:(id)sender;

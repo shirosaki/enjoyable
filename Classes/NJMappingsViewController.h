@@ -34,6 +34,9 @@
 - (void)changedActiveMappingToIndex:(NSInteger)index;
 
 - (void)reloadData;
+- (void)beginUpdates;
+- (void)endUpdates;
+
 
 @end
 
@@ -45,7 +48,8 @@
 
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
-          editedMappingAtIndex:(NSInteger)index;
+          renameMappingAtIndex:(NSInteger)index
+                        toName:(NSString *)name;
 
 - (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
        canMoveMappingFromIndex:(NSInteger)fromIdx

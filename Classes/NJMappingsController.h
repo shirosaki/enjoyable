@@ -9,15 +9,10 @@
 @class NJMapping;
 @class NJOutputController;
 
-#import "NJMappingsViewController.h"
-
-@interface NJMappingsController : NSObject <NSFastEnumeration,
-                                            NJMappingsViewControllerDelegate>
+@interface NJMappingsController : NSObject <NSFastEnumeration>
 
 @property (nonatomic, readonly) NJMapping *currentMapping;
 @property (nonatomic, readonly) NSUInteger count;
-
-@property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 
 - (NJMapping *)objectForKeyedSubscript:(NSString *)name;
 - (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx;
@@ -28,11 +23,9 @@
 - (void)removeMappingAtIndex:(NSInteger)idx;
 - (void)mergeMapping:(NJMapping *)mapping intoMapping:(NJMapping *)existing;
 - (void)moveMoveMappingFromIndex:(NSInteger)fromIdx toIndex:(NSInteger)toIdx;
+- (void)renameMapping:(NJMapping *)mapping to:(NSString *)name;
 
 - (void)mappingsChanged;
-
-- (void)promptForMapping:(NJMapping *)mapping atIndex:(NSInteger)idx;
-    // FIXME: Doesn't belong here.
 
 - (void)activateMapping:(NJMapping *)mapping;
 - (void)activateMappingForProcess:(NSRunningApplication *)app;

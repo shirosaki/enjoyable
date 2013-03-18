@@ -41,6 +41,10 @@
         object:nil];
 
     [self.mappingsController load];
+    [self.mvc.mappingList reloadData];
+    [self.mvc changedActiveMappingToIndex:
+     [self.mappingsController indexOfMapping:
+      self.mappingsController.currentMapping]];
 
     statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:36];
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
@@ -122,6 +126,9 @@
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
+    NSUInteger idx = [note.userInfo[NJMappingIndexKey] intValue];
+    [self.mvc changedActiveMappingToIndex:idx];
+
     if (!window.isVisible)
         for (int i = 0; i < 4; ++i)
             [self performSelector:@selector(flashStatusItem)
@@ -140,7 +147,7 @@
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:URL
                                                        error:&error];
     if ([self.mappingsController[mapping.name] hasConflictWith:mapping]) {
-        [self.mappingsController promptForMapping:mapping atIndex:self.mappingsController.count];
+        [self promptForMapping:mapping atIndex:self.mappingsController.count];
     } else if (self.mappingsController[mapping.name]) {
         [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
     } else if (mapping) {
@@ -161,7 +168,7 @@
 
 - (void)mappingListShouldOpen {
     [self restoreToForeground:self];
-    [self.mappingsController.mvc mappingTriggerClicked:self];
+    [self.mvc mappingTriggerClicked:self];
 }
 
 - (void)loginItemPromptDidEnd:(NSWindow *)sheet
@@ -217,7 +224,7 @@
                       NJMapping *mapping = [NJMapping mappingWithContentsOfURL:panel.URL
                                                                          error:&error];
                       if ([self.mappingsController[mapping.name] hasConflictWith:mapping]) {
-                          [self.mappingsController promptForMapping:mapping atIndex:self.mappingsController.count];
+                          [self promptForMapping:mapping atIndex:self.mappingsController.count];
                       } else if (self.mappingsController[mapping.name]) {
                           [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
                       } else if (mapping) {
@@ -254,6 +261,122 @@
                   }];
 }
 
+- (void)mappingConflictDidResolve:(NSAlert *)alert
+                       returnCode:(NSInteger)returnCode
+                      contextInfo:(void *)contextInfo {
+    NSDictionary *userInfo = CFBridgingRelease(contextInfo);
+    NJMapping *oldMapping = userInfo[@"old mapping"];
+    NJMapping *newMapping = userInfo[@"new mapping"];
+    NSInteger idx = [userInfo[@"index"] intValue];
+    [alert.window orderOut:nil];
+    switch (returnCode) {
+        case NSAlertFirstButtonReturn: // Merge
+            [self.mappingsController mergeMapping:newMapping intoMapping:oldMapping];
+            [self.mappingsController activateMapping:oldMapping];
+            break;
+        case NSAlertThirdButtonReturn: // New Mapping
+            [self.mvc beginUpdates];
+            [self.mappingsController addMapping:newMapping];
+            [self.mvc addedMappingAtIndex:idx startEditing:YES];
+            [self.mvc endUpdates];
+            [self.mappingsController activateMapping:newMapping];
+            break;
+        default: // Cancel, other.
+            break;
+    }
+}
 
+- (void)promptForMapping:(NJMapping *)mapping atIndex:(NSInteger)idx {
+    NJMapping *mergeInto = self.mappingsController[mapping.name];
+    NSAlert *conflictAlert = [[NSAlert alloc] init];
+    conflictAlert.messageText = NSLocalizedString(@"import conflict prompt", @"Title of import conflict alert");
+    conflictAlert.informativeText =
+    [NSString stringWithFormat:NSLocalizedString(@"import conflict in %@", @"Explanation of import conflict"),
+     mapping.name];
+    [conflictAlert addButtonWithTitle:NSLocalizedString(@"import and merge", @"button to merge imported mappings")];
+    [conflictAlert addButtonWithTitle:NSLocalizedString(@"cancel import", @"button to cancel import")];
+    [conflictAlert addButtonWithTitle:NSLocalizedString(@"import new mapping", @"button to import as new mapping")];
+    [conflictAlert beginSheetModalForWindow:window
+                              modalDelegate:self
+                             didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
+                                contextInfo:(void *)CFBridgingRetain(@{ @"index": @(idx),
+                                                                        @"old mapping": mergeInto,
+                                                                        @"new mapping": mapping })];
+}
+
+- (NSInteger)numberOfMappings:(NJMappingsViewController *)mvc {
+    return self.mappingsController.count;
+}
+
+- (NJMapping *)mappingsViewController:(NJMappingsViewController *)mvc
+                      mappingForIndex:(NSUInteger)idx {
+    return self.mappingsController[idx];
+}
+
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+          renameMappingAtIndex:(NSInteger)index
+                        toName:(NSString *)name {
+    [self.mappingsController renameMapping:self.mappingsController[index]
+                                        to:name];
+}
+
+- (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
+       canMoveMappingFromIndex:(NSInteger)fromIdx
+                       toIndex:(NSInteger)toIdx {
+    return fromIdx != toIdx && fromIdx != 0 && toIdx != 0
+            && toIdx < (NSInteger)self.mappingsController.count;
+}
+
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+          moveMappingFromIndex:(NSInteger)fromIdx
+                       toIndex:(NSInteger)toIdx {
+    [mvc beginUpdates];
+    [mvc.mappingList moveRowAtIndex:fromIdx toIndex:toIdx];
+    [self.mappingsController moveMoveMappingFromIndex:fromIdx toIndex:toIdx];
+    [mvc endUpdates];
+}
+
+- (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
+       canRemoveMappingAtIndex:(NSInteger)idx {
+    return idx != 0;
+}
+
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+          removeMappingAtIndex:(NSInteger)idx {
+    [mvc beginUpdates];
+    [mvc removedMappingAtIndex:idx];
+    [self.mappingsController removeMappingAtIndex:idx];
+    [mvc endUpdates];
+}
+
+- (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
+          importMappingFromURL:(NSURL *)url
+                       atIndex:(NSInteger)index
+                         error:(NSError **)error {
+    NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
+                                                       error:error];
+    if ([self.mappingsController[mapping.name] hasConflictWith:mapping]) {
+        [self promptForMapping:mapping atIndex:index];
+    } else if (self.mappingsController[mapping.name]) {
+        [self.mappingsController[mapping.name] mergeEntriesFrom:mapping];
+    } else if (mapping) {
+        [self.mappingsController insertMapping:mapping atIndex:index];
+    }
+    return !!mapping;
+}
+
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+                    addMapping:(NJMapping *)mapping {
+    [mvc beginUpdates];
+    [mvc addedMappingAtIndex:self.mappingsController.count startEditing:YES];
+    [self.mappingsController addMapping:mapping];
+    [mvc endUpdates];
+    [self.mappingsController activateMapping:mapping];
+}
+
+- (void)mappingsViewController:(NJMappingsViewController *)mvc
+           choseMappingAtIndex:(NSInteger)idx {
+    [self.mappingsController activateMapping:self.mappingsController[idx]];
+}
 
 @end

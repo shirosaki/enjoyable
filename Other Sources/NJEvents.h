@@ -12,4 +12,5 @@
 #define NJEventSimulationStopped @"com.yukkurigames.Enjoyable.EventSimulationStopped"
 
 #define NJMappingKey @"com.yukkurigames.Enjoyable.Mapping"
+#define NJMappingIndexKey @"com.yukkurigames.Enjoyable.MappingIndex"
 #define NJMappingListKey @"com.yukkurigames.Enjoyable.MappingList"

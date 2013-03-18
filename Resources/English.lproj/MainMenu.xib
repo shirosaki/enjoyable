@@ -566,7 +566,7 @@ aW5nLg</string>
 													<string key="NSFrameSize">{232, 321}</string>
 													<reference key="NSSuperview" ref="698362889"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="1036252745"/>
+													<reference key="NSNextKeyView" ref="892486973"/>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -696,7 +696,7 @@ aW5nLg</string>
 									<string key="NSFrameSize">{234, 323}</string>
 									<reference key="NSSuperview" ref="734312853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="892486973"/>
+									<reference key="NSNextKeyView" ref="698362889"/>
 									<int key="NSsFlags">150034</int>
 									<reference key="NSVScroller" ref="1036252745"/>
 									<reference key="NSHScroller" ref="892486973"/>
@@ -791,7 +791,6 @@ aW5nLg</string>
 									<string key="NSFrame">{{343, 31}, {70, 18}}</string>
 									<reference key="NSSuperview" ref="471332453"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="868379451">
@@ -1233,7 +1232,7 @@ aW5nLg</string>
 										<string key="NSFrameSize">{198, 198}</string>
 										<reference key="NSSuperview" ref="947403733"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="968378655"/>
+										<reference key="NSNextKeyView" ref="553414014"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1325,7 +1324,7 @@ aW5nLg</string>
 						<string key="NSFrame">{{0, 20}, {200, 200}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="553414014"/>
+						<reference key="NSNextKeyView" ref="947403733"/>
 						<int key="NSsFlags">150034</int>
 						<reference key="NSVScroller" ref="968378655"/>
 						<reference key="NSHScroller" ref="553414014"/>
@@ -1397,7 +1396,6 @@ aW5nLg</string>
 						<string key="NSFrame">{{166, -1}, {34, 23}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="828611353">
 							<int key="NSCellFlags">67108864</int>
@@ -1785,14 +1783,6 @@ aW5nLg</string>
 					<int key="connectionID">930</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">mappingsMenu</string>
-						<reference key="source" ref="207406104"/>
-						<reference key="destination" ref="720053764"/>
-					</object>
-					<int key="connectionID">931</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">restoreToForeground:</string>
 						<reference key="source" ref="207406104"/>
@@ -1815,6 +1805,14 @@ aW5nLg</string>
 						<reference key="destination" ref="187155117"/>
 					</object>
 					<int key="connectionID">1016</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mvc</string>
+						<reference key="source" ref="207406104"/>
+						<reference key="destination" ref="70919963"/>
+					</object>
+					<int key="connectionID">1024</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2178,14 +2176,6 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="70919963"/>
-						<reference key="destination" ref="468285243"/>
-					</object>
-					<int key="connectionID">994</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="70919963"/>
 						<reference key="destination" ref="671181514"/>
@@ -2279,6 +2269,14 @@ aW5nLg</string>
 						<reference key="destination" ref="1023366520"/>
 					</object>
 					<int key="connectionID">1011</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="70919963"/>
+						<reference key="destination" ref="207406104"/>
+					</object>
+					<int key="connectionID">1023</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3387,7 +3385,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1022</int>
+			<int key="maxID">1024</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3416,6 +3414,7 @@ aW5nLg</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="dockMenu">NSMenu</string>
 						<string key="mappingsController">NJMappingsController</string>
+						<string key="mvc">NJMappingsViewController</string>
 						<string key="statusItemMenu">NSMenu</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
@@ -3427,6 +3426,10 @@ aW5nLg</string>
 						<object class="IBToOneOutletInfo" key="mappingsController">
 							<string key="name">mappingsController</string>
 							<string key="candidateClassName">NJMappingsController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mvc">
+							<string key="name">mvc</string>
+							<string key="candidateClassName">NJMappingsViewController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="statusItemMenu">
 							<string key="name">statusItemMenu</string>
@@ -3566,17 +3569,6 @@ aW5nLg</string>
 				<object class="IBPartialClassDescription">
 					<string key="className">NJMappingsController</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">mvc</string>
-						<string key="NS.object.0">NJMappingsViewController</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">mvc</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">mvc</string>
-							<string key="candidateClassName">NJMappingsViewController</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NJMappingsController.h</string>
@@ -3713,7 +3705,7 @@ aW5nLg</string>
 						<string key="scrollSpeedSlider">NSSlider</string>
 						<string key="smoothCheck">NSButton</string>
 						<string key="title">NSTextField</string>
-						<string key="unknownMapping">NSBUtton</string>
+						<string key="unknownMapping">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="inputController">
@@ -3766,7 +3758,7 @@ aW5nLg</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="unknownMapping">
 							<string key="name">unknownMapping</string>
-							<string key="candidateClassName">NSBUtton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

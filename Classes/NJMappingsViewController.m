@@ -67,6 +67,15 @@
     self.mappingListTrigger.state = NSOffState;
 }
 
+- (void)beginUpdates {
+    [self.mappingList beginUpdates];
+}
+
+- (void)endUpdates {
+    [self.mappingList endUpdates];
+    [self changedActiveMappingToIndex:self.mappingList.selectedRow];
+}
+
 - (void)addedMappingAtIndex:(NSInteger)index startEditing:(BOOL)startEditing {
     [self.mappingList abortEditing];
     [self.mappingList insertRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:index]
@@ -116,10 +125,9 @@
    setObjectValue:(NSString *)obj
    forTableColumn:(NSTableColumn *)col
               row:(NSInteger)index {
-    NJMapping *mapping = [self.delegate mappingsViewController:self
-                                               mappingForIndex:index];
-    mapping.name = obj;
-    [self.delegate mappingsViewController:self editedMappingAtIndex:index];
+    [self.delegate mappingsViewController:self
+                     renameMappingAtIndex:index
+                                   toName:obj];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
