@@ -15,6 +15,7 @@
 
 @implementation EnjoyableApplicationDelegate {
     NSStatusItem *statusItem;
+    NSMutableArray *_errors;
 }
 
 - (void)didSwitchApplication:(NSNotification *)note {
@@ -143,6 +144,32 @@
     return self.dockMenu;
 }
 
+- (void)showNextError {
+    if (!self.window.attachedSheet && _errors.count) {
+        NSError *error = _errors.lastObject;
+        [_errors removeLastObject];
+        [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
+        [self.window makeKeyAndOrderFront:nil];
+        [self.window presentError:error
+                   modalForWindow:self.window
+                         delegate:self
+               didPresentSelector:@selector(didPresentErrorWithRecovery:contextInfo:)
+                      contextInfo:nil];
+    }
+}
+
+- (void)didPresentErrorWithRecovery:(BOOL)didRecover
+                        contextInfo:(void *)contextInfo {
+    [self showNextError];
+}
+
+- (void)presentErrorSheet:(NSError *)error {
+    if (!_errors)
+        _errors = [[NSMutableArray alloc] initWithCapacity:1];
+    [_errors insertObject:error atIndex:0];
+    [self showNextError];
+}
+
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
     [self restoreToForeground:sender];
     NSError *error;
@@ -160,11 +187,7 @@
         [self.mvc endUpdates];
         [self.ic activateMapping:mapping];
     } else {
-        [self.window presentError:error
-                   modalForWindow:self.window
-                         delegate:nil
-               didPresentSelector:nil
-                      contextInfo:nil];
+        [self presentErrorSheet:error];
     }
     return !!mapping;
 }
@@ -237,11 +260,7 @@
                       } else if (mapping) {
                           [self.ic addMapping:mapping];
                       } else {
-                          [self.window presentError:error
-                                     modalForWindow:self.window
-                                           delegate:nil
-                                 didPresentSelector:nil
-                                        contextInfo:nil];
+                          [self presentErrorSheet:error];
                       }
                   }];
     
@@ -259,11 +278,7 @@
                       [panel close];
                       NSError *error;
                       if (![mapping writeToURL:panel.URL error:&error]) {
-                          [self.window presentError:error
-                                     modalForWindow:self.window
-                                           delegate:nil
-                                 didPresentSelector:nil
-                                        contextInfo:nil];
+                          [self presentErrorSheet:error];
                       }
                   }];
 }
@@ -443,18 +458,7 @@
 }
 
 - (void)inputController:(NJInputController *)ic didError:(NSError *)error {
-    // Since the error shows the window, it can trigger another attempt
-    // to re-open the HID manager, which will also probably fail and error,
-    // so don't bother repeating ourselves.
-    if (!self.window.attachedSheet) {
-        [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
-        [self.window makeKeyAndOrderFront:nil];
-        [self.window presentError:error
-                   modalForWindow:self.window
-                         delegate:nil
-               didPresentSelector:nil
-                      contextInfo:nil];
-    }
+    [self presentErrorSheet:error];
 }
 
 - (NSInteger)numberOfDevicesInDeviceList:(NJDeviceViewController *)dvc {
