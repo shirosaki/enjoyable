@@ -1695,11 +1695,11 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">devicesViewController</string>
+						<string key="label">delegate</string>
 						<reference key="source" ref="1007832501"/>
-						<reference key="destination" ref="647344717"/>
+						<reference key="destination" ref="207406104"/>
 					</object>
-					<int key="connectionID">992</int>
+					<int key="connectionID">1029</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1766,6 +1766,30 @@ aW5nLg</string>
 					<int key="connectionID">1024</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">dvc</string>
+						<reference key="source" ref="207406104"/>
+						<reference key="destination" ref="647344717"/>
+					</object>
+					<int key="connectionID">1025</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">deviceController</string>
+						<reference key="source" ref="207406104"/>
+						<reference key="destination" ref="1007832501"/>
+					</object>
+					<int key="connectionID">1026</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">outputController</string>
+						<reference key="source" ref="207406104"/>
+						<reference key="destination" ref="801536542"/>
+					</object>
+					<int key="connectionID">1027</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">performClick:</string>
 						<reference key="source" ref="861276216"/>
@@ -1796,14 +1820,6 @@ aW5nLg</string>
 						<reference key="destination" ref="468285243"/>
 					</object>
 					<int key="connectionID">821</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">inputController</string>
-						<reference key="source" ref="801536542"/>
-						<reference key="destination" ref="1007832501"/>
-					</object>
-					<int key="connectionID">828</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2087,14 +2103,6 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="647344717"/>
-						<reference key="destination" ref="1007832501"/>
-					</object>
-					<int key="connectionID">984</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">hidStoppedNotice</string>
 						<reference key="source" ref="647344717"/>
 						<reference key="destination" ref="918286878"/>
@@ -2116,6 +2124,14 @@ aW5nLg</string>
 						<reference key="destination" ref="365506042"/>
 					</object>
 					<int key="connectionID">989</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="647344717"/>
+						<reference key="destination" ref="207406104"/>
+					</object>
+					<int key="connectionID">1028</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3328,7 +3344,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1024</int>
+			<int key="maxID">1029</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

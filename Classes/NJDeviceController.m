@@ -12,7 +12,6 @@
 #import "NJDevice.h"
 #import "NJInput.h"
 #import "NJOutput.h"
-#import "NJOutputController.h"
 #import "NJEvents.h"
 #import "NJDeviceViewController.h"
 
@@ -68,6 +67,14 @@
     [_continuousOutputsTick invalidate];
 }
 
+- (NJDevice *)objectAtIndexedSubscript:(NSUInteger)idx {
+    return idx < _devices.count ? _devices[idx] : nil;
+}
+
+- (NSUInteger)count {
+    return _devices.count;
+}
+
 - (void)addRunningOutput:(NJOutput *)output {
     // Axis events will trigger every small movement, don't keep
     // re-adding them or they trigger multiple times each time.
@@ -102,8 +109,7 @@
     if (!handler)
         return;
     
-    [devicesViewController expandAndSelectItem:handler];
-    [outputController focusKey];
+    [self.delegate deviceController:self didInput:handler];
 }
 
 - (void)hidManager:(NJHIDManager *)manager
@@ -134,10 +140,8 @@
 
 - (void)hidManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
     NJDevice *match = [[NJDevice alloc] initWithDevice:device];
-    [devicesViewController beginUpdates];
     [self addDevice:match];
-    [devicesViewController addedDevice:match atIndex:_devices.count - 1];
-    [devicesViewController endUpdates];
+    [self.delegate deviceController:self didAddDevice:match];
 }
 
 - (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device {
@@ -149,13 +153,10 @@
 
 - (void)hidManager:(NJHIDManager *)manager deviceRemoved:(IOHIDDeviceRef)device {
     NJDevice *match = [self findDeviceByRef:device];
-    IOHIDDeviceRegisterInputValueCallback(device, NULL, NULL);
     if (match) {
         NSInteger idx = [_devices indexOfObjectIdenticalTo:match];
-        [devicesViewController beginUpdates];
         [_devices removeObjectAtIndex:idx];
-        [devicesViewController removedDevice:match atIndex:idx];
-        [devicesViewController endUpdates];
+        [self.delegate deviceController:self didRemoveDeviceAtIndex:idx];
     }
 }
 
@@ -173,28 +174,17 @@
 }
 
 - (void)hidManager:(NJHIDManager *)manager didError:(NSError *)error {
-    // Since the error shows the window, it can trigger another attempt
-    // to re-open the HID manager, which will also probably fail and error,
-    // so don't bother repeating ourselves.
-    if (!simulatingEventsButton.window.attachedSheet) {
-        [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
-        [simulatingEventsButton.window makeKeyAndOrderFront:nil];
-        [simulatingEventsButton.window presentError:error
-                                     modalForWindow:simulatingEventsButton.window
-                                           delegate:nil
-                                 didPresentSelector:nil
-                                        contextInfo:nil];
-    }
+    [self.delegate deviceController:self didError:error];
     self.simulatingEvents = NO;
 }
 
 - (void)hidManagerDidStart:(NJHIDManager *)manager {
-    [devicesViewController hidStarted];
+    [self.delegate deviceControllerDidStartHID:self];
 }
 
 - (void)hidManagerDidStop:(NJHIDManager *)manager {
     [_devices removeAllObjects];
-    [devicesViewController hidStopped];
+    [self.delegate deviceControllerDidStopHID:self];
 }
 
 - (void)startHid {
@@ -203,10 +193,6 @@
 
 - (void)stopHid {
     [_hidManager stop];
-}
-
-- (NJInput *)selectedInput {
-    return (NJInput *)devicesViewController.selectedHandler;
 }
 
 - (void)setSimulatingEvents:(BOOL)simulatingEvents {
@@ -245,33 +231,13 @@
     return _devices[idx];
 }
 
-- (id)deviceViewController:(NJDeviceViewController *)dvc
-             elementForUID:(NSString *)uid {
+- (NJInputPathElement *)objectForKeyedSubscript:(NSString *)uid {
     for (NJDevice *dev in _devices) {
         id item = [dev elementForUID:uid];
         if (item)
             return item;
     }
     return nil;
-}
-
-- (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)dvc {
-    [outputController loadCurrent];
-}
-
-- (void)deviceViewController:(NJDeviceViewController *)dvc
-             didSelectBranch:(NJInputPathElement *)handler {
-    [outputController loadCurrent];
-}
-
-- (void)deviceViewController:(NJDeviceViewController *)dvc
-            didSelectHandler:(NJInputPathElement *)handler {
-    [outputController loadCurrent];
-}
-
-- (void)deviceViewController:(NJDeviceViewController *)dvc
-             didSelectDevice:(NJInputPathElement *)device {
-    [outputController loadCurrent];
 }
 
 @end

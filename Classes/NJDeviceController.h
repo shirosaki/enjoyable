@@ -11,20 +11,34 @@
 
 @class NJInput;
 @class NJMappingsController;
-@class NJOutputController;
 
-@interface NJDeviceController : NSObject <NJDeviceViewControllerDelegate,
-                                          NJHIDManagerDelegate> {
-    IBOutlet NJOutputController *outputController;
+@protocol NJDeviceControllerDelegate;
+
+@interface NJDeviceController : NSObject <NJHIDManagerDelegate> {
     IBOutlet NJMappingsController *mappingsController;
     IBOutlet NSButton *simulatingEventsButton;
-    IBOutlet NJDeviceViewController *devicesViewController;
 }
 
-@property (nonatomic, readonly) NJInput *selectedInput;
+@property (nonatomic, weak) IBOutlet id <NJDeviceControllerDelegate> delegate;
+
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL simulatingEvents;
 
 - (IBAction)simulatingEventsChanged:(NSButton *)sender;
+
+- (NJDevice *)objectAtIndexedSubscript:(NSUInteger)idx;
+- (NJInputPathElement *)objectForKeyedSubscript:(NSString *)uid;
+- (NSUInteger)count;
+
+@end
+
+@protocol NJDeviceControllerDelegate
+
+- (void)deviceController:(NJDeviceController *)dc didAddDevice:(NJDevice *)device;
+- (void)deviceController:(NJDeviceController *)dc didRemoveDeviceAtIndex:(NSInteger)idx;
+- (void)deviceController:(NJDeviceController *)dc didInput:(NJInput *)input;
+- (void)deviceControllerDidStartHID:(NJDeviceController *)dc;
+- (void)deviceControllerDidStopHID:(NJDeviceController *)dc;
+- (void)deviceController:(NJDeviceController *)dc didError:(NSError *)error;
 
 @end

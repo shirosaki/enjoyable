@@ -11,7 +11,7 @@
 @class NJMappingsController;
 @class NJDeviceController;
 @class NJOutput;
-@class NJOutputMouseMove;
+@class NJInput;
 
 @interface NJOutputController : NSObject <NJKeyInputFieldDelegate> {
     IBOutlet NJKeyInputField *keyInput;
@@ -24,14 +24,13 @@
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *mappingPopup;
     IBOutlet NJMappingsController *mappingsController;
-    IBOutlet NJDeviceController *inputController;
     IBOutlet NSButton *smoothCheck;
     IBOutlet NSButton *unknownMapping;
 }
 
 @property (assign) BOOL enabled;
 
-- (void)loadCurrent;
+- (void)loadInput:(NJInput *)input;
 - (IBAction)radioChanged:(id)sender;
 - (IBAction)mdirChanged:(id)sender;
 - (IBAction)mbtnChanged:(id)sender;

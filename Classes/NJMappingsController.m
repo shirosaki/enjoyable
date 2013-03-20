@@ -85,20 +85,24 @@
     _manualMapping = oldMapping;
 }
 
+- (void)activateMappingForcibly:(NJMapping *)mapping {
+    NSLog(@"Switching to mapping %@.", mapping.name);
+    _currentMapping = mapping;
+    NSUInteger idx = [self indexOfMapping:_currentMapping];
+    [NSNotificationCenter.defaultCenter
+     postNotificationName:NJEventMappingChanged
+                  object:self
+                userInfo:@{ NJMappingKey : _currentMapping,
+                            NJMappingIndexKey: @(idx) }];
+}
+
 - (void)activateMapping:(NJMapping *)mapping {
     if (!mapping)
         mapping = _manualMapping;
     if (mapping == _currentMapping)
         return;
-    NSLog(@"Switching to mapping %@.", mapping.name);
     _manualMapping = mapping;
-    _currentMapping = mapping;
-    NSUInteger idx = [self indexOfMapping:_currentMapping];
-    [NSNotificationCenter.defaultCenter
-         postNotificationName:NJEventMappingChanged
-                       object:self
-                     userInfo:@{ NJMappingKey : _currentMapping,
-                                 NJMappingIndexKey: @(idx) }];
+    [self activateMappingForcibly:mapping];
 }
 
 - (void)save {
@@ -139,25 +143,15 @@
 - (void)mergeMapping:(NJMapping *)mapping intoMapping:(NJMapping *)existing {
     [existing mergeEntriesFrom:mapping];
     [self mappingsChanged];
-    if (existing == _currentMapping) {
-        // FIXME: Hack to trigger updates in the rest of the UI.
-        _currentMapping = nil;
-        NJMapping *manual = _manualMapping;
-        [self activateMapping:existing];
-        _manualMapping = manual;
-    }
+    if (existing == _currentMapping)
+        [self activateMappingForcibly:mapping];
 }
 
 - (void)renameMapping:(NJMapping *)mapping to:(NSString *)name {
     mapping.name = name;
     [self mappingsChanged];
-    if (mapping == _currentMapping) {
-        // FIXME: Hack to trigger updates in the rest of the UI.
-        _currentMapping = nil;
-        NJMapping *manual = _manualMapping;
-        [self activateMapping:mapping];
-        _manualMapping = manual;        
-    }
+    if (mapping == _currentMapping)
+        [self activateMappingForcibly:mapping];
 }
 
 - (void)addMapping:(NJMapping *)mapping {

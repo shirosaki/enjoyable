@@ -20,7 +20,9 @@
 #import "NJOutputMouseMove.h"
 #import "NJOutputMouseScroll.h"
 
-@implementation NJOutputController
+@implementation NJOutputController {
+    NJInput *_input;
+}
 
 - (id)init {
     if ((self = [super init])) {
@@ -157,7 +159,7 @@
 }
 
 - (NJOutput *)currentOutput {
-    return mappingsController.currentMapping[inputController.selectedInput];
+    return mappingsController.currentMapping[_input];
 }
 
 - (NJOutput *)makeOutput {
@@ -203,7 +205,7 @@
 
 - (void)commit {
     [self cleanUpInterface];
-    mappingsController.currentMapping[inputController.selectedInput] = [self makeOutput];
+    mappingsController.currentMapping[_input] = [self makeOutput];
     [mappingsController save];
 }
 
@@ -272,8 +274,9 @@
     [self cleanUpInterface];
 }
 
-- (void)loadCurrent {
-    [self loadOutput:self.currentOutput forInput:inputController.selectedInput];
+- (void)loadInput:(NJInput *)input {
+    _input = input;
+    [self loadOutput:self.currentOutput forInput:input];
 }
 
 - (void)focusKey {
@@ -299,7 +302,7 @@
 }
 
 - (void)mappingDidChange:(NSNotification *)note {
-    [self loadCurrent];
+    [self loadInput:_input];
 }
 
 @end

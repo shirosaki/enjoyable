@@ -7,6 +7,7 @@
 //
 
 @class NJDevice;
+@class NJInput;
 @class NJInputPathElement;
 
 @protocol NJDeviceViewControllerDelegate;
@@ -21,18 +22,14 @@
 @property (nonatomic, weak) IBOutlet id <NJDeviceViewControllerDelegate> delegate;
 
 - (void)addedDevice:(NJDevice *)device atIndex:(NSUInteger)idx;
-- (void)removedDevice:(NJDevice *)device atIndex:(NSUInteger)idx;
-    // But using these will animate nicely.
+- (void)removedDeviceAtIndex:(NSUInteger)idx;
 
 - (void)hidStarted;
 - (void)hidStopped;
 
-- (void)beginUpdates;
-- (void)endUpdates;
-
 - (void)expandAndSelectItem:(NJInputPathElement *)item;
 
-- (NJInputPathElement *)selectedHandler;
+- (NJInput *)selectedHandler;
 
 @end
 

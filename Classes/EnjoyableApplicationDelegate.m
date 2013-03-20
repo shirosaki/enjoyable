@@ -386,4 +386,75 @@
     [self.mappingsController activateMapping:self.mappingsController[idx]];
 }
 
+- (id)deviceViewController:(NJDeviceViewController *)dvc
+             elementForUID:(NSString *)uid {
+    return self.deviceController[uid];
+}
+
+- (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)dvc {
+    [self.outputController loadInput:dvc.selectedHandler];
+}
+
+- (void)deviceViewController:(NJDeviceViewController *)dvc
+             didSelectBranch:(NJInputPathElement *)handler {
+    [self.outputController loadInput:dvc.selectedHandler];
+}
+
+- (void)deviceViewController:(NJDeviceViewController *)dvc
+            didSelectHandler:(NJInputPathElement *)handler {
+    [self.outputController loadInput:dvc.selectedHandler];
+}
+
+- (void)deviceViewController:(NJDeviceViewController *)dvc
+             didSelectDevice:(NJInputPathElement *)device {
+    [self.outputController loadInput:dvc.selectedHandler];
+}
+
+- (void)deviceController:(NJDeviceController *)dc
+            didAddDevice:(NJDevice *)device {
+    [self.dvc addedDevice:device atIndex:dc.count - 1];
+}
+
+- (void)deviceController:(NJDeviceController *)dc
+  didRemoveDeviceAtIndex:(NSInteger)idx {
+    [self.dvc removedDeviceAtIndex:idx];
+}
+
+- (void)deviceControllerDidStartHID:(NJDeviceController *)dc {
+    [self.dvc hidStarted];
+}
+
+- (void)deviceControllerDidStopHID:(NJDeviceController *)dc {
+    [self.dvc hidStopped];
+}
+
+- (void)deviceController:(NJDeviceController *)dc didInput:(NJInput *)input {
+    [self.outputController loadInput:input];
+    [self.outputController focusKey];
+}
+
+- (void)deviceController:(NJDeviceController *)dc didError:(NSError *)error {
+    // Since the error shows the window, it can trigger another attempt
+    // to re-open the HID manager, which will also probably fail and error,
+    // so don't bother repeating ourselves.
+    if (!window.attachedSheet) {
+        [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
+        [window makeKeyAndOrderFront:nil];
+        [window presentError:error
+              modalForWindow:window
+                    delegate:nil
+          didPresentSelector:nil
+                 contextInfo:nil];
+    }
+}
+
+- (NSInteger)numberOfDevicesInDeviceList:(NJDeviceViewController *)dvc {
+    return self.deviceController.count;
+}
+
+- (NJDevice *)deviceViewController:(NJDeviceViewController *)dvc
+                    deviceForIndex:(NSUInteger)idx {
+    return self.deviceController[idx];
+}
+
 @end
