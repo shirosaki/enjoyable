@@ -66,14 +66,6 @@
     [_continuousOutputsTick invalidate];
 }
 
-- (NJDevice *)objectAtIndexedSubscript:(NSUInteger)idx {
-    return idx < _devices.count ? _devices[idx] : nil;
-}
-
-- (NSUInteger)count {
-    return _devices.count;
-}
-
 - (void)addRunningOutput:(NJOutput *)output {
     // Axis events will trigger every small movement, don't keep
     // re-adding them or they trigger multiple times each time.
@@ -215,7 +207,7 @@
         [self stopHid];
 }
 
-- (NJInputPathElement *)objectForKeyedSubscript:(NSString *)uid {
+- (NJInputPathElement *)elementForUID:(NSString *)uid {
     for (NJDevice *dev in _devices) {
         id item = [dev elementForUID:uid];
         if (item)

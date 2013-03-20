@@ -27,15 +27,11 @@
     return self;
 }
 
-- (NJMapping *)objectForKeyedSubscript:(NSString *)name {
+- (NJMapping *)mappingForKey:(NSString *)name {
     for (NJMapping *mapping in _mappings)
         if ([name isEqualToString:mapping.name])
             return mapping;
     return nil;
-}
-
-- (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx {
-    return idx < _mappings.count ? _mappings[idx] : nil;
 }
 
 - (void)mappingsSet {
@@ -52,20 +48,12 @@
     [self mappingsSet];
 }
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
-                                  objects:(__unsafe_unretained id [])buffer
-                                    count:(NSUInteger)len {
-    return [_mappings countByEnumeratingWithState:state
-                                          objects:buffer
-                                            count:len];
-}
-
 - (void)activateMappingForProcess:(NSRunningApplication *)app {
     NJMapping *oldMapping = _manualMapping;
     NSArray *names = app.possibleMappingNames;
     BOOL found = NO;
     for (NSString *name in names) {
-        NJMapping *mapping = self[name];
+        NJMapping *mapping = [self mappingForKey:name];
         if (mapping) {
             [self activateMapping:mapping];
             found = YES;
@@ -114,8 +102,8 @@
 }
 
 - (void)postLoadProcess {
-    for (NJMapping *mapping in self)
-        [mapping postLoadProcess:self];
+    for (NJMapping *mapping in self.mappings)
+        [mapping postLoadProcess:self.mappings];
 }
 
 - (void)load {
@@ -166,17 +154,13 @@
 - (void)removeMappingAtIndex:(NSInteger)idx {
     NSInteger currentIdx = [self indexOfMapping:_currentMapping];
     [_mappings removeObjectAtIndex:idx];
-    [self activateMapping:self[MIN(currentIdx, _mappings.count - 1)]];
+    [self activateMapping:self.mappings[MIN(currentIdx, _mappings.count - 1)]];
     [self mappingsChanged];
 }
 
 - (void)moveMoveMappingFromIndex:(NSInteger)fromIdx toIndex:(NSInteger)toIdx {
     [_mappings moveObjectAtIndex:fromIdx toIndex:toIdx];
     [self mappingsChanged];
-}
-
-- (NSUInteger)count {
-    return _mappings.count;
 }
 
 @end

@@ -177,7 +177,7 @@
             break;
         case 2: {
             NJOutputMapping *c = [[NJOutputMapping alloc] init];
-            c.mapping = mappingsController[mappingPopup.indexOfSelectedItem];
+            c.mapping = mappingsController.mappings[mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {

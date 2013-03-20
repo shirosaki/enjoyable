@@ -8,13 +8,12 @@
 
 @class NJMapping;
 
-@interface NJMappingsController : NSObject <NSFastEnumeration>
+@interface NJMappingsController : NSObject
 
 @property (nonatomic, readonly) NJMapping *currentMapping;
-@property (nonatomic, readonly) NSUInteger count;
+@property (nonatomic, readonly) NSArray *mappings;
 
-- (NJMapping *)objectForKeyedSubscript:(NSString *)name;
-- (NJMapping *)objectAtIndexedSubscript:(NSUInteger)idx;
+- (NJMapping *)mappingForKey:(NSString *)name;
 - (NSInteger)indexOfMapping:(NJMapping *)mapping;
 
 - (void)addMapping:(NJMapping *)mapping;

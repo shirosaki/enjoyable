@@ -23,10 +23,9 @@
 
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL simulatingEvents;
+@property (nonatomic, readonly) NSArray *devices;
 
-- (NJDevice *)objectAtIndexedSubscript:(NSUInteger)idx;
-- (NJInputPathElement *)objectForKeyedSubscript:(NSString *)uid;
-- (NSUInteger)count;
+- (NJInputPathElement *)elementForUID:(NSString *)uid;
 
 @end
 
