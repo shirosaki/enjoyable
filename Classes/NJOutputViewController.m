@@ -39,127 +39,128 @@
 }
 
 - (void)cleanUpInterface {
-    NSInteger row = radioButtons.selectedRow;
+    NSInteger row = self.radioButtons.selectedRow;
     
     if (row != 1) {
-        keyInput.keyCode = NJKeyInputFieldEmpty;
-        [keyInput resignIfFirstResponder];
+        self.keyInput.keyCode = NJKeyInputFieldEmpty;
+        [self.keyInput resignIfFirstResponder];
     }
     
     if (row != 2) {
-        [mappingPopup selectItemAtIndex:-1];
-        [mappingPopup resignIfFirstResponder];
-        unknownMapping.hidden = YES;
+        [self.mappingPopup selectItemAtIndex:-1];
+        [self.mappingPopup resignIfFirstResponder];
+        self.unknownMapping.hidden = YES;
     }
     
     if (row != 3) {
-        mouseDirSelect.selectedSegment = -1;
-        mouseSpeedSlider.floatValue = mouseSpeedSlider.minValue;
-        [mouseDirSelect resignIfFirstResponder];
+        self.mouseDirSelect.selectedSegment = -1;
+        self.mouseSpeedSlider.floatValue = self.mouseSpeedSlider.minValue;
+        [self.mouseDirSelect resignIfFirstResponder];
     } else {
-        if (mouseDirSelect.selectedSegment == -1)
-            mouseDirSelect.selectedSegment = 0;
-        if (!mouseSpeedSlider.floatValue)
-            mouseSpeedSlider.floatValue = 10;
+        if (self.mouseDirSelect.selectedSegment == -1)
+            self.mouseDirSelect.selectedSegment = 0;
+        if (!self.mouseSpeedSlider.floatValue)
+            self.mouseSpeedSlider.floatValue = 10;
     }
     
     if (row != 4) {
-        mouseBtnSelect.selectedSegment = -1;
-        [mouseBtnSelect resignIfFirstResponder];
-    } else if (mouseBtnSelect.selectedSegment == -1)
-        mouseBtnSelect.selectedSegment = 0;
+        self.mouseBtnSelect.selectedSegment = -1;
+        [self.mouseBtnSelect resignIfFirstResponder];
+    } else if (self.mouseBtnSelect.selectedSegment == -1)
+        self.mouseBtnSelect.selectedSegment = 0;
     
     if (row != 5) {
-        scrollDirSelect.selectedSegment = -1;
-        scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
-        smoothCheck.state = NSOffState;
-        [scrollDirSelect resignIfFirstResponder];
-        [scrollSpeedSlider resignIfFirstResponder];
-        [smoothCheck resignIfFirstResponder];
+        self.scrollDirSelect.selectedSegment = -1;
+        self.scrollSpeedSlider.floatValue = self.scrollSpeedSlider.minValue;
+        self.smoothCheck.state = NSOffState;
+        [self.scrollDirSelect resignIfFirstResponder];
+        [self.scrollSpeedSlider resignIfFirstResponder];
+        [self.smoothCheck resignIfFirstResponder];
     } else {
-        if (scrollDirSelect.selectedSegment == -1)
-            scrollDirSelect.selectedSegment = 0;
+        if (self.scrollDirSelect.selectedSegment == -1)
+            self.scrollDirSelect.selectedSegment = 0;
     }
         
 }
 
 - (IBAction)radioChanged:(NSView *)sender {
     [sender.window makeFirstResponder:sender];
-    if (radioButtons.selectedRow == 1)
-        [keyInput.window makeFirstResponder:keyInput];
+    if (self.radioButtons.selectedRow == 1)
+        [self.keyInput.window makeFirstResponder:self.keyInput];
     [self commit];
 }
 
 - (void)keyInputField:(NJKeyInputField *)keyInput didChangeKey:(CGKeyCode)keyCode {
-    [radioButtons selectCellAtRow:1 column:0];
-    [radioButtons.window makeFirstResponder:radioButtons];
+    [self.radioButtons selectCellAtRow:1 column:0];
+    [self.radioButtons.window makeFirstResponder:self.radioButtons];
     [self commit];
 }
 
 - (void)keyInputFieldDidClear:(NJKeyInputField *)keyInput {
-    [radioButtons selectCellAtRow:0 column:0];
+    [self.radioButtons selectCellAtRow:0 column:0];
     [self commit];
 }
 
 - (void)mappingChosen:(id)sender {
-    [radioButtons selectCellAtRow:2 column:0];
-    [mappingPopup.window makeFirstResponder:mappingPopup];
-    unknownMapping.hidden = YES;
+    [self.radioButtons selectCellAtRow:2 column:0];
+    [self.mappingPopup.window makeFirstResponder:self.mappingPopup];
+    self.unknownMapping.hidden = YES;
     [self commit];
 }
 
 - (void)mdirChanged:(NSView *)sender {
-    [radioButtons selectCellAtRow:3 column:0];
+    [self.radioButtons selectCellAtRow:3 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
 - (void)mouseSpeedChanged:(NSSlider *)sender {
-    [radioButtons selectCellAtRow:3 column:0];
+    [self.radioButtons selectCellAtRow:3 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
 - (void)mbtnChanged:(NSView *)sender {
-    [radioButtons selectCellAtRow:4 column:0];
+    [self.radioButtons selectCellAtRow:4 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
 - (void)sdirChanged:(NSView *)sender {
-    [radioButtons selectCellAtRow:5 column:0];
+    [self.radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
 - (void)scrollSpeedChanged:(NSSlider *)sender {
-    [radioButtons selectCellAtRow:5 column:0];
+    [self.radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
 - (IBAction)scrollTypeChanged:(NSButton *)sender {
-    [radioButtons selectCellAtRow:5 column:0];
+    [self.radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
     if (sender.state == NSOnState) {
-        scrollSpeedSlider.floatValue =
-            scrollSpeedSlider.minValue + (scrollSpeedSlider.maxValue - scrollSpeedSlider.minValue) / 2;
-        scrollSpeedSlider.enabled = YES;
+        self.scrollSpeedSlider.floatValue =
+            self.scrollSpeedSlider.minValue
+            + (self.scrollSpeedSlider.maxValue - self.scrollSpeedSlider.minValue) / 2;
+        self.scrollSpeedSlider.enabled = YES;
     } else {
-        scrollSpeedSlider.floatValue = scrollSpeedSlider.minValue;
-        scrollSpeedSlider.enabled = NO;
+        self.scrollSpeedSlider.floatValue = self.scrollSpeedSlider.minValue;
+        self.scrollSpeedSlider.enabled = NO;
     }
     [self commit];
 }
 
 - (NJOutput *)makeOutput {
-    switch (radioButtons.selectedRow) {
+    switch (self.radioButtons.selectedRow) {
         case 0:
             return nil;
         case 1:
-            if (keyInput.hasKeyCode) {
+            if (self.keyInput.hasKeyCode) {
                 NJOutputKeyPress *k = [[NJOutputKeyPress alloc] init];
-                k.keyCode = keyInput.keyCode;
+                k.keyCode = self.keyInput.keyCode;
                 return k;
             } else {
                 return nil;
@@ -168,25 +169,25 @@
         case 2: {
             NJOutputMapping *c = [[NJOutputMapping alloc] init];
             c.mapping = [self.delegate outputViewController:self
-                                            mappingForIndex:mappingPopup.indexOfSelectedItem];
+                                            mappingForIndex:self.mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {
             NJOutputMouseMove *mm = [[NJOutputMouseMove alloc] init];
-            mm.axis = mouseDirSelect.selectedSegment;
-            mm.speed = mouseSpeedSlider.floatValue;
+            mm.axis = self.mouseDirSelect.selectedSegment;
+            mm.speed = self.mouseSpeedSlider.floatValue;
             return mm;
         }
         case 4: {
             NJOutputMouseButton *mb = [[NJOutputMouseButton alloc] init];
-            mb.button = [mouseBtnSelect.cell tagForSegment:mouseBtnSelect.selectedSegment];
+            mb.button = [self.mouseBtnSelect.cell tagForSegment:self.mouseBtnSelect.selectedSegment];
             return mb;
         }
         case 5: {
             NJOutputMouseScroll *ms = [[NJOutputMouseScroll alloc] init];
-            ms.direction = [scrollDirSelect.cell tagForSegment:scrollDirSelect.selectedSegment];
-            ms.speed = scrollSpeedSlider.floatValue;
-            ms.smooth = smoothCheck.state == NSOnState;
+            ms.direction = [self.scrollDirSelect.cell tagForSegment:self.scrollDirSelect.selectedSegment];
+            ms.speed = self.scrollSpeedSlider.floatValue;
+            ms.smooth = self.smoothCheck.state == NSOnState;
             return ms;
         }
         default:
@@ -202,91 +203,92 @@
 }
 
 - (BOOL)enabled {
-    return radioButtons.isEnabled;
+    return self.radioButtons.isEnabled;
 }
 
 - (void)setEnabled:(BOOL)enabled {
-    radioButtons.enabled = enabled;
-    keyInput.enabled = enabled;
-    mappingPopup.enabled = enabled;
-    mouseDirSelect.enabled = enabled;
-    mouseSpeedSlider.enabled = enabled;
-    mouseBtnSelect.enabled = enabled;
-    scrollDirSelect.enabled = enabled;
-    smoothCheck.enabled = enabled;
-    scrollSpeedSlider.enabled = enabled && smoothCheck.state;
+    self.radioButtons.enabled = enabled;
+    self.keyInput.enabled = enabled;
+    self.mappingPopup.enabled = enabled;
+    self.mouseDirSelect.enabled = enabled;
+    self.mouseSpeedSlider.enabled = enabled;
+    self.mouseBtnSelect.enabled = enabled;
+    self.scrollDirSelect.enabled = enabled;
+    self.smoothCheck.enabled = enabled;
+    self.scrollSpeedSlider.enabled = enabled && self.smoothCheck.state;
     if (!enabled)
-        unknownMapping.hidden = YES;
+        self.unknownMapping.hidden = YES;
 }
 
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {
     _input = input;
     if (!input) {
         [self setEnabled:NO];
-        title.stringValue = @"";
+        self.title.stringValue = @"";
     } else {
         [self setEnabled:YES];
         NSString *inpFullName = input.name;
         for (NJInputPathElement *cur = input.parent; cur; cur = cur.parent) {
             inpFullName = [[NSString alloc] initWithFormat:@"%@ ▸ %@", cur.name, inpFullName];
         }
-        title.stringValue = inpFullName;
+        self.title.stringValue = inpFullName;
     }
 
     if ([output isKindOfClass:NJOutputKeyPress.class]) {
-        [radioButtons selectCellAtRow:1 column:0];
-        keyInput.keyCode = [(NJOutputKeyPress*)output keyCode];
+        [self.radioButtons selectCellAtRow:1 column:0];
+        self.keyInput.keyCode = [(NJOutputKeyPress*)output keyCode];
     } else if ([output isKindOfClass:NJOutputMapping.class]) {
-        [radioButtons selectCellAtRow:2 column:0];
-        NSMenuItem *item = [mappingPopup itemWithIdenticalRepresentedObject:[(NJOutputMapping *)output mapping]];
-        [mappingPopup selectItem:item];
-        unknownMapping.hidden = !!item;
-        unknownMapping.title = [(NJOutputMapping *)output mappingName];
+        [self.radioButtons selectCellAtRow:2 column:0];
+        NSMenuItem *item = [self.mappingPopup itemWithIdenticalRepresentedObject:
+                            [(NJOutputMapping *)output mapping]];
+        [self.mappingPopup selectItem:item];
+        self.unknownMapping.hidden = !!item;
+        self.unknownMapping.title = [(NJOutputMapping *)output mappingName];
     }
     else if ([output isKindOfClass:NJOutputMouseMove.class]) {
-        [radioButtons selectCellAtRow:3 column:0];
-        mouseDirSelect.selectedSegment = [(NJOutputMouseMove *)output axis];
-        mouseSpeedSlider.floatValue = [(NJOutputMouseMove *)output speed];
+        [self.radioButtons selectCellAtRow:3 column:0];
+        self.mouseDirSelect.selectedSegment = [(NJOutputMouseMove *)output axis];
+        self.mouseSpeedSlider.floatValue = [(NJOutputMouseMove *)output speed];
     }
     else if ([output isKindOfClass:NJOutputMouseButton.class]) {
-        [radioButtons selectCellAtRow:4 column:0];
-        [mouseBtnSelect selectSegmentWithTag:[(NJOutputMouseButton *)output button]];
+        [self.radioButtons selectCellAtRow:4 column:0];
+        [self.mouseBtnSelect selectSegmentWithTag:[(NJOutputMouseButton *)output button]];
     }
     else if ([output isKindOfClass:NJOutputMouseScroll.class]) {
-        [radioButtons selectCellAtRow:5 column:0];
+        [self.radioButtons selectCellAtRow:5 column:0];
         int direction = [(NJOutputMouseScroll *)output direction];
         float speed = [(NJOutputMouseScroll *)output speed];
         BOOL smooth = [(NJOutputMouseScroll *)output smooth];
-        [scrollDirSelect selectSegmentWithTag:direction];
-        scrollSpeedSlider.floatValue = speed;
-        smoothCheck.state = smooth ? NSOnState : NSOffState;
-        scrollSpeedSlider.enabled = smooth;
+        [self.scrollDirSelect selectSegmentWithTag:direction];
+        self.scrollSpeedSlider.floatValue = speed;
+        self.smoothCheck.state = smooth ? NSOnState : NSOffState;
+        self.scrollSpeedSlider.enabled = smooth;
     } else {
-        [radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
+        [self.radioButtons selectCellAtRow:self.enabled ? 0 : -1 column:0];
     }
     [self cleanUpInterface];
 }
 
 - (void)focusKey {
-    if (radioButtons.selectedRow <= 1)
-        [keyInput.window makeFirstResponder:keyInput];
+    if (self.radioButtons.selectedRow <= 1)
+        [self.keyInput.window makeFirstResponder:self.keyInput];
     else
-        [keyInput resignIfFirstResponder];
+        [self.keyInput resignIfFirstResponder];
 }
 
 - (void)mappingListDidChange:(NSNotification *)note {
     NSArray *mappings = note.userInfo[NJMappingListKey];
-    NJMapping *current = mappingPopup.selectedItem.representedObject;
-    [mappingPopup.menu removeAllItems];
+    NJMapping *current = self.mappingPopup.selectedItem.representedObject;
+    [self.mappingPopup.menu removeAllItems];
     for (NJMapping *mapping in mappings) {
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:mapping.name
                                                       action:@selector(mappingChosen:)
                                                keyEquivalent:@""];
         item.target = self;
         item.representedObject = mapping;
-        [mappingPopup.menu addItem:item];
+        [self.mappingPopup.menu addItem:item];
     }
-    [mappingPopup selectItemWithIdenticalRepresentedObject:current];
+    [self.mappingPopup selectItemWithIdenticalRepresentedObject:current];
 }
 
 @end

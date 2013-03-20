@@ -14,19 +14,19 @@
 
 @protocol NJOutputViewControllerDelegate;
 
-@interface NJOutputViewController : NSObject <NJKeyInputFieldDelegate> {
-    IBOutlet NJKeyInputField *keyInput;
-    IBOutlet NSMatrix *radioButtons;
-    IBOutlet NSSegmentedControl *mouseDirSelect;
-    IBOutlet NSSlider *mouseSpeedSlider;
-    IBOutlet NSSegmentedControl *mouseBtnSelect;
-    IBOutlet NSSegmentedControl *scrollDirSelect;
-    IBOutlet NSSlider *scrollSpeedSlider;
-    IBOutlet NSTextField *title;
-    IBOutlet NSPopUpButton *mappingPopup;
-    IBOutlet NSButton *smoothCheck;
-    IBOutlet NSButton *unknownMapping;
-}
+@interface NJOutputViewController : NSObject <NJKeyInputFieldDelegate>
+
+@property (nonatomic, strong) IBOutlet NJKeyInputField *keyInput;
+@property (nonatomic, strong) IBOutlet NSMatrix *radioButtons;
+@property (nonatomic, strong) IBOutlet NSSegmentedControl *mouseDirSelect;
+@property (nonatomic, strong) IBOutlet NSSlider *mouseSpeedSlider;
+@property (nonatomic, strong) IBOutlet NSSegmentedControl *mouseBtnSelect;
+@property (nonatomic, strong) IBOutlet NSSegmentedControl *scrollDirSelect;
+@property (nonatomic, strong) IBOutlet NSSlider *scrollSpeedSlider;
+@property (nonatomic, strong) IBOutlet NSTextField *title;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *mappingPopup;
+@property (nonatomic, strong) IBOutlet NSButton *smoothCheck;
+@property (nonatomic, strong) IBOutlet NSButton *unknownMapping;
 
 @property (nonatomic, weak) IBOutlet id <NJOutputViewControllerDelegate> delegate;
 
