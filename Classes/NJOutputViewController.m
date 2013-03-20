@@ -30,11 +30,6 @@
             selector:@selector(mappingListDidChange:)
             name:NJEventMappingListChanged
             object:nil];
-        [NSNotificationCenter.defaultCenter
-             addObserver:self
-             selector:@selector(mappingDidChange:)
-             name:NJEventMappingChanged
-             object:nil];
     }
     return self;
 }
@@ -157,10 +152,6 @@
     [self commit];
 }
 
-- (NJOutput *)currentOutput {
-    return inputController.currentMapping[_input];
-}
-
 - (NJOutput *)makeOutput {
     switch (radioButtons.selectedRow) {
         case 0:
@@ -176,7 +167,8 @@
             break;
         case 2: {
             NJOutputMapping *c = [[NJOutputMapping alloc] init];
-            c.mapping = inputController.mappings[mappingPopup.indexOfSelectedItem];
+            c.mapping = [self.delegate outputViewController:self
+                                            mappingForIndex:mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {
@@ -204,8 +196,9 @@
 
 - (void)commit {
     [self cleanUpInterface];
-    inputController.currentMapping[_input] = [self makeOutput];
-    [inputController save];
+    [self.delegate outputViewController:self
+                              setOutput:[self makeOutput]
+                               forInput:_input];
 }
 
 - (BOOL)enabled {
@@ -227,11 +220,12 @@
 }
 
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input {
+    _input = input;
     if (!input) {
-        self.enabled = NO;
+        [self setEnabled:NO];
         title.stringValue = @"";
     } else {
-        self.enabled = YES;
+        [self setEnabled:YES];
         NSString *inpFullName = input.name;
         for (NJInputPathElement *cur = input.parent; cur; cur = cur.parent) {
             inpFullName = [[NSString alloc] initWithFormat:@"%@ ▸ %@", cur.name, inpFullName];
@@ -273,11 +267,6 @@
     [self cleanUpInterface];
 }
 
-- (void)loadInput:(NJInput *)input {
-    _input = input;
-    [self loadOutput:self.currentOutput forInput:input];
-}
-
 - (void)focusKey {
     if (radioButtons.selectedRow <= 1)
         [keyInput.window makeFirstResponder:keyInput];
@@ -298,10 +287,6 @@
         [mappingPopup.menu addItem:item];
     }
     [mappingPopup selectItemWithIdenticalRepresentedObject:current];
-}
-
-- (void)mappingDidChange:(NSNotification *)note {
-    [self loadInput:_input];
 }
 
 @end

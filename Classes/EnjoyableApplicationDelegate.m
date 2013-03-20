@@ -20,7 +20,7 @@
 - (void)didSwitchApplication:(NSNotification *)note {
     NSRunningApplication *activeApp = note.userInfo[NSWorkspaceApplicationKey];
     if (activeApp)
-        [self.inputController activateMappingForProcess:activeApp];
+        [self.ic activateMappingForProcess:activeApp];
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
@@ -40,11 +40,11 @@
         name:NJEventSimulationStopped
         object:nil];
 
-    [self.inputController load];
+    [self.ic load];
     [self.mvc.mappingList reloadData];
     [self.mvc changedActiveMappingToIndex:
-     [self.inputController indexOfMapping:
-      self.inputController.currentMapping]];
+     [self.ic indexOfMapping:
+      self.ic.currentMapping]];
 
     statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:36];
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
@@ -136,6 +136,7 @@
             [self performSelector:@selector(flashStatusItem)
                        withObject:self
                        afterDelay:0.2 * i];
+    [self loadOutputForInput:self.dvc.selectedHandler];
 }
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -148,16 +149,16 @@
     NSURL *URL = [NSURL fileURLWithPath:filename];
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:URL
                                                        error:&error];
-    if ([[self.inputController mappingForKey:mapping.name] hasConflictWith:mapping]) {
-        [self promptForMapping:mapping atIndex:self.inputController.mappings.count];
-    } else if ([self.inputController  mappingForKey:mapping.name]) {
-        [[self.inputController mappingForKey:mapping.name] mergeEntriesFrom:mapping];
+    if ([[self.ic mappingForKey:mapping.name] hasConflictWith:mapping]) {
+        [self promptForMapping:mapping atIndex:self.ic.mappings.count];
+    } else if ([self.ic  mappingForKey:mapping.name]) {
+        [[self.ic mappingForKey:mapping.name] mergeEntriesFrom:mapping];
     } else if (mapping) {
         [self.mvc beginUpdates];
-        [self.inputController addMapping:mapping];
-        [self.mvc addedMappingAtIndex:self.inputController.mappings.count - 1 startEditing:NO];
+        [self.ic addMapping:mapping];
+        [self.mvc addedMappingAtIndex:self.ic.mappings.count - 1 startEditing:NO];
         [self.mvc endUpdates];
-        [self.inputController activateMapping:mapping];
+        [self.ic activateMapping:mapping];
     } else {
         [self.window presentError:error
                    modalForWindow:self.window
@@ -169,7 +170,7 @@
 }
 
 - (void)mappingWasChosen:(NJMapping *)mapping {
-    [self.inputController activateMapping:mapping];
+    [self.ic activateMapping:mapping];
 }
 
 - (void)mappingListShouldOpen {
@@ -229,12 +230,12 @@
                       NSError *error;
                       NJMapping *mapping = [NJMapping mappingWithContentsOfURL:panel.URL
                                                                          error:&error];
-                      if ([[self.inputController mappingForKey:mapping.name] hasConflictWith:mapping]) {
-                          [self promptForMapping:mapping atIndex:self.inputController.mappings.count];
-                      } else if ([self.inputController mappingForKey:mapping.name]) {
-                          [[self.inputController mappingForKey:mapping.name] mergeEntriesFrom:mapping];
+                      if ([[self.ic mappingForKey:mapping.name] hasConflictWith:mapping]) {
+                          [self promptForMapping:mapping atIndex:self.ic.mappings.count];
+                      } else if ([self.ic mappingForKey:mapping.name]) {
+                          [[self.ic mappingForKey:mapping.name] mergeEntriesFrom:mapping];
                       } else if (mapping) {
-                          [self.inputController addMapping:mapping];
+                          [self.ic addMapping:mapping];
                       } else {
                           [self.window presentError:error
                                      modalForWindow:self.window
@@ -249,7 +250,7 @@
 - (void)exportMappingClicked:(id)sender {
     NSSavePanel *panel = [NSSavePanel savePanel];
     panel.allowedFileTypes = @[ @"enjoyable" ];
-    NJMapping *mapping = self.inputController.currentMapping;
+    NJMapping *mapping = self.ic.currentMapping;
     panel.nameFieldStringValue = [mapping.name stringByFixingPathComponent];
     [panel beginSheetModalForWindow:self.window
                   completionHandler:^(NSInteger result) {
@@ -277,15 +278,15 @@
     [alert.window orderOut:nil];
     switch (returnCode) {
         case NSAlertFirstButtonReturn: // Merge
-            [self.inputController mergeMapping:newMapping intoMapping:oldMapping];
-            [self.inputController activateMapping:oldMapping];
+            [self.ic mergeMapping:newMapping intoMapping:oldMapping];
+            [self.ic activateMapping:oldMapping];
             break;
         case NSAlertThirdButtonReturn: // New Mapping
             [self.mvc beginUpdates];
-            [self.inputController addMapping:newMapping];
+            [self.ic addMapping:newMapping];
             [self.mvc addedMappingAtIndex:idx startEditing:YES];
             [self.mvc endUpdates];
-            [self.inputController activateMapping:newMapping];
+            [self.ic activateMapping:newMapping];
             break;
         default: // Cancel, other.
             break;
@@ -293,7 +294,7 @@
 }
 
 - (void)promptForMapping:(NJMapping *)mapping atIndex:(NSInteger)idx {
-    NJMapping *mergeInto = [self.inputController mappingForKey:mapping.name];
+    NJMapping *mergeInto = [self.ic mappingForKey:mapping.name];
     NSAlert *conflictAlert = [[NSAlert alloc] init];
     conflictAlert.messageText = NSLocalizedString(@"import conflict prompt", @"Title of import conflict alert");
     conflictAlert.informativeText =
@@ -311,18 +312,18 @@
 }
 
 - (NSInteger)numberOfMappings:(NJMappingsViewController *)mvc {
-    return self.inputController.mappings.count;
+    return self.ic.mappings.count;
 }
 
 - (NJMapping *)mappingsViewController:(NJMappingsViewController *)mvc
                       mappingForIndex:(NSUInteger)idx {
-    return self.inputController.mappings[idx];
+    return self.ic.mappings[idx];
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
           renameMappingAtIndex:(NSInteger)index
                         toName:(NSString *)name {
-    [self.inputController renameMapping:self.inputController.mappings[index]
+    [self.ic renameMapping:self.ic.mappings[index]
                                         to:name];
 }
 
@@ -330,7 +331,7 @@
        canMoveMappingFromIndex:(NSInteger)fromIdx
                        toIndex:(NSInteger)toIdx {
     return fromIdx != toIdx && fromIdx != 0 && toIdx != 0
-            && toIdx < (NSInteger)self.inputController.mappings.count;
+            && toIdx < (NSInteger)self.ic.mappings.count;
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
@@ -338,7 +339,7 @@
                        toIndex:(NSInteger)toIdx {
     [mvc beginUpdates];
     [mvc.mappingList moveRowAtIndex:fromIdx toIndex:toIdx];
-    [self.inputController moveMoveMappingFromIndex:fromIdx toIndex:toIdx];
+    [self.ic moveMoveMappingFromIndex:fromIdx toIndex:toIdx];
     [mvc endUpdates];
 }
 
@@ -351,7 +352,7 @@
           removeMappingAtIndex:(NSInteger)idx {
     [mvc beginUpdates];
     [mvc removedMappingAtIndex:idx];
-    [self.inputController removeMappingAtIndex:idx];
+    [self.ic removeMappingAtIndex:idx];
     [mvc endUpdates];
 }
 
@@ -361,14 +362,14 @@
                          error:(NSError **)error {
     NJMapping *mapping = [NJMapping mappingWithContentsOfURL:url
                                                        error:error];
-    if ([[self.inputController mappingForKey:mapping.name] hasConflictWith:mapping]) {
+    if ([[self.ic mappingForKey:mapping.name] hasConflictWith:mapping]) {
         [self promptForMapping:mapping atIndex:index];
-    } else if ([self.inputController mappingForKey:mapping.name]) {
-        [[self.inputController mappingForKey:mapping.name] mergeEntriesFrom:mapping];
+    } else if ([self.ic mappingForKey:mapping.name]) {
+        [[self.ic mappingForKey:mapping.name] mergeEntriesFrom:mapping];
     } else if (mapping) {
         [self.mvc beginUpdates];
         [self.mvc addedMappingAtIndex:index startEditing:NO];
-        [self.inputController insertMapping:mapping atIndex:index];
+        [self.ic insertMapping:mapping atIndex:index];
         [self.mvc endUpdates];
     }
     return !!mapping;
@@ -377,39 +378,44 @@
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
                     addMapping:(NJMapping *)mapping {
     [mvc beginUpdates];
-    [mvc addedMappingAtIndex:self.inputController.mappings.count startEditing:YES];
-    [self.inputController addMapping:mapping];
+    [mvc addedMappingAtIndex:self.ic.mappings.count startEditing:YES];
+    [self.ic addMapping:mapping];
     [mvc endUpdates];
-    [self.inputController activateMapping:mapping];
+    [self.ic activateMapping:mapping];
 }
 
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
            choseMappingAtIndex:(NSInteger)idx {
-    [self.inputController activateMapping:self.inputController.mappings[idx]];
+    [self.ic activateMapping:self.ic.mappings[idx]];
 }
 
 - (id)deviceViewController:(NJDeviceViewController *)dvc
              elementForUID:(NSString *)uid {
-    return [self.inputController elementForUID:uid];
+    return [self.ic elementForUID:uid];
+}
+
+- (void)loadOutputForInput:(NJInput *)input {
+    NJOutput *output = self.ic.currentMapping[input];
+    [self.oc loadOutput:output forInput:input];
 }
 
 - (void)deviceViewControllerDidSelectNothing:(NJDeviceViewController *)dvc {
-    [self.outputController loadInput:dvc.selectedHandler];
+    [self loadOutputForInput:nil];
 }
 
 - (void)deviceViewController:(NJDeviceViewController *)dvc
              didSelectBranch:(NJInputPathElement *)handler {
-    [self.outputController loadInput:dvc.selectedHandler];
+    [self loadOutputForInput:dvc.selectedHandler];
 }
 
 - (void)deviceViewController:(NJDeviceViewController *)dvc
             didSelectHandler:(NJInputPathElement *)handler {
-    [self.outputController loadInput:dvc.selectedHandler];
+    [self loadOutputForInput:dvc.selectedHandler];
 }
 
 - (void)deviceViewController:(NJDeviceViewController *)dvc
              didSelectDevice:(NJInputPathElement *)device {
-    [self.outputController loadInput:dvc.selectedHandler];
+    [self loadOutputForInput:dvc.selectedHandler];
 }
 
 - (void)inputController:(NJInputController *)ic
@@ -432,8 +438,8 @@
 
 - (void)inputController:(NJInputController *)ic didInput:(NJInput *)input {
     [self.dvc expandAndSelectItem:input];
-    [self.outputController loadInput:input];
-    [self.outputController focusKey];
+    [self loadOutputForInput:input];
+    [self.oc focusKey];
 }
 
 - (void)inputController:(NJInputController *)ic didError:(NSError *)error {
@@ -452,16 +458,28 @@
 }
 
 - (NSInteger)numberOfDevicesInDeviceList:(NJDeviceViewController *)dvc {
-    return self.inputController.devices.count;
+    return self.ic.devices.count;
 }
 
 - (NJDevice *)deviceViewController:(NJDeviceViewController *)dvc
                     deviceForIndex:(NSUInteger)idx {
-    return self.inputController.devices[idx];
+    return self.ic.devices[idx];
 }
 
 - (IBAction)simulatingEventsChanged:(NSButton *)sender {
-    self.inputController.simulatingEvents = sender.state == NSOnState;
+    self.ic.simulatingEvents = sender.state == NSOnState;
+}
+
+- (void)outputViewController:(NJOutputViewController *)ovc
+                   setOutput:(NJOutput *)output
+                    forInput:(NJInput *)input {
+    self.ic.currentMapping[input] = output;
+    [self.ic save];
+}
+
+- (NJMapping *)outputViewController:(NJOutputViewController *)ovc
+                    mappingForIndex:(NSUInteger)index {
+    return self.ic.mappings[index];
 }
 
 @end

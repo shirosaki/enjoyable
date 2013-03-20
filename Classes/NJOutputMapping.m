@@ -33,7 +33,7 @@
 - (void)trigger {
     EnjoyableApplicationDelegate *ctrl = (EnjoyableApplicationDelegate *)NSApplication.sharedApplication.delegate;
     if (_mapping) {
-        [ctrl.inputController activateMapping:_mapping];
+        [ctrl.ic activateMapping:_mapping];
         self.mappingName = _mapping.name;
     } else {
         // TODO: Show an error message? Unobtrusively since something

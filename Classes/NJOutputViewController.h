@@ -8,9 +8,11 @@
 
 #import "NJKeyInputField.h"
 
-@class NJInputController;
-@class NJOutput;
 @class NJInput;
+@class NJOutput;
+@class NJMapping;
+
+@protocol NJOutputViewControllerDelegate;
 
 @interface NJOutputViewController : NSObject <NJKeyInputFieldDelegate> {
     IBOutlet NJKeyInputField *keyInput;
@@ -22,14 +24,15 @@
     IBOutlet NSSlider *scrollSpeedSlider;
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *mappingPopup;
-    IBOutlet NJInputController *inputController;
     IBOutlet NSButton *smoothCheck;
     IBOutlet NSButton *unknownMapping;
 }
 
-@property (assign) BOOL enabled;
+@property (nonatomic, weak) IBOutlet id <NJOutputViewControllerDelegate> delegate;
 
-- (void)loadInput:(NJInput *)input;
+- (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input;
+- (void)focusKey;
+
 - (IBAction)radioChanged:(id)sender;
 - (IBAction)mdirChanged:(id)sender;
 - (IBAction)mbtnChanged:(id)sender;
@@ -38,6 +41,14 @@
 - (IBAction)scrollSpeedChanged:(id)sender;
 - (IBAction)scrollTypeChanged:(id)sender;
 
-- (void)focusKey;
+@end
+
+@protocol NJOutputViewControllerDelegate
+
+- (NJMapping *)outputViewController:(NJOutputViewController *)ovc
+                    mappingForIndex:(NSUInteger)index;
+- (void)outputViewController:(NJOutputViewController *)ovc
+                   setOutput:(NJOutput *)output
+                    forInput:(NJInput *)input;
 
 @end

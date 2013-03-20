@@ -16,11 +16,12 @@
                                                     NJInputControllerDelegate,
                                                     NJDeviceViewControllerDelegate,
                                                     NJMappingsViewControllerDelegate,
+                                                    NJOutputViewControllerDelegate,
                                                     NJMappingMenuDelegate,
                                                     NSWindowDelegate>
 
-@property (nonatomic, strong) IBOutlet NJInputController *inputController;
-@property (nonatomic, strong) IBOutlet NJOutputViewController *outputController;
+@property (nonatomic, strong) IBOutlet NJInputController *ic;
+@property (nonatomic, strong) IBOutlet NJOutputViewController *oc;
 @property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 @property (nonatomic, strong) IBOutlet NJDeviceViewController *dvc;
 
