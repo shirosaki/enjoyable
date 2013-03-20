@@ -12,7 +12,7 @@
 @class NJOutput;
 @class NJInput;
 
-@interface NJOutputController : NSObject <NJKeyInputFieldDelegate> {
+@interface NJOutputViewController : NSObject <NJKeyInputFieldDelegate> {
     IBOutlet NJKeyInputField *keyInput;
     IBOutlet NSMatrix *radioButtons;
     IBOutlet NSSegmentedControl *mouseDirSelect;

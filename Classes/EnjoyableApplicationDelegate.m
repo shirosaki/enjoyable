@@ -412,31 +412,31 @@
     [self.outputController loadInput:dvc.selectedHandler];
 }
 
-- (void)deviceController:(NJInputController *)dc
-            didAddDevice:(NJDevice *)device {
-    [self.dvc addedDevice:device atIndex:dc.devices.count - 1];
+- (void)inputController:(NJInputController *)ic
+           didAddDevice:(NJDevice *)device {
+    [self.dvc addedDevice:device atIndex:ic.devices.count - 1];
 }
 
-- (void)deviceController:(NJInputController *)dc
-  didRemoveDeviceAtIndex:(NSInteger)idx {
+- (void)inputController:(NJInputController *)ic
+ didRemoveDeviceAtIndex:(NSInteger)idx {
     [self.dvc removedDeviceAtIndex:idx];
 }
 
-- (void)deviceControllerDidStartHID:(NJInputController *)dc {
+- (void)inputControllerDidStartHID:(NJInputController *)ic {
     [self.dvc hidStarted];
 }
 
-- (void)deviceControllerDidStopHID:(NJInputController *)dc {
+- (void)inputControllerDidStopHID:(NJInputController *)ic {
     [self.dvc hidStopped];
 }
 
-- (void)deviceController:(NJInputController *)dc didInput:(NJInput *)input {
+- (void)inputController:(NJInputController *)ic didInput:(NJInput *)input {
     [self.dvc expandAndSelectItem:input];
     [self.outputController loadInput:input];
     [self.outputController focusKey];
 }
 
-- (void)deviceController:(NJInputController *)dc didError:(NSError *)error {
+- (void)inputController:(NJInputController *)ic didError:(NSError *)error {
     // Since the error shows the window, it can trigger another attempt
     // to re-open the HID manager, which will also probably fail and error,
     // so don't bother repeating ourselves.

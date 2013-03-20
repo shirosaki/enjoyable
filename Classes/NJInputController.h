@@ -1,9 +1,6 @@
 //
-//  NJDeviceController.h
-//  Enjoy
-//
-//  Created by Sam McCall on 4/05/09.
-//  Copyright 2009 University of Otago. All rights reserved.
+//  NJInputController.h
+//  Enjoyable
 //
 
 #import "NJHIDManager.h"
@@ -48,11 +45,11 @@
 
 @protocol NJInputControllerDelegate
 
-- (void)deviceController:(NJInputController *)dc didAddDevice:(NJDevice *)device;
-- (void)deviceController:(NJInputController *)dc didRemoveDeviceAtIndex:(NSInteger)idx;
-- (void)deviceController:(NJInputController *)dc didInput:(NJInput *)input;
-- (void)deviceControllerDidStartHID:(NJInputController *)dc;
-- (void)deviceControllerDidStopHID:(NJInputController *)dc;
-- (void)deviceController:(NJInputController *)dc didError:(NSError *)error;
+- (void)inputController:(NJInputController *)ic didAddDevice:(NJDevice *)device;
+- (void)inputController:(NJInputController *)ic didRemoveDeviceAtIndex:(NSInteger)idx;
+- (void)inputController:(NJInputController *)ic didInput:(NJInput *)input;
+- (void)inputControllerDidStartHID:(NJInputController *)ic;
+- (void)inputControllerDidStopHID:(NJInputController *)ic;
+- (void)inputController:(NJInputController *)ic didError:(NSError *)error;
 
 @end

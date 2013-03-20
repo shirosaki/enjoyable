@@ -5,7 +5,7 @@
 //  Created by Sam McCall on 5/05/09.
 //
 
-#import "NJOutputController.h"
+#import "NJOutputViewController.h"
 
 #import "NJMapping.h"
 #import "NJInput.h"
@@ -13,13 +13,13 @@
 #import "NJInputController.h"
 #import "NJKeyInputField.h"
 #import "NJOutputMapping.h"
-#import "NJOutputController.h"
+#import "NJOutputViewController.h"
 #import "NJOutputKeyPress.h"
 #import "NJOutputMouseButton.h"
 #import "NJOutputMouseMove.h"
 #import "NJOutputMouseScroll.h"
 
-@implementation NJOutputController {
+@implementation NJOutputViewController {
     NJInput *_input;
 }
 

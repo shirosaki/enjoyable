@@ -6,12 +6,10 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class NJMappingsController;
-
 #import "NJMappingMenuController.h"
 #import "NJMappingsViewController.h"
 #import "NJDeviceViewController.h"
-#import "NJOutputController.h"
+#import "NJOutputViewController.h"
 #import "NJInputController.h"
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
@@ -22,7 +20,7 @@
                                                     NSWindowDelegate>
 
 @property (nonatomic, strong) IBOutlet NJInputController *inputController;
-@property (nonatomic, strong) IBOutlet NJOutputController *outputController;
+@property (nonatomic, strong) IBOutlet NJOutputViewController *outputController;
 @property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 @property (nonatomic, strong) IBOutlet NJDeviceViewController *dvc;
 

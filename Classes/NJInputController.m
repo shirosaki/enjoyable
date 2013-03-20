@@ -1,8 +1,6 @@
 //
-//  NJDeviceController.m
-//  Enjoy
-//
-//  Created by Sam McCall on 4/05/09.
+//  NJInputController.m
+//  Enjoyable
 //
 
 #import "NJInputController.h"
@@ -108,7 +106,7 @@
     if (!handler)
         return;
     
-    [self.delegate deviceController:self didInput:handler];
+    [self.delegate inputController:self didInput:handler];
 }
 
 - (void)hidManager:(NJHIDManager *)manager
@@ -140,7 +138,7 @@
 - (void)hidManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
     NJDevice *match = [[NJDevice alloc] initWithDevice:device];
     [self addDevice:match];
-    [self.delegate deviceController:self didAddDevice:match];
+    [self.delegate inputController:self didAddDevice:match];
 }
 
 - (NJDevice *)findDeviceByRef:(IOHIDDeviceRef)device {
@@ -155,7 +153,7 @@
     if (match) {
         NSInteger idx = [_devices indexOfObjectIdenticalTo:match];
         [_devices removeObjectAtIndex:idx];
-        [self.delegate deviceController:self didRemoveDeviceAtIndex:idx];
+        [self.delegate inputController:self didRemoveDeviceAtIndex:idx];
     }
 }
 
@@ -173,17 +171,17 @@
 }
 
 - (void)hidManager:(NJHIDManager *)manager didError:(NSError *)error {
-    [self.delegate deviceController:self didError:error];
+    [self.delegate inputController:self didError:error];
     self.simulatingEvents = NO;
 }
 
 - (void)hidManagerDidStart:(NJHIDManager *)manager {
-    [self.delegate deviceControllerDidStartHID:self];
+    [self.delegate inputControllerDidStartHID:self];
 }
 
 - (void)hidManagerDidStop:(NJHIDManager *)manager {
     [_devices removeAllObjects];
-    [self.delegate deviceControllerDidStopHID:self];
+    [self.delegate inputControllerDidStopHID:self];
 }
 
 - (void)startHid {
