@@ -13,7 +13,6 @@
 #import "NJInput.h"
 #import "NJOutput.h"
 #import "NJEvents.h"
-#import "NJDeviceViewController.h"
 
 @implementation NJDeviceController {
     NJHIDManager *_hidManager;
@@ -198,8 +197,6 @@
 - (void)setSimulatingEvents:(BOOL)simulatingEvents {
     if (simulatingEvents != _simulatingEvents) {
         _simulatingEvents = simulatingEvents;
-        NSInteger state = simulatingEvents ? NSOnState : NSOffState;
-        simulatingEventsButton.state = state;
         NSString *name = simulatingEvents
             ? NJEventSimulationStarted
             : NJEventSimulationStopped;
@@ -216,19 +213,6 @@
 - (void)stopHidIfDisabled:(NSNotification *)application {
     if (!self.simulatingEvents && !NSProcessInfo.processInfo.isBeingDebugged)
         [self stopHid];
-}
-
-- (IBAction)simulatingEventsChanged:(NSButton *)sender {
-    self.simulatingEvents = sender.state == NSOnState;
-}
-
-- (NSInteger)numberOfDevicesInDeviceList:(NJDeviceViewController *)dvc {
-    return _devices.count;
-}
-
-- (NJDevice *)deviceViewController:(NJDeviceViewController *)dvc
-                    deviceForIndex:(NSUInteger)idx {
-    return _devices[idx];
 }
 
 - (NJInputPathElement *)objectForKeyedSubscript:(NSString *)uid {

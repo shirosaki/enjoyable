@@ -19,11 +19,7 @@
                                                     NJDeviceViewControllerDelegate,
                                                     NJMappingsViewControllerDelegate,
                                                     NJMappingMenuDelegate,
-                                                    NSWindowDelegate> {
-    IBOutlet NSMenu *dockMenu;
-    IBOutlet NSMenu *statusItemMenu;
-    IBOutlet NSWindow *window;
-}
+                                                    NSWindowDelegate>
 
 @property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
 @property (nonatomic, strong) IBOutlet NJDeviceController *deviceController;
@@ -31,8 +27,14 @@
 @property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 @property (nonatomic, strong) IBOutlet NJDeviceViewController *dvc;
 
+@property (nonatomic, strong) IBOutlet NSMenu *dockMenu;
+@property (nonatomic, strong) IBOutlet NSMenu *statusItemMenu;
+@property (nonatomic, strong) IBOutlet NSWindow *window;
+@property (nonatomic, strong) IBOutlet NSButton *simulatingEventsButton;
+
 - (IBAction)restoreToForeground:(id)sender;
 - (IBAction)importMappingClicked:(id)sender;
 - (IBAction)exportMappingClicked:(id)sender;
+- (IBAction)simulatingEventsChanged:(NSButton *)sender;
 
 @end

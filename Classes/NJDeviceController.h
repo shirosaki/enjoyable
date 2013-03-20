@@ -7,24 +7,22 @@
 //
 
 #import "NJHIDManager.h"
-#import "NJDeviceViewController.h"
 
+@class NJDevice;
 @class NJInput;
+@class NJInputPathElement;
 @class NJMappingsController;
 
 @protocol NJDeviceControllerDelegate;
 
 @interface NJDeviceController : NSObject <NJHIDManagerDelegate> {
     IBOutlet NJMappingsController *mappingsController;
-    IBOutlet NSButton *simulatingEventsButton;
 }
 
 @property (nonatomic, weak) IBOutlet id <NJDeviceControllerDelegate> delegate;
 
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, assign) BOOL simulatingEvents;
-
-- (IBAction)simulatingEventsChanged:(NSButton *)sender;
 
 - (NJDevice *)objectAtIndexedSubscript:(NSUInteger)idx;
 - (NJInputPathElement *)objectForKeyedSubscript:(NSString *)uid;

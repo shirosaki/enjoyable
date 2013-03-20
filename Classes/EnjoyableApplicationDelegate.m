@@ -49,7 +49,7 @@
     statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:36];
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
     statusItem.highlightMode = YES;
-    statusItem.menu = statusItemMenu;
+    statusItem.menu = self.statusItemMenu;
     statusItem.target = self;
 }
 
@@ -58,7 +58,7 @@
         && NSRunningApplication.currentApplication.wasLaunchedAsLoginItemOrResume)
         [self transformIntoElement:nil];
     else
-        [window makeKeyAndOrderFront:nil];
+        [self.window makeKeyAndOrderFront:nil];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication
@@ -71,7 +71,7 @@
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
     [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
-    [window makeKeyAndOrderFront:sender];
+    [self.window makeKeyAndOrderFront:sender];
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(transformIntoElement:)
                                                object:self];
@@ -79,7 +79,7 @@
 }
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification {
-    if (window.isVisible)
+    if (self.window.isVisible)
         [self restoreToForeground:notification];
 }
 
@@ -109,6 +109,7 @@
 }
 
 - (void)eventSimulationStarted:(NSNotification *)note {
+    self.simulatingEventsButton.state = NSOnState;
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon"];
     [NSWorkspace.sharedWorkspace.notificationCenter
         addObserver:self
@@ -118,6 +119,7 @@
 }
 
 - (void)eventSimulationStopped:(NSNotification *)note {
+    self.simulatingEventsButton.state = NSOffState;
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
     [NSWorkspace.sharedWorkspace.notificationCenter
         removeObserver:self
@@ -129,7 +131,7 @@
     NSUInteger idx = [note.userInfo[NJMappingIndexKey] intValue];
     [self.mvc changedActiveMappingToIndex:idx];
 
-    if (!window.isVisible)
+    if (!self.window.isVisible)
         for (int i = 0; i < 4; ++i)
             [self performSelector:@selector(flashStatusItem)
                        withObject:self
@@ -137,7 +139,7 @@
 }
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender {
-    return dockMenu;
+    return self.dockMenu;
 }
 
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
@@ -157,11 +159,11 @@
         [self.mvc endUpdates];
         [self.mappingsController activateMapping:mapping];
     } else {
-        [window presentError:error
-              modalForWindow:window
-                    delegate:nil
-          didPresentSelector:nil
-                 contextInfo:nil];
+        [self.window presentError:error
+                   modalForWindow:self.window
+                         delegate:nil
+               didPresentSelector:nil
+                      contextInfo:nil];
     }
     return !!mapping;
 }
@@ -191,11 +193,11 @@
                        returnCode:(int)returnCode
                       contextInfo:(void *)contextInfo {
     [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"explained login items"];
-    [window performClose:sheet];
+    [self.window performClose:sheet];
 }
 
 - (BOOL)windowShouldClose:(NSWindow *)sender {
-    if (sender != window
+    if (sender != self.window
         || NSRunningApplication.currentApplication.isLoginItem
         || [NSUserDefaults.standardUserDefaults boolForKey:@"explained login items"])
         return YES;
@@ -203,7 +205,7 @@
         NSLocalizedString(@"login items prompt", @"alert prompt for adding to login items"),
         NSLocalizedString(@"login items add button", @"button to add to login items"),
         NSLocalizedString(@"login items don't add button", @"button to not add to login items"),
-        nil, window, self,
+        nil, self.window, self,
         @selector(loginItemPromptDidEnd:returnCode:contextInfo:),
         @selector(loginItemPromptDidDismiss:returnCode:contextInfo:),
         NULL,
@@ -219,7 +221,7 @@
 - (void)importMappingClicked:(id)sender {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     panel.allowedFileTypes = @[ @"enjoyable", @"json", @"txt" ];
-    [panel beginSheetModalForWindow:window
+    [panel beginSheetModalForWindow:self.window
                   completionHandler:^(NSInteger result) {
                       if (result != NSFileHandlingPanelOKButton)
                           return;
@@ -234,11 +236,11 @@
                       } else if (mapping) {
                           [self.mappingsController addMapping:mapping];
                       } else {
-                          [window presentError:error
-                                modalForWindow:window
-                                      delegate:nil
-                            didPresentSelector:nil
-                                   contextInfo:nil];
+                          [self.window presentError:error
+                                     modalForWindow:self.window
+                                           delegate:nil
+                                 didPresentSelector:nil
+                                        contextInfo:nil];
                       }
                   }];
     
@@ -249,18 +251,18 @@
     panel.allowedFileTypes = @[ @"enjoyable" ];
     NJMapping *mapping = self.mappingsController.currentMapping;
     panel.nameFieldStringValue = [mapping.name stringByFixingPathComponent];
-    [panel beginSheetModalForWindow:window
+    [panel beginSheetModalForWindow:self.window
                   completionHandler:^(NSInteger result) {
                       if (result != NSFileHandlingPanelOKButton)
                           return;
                       [panel close];
                       NSError *error;
                       if (![mapping writeToURL:panel.URL error:&error]) {
-                          [window presentError:error
-                                modalForWindow:window
-                                      delegate:nil
-                            didPresentSelector:nil
-                                   contextInfo:nil];
+                          [self.window presentError:error
+                                     modalForWindow:self.window
+                                           delegate:nil
+                                 didPresentSelector:nil
+                                        contextInfo:nil];
                       }
                   }];
 }
@@ -300,7 +302,7 @@
     [conflictAlert addButtonWithTitle:NSLocalizedString(@"import and merge", @"button to merge imported mappings")];
     [conflictAlert addButtonWithTitle:NSLocalizedString(@"cancel import", @"button to cancel import")];
     [conflictAlert addButtonWithTitle:NSLocalizedString(@"import new mapping", @"button to import as new mapping")];
-    [conflictAlert beginSheetModalForWindow:window
+    [conflictAlert beginSheetModalForWindow:self.window
                               modalDelegate:self
                              didEndSelector:@selector(mappingConflictDidResolve:returnCode:contextInfo:)
                                 contextInfo:(void *)CFBridgingRetain(@{ @"index": @(idx),
@@ -437,14 +439,14 @@
     // Since the error shows the window, it can trigger another attempt
     // to re-open the HID manager, which will also probably fail and error,
     // so don't bother repeating ourselves.
-    if (!window.attachedSheet) {
+    if (!self.window.attachedSheet) {
         [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
-        [window makeKeyAndOrderFront:nil];
-        [window presentError:error
-              modalForWindow:window
-                    delegate:nil
-          didPresentSelector:nil
-                 contextInfo:nil];
+        [self.window makeKeyAndOrderFront:nil];
+        [self.window presentError:error
+                   modalForWindow:self.window
+                         delegate:nil
+               didPresentSelector:nil
+                      contextInfo:nil];
     }
 }
 
@@ -455,6 +457,10 @@
 - (NJDevice *)deviceViewController:(NJDeviceViewController *)dvc
                     deviceForIndex:(NSUInteger)idx {
     return self.deviceController[idx];
+}
+
+- (IBAction)simulatingEventsChanged:(NSButton *)sender {
+    self.deviceController.simulatingEvents = sender.state == NSOnState;
 }
 
 @end
