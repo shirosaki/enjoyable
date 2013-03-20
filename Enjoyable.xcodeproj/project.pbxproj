@@ -39,14 +39,13 @@
 		EEF17D3816E8E2E100D7DC4D /* NSView+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D3216E8E2E100D7DC4D /* NSView+FirstResponder.m */; };
 		EEF17D5C16E8E2EF00D7DC4D /* EnjoyableApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D3A16E8E2EF00D7DC4D /* EnjoyableApplicationDelegate.m */; };
 		EEF17D5D16E8E2EF00D7DC4D /* NJDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D3C16E8E2EF00D7DC4D /* NJDevice.m */; };
-		EEF17D5E16E8E2EF00D7DC4D /* NJDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D3E16E8E2EF00D7DC4D /* NJDeviceController.m */; };
+		EEF17D5E16E8E2EF00D7DC4D /* NJInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D3E16E8E2EF00D7DC4D /* NJInputController.m */; };
 		EEF17D5F16E8E2EF00D7DC4D /* NJInput.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4016E8E2EF00D7DC4D /* NJInput.m */; };
 		EEF17D6016E8E2EF00D7DC4D /* NJInputAnalog.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4216E8E2EF00D7DC4D /* NJInputAnalog.m */; };
 		EEF17D6116E8E2EF00D7DC4D /* NJInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4416E8E2EF00D7DC4D /* NJInputButton.m */; };
 		EEF17D6216E8E2EF00D7DC4D /* NJInputHat.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4616E8E2EF00D7DC4D /* NJInputHat.m */; };
 		EEF17D6316E8E2EF00D7DC4D /* NJKeyInputField.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4916E8E2EF00D7DC4D /* NJKeyInputField.m */; };
 		EEF17D6416E8E2EF00D7DC4D /* NJMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4B16E8E2EF00D7DC4D /* NJMapping.m */; };
-		EEF17D6516E8E2EF00D7DC4D /* NJMappingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4D16E8E2EF00D7DC4D /* NJMappingsController.m */; };
 		EEF17D6616E8E2EF00D7DC4D /* NJOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D4F16E8E2EF00D7DC4D /* NJOutput.m */; };
 		EEF17D6716E8E2EF00D7DC4D /* NJOutputController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D5116E8E2EF00D7DC4D /* NJOutputController.m */; };
 		EEF17D6816E8E2EF00D7DC4D /* NJOutputKeyPress.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF17D5316E8E2EF00D7DC4D /* NJOutputKeyPress.m */; };
@@ -124,8 +123,8 @@
 		EEF17D3A16E8E2EF00D7DC4D /* EnjoyableApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnjoyableApplicationDelegate.m; path = Classes/EnjoyableApplicationDelegate.m; sourceTree = "<group>"; };
 		EEF17D3B16E8E2EF00D7DC4D /* NJDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJDevice.h; path = Classes/NJDevice.h; sourceTree = "<group>"; };
 		EEF17D3C16E8E2EF00D7DC4D /* NJDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJDevice.m; path = Classes/NJDevice.m; sourceTree = "<group>"; };
-		EEF17D3D16E8E2EF00D7DC4D /* NJDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJDeviceController.h; path = Classes/NJDeviceController.h; sourceTree = "<group>"; };
-		EEF17D3E16E8E2EF00D7DC4D /* NJDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJDeviceController.m; path = Classes/NJDeviceController.m; sourceTree = "<group>"; };
+		EEF17D3D16E8E2EF00D7DC4D /* NJInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJInputController.h; path = Classes/NJInputController.h; sourceTree = "<group>"; };
+		EEF17D3E16E8E2EF00D7DC4D /* NJInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJInputController.m; path = Classes/NJInputController.m; sourceTree = "<group>"; };
 		EEF17D3F16E8E2EF00D7DC4D /* NJInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJInput.h; path = Classes/NJInput.h; sourceTree = "<group>"; };
 		EEF17D4016E8E2EF00D7DC4D /* NJInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJInput.m; path = Classes/NJInput.m; sourceTree = "<group>"; };
 		EEF17D4116E8E2EF00D7DC4D /* NJInputAnalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJInputAnalog.h; path = Classes/NJInputAnalog.h; sourceTree = "<group>"; };
@@ -139,8 +138,6 @@
 		EEF17D4916E8E2EF00D7DC4D /* NJKeyInputField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJKeyInputField.m; path = Classes/NJKeyInputField.m; sourceTree = "<group>"; };
 		EEF17D4A16E8E2EF00D7DC4D /* NJMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJMapping.h; path = Classes/NJMapping.h; sourceTree = "<group>"; };
 		EEF17D4B16E8E2EF00D7DC4D /* NJMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJMapping.m; path = Classes/NJMapping.m; sourceTree = "<group>"; };
-		EEF17D4C16E8E2EF00D7DC4D /* NJMappingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJMappingsController.h; path = Classes/NJMappingsController.h; sourceTree = "<group>"; };
-		EEF17D4D16E8E2EF00D7DC4D /* NJMappingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJMappingsController.m; path = Classes/NJMappingsController.m; sourceTree = "<group>"; };
 		EEF17D4E16E8E2EF00D7DC4D /* NJOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJOutput.h; path = Classes/NJOutput.h; sourceTree = "<group>"; };
 		EEF17D4F16E8E2EF00D7DC4D /* NJOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJOutput.m; path = Classes/NJOutput.m; sourceTree = "<group>"; };
 		EEF17D5016E8E2EF00D7DC4D /* NJOutputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJOutputController.h; path = Classes/NJOutputController.h; sourceTree = "<group>"; };
@@ -176,10 +173,8 @@
 			children = (
 				EEF17D3916E8E2EF00D7DC4D /* EnjoyableApplicationDelegate.h */,
 				EEF17D3A16E8E2EF00D7DC4D /* EnjoyableApplicationDelegate.m */,
-				EEF17D3D16E8E2EF00D7DC4D /* NJDeviceController.h */,
-				EEF17D3E16E8E2EF00D7DC4D /* NJDeviceController.m */,
-				EEF17D4C16E8E2EF00D7DC4D /* NJMappingsController.h */,
-				EEF17D4D16E8E2EF00D7DC4D /* NJMappingsController.m */,
+				EEF17D3D16E8E2EF00D7DC4D /* NJInputController.h */,
+				EEF17D3E16E8E2EF00D7DC4D /* NJInputController.m */,
 				EEF17D5016E8E2EF00D7DC4D /* NJOutputController.h */,
 				EEF17D5116E8E2EF00D7DC4D /* NJOutputController.m */,
 				EEF17D4816E8E2EF00D7DC4D /* NJKeyInputField.h */,
@@ -442,14 +437,13 @@
 				EEF17D3816E8E2E100D7DC4D /* NSView+FirstResponder.m in Sources */,
 				EEF17D5C16E8E2EF00D7DC4D /* EnjoyableApplicationDelegate.m in Sources */,
 				EEF17D5D16E8E2EF00D7DC4D /* NJDevice.m in Sources */,
-				EEF17D5E16E8E2EF00D7DC4D /* NJDeviceController.m in Sources */,
+				EEF17D5E16E8E2EF00D7DC4D /* NJInputController.m in Sources */,
 				EEF17D5F16E8E2EF00D7DC4D /* NJInput.m in Sources */,
 				EEF17D6016E8E2EF00D7DC4D /* NJInputAnalog.m in Sources */,
 				EEF17D6116E8E2EF00D7DC4D /* NJInputButton.m in Sources */,
 				EEF17D6216E8E2EF00D7DC4D /* NJInputHat.m in Sources */,
 				EEF17D6316E8E2EF00D7DC4D /* NJKeyInputField.m in Sources */,
 				EEF17D6416E8E2EF00D7DC4D /* NJMapping.m in Sources */,
-				EEF17D6516E8E2EF00D7DC4D /* NJMappingsController.m in Sources */,
 				EEF17D6616E8E2EF00D7DC4D /* NJOutput.m in Sources */,
 				EEF17D6716E8E2EF00D7DC4D /* NJOutputController.m in Sources */,
 				EEF17D6816E8E2EF00D7DC4D /* NJOutputKeyPress.m in Sources */,

@@ -60,7 +60,7 @@
 - (void)untrigger {
 }
 
-- (BOOL)update:(NJDeviceController *)jc {
+- (BOOL)update:(NJInputController *)jc {
     return NO;
 }
 

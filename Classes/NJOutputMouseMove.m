@@ -7,7 +7,7 @@
 
 #import "NJOutputMouseMove.h"
 
-#import "NJDeviceController.h"
+#import "NJInputController.h"
 
 @implementation NJOutputMouseMove
 
@@ -37,7 +37,7 @@
 
 #define CLAMP(a, l, h) MIN(h, MAX(a, l))
 
-- (BOOL)update:(NJDeviceController *)jc {
+- (BOOL)update:(NJInputController *)jc {
     if (self.magnitude < 0.05)
         return NO; // dead zone
     

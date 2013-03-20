@@ -7,11 +7,10 @@
 
 #import "NJOutputController.h"
 
-#import "NJMappingsController.h"
 #import "NJMapping.h"
 #import "NJInput.h"
 #import "NJEvents.h"
-#import "NJDeviceController.h"
+#import "NJInputController.h"
 #import "NJKeyInputField.h"
 #import "NJOutputMapping.h"
 #import "NJOutputController.h"
@@ -159,7 +158,7 @@
 }
 
 - (NJOutput *)currentOutput {
-    return mappingsController.currentMapping[_input];
+    return inputController.currentMapping[_input];
 }
 
 - (NJOutput *)makeOutput {
@@ -177,7 +176,7 @@
             break;
         case 2: {
             NJOutputMapping *c = [[NJOutputMapping alloc] init];
-            c.mapping = mappingsController.mappings[mappingPopup.indexOfSelectedItem];
+            c.mapping = inputController.mappings[mappingPopup.indexOfSelectedItem];
             return c;
         }
         case 3: {
@@ -205,8 +204,8 @@
 
 - (void)commit {
     [self cleanUpInterface];
-    mappingsController.currentMapping[_input] = [self makeOutput];
-    [mappingsController save];
+    inputController.currentMapping[_input] = [self makeOutput];
+    [inputController save];
 }
 
 - (BOOL)enabled {

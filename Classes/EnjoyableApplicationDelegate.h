@@ -12,17 +12,16 @@
 #import "NJMappingsViewController.h"
 #import "NJDeviceViewController.h"
 #import "NJOutputController.h"
-#import "NJDeviceController.h"
+#import "NJInputController.h"
 
 @interface EnjoyableApplicationDelegate : NSObject <NSApplicationDelegate,
-                                                    NJDeviceControllerDelegate,
+                                                    NJInputControllerDelegate,
                                                     NJDeviceViewControllerDelegate,
                                                     NJMappingsViewControllerDelegate,
                                                     NJMappingMenuDelegate,
                                                     NSWindowDelegate>
 
-@property (nonatomic, strong) IBOutlet NJMappingsController *mappingsController;
-@property (nonatomic, strong) IBOutlet NJDeviceController *deviceController;
+@property (nonatomic, strong) IBOutlet NJInputController *inputController;
 @property (nonatomic, strong) IBOutlet NJOutputController *outputController;
 @property (nonatomic, strong) IBOutlet NJMappingsViewController *mvc;
 @property (nonatomic, strong) IBOutlet NJDeviceViewController *dvc;

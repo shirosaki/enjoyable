@@ -365,7 +365,6 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{7, 14}, {36, 25}}</string>
 								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="422366518">
@@ -415,7 +414,6 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{0, 14}, {140, 25}}</string>
 								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="850080795">
@@ -570,7 +568,7 @@ aW5nLg</string>
 													<string key="NSFrameSize">{232, 321}</string>
 													<reference key="NSSuperview" ref="698362889"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="1036252745"/>
+													<reference key="NSNextKeyView" ref="892486973"/>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -700,7 +698,7 @@ aW5nLg</string>
 									<string key="NSFrameSize">{234, 323}</string>
 									<reference key="NSSuperview" ref="734312853"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="892486973"/>
+									<reference key="NSNextKeyView" ref="698362889"/>
 									<int key="NSsFlags">150034</int>
 									<reference key="NSVScroller" ref="1036252745"/>
 									<reference key="NSHScroller" ref="892486973"/>
@@ -1218,6 +1216,101 @@ aW5nLg</string>
 				<string key="NSFrameAutosaveName">Enjoyable</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
+			<object class="NSMenu" id="388664617">
+				<string key="NSTitle"/>
+				<array class="NSMutableArray" key="NSMenuItems">
+					<object class="NSMenuItem" id="679462300">
+						<reference key="NSMenu" ref="388664617"/>
+						<string key="NSTitle">Enable</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="462014786">
+						<reference key="NSMenu" ref="388664617"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="937740972">
+						<reference key="NSMenu" ref="388664617"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="548842355">
+						<reference key="NSMenu" ref="388664617"/>
+						<string key="NSTitle">Show Enjoyable</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="567028745">
+						<reference key="NSMenu" ref="388664617"/>
+						<string key="NSTitle">Quit Enjoyable</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+				</array>
+			</object>
+			<object class="NSMenu" id="330397624">
+				<string key="NSTitle"/>
+				<array class="NSMutableArray" key="NSMenuItems">
+					<object class="NSMenuItem" id="803553950">
+						<reference key="NSMenu" ref="330397624"/>
+						<string key="NSTitle">Enable</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="598206649">
+						<reference key="NSMenu" ref="330397624"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+				</array>
+			</object>
+			<object class="NSCustomObject" id="207406104">
+				<string key="NSClassName">EnjoyableApplicationDelegate</string>
+			</object>
+			<object class="NSCustomObject" id="1007832501">
+				<string key="NSClassName">NJInputController</string>
+			</object>
+			<object class="NSCustomObject" id="801536542">
+				<string key="NSClassName">NJOutputController</string>
+			</object>
+			<object class="NSCustomObject" id="647344717">
+				<string key="NSClassName">NJDeviceViewController</string>
+			</object>
+			<object class="NSCustomObject" id="70919963">
+				<string key="NSClassName">NJMappingsViewController</string>
+			</object>
+			<object class="NSPopover" id="586993839">
+				<nil key="NSNextResponder"/>
+				<int key="NSAppearance">0</int>
+				<int key="NSBehavior">1</int>
+				<double key="NSContentWidth">0.0</double>
+				<double key="NSContentHeight">0.0</double>
+				<bool key="NSAnimates">YES</bool>
+			</object>
 			<object class="NSCustomView" id="671181514">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
@@ -1236,7 +1329,7 @@ aW5nLg</string>
 										<string key="NSFrameSize">{198, 198}</string>
 										<reference key="NSSuperview" ref="947403733"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="968378655"/>
+										<reference key="NSNextKeyView" ref="553414014"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1328,7 +1421,7 @@ aW5nLg</string>
 						<string key="NSFrame">{{0, 20}, {200, 200}}</string>
 						<reference key="NSSuperview" ref="671181514"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="553414014"/>
+						<reference key="NSNextKeyView" ref="947403733"/>
 						<int key="NSsFlags">150034</int>
 						<reference key="NSVScroller" ref="968378655"/>
 						<reference key="NSHScroller" ref="553414014"/>
@@ -1473,104 +1566,6 @@ aW5nLg</string>
 				<reference key="NSNextKeyView" ref="443618264"/>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSMenu" id="388664617">
-				<string key="NSTitle"/>
-				<array class="NSMutableArray" key="NSMenuItems">
-					<object class="NSMenuItem" id="679462300">
-						<reference key="NSMenu" ref="388664617"/>
-						<string key="NSTitle">Enable</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-					<object class="NSMenuItem" id="462014786">
-						<reference key="NSMenu" ref="388664617"/>
-						<bool key="NSIsDisabled">YES</bool>
-						<bool key="NSIsSeparator">YES</bool>
-						<string key="NSTitle"/>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-					<object class="NSMenuItem" id="937740972">
-						<reference key="NSMenu" ref="388664617"/>
-						<bool key="NSIsDisabled">YES</bool>
-						<bool key="NSIsSeparator">YES</bool>
-						<string key="NSTitle"/>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-					<object class="NSMenuItem" id="548842355">
-						<reference key="NSMenu" ref="388664617"/>
-						<string key="NSTitle">Show Enjoyable</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-					<object class="NSMenuItem" id="567028745">
-						<reference key="NSMenu" ref="388664617"/>
-						<string key="NSTitle">Quit Enjoyable</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-				</array>
-			</object>
-			<object class="NSMenu" id="330397624">
-				<string key="NSTitle"/>
-				<array class="NSMutableArray" key="NSMenuItems">
-					<object class="NSMenuItem" id="803553950">
-						<reference key="NSMenu" ref="330397624"/>
-						<string key="NSTitle">Enable</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-					<object class="NSMenuItem" id="598206649">
-						<reference key="NSMenu" ref="330397624"/>
-						<bool key="NSIsDisabled">YES</bool>
-						<bool key="NSIsSeparator">YES</bool>
-						<string key="NSTitle"/>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-				</array>
-			</object>
-			<object class="NSCustomObject" id="207406104">
-				<string key="NSClassName">EnjoyableApplicationDelegate</string>
-			</object>
-			<object class="NSPopover" id="586993839">
-				<nil key="NSNextResponder"/>
-				<int key="NSAppearance">0</int>
-				<int key="NSBehavior">1</int>
-				<double key="NSContentWidth">0.0</double>
-				<double key="NSContentHeight">0.0</double>
-				<bool key="NSAnimates">YES</bool>
-			</object>
-			<object class="NSCustomObject" id="468285243">
-				<string key="NSClassName">NJMappingsController</string>
-			</object>
-			<object class="NSCustomObject" id="1007832501">
-				<string key="NSClassName">NJDeviceController</string>
-			</object>
-			<object class="NSCustomObject" id="801536542">
-				<string key="NSClassName">NJOutputController</string>
-			</object>
-			<object class="NSCustomObject" id="647344717">
-				<string key="NSClassName">NJDeviceViewController</string>
-			</object>
-			<object class="NSCustomObject" id="70919963">
-				<string key="NSClassName">NJMappingsViewController</string>
-			</object>
 			<object class="NSCustomObject" id="9563326">
 				<string key="NSClassName">NJMappingMenuController</string>
 			</object>
@@ -1700,27 +1695,11 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">mappingsController</string>
-						<reference key="source" ref="1007832501"/>
-						<reference key="destination" ref="468285243"/>
-					</object>
-					<int key="connectionID">822</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="1007832501"/>
 						<reference key="destination" ref="207406104"/>
 					</object>
 					<int key="connectionID">1029</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">mappingsController</string>
-						<reference key="source" ref="207406104"/>
-						<reference key="destination" ref="468285243"/>
-					</object>
-					<int key="connectionID">820</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1788,14 +1767,6 @@ aW5nLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">deviceController</string>
-						<reference key="source" ref="207406104"/>
-						<reference key="destination" ref="1007832501"/>
-					</object>
-					<int key="connectionID">1026</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">outputController</string>
 						<reference key="source" ref="207406104"/>
 						<reference key="destination" ref="801536542"/>
@@ -1817,6 +1788,14 @@ aW5nLg</string>
 						<reference key="destination" ref="385218002"/>
 					</object>
 					<int key="connectionID">1031</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">inputController</string>
+						<reference key="source" ref="207406104"/>
+						<reference key="destination" ref="1007832501"/>
+					</object>
+					<int key="connectionID">1032</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1841,14 +1820,6 @@ aW5nLg</string>
 						<reference key="destination" ref="647344717"/>
 					</object>
 					<int key="connectionID">991</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">mappingsController</string>
-						<reference key="source" ref="801536542"/>
-						<reference key="destination" ref="468285243"/>
-					</object>
-					<int key="connectionID">821</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1993,6 +1964,14 @@ aW5nLg</string>
 						<reference key="destination" ref="529992855"/>
 					</object>
 					<int key="connectionID">1022</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">inputController</string>
+						<reference key="source" ref="801536542"/>
+						<reference key="destination" ref="1007832501"/>
+					</object>
+					<int key="connectionID">1034</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2536,11 +2515,6 @@ aW5nLg</string>
 						<int key="objectID">512</int>
 						<reference key="object" ref="1008023024"/>
 						<reference key="parent" ref="456935010"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">514</int>
-						<reference key="object" ref="468285243"/>
-						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">479</int>
@@ -3171,7 +3145,6 @@ aW5nLg</string>
 				</object>
 				<string key="511.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="512.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="514.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3373,7 +3346,7 @@ aW5nLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1031</int>
+			<int key="maxID">1034</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3405,10 +3378,9 @@ aW5nLg</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="deviceController">NJDeviceController</string>
 						<string key="dockMenu">NSMenu</string>
 						<string key="dvc">NJDeviceViewController</string>
-						<string key="mappingsController">NJMappingsController</string>
+						<string key="inputController">NJInputController</string>
 						<string key="mvc">NJMappingsViewController</string>
 						<string key="outputController">NJOutputController</string>
 						<string key="simulatingEventsButton">NSButton</string>
@@ -3416,10 +3388,6 @@ aW5nLg</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="deviceController">
-							<string key="name">deviceController</string>
-							<string key="candidateClassName">NJDeviceController</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="dockMenu">
 							<string key="name">dockMenu</string>
 							<string key="candidateClassName">NSMenu</string>
@@ -3428,9 +3396,9 @@ aW5nLg</string>
 							<string key="name">dvc</string>
 							<string key="candidateClassName">NJDeviceViewController</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="mappingsController">
-							<string key="name">mappingsController</string>
-							<string key="candidateClassName">NJMappingsController</string>
+						<object class="IBToOneOutletInfo" key="inputController">
+							<string key="name">inputController</string>
+							<string key="candidateClassName">NJInputController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mvc">
 							<string key="name">mvc</string>
@@ -3456,28 +3424,6 @@ aW5nLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EnjoyableApplicationDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NJDeviceController</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="delegate">id</string>
-						<string key="mappingsController">NJMappingsController</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="delegate">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="mappingsController">
-							<string key="name">mappingsController</string>
-							<string key="candidateClassName">NJMappingsController</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NJDeviceController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3510,6 +3456,25 @@ aW5nLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NJDeviceViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NJInputController</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NJInputController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3556,14 +3521,6 @@ aW5nLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NJMappingMenuController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NJMappingsController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NJMappingsController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3685,9 +3642,9 @@ aW5nLg</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="inputController">NJInputController</string>
 						<string key="keyInput">NJKeyInputField</string>
 						<string key="mappingPopup">NSPopUpButton</string>
-						<string key="mappingsController">NJMappingsController</string>
 						<string key="mouseBtnSelect">NSSegmentedControl</string>
 						<string key="mouseDirSelect">NSSegmentedControl</string>
 						<string key="mouseSpeedSlider">NSSlider</string>
@@ -3699,6 +3656,10 @@ aW5nLg</string>
 						<string key="unknownMapping">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="inputController">
+							<string key="name">inputController</string>
+							<string key="candidateClassName">NJInputController</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="keyInput">
 							<string key="name">keyInput</string>
 							<string key="candidateClassName">NJKeyInputField</string>
@@ -3706,10 +3667,6 @@ aW5nLg</string>
 						<object class="IBToOneOutletInfo" key="mappingPopup">
 							<string key="name">mappingPopup</string>
 							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="mappingsController">
-							<string key="name">mappingsController</string>
-							<string key="candidateClassName">NJMappingsController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mouseBtnSelect">
 							<string key="name">mouseBtnSelect</string>

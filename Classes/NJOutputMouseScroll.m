@@ -52,7 +52,7 @@
     }
 }
 
-- (BOOL)update:(NJDeviceController *)jc {
+- (BOOL)update:(NJInputController *)jc {
     if (self.magnitude < 0.05f)
         return NO; // dead zone
     

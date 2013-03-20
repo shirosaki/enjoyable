@@ -8,8 +8,7 @@
 
 #import "NJKeyInputField.h"
 
-@class NJMappingsController;
-@class NJDeviceController;
+@class NJInputController;
 @class NJOutput;
 @class NJInput;
 
@@ -23,7 +22,7 @@
     IBOutlet NSSlider *scrollSpeedSlider;
     IBOutlet NSTextField *title;
     IBOutlet NSPopUpButton *mappingPopup;
-    IBOutlet NJMappingsController *mappingsController;
+    IBOutlet NJInputController *inputController;
     IBOutlet NSButton *smoothCheck;
     IBOutlet NSButton *unknownMapping;
 }

@@ -6,7 +6,7 @@
 //  Copyright 2009 University of Otago. All rights reserved.
 //
 
-@class NJDeviceController;
+@class NJInputController;
 
 @interface NJOutput : NSObject
 
@@ -16,7 +16,7 @@
 
 - (void)trigger;
 - (void)untrigger;
-- (BOOL)update:(NJDeviceController *)jc;
+- (BOOL)update:(NJInputController *)jc;
 
 - (NSDictionary *)serialize;
 + (NJOutput *)outputDeserialize:(NSDictionary *)serialization;
