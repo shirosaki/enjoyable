@@ -4,17 +4,16 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import <IOKit/hid/IOHIDLib.h>
+
+    #import "NSError+Description.h"
+    #import "NSMenu+RepresentedObjectAccessors.h"
+    #import "NSView+FirstResponder.h"
+    #import "NSMutableArray+MoveObject.h"
+    #import "NSFileManager+UniqueNames.h"
+    #import "NSString+FixFilename.h"
+    #import "NSRunningApplication+NJPossibleNames.h"
+    #import "NSRunningApplication+LoginItem.h"
+    #import "NSOutlineView+ItemAccessors.h"
+    #import "NSProcessInfo+Debugging.h"
 #endif
-
-#import <IOKit/hid/IOHIDLib.h>
-
-#import "NSError+Description.h"
-#import "NSMenu+RepresentedObjectAccessors.h"
-#import "NSView+FirstResponder.h"
-#import "NSMutableArray+MoveObject.h"
-#import "NSFileManager+UniqueNames.h"
-#import "NSString+FixFilename.h"
-#import "NSRunningApplication+NJPossibleNames.h"
-#import "NSRunningApplication+LoginItem.h"
-#import "NSOutlineView+ItemAccessors.h"
-#import "NSProcessInfo+Debugging.h"

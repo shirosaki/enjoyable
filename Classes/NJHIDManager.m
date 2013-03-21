@@ -1,11 +1,3 @@
-//
-//  NJHIDManager.m
-//  Enjoyable
-//
-//  Created by Joe Wreschnig on 3/13/13.
-//
-//
-
 #import "NJHIDManager.h"
 
 @implementation NJHIDManager {
@@ -27,21 +19,21 @@
     [self stop];
 }
 
-static void input_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
+static void _input(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
     NJHIDManager *self = (__bridge NJHIDManager *)ctx;
     IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
-    [self.delegate hidManager:self valueChanged:value fromDevice:device];
+    [self.delegate HIDManager:self valueChanged:value fromDevice:device];
 }
 
-static void add_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
+static void _add(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
     NJHIDManager *self = (__bridge NJHIDManager *)ctx;
-    [self.delegate hidManager:self deviceAdded:device];
-    IOHIDDeviceRegisterInputValueCallback(device, input_callback, ctx);
+    [self.delegate HIDManager:self deviceAdded:device];
+    IOHIDDeviceRegisterInputValueCallback(device, _input, ctx);
 }
 
-static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
+static void _remove(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {
     NJHIDManager *self = (__bridge NJHIDManager *)ctx;
-    [self.delegate hidManager:self deviceRemoved:device];
+    [self.delegate HIDManager:self deviceRemoved:device];
 }
 
 - (void)start {
@@ -54,14 +46,14 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
         NSError *error = [NSError errorWithDomain:NSMachErrorDomain code:ret userInfo:nil];
         IOHIDManagerClose(manager, kIOHIDOptionsTypeNone);
         CFRelease(manager);
-        [self.delegate hidManager:self didError:error];
+        [self.delegate HIDManager:self didError:error];
         NSLog(@"Error starting HID manager: %@.", error);
     } else {
         _manager = manager;
         IOHIDManagerScheduleWithRunLoop(_manager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-        IOHIDManagerRegisterDeviceMatchingCallback(_manager, add_callback, (__bridge void *)self);
-        IOHIDManagerRegisterDeviceRemovalCallback(_manager, remove_callback, (__bridge void *)self);
-        [self.delegate hidManagerDidStart:self];
+        IOHIDManagerRegisterDeviceMatchingCallback(_manager, _add, (__bridge void *)self);
+        IOHIDManagerRegisterDeviceRemovalCallback(_manager, _remove, (__bridge void *)self);
+        [self.delegate HIDManagerDidStart:self];
         NSLog(@"Started HID manager.");
     }
 }
@@ -73,12 +65,19 @@ static void remove_callback(void *ctx, IOReturn inResult, void *inSender, IOHIDD
     IOHIDManagerClose(_manager, kIOHIDOptionsTypeNone);
     CFRelease(_manager);
     _manager = NULL;
-    [self.delegate hidManagerDidStop:self];
+    [self.delegate HIDManagerDidStop:self];
     NSLog(@"Stopped HID manager.");
 }
 
 - (BOOL)running {
     return !!_manager;
+}
+
+- (void)setRunning:(BOOL)running {
+    if (running)
+        [self start];
+    else
+        [self stop];
 }
 
 - (NSArray *)criteria {

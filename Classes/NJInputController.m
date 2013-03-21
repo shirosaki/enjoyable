@@ -12,7 +12,7 @@
 #import "NJEvents.h"
 
 @implementation NJInputController {
-    NJHIDManager *_hidManager;
+    NJHIDManager *_HIDManager;
     NSTimer *_continuousOutputsTick;
     NSMutableArray *_continousOutputs;
     NSMutableArray *_devices;
@@ -28,7 +28,7 @@
         _devices = [[NSMutableArray alloc] initWithCapacity:16];
         _continousOutputs = [[NSMutableArray alloc] initWithCapacity:32];
         
-        _hidManager = [[NJHIDManager alloc] initWithCriteria:@[
+        _HIDManager = [[NJHIDManager alloc] initWithCriteria:@[
                        @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
                        NSSTR(kIOHIDDeviceUsageKey) : @(kHIDUsage_GD_Joystick) },
                        @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
@@ -109,7 +109,7 @@
     [self.delegate inputController:self didInput:handler];
 }
 
-- (void)hidManager:(NJHIDManager *)manager
+- (void)HIDManager:(NJHIDManager *)manager
       valueChanged:(IOHIDValueRef)value
         fromDevice:(IOHIDDeviceRef)device {
     if (self.simulatingEvents
@@ -135,7 +135,7 @@
     [_devices addObject:device];
 }
 
-- (void)hidManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
+- (void)HIDManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device {
     NJDevice *match = [[NJDevice alloc] initWithDevice:device];
     [self addDevice:match];
     [self.delegate inputController:self didAddDevice:match];
@@ -148,7 +148,7 @@
     return nil;
 }
 
-- (void)hidManager:(NJHIDManager *)manager deviceRemoved:(IOHIDDeviceRef)device {
+- (void)HIDManager:(NJHIDManager *)manager deviceRemoved:(IOHIDDeviceRef)device {
     NJDevice *match = [self findDeviceByRef:device];
     if (match) {
         NSInteger idx = [_devices indexOfObjectIdenticalTo:match];
@@ -170,26 +170,26 @@
     }
 }
 
-- (void)hidManager:(NJHIDManager *)manager didError:(NSError *)error {
+- (void)HIDManager:(NJHIDManager *)manager didError:(NSError *)error {
     [self.delegate inputController:self didError:error];
     self.simulatingEvents = NO;
 }
 
-- (void)hidManagerDidStart:(NJHIDManager *)manager {
+- (void)HIDManagerDidStart:(NJHIDManager *)manager {
     [self.delegate inputControllerDidStartHID:self];
 }
 
-- (void)hidManagerDidStop:(NJHIDManager *)manager {
+- (void)HIDManagerDidStop:(NJHIDManager *)manager {
     [_devices removeAllObjects];
     [self.delegate inputControllerDidStopHID:self];
 }
 
 - (void)startHid {
-    [_hidManager start];
+    [_HIDManager start];
 }
 
 - (void)stopHid {
-    [_hidManager stop];
+    [_HIDManager stop];
 }
 
 - (void)setSimulatingEvents:(BOOL)simulatingEvents {
