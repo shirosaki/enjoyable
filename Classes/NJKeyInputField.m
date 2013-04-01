@@ -20,6 +20,9 @@ enum {
 
 const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 
+@interface NJKeyInputField () <NSTextFieldDelegate>
+@end
+
 @implementation NJKeyInputField {
     NSTextField *field;
     NSImageView *warning;
@@ -52,7 +55,7 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 
 - (void)clear {
     self.keyCode = NJKeyInputFieldEmpty;
-        [self.delegate keyInputFieldDidClear:self];
+    [self.delegate keyInputFieldDidClear:self];
     [self resignIfFirstResponder];
 }
 
@@ -60,7 +63,7 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
     return self.keyCode != NJKeyInputFieldEmpty;
 }
 
-+ (NSString *)stringForKeyCode:(CGKeyCode)keyCode {
++ (NSString *)displayNameForKeyCode:(CGKeyCode)keyCode {
     switch (keyCode) {
         case kVK_F1: return @"F1";
         case kVK_F2: return @"F2";
@@ -204,7 +207,6 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
         case kVK_ApplicationMenu:
             return NSLocalizedString(@"Menu", "keyboard key");
 
-            
         case kVK_MAX: // NJKeyInputFieldEmpty
             return @"";
         default:
@@ -230,7 +232,7 @@ const CGKeyCode NJKeyInputFieldEmpty = kVK_MAX;
 
 - (void)setKeyCode:(CGKeyCode)keyCode {
     _keyCode = keyCode;
-    field.stringValue = [NJKeyInputField stringForKeyCode:keyCode];
+    field.stringValue = [NJKeyInputField displayNameForKeyCode:keyCode];
 }
 
 - (void)keyDown:(NSEvent *)event {

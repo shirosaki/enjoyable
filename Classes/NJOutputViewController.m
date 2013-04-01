@@ -83,7 +83,7 @@
         
 }
 
-- (IBAction)radioChanged:(NSView *)sender {
+- (IBAction)outputTypeChanged:(NSView *)sender {
     [sender.window makeFirstResponder:sender];
     if (self.radioButtons.selectedRow == 1)
         [self.keyInput.window makeFirstResponder:self.keyInput];
@@ -108,7 +108,7 @@
     [self commit];
 }
 
-- (void)mdirChanged:(NSView *)sender {
+- (void)mouseDirectionChanged:(NSView *)sender {
     [self.radioButtons selectCellAtRow:3 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
@@ -120,13 +120,13 @@
     [self commit];
 }
 
-- (void)mbtnChanged:(NSView *)sender {
+- (void)mouseButtonChanged:(NSView *)sender {
     [self.radioButtons selectCellAtRow:4 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];
 }
 
-- (void)sdirChanged:(NSView *)sender {
+- (void)scrollDirectionChanged:(NSView *)sender {
     [self.radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
     [self commit];

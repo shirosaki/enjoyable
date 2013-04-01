@@ -46,5 +46,4 @@
     // A menu item representing the current event simulation state.
     // This outlet is optional.
 
-
 @end

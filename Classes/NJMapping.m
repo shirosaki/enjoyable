@@ -39,7 +39,7 @@
         if ([entries isKindOfClass:NSDictionary.class]) {
             for (id key in entries) {
                 if ([key isKindOfClass:NSString.class]) {
-                    NJOutput *output = [NJOutput outputDeserialize:entries[key]];
+                    NJOutput *output = [NJOutput outputWithSerialization:entries[key]];
                     if (output)
                         _entries[key] = output;
                 }

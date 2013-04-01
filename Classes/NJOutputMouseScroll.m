@@ -21,7 +21,7 @@
               };
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
++ (NJOutput *)outputWithSerialization:(NSDictionary *)serialization {
     NJOutputMouseScroll *output = [[NJOutputMouseScroll alloc] init];
     output.direction = [serialization[@"direction"] intValue];
     output.speed = [serialization[@"speed"] floatValue];
@@ -52,7 +52,7 @@
     }
 }
 
-- (BOOL)update:(NJInputController *)jc {
+- (BOOL)update:(NJInputController *)ic {
     if (self.magnitude < 0.05f)
         return NO; // dead zone
     

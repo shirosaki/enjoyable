@@ -21,7 +21,7 @@
         : nil;
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
++ (NJOutput *)outputWithSerialization:(NSDictionary *)serialization {
     NJOutputKeyPress *output = [[NJOutputKeyPress alloc] init];
     output.keyCode = [serialization[@"key"] intValue];
     return output;

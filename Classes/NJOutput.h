@@ -16,10 +16,10 @@
 
 - (void)trigger;
 - (void)untrigger;
-- (BOOL)update:(NJInputController *)jc;
+- (BOOL)update:(NJInputController *)ic;
 
 - (NSDictionary *)serialize;
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization;
++ (NJOutput *)outputWithSerialization:(NSDictionary *)serialization;
 + (NSString *)serializationCode;
 
 - (void)postLoadProcess:(id <NSFastEnumeration>)allMappings;

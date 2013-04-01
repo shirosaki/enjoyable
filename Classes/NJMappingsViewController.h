@@ -37,7 +37,6 @@
 - (void)beginUpdates;
 - (void)endUpdates;
 
-
 @end
 
 @protocol NJMappingsViewControllerDelegate

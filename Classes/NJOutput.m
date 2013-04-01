@@ -36,7 +36,7 @@
     return [[self serialize] hash];
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
++ (NJOutput *)outputWithSerialization:(NSDictionary *)serialization {
     // Don't crash loading old/bad mappings (but don't load them either).
     if (![serialization isKindOfClass:NSDictionary.class])
         return nil;
@@ -48,7 +48,7 @@
                         NJOutputMouseScroll.class
          ]) {
         if ([type isEqualToString:cls.serializationCode])
-            return [cls outputDeserialize:serialization];
+            return [cls outputWithSerialization:serialization];
     }
     
     return nil;
@@ -60,7 +60,7 @@
 - (void)untrigger {
 }
 
-- (BOOL)update:(NJInputController *)jc {
+- (BOOL)update:(NJInputController *)ic {
     return NO;
 }
 

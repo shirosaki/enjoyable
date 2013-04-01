@@ -23,7 +23,7 @@
         : nil;
 }
 
-+ (NJOutputMapping *)outputDeserialize:(NSDictionary *)serialization {
++ (NJOutputMapping *)outputWithSerialization:(NSDictionary *)serialization {
     NSString *name = serialization[@"name"];
     NJOutputMapping *output = [[NJOutputMapping alloc] init];
     output.mappingName = name;

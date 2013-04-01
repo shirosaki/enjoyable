@@ -15,7 +15,6 @@
 - (id)initWithDevice:(IOHIDDeviceRef)device;
 
 @property (nonatomic, assign) int index;
-@property (nonatomic, copy) NSString *productName;
 @property (nonatomic, assign) IOHIDDeviceRef device;
 
 - (NJInput *)handlerForEvent:(IOHIDValueRef)value;

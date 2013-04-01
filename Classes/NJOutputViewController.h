@@ -33,10 +33,10 @@
 - (void)loadOutput:(NJOutput *)output forInput:(NJInput *)input;
 - (void)focusKey;
 
-- (IBAction)radioChanged:(id)sender;
-- (IBAction)mdirChanged:(id)sender;
-- (IBAction)mbtnChanged:(id)sender;
-- (IBAction)sdirChanged:(id)sender;
+- (IBAction)outputTypeChanged:(id)sender;
+- (IBAction)mouseDirectionChanged:(id)sender;
+- (IBAction)mouseButtonChanged:(id)sender;
+- (IBAction)scrollDirectionChanged:(id)sender;
 - (IBAction)mouseSpeedChanged:(id)sender;
 - (IBAction)scrollSpeedChanged:(id)sender;
 - (IBAction)scrollTypeChanged:(id)sender;

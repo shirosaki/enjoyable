@@ -66,9 +66,9 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id parent) {
 }
 
 - (id)initWithDevice:(IOHIDDeviceRef)dev {
-    if ((self = [super initWithName:nil eid:nil parent:nil])) {
+    NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
+    if ((self = [super initWithName:name eid:nil parent:nil])) {
         self.device = dev;
-        self.productName = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
         _vendorId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey)) intValue];
         _productId = [(__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey)) intValue];
         self.children = InputsForElement(dev, self);
@@ -79,12 +79,11 @@ static NSArray *InputsForElement(IOHIDDeviceRef device, id parent) {
 
 - (BOOL)isEqual:(id)object {
     return [object isKindOfClass:NJDevice.class]
-        && [[(NJDevice *)object productName] isEqualToString:self.productName]
-        && [(NJDevice *)object index] == self.index;
+        && [[(NJDevice *)object name] isEqualToString:self.name];
 }
 
 - (NSString *)name {
-    return [NSString stringWithFormat:@"%@ #%d", _productName, _index];
+    return [NSString stringWithFormat:@"%@ #%d", super.name, _index];
 }
 
 - (NSString *)uid {

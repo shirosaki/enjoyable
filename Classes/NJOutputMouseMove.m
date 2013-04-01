@@ -22,7 +22,7 @@
               };
 }
 
-+ (NJOutput *)outputDeserialize:(NSDictionary *)serialization {
++ (NJOutput *)outputWithSerialization:(NSDictionary *)serialization {
     NJOutputMouseMove *output = [[NJOutputMouseMove alloc] init];
     output.axis = [serialization[@"axis"] intValue];
     output.speed = [serialization[@"speed"] floatValue];
@@ -37,7 +37,7 @@
 
 #define CLAMP(a, l, h) MIN(h, MAX(a, l))
 
-- (BOOL)update:(NJInputController *)jc {
+- (BOOL)update:(NJInputController *)ic {
     if (self.magnitude < 0.05)
         return NO; // dead zone
     
@@ -58,10 +58,10 @@
             dy = self.magnitude * _speed;
             break;
     }
-    NSPoint mouseLoc = jc.mouseLoc;
+    NSPoint mouseLoc = ic.mouseLoc;
     mouseLoc.x = CLAMP(mouseLoc.x + dx, 0, size.width - 1);
     mouseLoc.y = CLAMP(mouseLoc.y - dy, 0, size.height - 1);
-    jc.mouseLoc = mouseLoc;
+    ic.mouseLoc = mouseLoc;
     
     CGEventRef move = CGEventCreateMouseEvent(NULL, kCGEventMouseMoved,
                                               CGPointMake(mouseLoc.x, size.height - mouseLoc.y),
