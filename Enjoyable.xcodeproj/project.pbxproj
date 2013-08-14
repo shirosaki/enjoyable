@@ -10,6 +10,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D594BEFF0FAE7397007A85F2 /* IOKit.framework */; };
 		EE1F3CEA16EF4182008C6426 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE1F3CE816EF4182008C6426 /* Localizable.strings */; };
+		EE35A6E417BBCC9500413995 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE35A6E317BBCC9500413995 /* CoreVideo.framework */; };
 		EE3D897A16EA7EFC00596D1F /* Status Menu Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897916EA7EFC00596D1F /* Status Menu Icon@2x.png */; };
 		EE3D897C16EA806E00596D1F /* Status Menu Icon Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */; };
 		EE3D897F16EA817E00596D1F /* Status Menu Icon Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */; };
@@ -77,6 +78,7 @@
 		8D1107320486CEB800E47090 /* Enjoyable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enjoyable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D594BEFF0FAE7397007A85F2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		EE1F3CE916EF4182008C6426 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EE35A6E317BBCC9500413995 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		EE3D897916EA7EFC00596D1F /* Status Menu Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon@2x.png"; path = "Resources/Status Menu Icon@2x.png"; sourceTree = "<group>"; };
 		EE3D897B16EA806E00596D1F /* Status Menu Icon Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled@2x.png"; path = "Resources/Status Menu Icon Disabled@2x.png"; sourceTree = "<group>"; };
 		EE3D897D16EA817E00596D1F /* Status Menu Icon Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Status Menu Icon Disabled.png"; path = "Resources/Status Menu Icon Disabled.png"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE35A6E417BBCC9500413995 /* CoreVideo.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */,
 				EED4CE7716EE195100C65AA8 /* Sparkle.framework in Frameworks */,
@@ -211,6 +214,7 @@
 		29B97314FDCFA39411CA2CEA /* Enjoy */ = {
 			isa = PBXGroup;
 			children = (
+				EE35A6E317BBCC9500413995 /* CoreVideo.framework */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				EE1D5F8B16E403D600749C36 /* Categories */,

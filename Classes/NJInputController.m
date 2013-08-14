@@ -11,13 +11,34 @@
 #import "NJOutput.h"
 #import "NJEvents.h"
 
+#import <CoreVideo/CoreVideo.h>
+
+@interface NJInputController ()
+
+- (void)updateContinuousOutputs;
+
+@end
+
+static CVReturn displayLink_update_cb(CVDisplayLinkRef displayLink,
+                                          const CVTimeStamp *inNow,
+                                          const CVTimeStamp *inOutputTime,
+                                          CVOptionFlags flagsIn,
+                                          CVOptionFlags *flagsOut,
+                                          void *ctxManager) {
+    NJInputController *manager = (__bridge NJInputController *)ctxManager;
+    [manager performSelectorOnMainThread:@selector(updateContinuousOutputs)
+                              withObject:nil
+                           waitUntilDone:NO];
+    return kCVReturnSuccess;
+}
+
 @implementation NJInputController {
     NJHIDManager *_HIDManager;
-    NSTimer *_continuousOutputsTick;
     NSMutableArray *_continousOutputs;
     NSMutableArray *_devices;
     NSMutableArray *_mappings;
     NJMapping *_manualMapping;
+    CVDisplayLinkRef displayLink;
 
 }
 
@@ -27,6 +48,17 @@
     if ((self = [super init])) {
         _devices = [[NSMutableArray alloc] initWithCapacity:16];
         _continousOutputs = [[NSMutableArray alloc] initWithCapacity:32];
+
+        CVReturn error = CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
+        if (error) {
+            [self.delegate inputController:self
+                                  didError:[NSError errorWithDomain:NSCocoaErrorDomain
+                                                               code:error
+                                                           userInfo:nil]];
+            NSLog(@"DisplayLink failed creation with error: %d.", error);
+            displayLink = NULL;
+        }
+        CVDisplayLinkSetOutputCallback(displayLink, displayLink_update_cb, (__bridge void *)self);
         
         _HIDManager = [[NJHIDManager alloc] initWithCriteria:@[
                        @{ NSSTR(kIOHIDDeviceUsagePageKey) : @(kHIDPage_GenericDesktop),
@@ -69,7 +101,10 @@
 
 - (void)dealloc {
     [NSNotificationCenter.defaultCenter removeObserver:self];
-    [_continuousOutputsTick invalidate];
+    if (displayLink) {
+        CVDisplayLinkStop(displayLink);
+        CVDisplayLinkRelease(displayLink);
+    }
 }
 
 - (void)addRunningOutput:(NJOutput *)output {
@@ -77,12 +112,8 @@
     // re-adding them or they trigger multiple times each time.
     if (![_continousOutputs containsObject:output])
         [_continousOutputs addObject:output];
-    if (!_continuousOutputsTick) {
-        _continuousOutputsTick = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0
-                                                           target:self
-                                                         selector:@selector(updateContinuousOutputs:)
-                                                         userInfo:nil
-                                                          repeats:YES];
+    if (displayLink && !CVDisplayLinkIsRunning(displayLink)) {
+        CVDisplayLinkStart(displayLink);
     }
 }
 
@@ -157,22 +188,23 @@
     }
 }
 
-- (void)updateContinuousOutputs:(NSTimer *)timer {
+- (void)updateContinuousOutputs {
     self.mouseLoc = [NSEvent mouseLocation];
     for (NJOutput *output in [_continousOutputs copy]) {
         if (![output update:self]) {
             [_continousOutputs removeObject:output];
         }
     }
-    if (!_continousOutputs.count) {
-        [_continuousOutputsTick invalidate];
-        _continuousOutputsTick = nil;
+    if (!_continousOutputs.count && displayLink) {
+        CVDisplayLinkStop(displayLink);
     }
 }
 
 - (void)HIDManager:(NJHIDManager *)manager didError:(NSError *)error {
     [self.delegate inputController:self didError:error];
     self.simulatingEvents = NO;
+    if (displayLink)
+        CVDisplayLinkStop(displayLink);
 }
 
 - (void)HIDManagerDidStart:(NJHIDManager *)manager {
@@ -181,6 +213,8 @@
 
 - (void)HIDManagerDidStop:(NJHIDManager *)manager {
     [_devices removeAllObjects];
+    if (displayLink)
+        CVDisplayLinkStop(displayLink);
     [self.delegate inputControllerDidStopHID:self];
 }
 
