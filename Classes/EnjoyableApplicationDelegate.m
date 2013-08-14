@@ -112,6 +112,8 @@
 - (void)eventSimulationStarted:(NSNotification *)note {
     self.simulatingEventsButton.state = NSOnState;
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon"];
+    [NSProcessInfo.processInfo
+        disableAutomaticTermination:@"Event simulation running."];
     [NSWorkspace.sharedWorkspace.notificationCenter
         addObserver:self
         selector:@selector(didSwitchApplication:)
@@ -122,6 +124,8 @@
 - (void)eventSimulationStopped:(NSNotification *)note {
     self.simulatingEventsButton.state = NSOffState;
     statusItem.image = [NSImage imageNamed:@"Status Menu Icon Disabled"];
+    [NSProcessInfo.processInfo
+        enableAutomaticTermination:@"Event simulation running."];
     [NSWorkspace.sharedWorkspace.notificationCenter
         removeObserver:self
         name:NSWorkspaceDidActivateApplicationNotification
