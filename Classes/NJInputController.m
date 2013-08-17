@@ -266,10 +266,10 @@ static CVReturn displayLink_update_cb(CVDisplayLinkRef displayLink,
 - (void)mappingsSet {
     [self postLoadProcess];
     [NSNotificationCenter.defaultCenter
-     postNotificationName:NJEventMappingListChanged
-     object:self
-     userInfo:@{ NJMappingListKey: _mappings,
-     NJMappingKey: _currentMapping }];
+        postNotificationName:NJEventMappingListChanged
+        object:self
+        userInfo:@{ NJMappingListKey: _mappings,
+                    NJMappingKey: _currentMapping }];
 }
 
 - (void)mappingsChanged {

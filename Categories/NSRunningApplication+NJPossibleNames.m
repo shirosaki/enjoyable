@@ -10,6 +10,21 @@
 
 @implementation NSRunningApplication (NJPossibleNames)
 
+- (NSArray *)windowTitles {
+    NSMutableArray *titles = [[NSMutableArray alloc] initWithCapacity:4];
+    NSArray *windows = CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionAll, kCGNullWindowID));
+    for (NSDictionary *props in windows) {
+        NSNumber *pid = props[(id)kCGWindowOwnerPID];
+        if (pid.longValue == self.processIdentifier && props[(id)kCGWindowName])
+            [titles addObject:props[(id)kCGWindowName]];
+    }
+    return titles;
+}
+
+- (NSString *)frontWindowTitle {
+    return self.windowTitles[0];
+}
+
 - (NSArray *)possibleMappingNames {
     NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity:4];
     if (self.bundleIdentifier)
@@ -20,6 +35,8 @@
         [names addObject:[self.bundleURL.lastPathComponent stringByDeletingPathExtension]];
     if (self.executableURL)
         [names addObject:self.executableURL.lastPathComponent];
+    if (self.frontWindowTitle)
+        [names addObject:self.frontWindowTitle];
     return names;
 }
 
@@ -32,13 +49,17 @@
         @"com.macromedia.Flash Player Debugger.app",
         @"com.macromedia.Flash Player.app",
         ];
-    BOOL probablyWrong = [genericBundles containsObject:self.bundleIdentifier];
+    NSArray *genericExecutables = @[ @"wine.bin" ];
+    BOOL probablyWrong = ([genericBundles containsObject:self.bundleIdentifier]
+                          || [genericExecutables containsObject:self.localizedName]);
     if (!probablyWrong && self.localizedName)
         return self.localizedName;
     else if (!probablyWrong && self.bundleIdentifier)
         return self.bundleIdentifier;
     else if (self.bundleURL)
         return [self.bundleURL.lastPathComponent stringByDeletingPathExtension];
+    else if (self.frontWindowTitle)
+        return self.frontWindowTitle;
     else if (self.executableURL)
         return self.executableURL.lastPathComponent;
     else if (self.localizedName)
