@@ -295,8 +295,7 @@ static CVReturn displayLink_update_cb(CVDisplayLinkRef displayLink,
         if ([oldMapping.name.lowercaseString isEqualToString:@"@application"]
             || [oldMapping.name.lowercaseString isEqualToString:
                 NSLocalizedString(@"@Application", nil).lowercaseString]) {
-                oldMapping.name = app.bestMappingName;
-                [self mappingsChanged];
+                [self renameMapping:oldMapping to:app.bestMappingName];
             }
     }
     _manualMapping = oldMapping;
@@ -307,10 +306,10 @@ static CVReturn displayLink_update_cb(CVDisplayLinkRef displayLink,
     _currentMapping = mapping;
     NSUInteger idx = [self indexOfMapping:_currentMapping];
     [NSNotificationCenter.defaultCenter
-     postNotificationName:NJEventMappingChanged
-     object:self
-     userInfo:@{ NJMappingKey : _currentMapping,
-     NJMappingIndexKey: @(idx) }];
+        postNotificationName:NJEventMappingChanged
+        object:self
+        userInfo:@{ NJMappingKey : _currentMapping,
+                    NJMappingIndexKey: @(idx) }];
 }
 
 - (void)activateMapping:(NJMapping *)mapping {

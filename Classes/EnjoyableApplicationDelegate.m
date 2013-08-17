@@ -301,8 +301,7 @@
 - (void)mappingsViewController:(NJMappingsViewController *)mvc
           renameMappingAtIndex:(NSInteger)index
                         toName:(NSString *)name {
-    [self.ic renameMapping:self.ic.mappings[index]
-                                        to:name];
+    [self.ic renameMapping:self.ic.mappings[index] to:name];
 }
 
 - (BOOL)mappingsViewController:(NJMappingsViewController *)mvc
