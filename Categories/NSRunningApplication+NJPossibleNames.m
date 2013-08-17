@@ -11,8 +11,10 @@
 @implementation NSRunningApplication (NJPossibleNames)
 
 - (NSArray *)windowTitles {
+    static CGWindowListOption s_OPTIONS = (kCGWindowListOptionOnScreenOnly
+                                           | kCGWindowListExcludeDesktopElements);
     NSMutableArray *titles = [[NSMutableArray alloc] initWithCapacity:4];
-    NSArray *windows = CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionAll, kCGNullWindowID));
+    NSArray *windows = CFBridgingRelease(CGWindowListCopyWindowInfo(s_OPTIONS, kCGNullWindowID));
     for (NSDictionary *props in windows) {
         NSNumber *pid = props[(id)kCGWindowOwnerPID];
         if (pid.longValue == self.processIdentifier && props[(id)kCGWindowName])
