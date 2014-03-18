@@ -1,10 +1,9 @@
-Enjoyable
-=========
-
 Enjoyable is an application for Mac OS X which allows you to use
-controller inputs like a mouse or keyboard. If you've ever played a
-video game which only supports mouse and keyboard input but you want
-to use a joystick or gamepad, then Enjoyable is the program for you.
+controller inputs like a mouse or keyboard.
+
+If you've ever played a video game which only supports mouse and
+keyboard input but you want to use a joystick or gamepad, then
+Enjoyable will help you do that.
 
 Enjoyable supports
 
