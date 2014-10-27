@@ -46,7 +46,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>630</string>
+	<string>636</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>NSHumanReadableCopyright</key>
@@ -59,8 +59,6 @@
 	<string>YES</string>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
-	<key>SUFeedURL</key>
-	<string>http://yukkurigames.com/enjoyable/appcast.xml</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

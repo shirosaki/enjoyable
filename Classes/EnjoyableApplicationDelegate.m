@@ -5,8 +5,6 @@
 //  Created by Sam McCall on 4/05/09.
 //
 
-#import <Sparkle/Sparkle.h>
-
 #import "EnjoyableApplicationDelegate.h"
 
 #import "NJMapping.h"

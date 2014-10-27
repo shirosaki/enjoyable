@@ -22,8 +22,6 @@
 		EE83ACEC16F545EA00083E94 /* NJMappingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE83ACEB16F545EA00083E94 /* NJMappingsViewController.m */; };
 		EE8455DD16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8455DC16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m */; };
 		EED4CE6E16ED692400C65AA8 /* NJMappingMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */; };
-		EED4CE7716EE195100C65AA8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EED4CE7616EE195100C65AA8 /* Sparkle.framework */; };
-		EED4CE7816EE195B00C65AA8 /* Sparkle.framework in Copy Sparkle Framework */ = {isa = PBXBuildFile; fileRef = EED4CE7616EE195100C65AA8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		EEE703DC16F089FE002FDD69 /* NJHIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE703DB16F089FE002FDD69 /* NJHIDManager.m */; };
 		EEE703DE16F0B3F6002FDD69 /* NJInputPathElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE703DD16F0B3F6002FDD69 /* NJInputPathElement.m */; };
 		EEE73B1616EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE73B1516EA42E5009D9D99 /* NSRunningApplication+NJPossibleNames.m */; };
@@ -63,7 +61,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EED4CE7816EE195B00C65AA8 /* Sparkle.framework in Copy Sparkle Framework */,
 			);
 			name = "Copy Sparkle Framework";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,7 +93,6 @@
 		EE8455DC16F0E46B00F32A01 /* NSRunningApplication+LoginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunningApplication+LoginItem.m"; path = "Categories/NSRunningApplication+LoginItem.m"; sourceTree = "<group>"; };
 		EED4CE6C16ED692400C65AA8 /* NJMappingMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJMappingMenuController.h; path = Classes/NJMappingMenuController.h; sourceTree = "<group>"; };
 		EED4CE6D16ED692400C65AA8 /* NJMappingMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJMappingMenuController.m; path = Classes/NJMappingMenuController.m; sourceTree = "<group>"; };
-		EED4CE7616EE195100C65AA8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		EEE703DA16F089FE002FDD69 /* NJHIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJHIDManager.h; path = Classes/NJHIDManager.h; sourceTree = "<group>"; };
 		EEE703DB16F089FE002FDD69 /* NJHIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJHIDManager.m; path = Classes/NJHIDManager.m; sourceTree = "<group>"; };
 		EEE703DD16F0B3F6002FDD69 /* NJInputPathElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJInputPathElement.m; path = Classes/NJInputPathElement.m; sourceTree = "<group>"; };
@@ -164,7 +160,6 @@
 				EE35A6E417BBCC9500413995 /* CoreVideo.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				D594BF000FAE7397007A85F2 /* IOKit.framework in Frameworks */,
-				EED4CE7716EE195100C65AA8 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +182,6 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EED4CE7616EE195100C65AA8 /* Sparkle.framework */,
 				D594BEFF0FAE7397007A85F2 /* IOKit.framework */,
 				EE35A6E317BBCC9500413995 /* CoreVideo.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
