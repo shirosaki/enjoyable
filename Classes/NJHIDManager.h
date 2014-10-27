@@ -33,9 +33,7 @@
 - (void)HIDManager:(NJHIDManager *)manager deviceAdded:(IOHIDDeviceRef)device;
 - (void)HIDManager:(NJHIDManager *)manager deviceRemoved:(IOHIDDeviceRef)device;
 
-- (void)HIDManager:(NJHIDManager *)manager
-      valueChanged:(IOHIDValueRef)value
-        fromDevice:(IOHIDDeviceRef)device;
+- (void)HIDManager:(NJHIDManager *)manager valueChanged:(IOHIDValueRef)value;
 
 - (void)HIDManager:(NJHIDManager *)manager didError:(NSError *)error;
 

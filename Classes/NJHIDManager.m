@@ -21,8 +21,7 @@
 
 static void _input(void *ctx, IOReturn inResult, void *inSender, IOHIDValueRef value) {
     NJHIDManager *self = (__bridge NJHIDManager *)ctx;
-    IOHIDDeviceRef device = IOHIDQueueGetDevice(inSender);
-    [self.delegate HIDManager:self valueChanged:value fromDevice:device];
+    [self.delegate HIDManager:self valueChanged:value];
 }
 
 static void _add(void *ctx, IOReturn inResult, void *inSender, IOHIDDeviceRef device) {

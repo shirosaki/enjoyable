@@ -115,7 +115,9 @@ static CVReturn _updateDL(CVDisplayLinkRef displayLink,
         CVDisplayLinkStart(_displayLink);
 }
 
-- (void)runOutputForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
+- (void)runOutputForValue:(IOHIDValueRef)value {
+    IOHIDElementRef elt = value ? IOHIDValueGetElement(value) : NULL;
+    IOHIDDeviceRef device = elt ? IOHIDElementGetDevice(elt) : NULL;
     NJDevice *dev = [self findDeviceByRef:device];
     NJInput *mainInput = [dev inputForEvent:value];
     [mainInput notifyEvent:value];
@@ -129,7 +131,9 @@ static CVReturn _updateDL(CVDisplayLinkRef displayLink,
     }
 }
 
-- (void)showOutputForDevice:(IOHIDDeviceRef)device value:(IOHIDValueRef)value {
+- (void)showOutputForValue:(IOHIDValueRef)value {
+    IOHIDElementRef elt = value ? IOHIDValueGetElement(value) : NULL;
+    IOHIDDeviceRef device = elt ? IOHIDElementGetDevice(elt) : NULL;
     NJDevice *dev = [self findDeviceByRef:device];
     NJInput *handler = [dev handlerForEvent:value];
     if (!handler)
@@ -138,14 +142,11 @@ static CVReturn _updateDL(CVDisplayLinkRef displayLink,
     [self.delegate inputController:self didInput:handler];
 }
 
-- (void)HIDManager:(NJHIDManager *)manager
-      valueChanged:(IOHIDValueRef)value
-        fromDevice:(IOHIDDeviceRef)device {
-    if (self.simulatingEvents
-        && !NSApplication.sharedApplication.isActive) {
-        [self runOutputForDevice:device value:value];
+- (void)HIDManager:(NJHIDManager *)manager valueChanged:(IOHIDValueRef)value {
+    if (self.simulatingEvents && !NSApplication.sharedApplication.isActive) {
+        [self runOutputForValue:value];
     } else {
-        [self showOutputForDevice:device value:value];
+        [self showOutputForValue:value];
     }
 }
 
