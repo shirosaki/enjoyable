@@ -54,7 +54,7 @@
     
     if (row != 3) {
         self.mouseDirSelect.selectedSegment = -1;
-        self.mouseSpeedSlider.floatValue = self.mouseSpeedSlider.minValue;
+        self.mouseSpeedSlider.doubleValue = self.mouseSpeedSlider.minValue;
         [self.mouseDirSelect resignIfFirstResponder];
     } else {
         if (self.mouseDirSelect.selectedSegment == -1)
@@ -71,7 +71,7 @@
     
     if (row != 5) {
         self.scrollDirSelect.selectedSegment = -1;
-        self.scrollSpeedSlider.floatValue = self.scrollSpeedSlider.minValue;
+        self.scrollSpeedSlider.doubleValue = self.scrollSpeedSlider.minValue;
         self.smoothCheck.state = NSOffState;
         [self.scrollDirSelect resignIfFirstResponder];
         [self.scrollSpeedSlider resignIfFirstResponder];
@@ -142,12 +142,12 @@
     [self.radioButtons selectCellAtRow:5 column:0];
     [sender.window makeFirstResponder:sender];
     if (sender.state == NSOnState) {
-        self.scrollSpeedSlider.floatValue =
+        self.scrollSpeedSlider.doubleValue =
             self.scrollSpeedSlider.minValue
             + (self.scrollSpeedSlider.maxValue - self.scrollSpeedSlider.minValue) / 2;
         self.scrollSpeedSlider.enabled = YES;
     } else {
-        self.scrollSpeedSlider.floatValue = self.scrollSpeedSlider.minValue;
+        self.scrollSpeedSlider.doubleValue = self.scrollSpeedSlider.minValue;
         self.scrollSpeedSlider.enabled = NO;
     }
     [self commit];
@@ -174,18 +174,18 @@
         }
         case 3: {
             NJOutputMouseMove *mm = [[NJOutputMouseMove alloc] init];
-            mm.axis = self.mouseDirSelect.selectedSegment;
+            mm.axis = (int)self.mouseDirSelect.selectedSegment;
             mm.speed = self.mouseSpeedSlider.floatValue;
             return mm;
         }
         case 4: {
             NJOutputMouseButton *mb = [[NJOutputMouseButton alloc] init];
-            mb.button = [self.mouseBtnSelect.cell tagForSegment:self.mouseBtnSelect.selectedSegment];
+            mb.button = (int)[self.mouseBtnSelect.cell tagForSegment:self.mouseBtnSelect.selectedSegment];
             return mb;
         }
         case 5: {
             NJOutputMouseScroll *ms = [[NJOutputMouseScroll alloc] init];
-            ms.direction = [self.scrollDirSelect.cell tagForSegment:self.scrollDirSelect.selectedSegment];
+            ms.direction = (int)[self.scrollDirSelect.cell tagForSegment:self.scrollDirSelect.selectedSegment];
             ms.speed = self.scrollSpeedSlider.floatValue;
             ms.smooth = self.smoothCheck.state == NSOnState;
             return ms;

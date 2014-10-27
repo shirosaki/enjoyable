@@ -267,7 +267,7 @@ static BOOL isValidKeyCode(long code) {
     warning.hidden = YES;
     char *error = NULL;
     const char *s = field.stringValue.UTF8String;
-    long code = strtol(s, &error, 16);
+    short code = (short)strtol(s, &error, 16);
     
     if (!*error && isValidKeyCode(code) && field.stringValue.length) {
         self.keyCode = code;

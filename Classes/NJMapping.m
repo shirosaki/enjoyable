@@ -102,7 +102,9 @@
     NSInputStream *stream = [NSInputStream inputStreamWithURL:url];
     [stream open];
     NSDictionary *serialization = stream && !*error
-        ? [NSJSONSerialization JSONObjectWithStream:stream options:0 error:error]
+        ? [NSJSONSerialization JSONObjectWithStream:stream
+                                            options:(NSJSONReadingOptions)0
+                                              error:error]
         : nil;
     [stream close];
     

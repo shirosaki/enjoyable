@@ -380,7 +380,8 @@ static CVReturn _updateDL(CVDisplayLinkRef displayLink,
 - (void)removeMappingAtIndex:(NSInteger)idx {
     NSInteger currentIdx = [self indexOfMapping:_currentMapping];
     [_mappings removeObjectAtIndex:idx];
-    [self activateMapping:self.mappings[MIN(currentIdx, _mappings.count - 1)]];
+    NSInteger activeIdx = MIN(currentIdx, (NSInteger)_mappings.count - 1);
+    [self activateMapping:self.mappings[activeIdx]];
     [self mappingsChanged];
 }
 
