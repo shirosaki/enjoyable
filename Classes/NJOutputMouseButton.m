@@ -43,7 +43,7 @@
 }
 
 - (void)trigger {
-    CGFloat height = NSScreen.mainScreen.frame.size.height;
+    CGFloat height = ((NSScreen*)NSScreen.screens[0]).frame.size.height;
     NSPoint mouseLoc = NSEvent.mouseLocation;
     CGEventType eventType = _button == kCGMouseButtonLeft ? kCGEventLeftMouseDown
                           : _button == kCGMouseButtonRight ? kCGEventRightMouseDown
@@ -67,7 +67,7 @@
 - (void)untrigger {
     upTime = [NJOutputMouseButton dateWithClickInterval];
     NSPoint mouseLoc = NSEvent.mouseLocation;
-    CGFloat height = NSScreen.mainScreen.frame.size.height;
+    CGFloat height = ((NSScreen*)NSScreen.screens[0]).frame.size.height;
     CGEventType eventType = _button == kCGMouseButtonLeft ? kCGEventLeftMouseUp
                           : _button == kCGMouseButtonRight ? kCGEventRightMouseUp
                           : kCGEventOtherMouseUp;
