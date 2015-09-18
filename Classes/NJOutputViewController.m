@@ -59,7 +59,7 @@
     } else {
         if (self.mouseDirSelect.selectedSegment == -1)
             self.mouseDirSelect.selectedSegment = 0;
-        if (!self.mouseSpeedSlider.floatValue)
+        if (self.mouseSpeedSlider.floatValue == 0)
             self.mouseSpeedSlider.floatValue = 10;
     }
     
